@@ -9,6 +9,9 @@
 #import <UIKit/UIKit.h>
 
 
+/**
+ 
+ */
 @interface GCDiscoverListController : UITableViewController {
 	NSArray *games;
 }
