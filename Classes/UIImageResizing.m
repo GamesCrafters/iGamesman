@@ -5,9 +5,11 @@
 
 #import "UIImageResizing.h"
 
-
 @implementation UIImage (Resizing)
 
+/**
+ Resizes an image to a given size.
+ */
 - (UIImage*)scaleToSize:(CGSize)size {
 	UIGraphicsBeginImageContext(size);
 	

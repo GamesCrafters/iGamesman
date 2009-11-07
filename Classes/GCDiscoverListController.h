@@ -10,10 +10,10 @@
 
 
 /**
- 
+ Lists the additional games available for download. Currently does nothing.
  */
 @interface GCDiscoverListController : UITableViewController {
-	NSArray *games;
+	NSArray *games; ///< An array of game names
 }
 
 @end
