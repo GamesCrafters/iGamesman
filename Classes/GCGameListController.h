@@ -9,8 +9,12 @@
 #import <UIKit/UIKit.h>
 
 
+/**
+ Lists the games avaiable for play. Tapping on a game takes the user
+ to that game's menu.
+ */
 @interface GCGameListController : UITableViewController {
-	NSArray *games;
+	NSArray *games; ///< An array of game names
 }
 
 @end

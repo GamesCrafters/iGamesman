@@ -77,17 +77,15 @@
 	
 	if (tag <= width * height) {
 		UIButton *B = (UIButton *) [self.view viewWithTag: tag];
-		CGSize squareSize = B.bounds.size;
-		squareSize.width += 1;
-		squareSize.height += 1;
+		//double squareSize = B.bounds.size.width;
 		if (tag < width * height + 1) {
 			NSString *piece;
 			if (turn) {
 				piece = @"X";
-				[B setImage: [[UIImage imageNamed: @"gridX.png"] scaleToSize: squareSize] forState: UIControlStateNormal];
+				[B setBackgroundImage: [UIImage imageNamed: @"gridX.png"] forState: UIControlStateNormal];
 			} else {
 				piece = @"O";
-				[B setImage: [[UIImage imageNamed: @"gridO.png"] scaleToSize: squareSize] forState: UIControlStateNormal];
+				[B setBackgroundImage: [UIImage imageNamed: @"gridO.png"] forState: UIControlStateNormal];
 			}
 			[B setTitle: piece forState: UIControlStateNormal];
 			turn = !turn;
@@ -119,27 +117,24 @@
 		for (int i = 0; i < width; i += 1) {
 			UIButton *column = (UIButton *) [colHeads objectAtIndex: i];
 			NSString *currentValue = [service getValueAfterMove: [NSString stringWithFormat: @"%d", i]];
-			CGSize squareSize = column.bounds.size;
-			squareSize.width += 1;
-			squareSize.height += 1;
 			if (!showMoveValues) {
 				if ([column.titleLabel.text isEqualToString: @"+"])
-					[column setImage: [[UIImage imageNamed: @"gridTopClear.png"] scaleToSize: squareSize] 
-							forState: UIControlStateNormal];
+					[column setBackgroundImage: [UIImage imageNamed: @"gridTopClear.png"] 
+									  forState: UIControlStateNormal];
 			} else if (currentValue == nil) {
 				if ([column.titleLabel.text isEqualToString: @"+"])
-					[column setImage: [[UIImage imageNamed: @"gridTopClear.png"] scaleToSize: squareSize] 
-							forState: UIControlStateNormal];
+					[column setBackgroundImage: [UIImage imageNamed: @"gridTopClear.png"]
+									  forState: UIControlStateNormal];
 			} else {
 				if ([currentValue isEqualToString: @"win"])
-					[column setImage: [[UIImage imageNamed: @"gridTopGreen.png"] scaleToSize: squareSize] 
-							forState: UIControlStateNormal];
+					[column setBackgroundImage: [UIImage imageNamed: @"gridTopGreen.png"] 
+									  forState: UIControlStateNormal];
 				else if ([currentValue isEqualToString: @"lose"])
-					[column setImage: [[UIImage imageNamed: @"gridTopRed.png"] scaleToSize: squareSize] 
-							forState: UIControlStateNormal];
+					[column setBackgroundImage: [UIImage imageNamed: @"gridTopRed.png"]
+									  forState: UIControlStateNormal];
 				else
-					[column setImage: [[UIImage imageNamed: @"gridTopYellow.png"] scaleToSize: squareSize] 
-							forState: UIControlStateNormal];
+					[column setBackgroundImage: [UIImage imageNamed: @"gridTopYellow.png"]
+									  forState: UIControlStateNormal];
 			}
 		}
 		if (remoteness == 0) {
@@ -218,11 +213,11 @@
 	for (int j = height - 1; j >= 0; j -= 1) {
 		for (int i = 0; i < width; i += 1) {
 			UIButton *B = [[UIButton buttonWithType: UIButtonTypeCustom] 
-						   initWithFrame: CGRectMake(20 + i * squareSize, 20 + j * squareSize, squareSize, squareSize)];
+						   initWithFrame: CGRectMake((20 + width/2) + i * (squareSize - 1), 20 + j * (squareSize - 1), squareSize, squareSize)];
 			UIImage *gridImg = [UIImage imageNamed: @"grid.png"];
-			UIImage *resized = [gridImg scaleToSize: CGSizeMake(squareSize + 1, squareSize + 1)];
+			B.titleLabel.alpha = 0;
 			[B setTitle: @"+" forState: UIControlStateNormal];
-			[B setImage: resized forState: UIControlStateNormal];
+			[B setBackgroundImage: gridImg forState: UIControlStateNormal];
 			[B addTarget: self action: @selector(tapped:) forControlEvents: UIControlEventTouchUpInside];
 			B.adjustsImageWhenDisabled = NO;
 			B.tag = tagNum;

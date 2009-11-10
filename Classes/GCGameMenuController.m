@@ -21,6 +21,12 @@
 */
 
 
+/**
+ The designated initializer
+ 
+ @param game the game object (currently unused)
+ @param gameName the name of the game
+ */
 - (id)initWithGame: (id) game andName: (NSString *) gameName {
 	if (self = [super initWithStyle: UITableViewStyleGrouped]) {
 		self.title = gameName;

@@ -10,14 +10,19 @@
 
 @protocol OptionPanelDelegate;
 
-
+/**
+ The in-game option panel for adjusting gameplay settings,
+ such as displaying move values and predictions.
+ */
 @interface GCGameOptionsController : UITableViewController {
 	id <OptionPanelDelegate> delegate;
 }
 
+
 @property (nonatomic, assign) id <OptionPanelDelegate> delegate;
 
 @end
+
 
 
 @protocol OptionPanelDelegate
@@ -30,4 +35,3 @@
 - (BOOL) showingMoveValues;
 
 @end
-

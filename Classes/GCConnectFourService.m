@@ -84,7 +84,10 @@
 		NSString *aBoard = [position objectForKey: @"board"];
 		if ([aBoard isEqual: [self stringForBoard: myBoard]]) {
 			NSString *val = [position objectForKey: @"value"];
-			if (val == nil) return nil;
+			if (val == nil) 
+				return nil;
+			if ([position objectForKey: @"move"] == nil) // Handles the case of the first position
+				return val;								 // where the value is NOT flipped
 			return [self flip: val];
 		}
 	}

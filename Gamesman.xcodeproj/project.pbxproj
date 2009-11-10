@@ -35,7 +35,6 @@
 		0A0F6D43109FBCB900A2F268 /* About.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A0F6D40109FBCB900A2F268 /* About.xib */; };
 		0A0F6D44109FBCB900A2F268 /* Connect4.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A0F6D41109FBCB900A2F268 /* Connect4.xib */; };
 		0A0F6D45109FBCB900A2F268 /* GameView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A0F6D42109FBCB900A2F268 /* GameView.xib */; };
-		0AD2FB7710A0C9E600362251 /* UIImageResizing.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AD2FB7610A0C9E600362251 /* UIImageResizing.m */; };
 		0AD2FB8110A0CB3900362251 /* grid.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AD2FB8010A0CB3900362251 /* grid.png */; };
 		0AD2FBBC10A0D06F00362251 /* gridO.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AD2FBBB10A0D06F00362251 /* gridO.png */; };
 		0AD2FBBE10A0D2CF00362251 /* gridX.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AD2FBBD10A0D2CF00362251 /* gridX.png */; };
@@ -94,8 +93,6 @@
 		0A0F6D40109FBCB900A2F268 /* About.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = About.xib; sourceTree = "<group>"; };
 		0A0F6D41109FBCB900A2F268 /* Connect4.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Connect4.xib; sourceTree = "<group>"; };
 		0A0F6D42109FBCB900A2F268 /* GameView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GameView.xib; sourceTree = "<group>"; };
-		0AD2FB7510A0C9E600362251 /* UIImageResizing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIImageResizing.h; sourceTree = "<group>"; };
-		0AD2FB7610A0C9E600362251 /* UIImageResizing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIImageResizing.m; sourceTree = "<group>"; };
 		0AD2FB8010A0CB3900362251 /* grid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grid.png; sourceTree = "<group>"; };
 		0AD2FBBB10A0D06F00362251 /* gridO.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gridO.png; sourceTree = "<group>"; };
 		0AD2FBBD10A0D2CF00362251 /* gridX.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gridX.png; sourceTree = "<group>"; };
@@ -151,8 +148,6 @@
 				0A0F6D07109FBC6200A2F268 /* GCGameOptionsController.m */,
 				0A0F6D08109FBC6200A2F268 /* GCGameViewController.h */,
 				0A0F6D09109FBC6200A2F268 /* GCGameViewController.m */,
-				0AD2FB7510A0C9E600362251 /* UIImageResizing.h */,
-				0AD2FB7610A0C9E600362251 /* UIImageResizing.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -347,7 +342,6 @@
 				0A0F6D23109FBC6800A2F268 /* SBJsonParser.m in Sources */,
 				0A0F6D24109FBC6800A2F268 /* SBJsonWriter.m in Sources */,
 				0AD6A06510A0B83200B37750 /* GCConnectFourViewController.m in Sources */,
-				0AD2FB7710A0C9E600362251 /* UIImageResizing.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
