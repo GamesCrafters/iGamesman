@@ -131,13 +131,13 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				0AD6A06310A0B83200B37750 /* GCConnectFourViewController.h */,
-				0AD6A06410A0B83200B37750 /* GCConnectFourViewController.m */,
 				0A0F6D11109FBC6800A2F268 /* JSON */,
 				1D3623240D0F684500981E51 /* GamesmanAppDelegate.h */,
 				1D3623250D0F684500981E51 /* GamesmanAppDelegate.m */,
 				0A0F6CFC109FBC6200A2F268 /* GCConnectFourService.h */,
 				0A0F6CFD109FBC6200A2F268 /* GCConnectFourService.m */,
+				0AD6A06310A0B83200B37750 /* GCConnectFourViewController.h */,
+				0AD6A06410A0B83200B37750 /* GCConnectFourViewController.m */,
 				0A0F6D00109FBC6200A2F268 /* GCDiscoverListController.h */,
 				0A0F6D01109FBC6200A2F268 /* GCDiscoverListController.m */,
 				0A0F6D02109FBC6200A2F268 /* GCGameListController.h */,

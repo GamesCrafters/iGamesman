@@ -22,6 +22,11 @@
 }
 */
 
+/**
+ Message delegate that the user tapped DONE, and
+ pass along the new values for showing predictions and
+ showing move values.
+ */
 - (void) done {
 	UISwitch *s1 = (UISwitch *) [self.tableView viewWithTag: 1];
 	UISwitch *s2 = (UISwitch *) [self.tableView viewWithTag: 2];
@@ -29,6 +34,9 @@
 }
 
 
+/**
+ Message delegate that the user tapped CANCEL.
+ */
 - (void) cancel {
 	[delegate optionPanelDidCancel: self];
 }

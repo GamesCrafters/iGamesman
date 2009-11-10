@@ -12,22 +12,38 @@
 @protocol FlipsideViewControllerDelegate;
 
 
+/**
+ The main game view controller. Essentially a container for the
+ game's view controller. Manages the toolbar along the bottom of the screen.
+ */
 @interface GCGameViewController : UIViewController <OptionPanelDelegate> {
-	BOOL showPredictions;
-	BOOL showMoveValues;
-	UIViewController *gameView;
+	BOOL showPredictions;		///< YES if predicitons are ON, NO if predictions are OFF
+	BOOL showMoveValues;		///< YES if move values are ON, NO if move values are OFF
+	UIViewController *gameView; ///< The game-specific view controller
 	id <FlipsideViewControllerDelegate> delegate;
 }
 
+/// This view's delegate, to have this view dismissed
 @property (nonatomic, assign) id <FlipsideViewControllerDelegate> delegate;
 
+/// Called when the user taps the back button in the toolbar
 - (IBAction) done;
+
+/// Called when the user taps the options button in the toolbar
 - (IBAction) changeOptions;
 
 @end
 
+
+/**
+ Protocol for handling the game view modally.
+ */
 @protocol FlipsideViewControllerDelegate
 
+/** 
+ @brief Called when the user taps the back button. Expectation
+ is that this dismisses the game view.
+ */
 - (void) flipsideViewControllerDidFinish: (GCGameViewController *) controller;
 
 @end

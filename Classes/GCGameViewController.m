@@ -50,13 +50,17 @@
 	// e.g. self.myOutlet = nil;
 }
 
-/* Call my delegate to dismiss me. */
+/** 
+ Messages this view's delegate to dismiss me. 
+ */
 - (void) done {
 	[delegate flipsideViewControllerDidFinish: self];
 }
 
 
-/* Modally presents the option panel. */
+/** 
+ Modally presents the option panel.
+ */
 - (void) changeOptions {
 	GCGameOptionsController *options = [[GCGameOptionsController alloc] initWithStyle: UITableViewStyleGrouped];
 	options.delegate = self;
