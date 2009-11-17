@@ -50,6 +50,10 @@
 	// e.g. self.myOutlet = nil;
 }
 
+- (BOOL) shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+	return [gameView shouldAutorotateToInterfaceOrientation: interfaceOrientation];
+}
+
 /** 
  Messages this view's delegate to dismiss me. 
  */
@@ -62,7 +66,7 @@
  Modally presents the option panel.
  */
 - (void) changeOptions {
-	GCGameOptionsController *options = [[GCGameOptionsController alloc] initWithStyle: UITableViewStyleGrouped];
+	GCGameOptionsController *options = [[GCGameOptionsController alloc] initWithOrientation: [self interfaceOrientation]];
 	options.delegate = self;
 	UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController: options];
 	nav.modalTransitionStyle = UIModalTransitionStyleCoverVertical;

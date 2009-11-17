@@ -7,7 +7,6 @@
 //
 
 #import "GCConnectFourViewController.h"
-#import "UIImageResizing.h"
 
 
 @implementation GCConnectFourViewController
@@ -174,7 +173,7 @@
 			CGSize squareSize = column.bounds.size;
 			squareSize.width += 1;
 			squareSize.height += 1;
-			[column setImage: [[UIImage imageNamed: @"gridTopClear.png"] scaleToSize: squareSize] forState: UIControlStateNormal];
+			[column setBackgroundImage: [UIImage imageNamed: @"gridTopClear.png"] forState: UIControlStateNormal];
 		}
 	}
 }
@@ -204,10 +203,17 @@
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
-	self.view = [[UIView alloc] initWithFrame: CGRectMake(0, 0, 320, 416)];
+	if ([self interfaceOrientation] == UIInterfaceOrientationPortrait)
+		self.view = [[UIView alloc] initWithFrame: CGRectMake(0, 0, 320, 416)];
+	else
+		self.view = [[UIView alloc] initWithFrame: CGRectMake(0, 0, 480, 256)];
 	self.view.backgroundColor = [UIColor colorWithRed: 0 green: 0 blue: 102.0/256.0 alpha: 1];
 	
-	float squareSize = MIN(280.0 / width, 376.0 / height);
+	float squareSize;
+	if ([self interfaceOrientation] == UIInterfaceOrientationPortrait)
+		squareSize = MIN(280.0 / width, 376.0 / height);
+	else
+		squareSize = MIN(216.0 / height, 440.0 / width);
 	
 	int tagNum = 1;
 	for (int j = height - 1; j >= 0; j -= 1) {
@@ -226,8 +232,12 @@
 		}
 	}
 	
-	descLabel = [[UILabel alloc] initWithFrame: CGRectMake(20, 40 + height * squareSize, 
-																	280, 416 - (60 + height * squareSize))];
+	if ([self interfaceOrientation] == UIInterfaceOrientationPortrait)
+		descLabel = [[UILabel alloc] initWithFrame: CGRectMake(20, 40 + height * squareSize, 
+															   280, 416 - (60 + height * squareSize))];
+	else
+		descLabel = [[UILabel alloc] initWithFrame: CGRectMake(40 + width * squareSize, 103, 
+															   480 - (40 + width * squareSize), 50)];
 	descLabel.backgroundColor = [UIColor clearColor];
 	descLabel.textColor = [UIColor whiteColor];
 	descLabel.textAlignment = UITextAlignmentCenter;
@@ -248,13 +258,12 @@
 
 
 
-/*
-// Override to allow orientations other than the default portrait orientation.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    // Return YES for supported orientations
+	if (width > 5)
+		return (interfaceOrientation == UIInterfaceOrientationLandscapeRight);
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
-*/
+
 
 - (void)didReceiveMemoryWarning {
 	// Releases the view if it doesn't have a superview.

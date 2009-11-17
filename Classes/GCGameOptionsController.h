@@ -16,11 +16,14 @@
  contains a toggle for move values and a toggle for predictions.
  */
 @interface GCGameOptionsController : UITableViewController {
+	UIInterfaceOrientation orientation;
 	id <OptionPanelDelegate> delegate;
 }
 
 /// This view's delegate, to have this view dismissed.
 @property (nonatomic, assign) id <OptionPanelDelegate> delegate;
+
+- (id) initWithOrientation: (UIInterfaceOrientation) _orientation;
 
 /// Report to delegate that the user tapped DONE
 - (void) done;

@@ -43,6 +43,8 @@
 		0AD2FC0F10A0DF8300362251 /* gridTopRed.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AD2FC0B10A0DF8300362251 /* gridTopRed.png */; };
 		0AD2FC1010A0DF8300362251 /* gridTopYellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AD2FC0C10A0DF8300362251 /* gridTopYellow.png */; };
 		0AD6A06510A0B83200B37750 /* GCConnectFourViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AD6A06410A0B83200B37750 /* GCConnectFourViewController.m */; };
+		0ADA27A510B2095000053620 /* NameChanger.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0ADA27A410B2095000053620 /* NameChanger.xib */; };
+		0AE7A95D10AA17D900D66ACA /* GCNameChangeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AE7A95C10AA17D900D66ACA /* GCNameChangeController.m */; };
 		1D3623260D0F684500981E51 /* GamesmanAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* GamesmanAppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
@@ -102,6 +104,9 @@
 		0AD2FC0C10A0DF8300362251 /* gridTopYellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gridTopYellow.png; sourceTree = "<group>"; };
 		0AD6A06310A0B83200B37750 /* GCConnectFourViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCConnectFourViewController.h; sourceTree = "<group>"; };
 		0AD6A06410A0B83200B37750 /* GCConnectFourViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCConnectFourViewController.m; sourceTree = "<group>"; };
+		0ADA27A410B2095000053620 /* NameChanger.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NameChanger.xib; sourceTree = "<group>"; };
+		0AE7A95B10AA17D900D66ACA /* GCNameChangeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCNameChangeController.h; sourceTree = "<group>"; };
+		0AE7A95C10AA17D900D66ACA /* GCNameChangeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCNameChangeController.m; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* GamesmanAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GamesmanAppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* GamesmanAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GamesmanAppDelegate.m; sourceTree = "<group>"; };
@@ -148,6 +153,8 @@
 				0A0F6D07109FBC6200A2F268 /* GCGameOptionsController.m */,
 				0A0F6D08109FBC6200A2F268 /* GCGameViewController.h */,
 				0A0F6D09109FBC6200A2F268 /* GCGameViewController.m */,
+				0AE7A95B10AA17D900D66ACA /* GCNameChangeController.h */,
+				0AE7A95C10AA17D900D66ACA /* GCNameChangeController.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -236,6 +243,7 @@
 				0A0F6D41109FBCB900A2F268 /* Connect4.xib */,
 				0A0F6D42109FBCB900A2F268 /* GameView.xib */,
 				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
+				0ADA27A410B2095000053620 /* NameChanger.xib */,
 				8D1107310486CEB800E47090 /* Gamesman-Info.plist */,
 			);
 			name = Resources;
@@ -317,6 +325,7 @@
 				0AD2FC0E10A0DF8300362251 /* gridTopGreen.png in Resources */,
 				0AD2FC0F10A0DF8300362251 /* gridTopRed.png in Resources */,
 				0AD2FC1010A0DF8300362251 /* gridTopYellow.png in Resources */,
+				0ADA27A510B2095000053620 /* NameChanger.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -342,6 +351,7 @@
 				0A0F6D23109FBC6800A2F268 /* SBJsonParser.m in Sources */,
 				0A0F6D24109FBC6800A2F268 /* SBJsonWriter.m in Sources */,
 				0AD6A06510A0B83200B37750 /* GCConnectFourViewController.m in Sources */,
+				0AE7A95D10AA17D900D66ACA /* GCNameChangeController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

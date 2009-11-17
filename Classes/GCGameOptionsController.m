@@ -22,6 +22,13 @@
 }
 */
 
+- (id) initWithOrientation: (UIInterfaceOrientation) _orientation {
+	if (self = [super initWithStyle: UITableViewStyleGrouped]) {
+		orientation = _orientation;
+	}
+	return self;
+}
+
 /**
  Message delegate that the user tapped DONE, and
  pass along the new values for showing predictions and
@@ -73,6 +80,13 @@
 	// e.g. self.myOutlet = nil;
 }
 
+- (BOOL) shouldAutorotateToInterfaceOrientation: (UIInterfaceOrientation) interfaceOrientation {
+	if (orientation == UIInterfaceOrientationPortrait)
+		return (interfaceOrientation == UIInterfaceOrientationPortrait);
+	else
+		return (interfaceOrientation == UIInterfaceOrientationLandscapeRight);
+}
+
 
 #pragma mark Table view methods
 
@@ -107,7 +121,11 @@
 		cell.textLabel.text = @"Show Move Values";
 		switchOn = [delegate showingMoveValues];
 	}
-	CGRect switchFrame = CGRectMake(200.0, 9.0, 95.0, 20.0);
+	CGRect switchFrame;
+	if (orientation == UIInterfaceOrientationPortrait)
+		switchFrame = CGRectMake(205.0, 9.0, 95.0, 20.0);
+	else
+		switchFrame = CGRectMake(365.0, 9.0, 95.0, 20.0);
 	UISwitch *pSwitch = [[UISwitch alloc] initWithFrame: switchFrame];
 	pSwitch.on = switchOn;
 	pSwitch.tag = indexPath.row + 1;
