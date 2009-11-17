@@ -20,7 +20,7 @@
     if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
 		//gameView = [[GCConnectFourViewController alloc] initWithNibName: @"Connect4" bundle: nil];
 		//[self.view addSubview: gameView.view];
-		gameView = [[GCConnectFourViewController alloc] initWithWidth: 5 height: 5 pieces: 4];
+		gameView = [[GCConnectFourViewController alloc] initWithWidth: 6 height: 5 pieces: 4];
 		[self.view addSubview: gameView.view];
 		showPredictions = YES;
 		showMoveValues = YES;

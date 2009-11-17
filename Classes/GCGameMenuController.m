@@ -9,6 +9,7 @@
 #import "GCGameMenuController.h"
 #import "GCGameViewController.h"
 #import "GCNameChangeController.h"
+#import "GCRulesController.h"
 
 
 @implementation GCGameMenuController
@@ -110,6 +111,7 @@
 		else
 			name.text = p2Name;
 		
+		name.tag = 2;
 		[cell addSubview: name];
 	}
 	
@@ -124,9 +126,15 @@
 		viewControl.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
 		[self presentModalViewController: viewControl animated: YES];
 		[viewControl release];
+	} else if (indexPath.row == 0) {
+		GCRulesController *rules = [[GCRulesController alloc] initWithGameName: @"Connect-4"];
+		rules.delegate = self;
+		UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController: rules];
+		[rules release];
+		[self presentModalViewController: nav animated: YES];
+		[nav release];
 	} else if (indexPath.row == 1 || indexPath.row == 2) {
-		GCNameChangeController *nameChanger = [[GCNameChangeController alloc] initWithNibName: @"NameChanger" 
-																					   bundle: nil];
+		GCNameChangeController *nameChanger = [[GCNameChangeController alloc] initWithPlayerNumber: indexPath.row];
 		nameChanger.delegate = self;
 		UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController: nameChanger];
 		[nameChanger release];
@@ -152,6 +160,19 @@
 
 
 - (void) nameChangerDidCancel {
+	[self dismissModalViewControllerAnimated: YES];
+}
+
+
+- (void) nameChangerDidFinishWithPlayer:(NSInteger)playerNum andNewName: (NSString *) name {
+	UILabel *nameLabel = (UILabel *) [[self.tableView cellForRowAtIndexPath: 
+									   [NSIndexPath indexPathForRow: playerNum inSection: 1]] viewWithTag: 2];
+	nameLabel.text = name;
+	[self dismissModalViewControllerAnimated: YES];
+}
+
+
+- (void) rulesPanelDidCancel {
 	[self dismissModalViewControllerAnimated: YES];
 }
 

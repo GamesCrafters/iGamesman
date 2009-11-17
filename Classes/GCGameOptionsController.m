@@ -25,6 +25,7 @@
 - (id) initWithOrientation: (UIInterfaceOrientation) _orientation {
 	if (self = [super initWithStyle: UITableViewStyleGrouped]) {
 		orientation = _orientation;
+		self.tableView.allowsSelection = NO;
 	}
 	return self;
 }
@@ -137,7 +138,7 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	[tableView deselectRowAtIndexPath: indexPath animated: YES];
+	[tableView deselectRowAtIndexPath: indexPath animated: NO];
 }
 
 

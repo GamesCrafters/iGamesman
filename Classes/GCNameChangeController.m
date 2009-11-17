@@ -11,7 +11,7 @@
 
 @implementation GCNameChangeController
 
-@synthesize delegate;
+@synthesize delegate, nameField;
 
 /*
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
@@ -23,8 +23,19 @@
 }
 */
 
+- (id) initWithPlayerNumber: (NSInteger) num {
+	if (self = [super initWithNibName: @"NameChanger" bundle: nil]) {
+		playerNum = num;
+	}
+	return self;
+}
+
 - (void) cancel {
 	[delegate nameChangerDidCancel];
+}
+
+- (void) done {
+	[delegate nameChangerDidFinishWithPlayer: playerNum andNewName: [nameField text]];
 }
 
 /*
@@ -42,7 +53,9 @@
 																						  action: @selector(cancel)];
 	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemDone
 																						   target: self 
-																						   action: NULL];
+																						   action: @selector(done)];
+	
+	[nameField setPlaceholder: [NSString stringWithFormat: @"Player %d", playerNum]];
 }
 
 
