@@ -71,6 +71,7 @@
 	options.delegate = self;
 	UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController: options];
 	nav.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+	nav.navigationBar.tintColor = [UIColor colorWithRed: 0 green: 0 blue: 139.0/256.0 alpha: 1];
 	[options release];
 	[self presentModalViewController: nav animated: YES];
 	[nav release];

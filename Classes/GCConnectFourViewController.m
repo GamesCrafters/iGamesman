@@ -76,7 +76,6 @@
 	
 	if (tag <= width * height) {
 		UIButton *B = (UIButton *) [self.view viewWithTag: tag];
-		//double squareSize = B.bounds.size.width;
 		if (tag < width * height + 1) {
 			NSString *piece;
 			if (turn) {
@@ -107,10 +106,14 @@
 		NSString *value = [service getValue];
 		int remoteness = [service getRemoteness];
 		
-		descLabel.numberOfLines = 2;
-		if (showPredictions)
-			descLabel.text = [NSString stringWithFormat: @"%@'s turn\n%@ in %d", (turn ? @"Red" : @"Black"), value, remoteness];
-		else
+		descLabel.numberOfLines = 3;
+		descLabel.lineBreakMode = UILineBreakModeWordWrap;
+		if (showPredictions) {
+			if (value == nil || remoteness == -1) {
+				descLabel.text = [NSString stringWithFormat: @"%@'s turn\nPrediction unavailable", (turn ? @"Red" : @"Black")];
+			} else
+				descLabel.text = [NSString stringWithFormat: @"%@'s turn\n%@ in %d", (turn ? @"Red" : @"Black"), value, remoteness];
+		} else
 			descLabel.text = [NSString stringWithFormat: @"%@'s turn\n", (turn ? @"Red" : @"Black")];
 		
 		for (int i = 0; i < width; i += 1) {
@@ -131,8 +134,11 @@
 				else if ([currentValue isEqualToString: @"lose"])
 					[column setBackgroundImage: [UIImage imageNamed: @"gridTopRed.png"]
 									  forState: UIControlStateNormal];
-				else
+				else if ([currentValue isEqualToString: @"tie"] || [currentValue isEqualToString: @"draw"])
 					[column setBackgroundImage: [UIImage imageNamed: @"gridTopYellow.png"]
+									  forState: UIControlStateNormal];
+				else
+					[column setBackgroundImage: [UIImage imageNamed: @"gridTopClear.png"]
 									  forState: UIControlStateNormal];
 			}
 		}
@@ -151,7 +157,8 @@
 			}
 		}
 	} else {
-		descLabel.numberOfLines = 2;
+		descLabel.numberOfLines = 4;
+		descLabel.lineBreakMode = UILineBreakModeWordWrap;
 		if (![service status])
 			descLabel.text = @"Server error.\nPlease try again later";
 		if (![service connected])
@@ -213,7 +220,7 @@
 	if ([self interfaceOrientation] == UIInterfaceOrientationPortrait)
 		squareSize = MIN(280.0 / width, 336.0 / height);
 	else
-		squareSize = MIN(216.0 / height, 440.0 / width);
+		squareSize = MIN(216.0 / height, 360.0 / width);
 	
 	int tagNum = 1;
 	for (int j = height - 1; j >= 0; j -= 1) {

@@ -13,11 +13,13 @@
 
 @interface GCConnectFourOptionMenu : UITableViewController <GCOptionMenu> {
 	id <GCRulesDelegate> delegate;
+	NSArray *headings;
 	NSMutableDictionary *currentlySelectedOptions;
 }
 
 - (int) getWidth;
 - (int) getHeight;
+- (int) getPieces;
 
 @end
 

@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "GCGameViewController.h"
 #import "GCNameChangeController.h"
-#import "GCRulesController.h"
 #import "GCRulesDelegate.h"
 
 /**

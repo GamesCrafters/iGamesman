@@ -171,7 +171,7 @@
 	
 	NSString *result = [NSString stringWithContentsOfURL: 
 						[NSURL URLWithString: 
-						 [NSString stringWithFormat: @"http://nyc.cs.berkeley.edu:8080/gcweb/service/gamesman/puzzles/connect4/getNextMoveValues;width=%d;height=%d;pieces=4;board=%@", width, height, boardString]]
+						 [NSString stringWithFormat: @"http://nyc.cs.berkeley.edu:8080/gcweb/service/gamesman/puzzles/connect4/getNextMoveValues;width=%d;height=%d;pieces=%d;board=%@", width, height, pieces, boardString]]
 												encoding: NSUTF8StringEncoding
 												   error: NULL];
 	SBJsonParser *parser = [[SBJsonParser alloc] init];

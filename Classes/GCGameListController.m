@@ -60,21 +60,18 @@
 }
 
 
-// Customize the appearance of table view cells.
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *CellIdentifier = @"Cell";
-    
-	// Cell reuse stuff
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
-    }
-    
-	// Set up the cell
-    cell.textLabel.text = [gameNames objectAtIndex: indexPath.row];
-	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+- (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+	static NSString *CellIdentifier = @"Cell";
 	
-    return cell;
+	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: CellIdentifier];
+	
+	if (cell == nil) {
+		cell = [[[UITableViewCell alloc] initWithFrame: CGRectZero reuseIdentifier: CellIdentifier] autorelease];
+		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+	}
+	cell.textLabel.text = [gameNames objectAtIndex: indexPath.row];
+	
+	return cell;
 }
 
 

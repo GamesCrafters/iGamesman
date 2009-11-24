@@ -17,21 +17,26 @@
 		self.title = @"Connect-4 Rules";
 		self.tableView.allowsSelection = NO;
 		
-		NSArray *keys = [NSArray arrayWithObjects: @"Width", @"Height", nil];
-		NSArray *objs = [NSArray arrayWithObjects: [NSNumber numberWithInt: 6], [NSNumber numberWithInt: 5], nil];
-		currentlySelectedOptions = [[NSMutableDictionary alloc] initWithObjects: objs forKeys: keys];
+		headings = [[NSArray alloc] initWithObjects: @"Width", @"Height", @"Pieces", nil];
+		NSArray *objs = [NSArray arrayWithObjects: [NSNumber numberWithInt: 6], [NSNumber numberWithInt: 5], [NSNumber numberWithInt: 4], nil];
+		currentlySelectedOptions = [[NSMutableDictionary alloc] initWithObjects: objs forKeys: headings];
 	}
     return self;
 }
 
 
 - (int) getWidth {
-	return [[currentlySelectedOptions objectForKey: @"Width"] intValue];
+	return [[currentlySelectedOptions objectForKey: @"Width"] integerValue];
 }
 
 
 - (int) getHeight {
-	return [[currentlySelectedOptions objectForKey: @"Height"] intValue];
+	return [[currentlySelectedOptions objectForKey: @"Height"] integerValue];
+}
+
+
+- (int) getPieces {
+	return [[currentlySelectedOptions objectForKey: @"Pieces"] integerValue];
 }
 
 
@@ -61,9 +66,12 @@
 	if (sender.tag == 1) 
 		[currentlySelectedOptions setObject: [NSNumber numberWithInt: [sender selectedSegmentIndex] + 4] 
 									 forKey: @"Width"];
-	else
+	else if (sender.tag == 2)
 		[currentlySelectedOptions setObject: [NSNumber numberWithInt: [sender selectedSegmentIndex] + 4]
 									 forKey: @"Height"];
+	else
+		[currentlySelectedOptions setObject: [NSNumber numberWithInt: [sender selectedSegmentIndex] + 3]
+									 forKey: @"Pieces"];
 }
 
 
@@ -91,7 +99,7 @@
 #pragma mark Table view methods
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    return 3;
 }
 
 
@@ -101,7 +109,7 @@
 }
 
 - (NSString *) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-	return (section == 0) ? @"Width" : @"Height";
+	return [headings objectAtIndex: section];
 }
 
 
@@ -117,15 +125,25 @@
     
     // Set up the cell...
 	UISegmentedControl *segment = [[UISegmentedControl alloc] initWithFrame: CGRectMake(20, 10, 280, 26)];
-	[segment insertSegmentWithTitle: @"4" atIndex: 0 animated: NO];
-	[segment insertSegmentWithTitle: @"5" atIndex: 1 animated: NO];
-	[segment insertSegmentWithTitle: @"6" atIndex: 2 animated: NO];
+	if (indexPath.section == 2) {
+		[segment insertSegmentWithTitle: @"3" atIndex: 0 animated: NO];
+		[segment insertSegmentWithTitle: @"4" atIndex: 1 animated: NO];
+		[segment insertSegmentWithTitle: @"5" atIndex: 2 animated: NO];
+	} else {
+		[segment insertSegmentWithTitle: @"4" atIndex: 0 animated: NO];
+		[segment insertSegmentWithTitle: @"5" atIndex: 1 animated: NO];
+		[segment insertSegmentWithTitle: @"6" atIndex: 2 animated: NO];
+	}
 	if (indexPath.section == 0)
 		[segment insertSegmentWithTitle: @"7" atIndex: 3 animated: NO];
 	int selected = [[currentlySelectedOptions objectForKey: [self tableView: tableView titleForHeaderInSection: indexPath.section]] intValue];
-	[segment setSelectedSegmentIndex: selected - 4];
+	if (indexPath.section == 2)
+		[segment setSelectedSegmentIndex: 1];
+	else
+		[segment setSelectedSegmentIndex: selected - 4];
 	segment.segmentedControlStyle = UISegmentedControlStyleBar;
-	segment.tag = (indexPath.section == 0) ? 1 : 2;
+	segment.tintColor = [UIColor colorWithRed: 25.0/256 green: 50.0/256 blue: 175.0/256 alpha: 1];
+	segment.tag = indexPath.section + 1;
 	[segment addTarget: self action: @selector(update:) forControlEvents: UIControlEventValueChanged];
 	[cell addSubview: segment];
 	

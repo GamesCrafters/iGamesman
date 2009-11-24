@@ -28,9 +28,10 @@
 - (UIViewController *) getGameViewController {
 	int width = [optionMenu getWidth];
 	int height = [optionMenu getHeight];
+	int pieces = [optionMenu getPieces];
 	GCConnectFourViewController *view = [[GCConnectFourViewController alloc] initWithWidth: width 
 																					height: height 
-																					pieces: 4];
+																					pieces: pieces];
 	return view;
 }
 

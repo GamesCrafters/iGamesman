@@ -91,7 +91,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
-    }
+	}
     
 	// Set up the cell
     cell.textLabel.text = [[cellLabels objectAtIndex: indexPath.section] objectAtIndex: indexPath.row];
@@ -131,6 +131,7 @@
 		if ([menu conformsToProtocol: @protocol(GCOptionMenu)]) {
 			[menu setDelegate: self];
 			UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController: menu];
+			nav.navigationBar.tintColor = [UIColor colorWithRed: 0 green: 0 blue: 139.0/256.0 alpha: 1];
 			[self presentModalViewController: nav animated: YES];
 			[nav release];
 		}
@@ -138,6 +139,7 @@
 		GCNameChangeController *nameChanger = [[GCNameChangeController alloc] initWithPlayerNumber: indexPath.row];
 		nameChanger.delegate = self;
 		UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController: nameChanger];
+		nav.navigationBar.tintColor = [UIColor colorWithRed: 0 green: 0 blue: 139.0/256.0 alpha: 1];
 		[nameChanger release];
 		[self presentModalViewController: nav animated: YES];
 		[nav release];
