@@ -7,13 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GCGameView.h"
 #import "GCConnectFourService.h"
 
 
 /**
  Manages the Connect-4 board view and maintains the game play.
  */
-@interface GCConnectFourViewController : UIViewController {
+@interface GCConnectFourViewController : UIViewController <GCGameView> {
 	NSMutableArray *board;			///< Represents the current state of the Connect-4 board
 	UILabel *descLabel;				///< Displays messages to the user
 	NSArray *colHeads;				///< Contains the buttons along the top row of the board
@@ -29,9 +30,6 @@
 
 /// The designated initializer
 - (id) initWithWidth: (NSInteger) _width height: (NSInteger) _height pieces: (NSInteger) _pieces;
-
-/// Handles the changing of appearance options
-- (void) updateDisplayOptions: (NSDictionary *) options;
 
 /// Receives the button taps and interprets them as moves
 - (void) tapped: (UIButton *) sender;

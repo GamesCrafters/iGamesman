@@ -8,6 +8,7 @@
 
 #import "GCGameListController.h"
 #import "GCGameMenuController.h"
+#import "GCConnectFour.h"
 
 
 @implementation GCGameListController
@@ -16,7 +17,9 @@
 - (id)initWithStyle:(UITableViewStyle)style {
     if (self = [super initWithStyle:style]) {
 		self.title = @"Games";
-		games = [[NSArray alloc] initWithObjects: @"1 to 10", @"Connect-4", @"Tic-Tac-Toe", nil];
+		gameNames = [[NSArray alloc] initWithObjects: @"1 to 10", @"Connect-4", @"Tic-Tac-Toe", nil];
+		GCConnectFour *c4 = [[GCConnectFour alloc] init];
+		games = [[NSDictionary alloc] initWithObjectsAndKeys: c4, @"Connect-4", nil];
 	}
     return self;
 }
@@ -53,7 +56,7 @@
 
 // Customize the number of rows in the table view.
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [games count];
+    return [gameNames count];
 }
 
 
@@ -68,7 +71,7 @@
     }
     
 	// Set up the cell
-    cell.textLabel.text = [games objectAtIndex: indexPath.row];
+    cell.textLabel.text = [gameNames objectAtIndex: indexPath.row];
 	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 	
     return cell;
@@ -78,12 +81,11 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	NSString *gameName = [tableView cellForRowAtIndexPath: indexPath].textLabel.text;
 	
-	id game;
-	game = nil;
+	id game = [games objectForKey: gameName];
 	[tableView deselectRowAtIndexPath: indexPath animated: YES];
 	
 	if ([gameName isEqualToString: @"Connect-4"]) {
-		GCGameMenuController *menuControl = [[GCGameMenuController alloc] initWithGame: nil	andName: gameName];
+		GCGameMenuController *menuControl = [[GCGameMenuController alloc] initWithGame: game andName: gameName];
 		[self.navigationController pushViewController: menuControl animated: YES];
 		[menuControl release];
 	}
@@ -91,6 +93,7 @@
 
 
 - (void)dealloc {
+	[gameNames release];
 	[games release];
     [super dealloc];
 }

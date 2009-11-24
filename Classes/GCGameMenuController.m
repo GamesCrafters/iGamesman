@@ -7,9 +7,7 @@
 //
 
 #import "GCGameMenuController.h"
-#import "GCGameViewController.h"
-#import "GCNameChangeController.h"
-#import "GCRulesController.h"
+#import "GCGame.h"
 
 
 @implementation GCGameMenuController
@@ -29,7 +27,7 @@
  @param game the game object (currently unused)
  @param gameName the name of the game
  */
-- (id)initWithGame: (id) game andName: (NSString *) gameName {
+- (id)initWithGame: (id) _game andName: (NSString *) gameName {
 	if (self = [super initWithStyle: UITableViewStyleGrouped]) {
 		self.title = gameName;
 		
@@ -42,6 +40,9 @@
 		
 		p1Name = @"Player 1";
 		p2Name = @"Player 2";
+		
+		if ([_game conformsToProtocol: @protocol(GCGame)])
+			game = _game;
 	}
 	return self;
 }
@@ -121,18 +122,18 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	if (indexPath.section == 0) {
-		GCGameViewController *viewControl = [[GCGameViewController alloc] initWithNibName: @"GameView" bundle:nil];
+		GCGameViewController *viewControl = [[GCGameViewController alloc] initWithGame: game];
 		viewControl.delegate = self;
 		viewControl.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
 		[self presentModalViewController: viewControl animated: YES];
-		[viewControl release];
 	} else if (indexPath.row == 0) {
-		GCRulesController *rules = [[GCRulesController alloc] initWithGameName: @"Connect-4"];
-		rules.delegate = self;
-		UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController: rules];
-		[rules release];
-		[self presentModalViewController: nav animated: YES];
-		[nav release];
+		id menu = [game getOptionMenu];
+		if ([menu conformsToProtocol: @protocol(GCOptionMenu)]) {
+			[menu setDelegate: self];
+			UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController: menu];
+			[self presentModalViewController: nav animated: YES];
+			[nav release];
+		}
 	} else if (indexPath.row == 1 || indexPath.row == 2) {
 		GCNameChangeController *nameChanger = [[GCNameChangeController alloc] initWithPlayerNumber: indexPath.row];
 		nameChanger.delegate = self;
@@ -172,7 +173,7 @@
 }
 
 
-- (void) rulesPanelDidCancel {
+- (void) rulesPanelDidFinish {
 	[self dismissModalViewControllerAnimated: YES];
 }
 

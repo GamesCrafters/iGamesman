@@ -211,7 +211,7 @@
 	
 	float squareSize;
 	if ([self interfaceOrientation] == UIInterfaceOrientationPortrait)
-		squareSize = MIN(280.0 / width, 376.0 / height);
+		squareSize = MIN(280.0 / width, 336.0 / height);
 	else
 		squareSize = MIN(216.0 / height, 440.0 / width);
 	
@@ -233,11 +233,11 @@
 	}
 	
 	if ([self interfaceOrientation] == UIInterfaceOrientationPortrait)
-		descLabel = [[UILabel alloc] initWithFrame: CGRectMake(20, 40 + height * squareSize, 
-															   280, 416 - (60 + height * squareSize))];
+		descLabel = [[UILabel alloc] initWithFrame: CGRectMake(20, 25 + height * squareSize, 
+															   280, 416 - (35 + height * squareSize))];
 	else
-		descLabel = [[UILabel alloc] initWithFrame: CGRectMake(40 + width * squareSize, 103, 
-															   480 - (40 + width * squareSize), 50)];
+		descLabel = [[UILabel alloc] initWithFrame: CGRectMake(10 + width * squareSize, 3, 
+															   480 - (10 + width * squareSize), 250)];
 	descLabel.backgroundColor = [UIColor clearColor];
 	descLabel.textColor = [UIColor whiteColor];
 	descLabel.textAlignment = UITextAlignmentCenter;

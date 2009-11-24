@@ -21,10 +21,13 @@
 	BOOL showMoveValues;		///< YES if move values are ON, NO if move values are OFF
 	UIViewController *gameView; ///< The game-specific view controller
 	id <FlipsideViewControllerDelegate> delegate;
+	id game;
 }
 
 /// This view's delegate, to have this view dismissed
 @property (nonatomic, assign) id <FlipsideViewControllerDelegate> delegate;
+
+- (id)initWithGame: (id) _game;
 
 /// Called when the user taps the back button in the toolbar
 - (IBAction) done;

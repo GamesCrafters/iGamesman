@@ -7,8 +7,8 @@
 //
 
 #import "GCGameViewController.h"
-#import "GCConnectFourViewController.h"
 #import "GCGameOptionsController.h"
+#import "GCGame.h"
 
 
 @implementation GCGameViewController
@@ -16,11 +16,12 @@
 @synthesize delegate;
 
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
-		//gameView = [[GCConnectFourViewController alloc] initWithNibName: @"Connect4" bundle: nil];
-		//[self.view addSubview: gameView.view];
-		gameView = [[GCConnectFourViewController alloc] initWithWidth: 6 height: 5 pieces: 4];
+- (id)initWithGame: (id) _game {
+    if (self = [super initWithNibName: @"GameView" bundle: nil]) {
+		if ([_game conformsToProtocol: @protocol(GCGame)])
+			game = _game;
+		
+		gameView = [game getGameViewController];
 		[self.view addSubview: gameView.view];
 		showPredictions = YES;
 		showMoveValues = YES;

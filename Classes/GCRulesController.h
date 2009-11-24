@@ -3,28 +3,21 @@
 //  Gamesman
 //
 //  Created by Kevin Jorgensen on 11/16/09.
-//  Copyright 2009 Kevin Jorgensen. All rights reserved.
+//  Copyright 2009 GamesCrafters. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
-
-@protocol RulesDelegate;
+#import "GCRulesDelegate.h"
 
 @interface GCRulesController : UITableViewController {
-	id <RulesDelegate> delegate;
+	id <GCRulesDelegate> delegate;
 	id gameOptions;
 }
 
-@property (nonatomic, assign) id <RulesDelegate> delegate;
+@property (nonatomic, assign) id <GCRulesDelegate> delegate;
 
-- (id) initWithGameName: (NSString *) name;
-
-@end
-
-
-@protocol RulesDelegate
-
-- (void) rulesPanelDidCancel;
+- (id) initWithGameName: (NSString *) name andGameOptions: (id) _gameOptions;
+- (void) done;
 
 @end
 

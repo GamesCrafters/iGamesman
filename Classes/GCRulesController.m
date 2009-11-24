@@ -3,11 +3,11 @@
 //  Gamesman
 //
 //  Created by Kevin Jorgensen on 11/16/09.
-//  Copyright 2009 Kevin Jorgensen. All rights reserved.
+//  Copyright 2009 GamesCrafters. All rights reserved.
 //
 
 #import "GCRulesController.h"
-#import "GCConnectFourOptions.h"s
+//#import "GCConnectFourOptions.h"
 
 
 @implementation GCRulesController
@@ -23,26 +23,26 @@
 }
 */
 
-- (id) initWithGameName: (NSString *) name {
+- (id) initWithGameName: (NSString *) name andGameOptions: (id) _gameOptions {
 	if (self = [super initWithStyle: UITableViewStyleGrouped]) {
 		self.title = [NSString stringWithFormat: @"%@ Rules", name];
-		gameOptions = [[GCConnectFourOptions alloc] init];
+		gameOptions = _gameOptions;
 	}
 	return self;
 }
 
 
-- (void) cancel {
-	[delegate rulesPanelDidCancel];
+- (void) done {
+	[delegate rulesPanelDidFinish];
 }
 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemCancel 
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemDone 
 																						   target: self 
-																						   action: @selector(cancel)];
+																						   action: @selector(done)];
 }
 
 /*
@@ -96,13 +96,19 @@
     // Set up the cell
 	cell.textLabel.text = [gameOptions titleForChoice: indexPath.row inCategory: indexPath.section];
 	
+	if (indexPath.row == [[[gameOptions getCurrentlySelectedOptions] objectAtIndex: indexPath.section] intValue])
+		cell.accessoryType = UITableViewCellAccessoryCheckmark;
+	else
+		cell.accessoryType = UITableViewCellAccessoryNone;
+	
     return cell;
 }
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	[tableView cellForRowAtIndexPath: indexPath].accessoryType = UITableViewCellAccessoryCheckmark;
     [tableView deselectRowAtIndexPath: indexPath animated: YES];
+	[gameOptions setSelectedOptionAtIndex: indexPath.row inCategory: indexPath.section];
+	[tableView reloadData];
 }
 
 

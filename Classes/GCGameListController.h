@@ -14,7 +14,8 @@
  to that game's menu.
  */
 @interface GCGameListController : UITableViewController {
-	NSArray *games; ///< An array of game names
+	NSArray *gameNames; ///< An array of game names
+	NSDictionary *games;
 }
 
 @end
