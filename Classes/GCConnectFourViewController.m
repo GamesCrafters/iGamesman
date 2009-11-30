@@ -37,10 +37,21 @@
 			[board addObject: @" "];
 		turn = YES;
 		service = [[GCConnectFourService alloc] init];
-		showPredictions = YES;
-		showMoveValues  = YES;
+		showPredictions = NO;
+		showMoveValues  = NO;
+		p1Name = @"";
+		p2Name = @"";
 	}
 	return self;
+}
+
+
+- (void) setPlayer1Name:(NSString *) name {
+	p1Name = name;
+}
+
+- (void) setPlayer2Name:(NSString *) name {
+	p2Name = name;
 }
 
 
@@ -106,15 +117,15 @@
 		NSString *value = [service getValue];
 		int remoteness = [service getRemoteness];
 		
-		descLabel.numberOfLines = 3;
+		descLabel.numberOfLines = 4;
 		descLabel.lineBreakMode = UILineBreakModeWordWrap;
 		if (showPredictions) {
 			if (value == nil || remoteness == -1) {
-				descLabel.text = [NSString stringWithFormat: @"%@'s turn\nPrediction unavailable", (turn ? @"Red" : @"Black")];
+				descLabel.text = [NSString stringWithFormat: @"%@'s turn (%@)\nPrediction unavailable", (turn ? p1Name : p2Name), (turn ? @"Red" : @"Black")];
 			} else
-				descLabel.text = [NSString stringWithFormat: @"%@'s turn\n%@ in %d", (turn ? @"Red" : @"Black"), value, remoteness];
+				descLabel.text = [NSString stringWithFormat: @"%@'s turn (%@)\n%@ in %d", (turn ? p1Name : p2Name), (turn ? @"Red" : @"Black"), value, remoteness];
 		} else
-			descLabel.text = [NSString stringWithFormat: @"%@'s turn\n", (turn ? @"Red" : @"Black")];
+			descLabel.text = [NSString stringWithFormat: @"%@'s turn (%@)\n", (turn ? p1Name : p2Name), (turn ? @"Red" : @"Black")];
 		
 		for (int i = 0; i < width; i += 1) {
 			UIButton *column = (UIButton *) [colHeads objectAtIndex: i];

@@ -23,8 +23,8 @@
 		
 		gameView = [game getGameViewController];
 		[self.view addSubview: gameView.view];
-		showPredictions = YES;
-		showMoveValues = YES;
+		showPredictions = NO;
+		showMoveValues = NO;
     }
     return self;
 }

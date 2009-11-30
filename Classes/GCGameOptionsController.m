@@ -110,6 +110,12 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+		
+		cell.backgroundColor = [UIColor colorWithRed: 234.0/255 green: 234.0/255 blue: 255.0/255 alpha: 1];
+		
+		UILabel *label = [[UILabel alloc] initWithFrame: CGRectMake(20, 0, 280, 44)];
+		label.tag = 111;
+		label.backgroundColor = [UIColor clearColor];
     }
     
     // Set up the cell

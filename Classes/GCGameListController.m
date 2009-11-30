@@ -20,6 +20,9 @@
 		gameNames = [[NSArray alloc] initWithObjects: @"1 to 10", @"Connect-4", @"Tic-Tac-Toe", nil];
 		GCConnectFour *c4 = [[GCConnectFour alloc] init];
 		games = [[NSDictionary alloc] initWithObjectsAndKeys: c4, @"Connect-4", nil];
+		
+		self.tableView.backgroundColor = [UIColor colorWithRed: 234.0/255 green: 234.0/255 blue: 255.0/255 alpha: 1];
+		self.tableView.separatorColor = [UIColor lightGrayColor];
 	}
     return self;
 }
@@ -69,6 +72,7 @@
 		cell = [[[UITableViewCell alloc] initWithFrame: CGRectZero reuseIdentifier: CellIdentifier] autorelease];
 		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 	}
+	
 	cell.textLabel.text = [gameNames objectAtIndex: indexPath.row];
 	
 	return cell;

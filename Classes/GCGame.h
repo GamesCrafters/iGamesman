@@ -15,5 +15,9 @@
 
 - (id<GCOptionMenu>) getOptionMenu;
 - (UIViewController<GCGameView> *) getGameViewController;
+- (NSString *) player1Name;
+- (NSString *) player2Name;
+- (void) setPlayer1Name:(NSString *) name;
+- (void) setPlayer2Name:(NSString *) name;
 
 @end

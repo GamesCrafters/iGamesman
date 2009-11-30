@@ -31,10 +31,12 @@
 }
 
 - (void) cancel {
+	[nameField resignFirstResponder];
 	[delegate nameChangerDidCancel];
 }
 
 - (void) done {
+	[nameField resignFirstResponder];
 	[delegate nameChangerDidFinishWithPlayer: playerNum andNewName: [nameField text]];
 }
 
@@ -56,6 +58,7 @@
 																						   action: @selector(done)];
 	
 	[nameField setPlaceholder: [NSString stringWithFormat: @"Player %d", playerNum]];
+	[nameField becomeFirstResponder];
 }
 
 

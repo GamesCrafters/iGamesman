@@ -38,11 +38,11 @@
 		[play release];
 		[options release];
 		
-		p1Name = @"Player 1";
-		p2Name = @"Player 2";
-		
 		if ([_game conformsToProtocol: @protocol(GCGame)])
 			game = _game;
+		
+		p1Name = [game player1Name];
+		p2Name = [game player2Name];
 	}
 	return self;
 }
@@ -91,22 +91,33 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+		cell.backgroundColor = [UIColor colorWithRed: 234.0/255 green: 234.0/255 blue: 255.0/255 alpha: 1];
+		
+		int height = [self tableView: tableView heightForRowAtIndexPath: indexPath];
+		UILabel *label = [[UILabel alloc] initWithFrame: CGRectMake(20, 0, 280, height)];
+		label.font = [UIFont boldSystemFontOfSize: 17.0];
+		label.tag = 111;
+		label.backgroundColor = [UIColor clearColor];
+		[cell addSubview: label];
+		[label release];
 	}
     
 	// Set up the cell
-    cell.textLabel.text = [[cellLabels objectAtIndex: indexPath.section] objectAtIndex: indexPath.row];
-	cell.textLabel.numberOfLines = 2;
-	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+	UILabel *label = (UILabel *) [cell viewWithTag: 111];
+    label.text = [[cellLabels objectAtIndex: indexPath.section] objectAtIndex: indexPath.row];
+	label.numberOfLines = 2;
 	
 	if (indexPath.section == 1 && indexPath.row > 0) {
-		cell.textLabel.textColor = [UIColor lightGrayColor];
-		cell.textLabel.font = [UIFont systemFontOfSize: 16.0];
+		label.textColor = [UIColor lightGrayColor];
+		label.font = [UIFont systemFontOfSize: 16.0];
 	}
 	
 	if (indexPath.section == 1 && (indexPath.row == 1 || indexPath.row == 2)) {
-		CGSize S = [cell.textLabel.text sizeWithFont: cell.textLabel.font];
+		CGSize S = [label.text sizeWithFont: label.font];
 		UILabel *name = [[UILabel alloc] initWithFrame: 
 						 CGRectMake(S.width + 30, 10, cell.bounds.size.width - S.width - 40, cell.bounds.size.height - 20)];
+		name.backgroundColor = [UIColor clearColor];
 		if (indexPath.row == 1)
 			name.text = p1Name;
 		else
@@ -172,6 +183,11 @@
 									   [NSIndexPath indexPathForRow: playerNum inSection: 1]] viewWithTag: 2];
 	nameLabel.text = name;
 	[self dismissModalViewControllerAnimated: YES];
+	
+	if (playerNum == 1)
+		[game setPlayer1Name: name];
+	else
+		[game setPlayer2Name: name];
 }
 
 

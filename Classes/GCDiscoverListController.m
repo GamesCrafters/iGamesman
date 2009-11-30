@@ -15,6 +15,10 @@
 - (id)initWithStyle:(UITableViewStyle)style {
     if (self = [super initWithStyle:style]) {
 		self.title = @"Discover";
+		
+		self.tableView.backgroundColor = [UIColor colorWithRed: 234.0/255 green: 234.0/255 blue: 255.0/255 alpha: 1];
+		self.tableView.separatorColor = [UIColor lightGrayColor];
+		
 		games = [[NSArray alloc] initWithObjects: @"Achi", @"Change!", @"Nim", nil];
     }
     return self;

@@ -13,6 +13,7 @@
 
 @interface GCConnectFour : NSObject <GCGame> {
 	GCConnectFourOptionMenu *optionMenu;
+	NSString *p1Name, *p2Name;
 }
 
 @end

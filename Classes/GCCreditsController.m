@@ -81,10 +81,20 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+		
+		cell.backgroundColor = [UIColor colorWithRed: 234.0/255 green: 234.0/255 blue: 255.0/255 alpha: 1];
+		
+		UILabel *label = [[UILabel alloc] initWithFrame: CGRectMake(20, 0, 280, 44)];
+		label.tag = 111;
+		label.backgroundColor = [UIColor clearColor];
+		label.font = [UIFont boldSystemFontOfSize: 16.0];
+		[cell addSubview: label];
     }
     
     // Set up the cell...
-	cell.textLabel.text = [info objectAtIndex: indexPath.section];
+	UILabel *label = (UILabel *) [cell viewWithTag: 111];
+	label.text = [info objectAtIndex: indexPath.section];
+	
 	
     return cell;
 }

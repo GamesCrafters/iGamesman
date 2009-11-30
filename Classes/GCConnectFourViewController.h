@@ -25,11 +25,16 @@
 	BOOL turn;						///< Keeps track of whose turn it is
 	BOOL showPredictions;			///< Keeps track of whether or not to display predictions
 	BOOL showMoveValues;			///< Keeps track of whether or not to display move values
+	NSString *p1Name, *p2Name;
 }
 
 
 /// The designated initializer
 - (id) initWithWidth: (NSInteger) _width height: (NSInteger) _height pieces: (NSInteger) _pieces;
+
+- (void) setPlayer1Name:(NSString *) name;
+
+- (void) setPlayer2Name:(NSString *) name;
 
 /// Receives the button taps and interprets them as moves
 - (void) tapped: (UIButton *) sender;
