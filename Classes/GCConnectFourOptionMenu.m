@@ -121,6 +121,8 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+		
+		cell.backgroundColor = [UIColor colorWithRed: 234.0/255 green: 234.0/255 blue: 255.0/255 alpha: 1];
     }
     
     // Set up the cell...
@@ -142,10 +144,7 @@
 	else
 		[segment setSelectedSegmentIndex: selected - 4];
 	segment.segmentedControlStyle = UISegmentedControlStyleBar;
-	segment.tintColor = [UIColor colorWithRed: 25.0/256 green: 50.0/256 blue: 175.0/256 alpha: 1];
-	for (int i = 0; i < segment.numberOfSegments; i += 1) {
-		
-	}
+	segment.tintColor = [UIColor colorWithRed: 26.0/255 green: 120.0/255 blue: 179.0/255 alpha: 1.0];
 	segment.tag = indexPath.section + 1;
 	[segment addTarget: self action: @selector(update:) forControlEvents: UIControlEventValueChanged];
 	[cell addSubview: segment];

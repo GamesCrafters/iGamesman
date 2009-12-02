@@ -34,6 +34,8 @@
 /// Return the "opposite" game value
 - (NSString	*) flip: (NSString *) value;
 
+- (void) setPrevious: (NSArray *) board value: (NSString *) value remoteness: (NSInteger) remoteness;
+
 /// Return the value of the current board
 - (NSString *) getValue;
 

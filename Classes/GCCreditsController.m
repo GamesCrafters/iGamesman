@@ -17,10 +17,13 @@
 		self.title = @"Gamesman Credits";
 		self.tableView.allowsSelection = NO;
 		
-		headers = [[NSArray alloc] initWithObjects: @"GamesmanMobile", @"Project Lead", 
-				   @"Solved Game Databases", @"Connect-4", nil];
-		info    = [[NSArray alloc] initWithObjects: @"Version 0.5.5", @"Kevin Jorgensen", 
-				   @"Dan Garcia / GamesCrafters", @"Kevin Jorgensen", nil];
+		headers = [[NSArray alloc] initWithObjects: @"GamesmanMobile", @"Project Lead", @"Team Lead",
+				   @"Connect-4", @"GamesmanJava Team\n(Connect-4 Databases)", nil];
+		NSArray *java = [NSArray arrayWithObjects: @"Alex Trofimov", @"David Spies", 
+						 @"James Yeh", @"Jason Davidson", @"Jeremy Fleischman", @"Jin-Su Oh", 
+						 @"Patrick Horn", @"Steven Schlansker", @"Wesley Hart", nil];
+		info    = [[NSArray alloc] initWithObjects: @"Version 0.5.7", @"Dan Garcia", @"Kevin Jorgensen", 
+				   @"Kevin Jorgensen", java, nil];
     }
     return self;
 }
@@ -64,7 +67,10 @@
 
 // Customize the number of rows in the table view.
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
+	if ([[info objectAtIndex: section] isKindOfClass: [NSString class]])
+		return 1;
+	else
+		return [[info objectAtIndex: section] count];
 }
 
 
@@ -93,7 +99,10 @@
     
     // Set up the cell...
 	UILabel *label = (UILabel *) [cell viewWithTag: 111];
-	label.text = [info objectAtIndex: indexPath.section];
+	if ([[info objectAtIndex: indexPath.section] isKindOfClass: [NSString class]])
+		label.text = [info objectAtIndex: indexPath.section];
+	else
+		label.text = [[info objectAtIndex: indexPath.section] objectAtIndex: indexPath.row];
 	
 	
     return cell;

@@ -26,18 +26,17 @@
 	BOOL showPredictions;			///< Keeps track of whether or not to display predictions
 	BOOL showMoveValues;			///< Keeps track of whether or not to display move values
 	NSString *p1Name, *p2Name;
+	BOOL p1Human, p2Human;
 }
 
 
 /// The designated initializer
-- (id) initWithWidth: (NSInteger) _width height: (NSInteger) _height pieces: (NSInteger) _pieces;
-
-- (void) setPlayer1Name:(NSString *) name;
-
-- (void) setPlayer2Name:(NSString *) name;
+- (id) initWithWidth: (NSInteger) _width height: (NSInteger) _height pieces: (NSInteger) _pieces 
+		 player1Name: (NSString *) player1Name player2Name: (NSString *) player2Name;
 
 /// Receives the button taps and interprets them as moves
 - (void) tapped: (UIButton *) sender;
+
 
 /// Update the message label and the display of move values
 - (void) updateLabels;
@@ -49,3 +48,4 @@
 - (UIColor *) colorForValue: (NSString *) value;
 
 @end
+

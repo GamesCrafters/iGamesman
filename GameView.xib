@@ -2,10 +2,10 @@
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="7.10">
 	<data>
 		<int key="IBDocument.SystemTarget">768</int>
-		<string key="IBDocument.SystemVersion">10B504</string>
+		<string key="IBDocument.SystemVersion">10C540</string>
 		<string key="IBDocument.InterfaceBuilderVersion">740</string>
-		<string key="IBDocument.AppKitVersion">1038.2</string>
-		<string key="IBDocument.HIToolboxVersion">437.00</string>
+		<string key="IBDocument.AppKitVersion">1038.25</string>
+		<string key="IBDocument.HIToolboxVersion">458.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			<string key="NS.object.0">62</string>
@@ -58,6 +58,10 @@
 								<reference key="IBUIToolbar" ref="858300214"/>
 							</object>
 							<object class="IBUIBarButtonItem" id="785018535">
+								<reference key="IBUIToolbar" ref="858300214"/>
+								<int key="IBUISystemItemIdentifier">5</int>
+							</object>
+							<object class="IBUIBarButtonItem" id="70074878">
 								<reference key="IBUIToolbar" ref="858300214"/>
 								<int key="IBUISystemItemIdentifier">5</int>
 							</object>
@@ -152,6 +156,7 @@
 							<reference ref="920170122"/>
 							<reference ref="525432750"/>
 							<reference ref="785018535"/>
+							<reference ref="70074878"/>
 						</object>
 						<reference key="parent" ref="191373211"/>
 					</object>
@@ -170,6 +175,11 @@
 						<reference key="object" ref="785018535"/>
 						<reference key="parent" ref="858300214"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">10</int>
+						<reference key="object" ref="70074878"/>
+						<reference key="parent" ref="858300214"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -180,6 +190,7 @@
 					<string>-2.CustomClassName</string>
 					<string>1.IBEditorWindowLastContentRect</string>
 					<string>1.IBPluginDependency</string>
+					<string>10.IBPluginDependency</string>
 					<string>3.IBPluginDependency</string>
 					<string>4.IBPluginDependency</string>
 					<string>7.IBPluginDependency</string>
@@ -190,6 +201,7 @@
 					<string>GCGameViewController</string>
 					<string>UIResponder</string>
 					<string>{{417, 364}, {320, 480}}</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -213,7 +225,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">9</int>
+			<int key="maxID">17</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -235,8 +247,21 @@
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">delegate</string>
-						<string key="NS.object.0">id</string>
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>delegate</string>
+							<string>game</string>
+							<string>stepBack</string>
+							<string>stepForward</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
+							<string>id</string>
+							<string>UIBarButtonItem</string>
+							<string>UIBarButtonItem</string>
+						</object>
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
@@ -473,7 +498,7 @@
 			<integer value="3100" key="NS.object.0"/>
 		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
-		<string key="IBDocument.LastKnownRelativeProjectPath">GamesmanMobile.xcodeproj</string>
+		<string key="IBDocument.LastKnownRelativeProjectPath">Gamesman.xcodeproj</string>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<string key="IBCocoaTouchPluginVersion">3.1</string>
 	</data>

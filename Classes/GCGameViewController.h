@@ -20,12 +20,15 @@
 	BOOL showPredictions;		///< YES if predicitons are ON, NO if predictions are OFF
 	BOOL showMoveValues;		///< YES if move values are ON, NO if move values are OFF
 	UIViewController *gameView; ///< The game-specific view controller
+	UIBarButtonItem *stepBack;
+	UIBarButtonItem *stepForward;
 	id <FlipsideViewControllerDelegate> delegate;
 	id game;
 }
 
 /// This view's delegate, to have this view dismissed
 @property (nonatomic, assign) id <FlipsideViewControllerDelegate> delegate;
+@property (nonatomic, retain) IBOutlet UIBarButtonItem *stepBack, *stepForward;
 
 - (id)initWithGame: (id) _game;
 

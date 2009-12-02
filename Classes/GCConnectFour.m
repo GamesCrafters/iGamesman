@@ -31,11 +31,11 @@
 	int width = [optionMenu getWidth];
 	int height = [optionMenu getHeight];
 	int pieces = [optionMenu getPieces];
-	GCConnectFourViewController *view = [[GCConnectFourViewController alloc] initWithWidth: width 
-																					height: height 
-																					pieces: pieces];
-	[view setPlayer1Name: p1Name];
-	[view setPlayer2Name: p2Name];
+	GCConnectFourViewController *view = [[GCConnectFourViewController alloc] initWithWidth: width
+																					height: height
+																					pieces: pieces
+																			   player1Name: p1Name
+																			   player2Name: p2Name];
 	return view;
 }
 

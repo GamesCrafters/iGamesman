@@ -27,7 +27,8 @@
  @param _height the number of rows
  @param _pieces the number in a row needed to win
  */
-- (id) initWithWidth: (NSInteger) _width height: (NSInteger) _height pieces: (NSInteger) _pieces {
+- (id) initWithWidth: (NSInteger) _width height: (NSInteger) _height pieces: (NSInteger) _pieces 
+		 player1Name: (NSString *) player1Name player2Name: (NSString *) player2Name {
 	if (self = [super init]) {
 		width  = _width;
 		height = _height;
@@ -39,19 +40,12 @@
 		service = [[GCConnectFourService alloc] init];
 		showPredictions = NO;
 		showMoveValues  = NO;
-		p1Name = @"";
-		p2Name = @"";
+		p1Name = player1Name;
+		p2Name = player2Name;
+		p1Human = YES;
+		p2Human = YES;
 	}
 	return self;
-}
-
-
-- (void) setPlayer1Name:(NSString *) name {
-	p1Name = name;
-}
-
-- (void) setPlayer2Name:(NSString *) name {
-	p2Name = name;
 }
 
 
@@ -89,20 +83,59 @@
 		UIButton *B = (UIButton *) [self.view viewWithTag: tag];
 		if (tag < width * height + 1) {
 			NSString *piece;
-			if (turn) {
+			if (turn)
 				piece = @"X";
-				[B setBackgroundImage: [UIImage imageNamed: @"gridX.png"] forState: UIControlStateNormal];
-			} else {
+			else
 				piece = @"O";
-				[B setBackgroundImage: [UIImage imageNamed: @"gridO.png"] forState: UIControlStateNormal];
-			}
+			
+			UIImage *img = [UIImage imageNamed: [NSString stringWithFormat: @"%@.png", piece]];
+			double x = [B frame].origin.x;
+			double y = [B frame].origin.y;
+			double w = [B frame].size.width;
+			double h = [B frame].size.height;
+			UIImageView *imgView = [[UIImageView alloc] initWithFrame: CGRectMake(x, -30, w, h)];
+			[imgView setImage: img];
+			imgView.tag = 1234;
+			[self.view insertSubview: imgView atIndex: 0];
+			
+			[UIView beginAnimations: @"Drop" context: NULL];
+			[imgView setFrame: CGRectMake(x, y, w, h)];
+			[UIView commitAnimations];
+			
 			[B setTitle: piece forState: UIControlStateNormal];
 			turn = !turn;
 			[board replaceObjectAtIndex: tag - 1 withObject: piece];
 		}
 		
-		[service retrieveDataForBoard: board width: width height: height pieces: pieces];
+		[service retrieveDataForBoard: board width: width height: height pieces: pieces];		
 		[self updateLabels];
+	}
+}
+
+
+- (void) redrawBoard {
+	for (UIView *V in [self.view subviews]) {
+		if (V.tag == 1234)
+			[V removeFromSuperview];
+	}
+	
+	for (int i = 1; i <= width * height; i += 1) {
+		UIButton *B = (UIButton *) [self.view viewWithTag: i];
+		NSString *piece = (NSString *) [board objectAtIndex: i - 1];
+		if ([piece isEqualToString: @" "])
+			piece = @"+";
+		[B setTitle: piece forState: UIControlStateNormal];
+		
+		UIImage *img = [UIImage imageNamed: [NSString stringWithFormat: @"%@.png", piece]];
+		double x = [B frame].origin.x;
+		double y = [B frame].origin.y;
+		double w = [B frame].size.width;
+		double h = [B frame].size.height;
+		UIImageView *imgView = [[UIImageView alloc] initWithFrame: CGRectMake(x, y, w, h)];
+		[imgView setImage: img];
+		imgView.tag = 1234;
+		[self.view insertSubview: imgView atIndex: 0];
+		
 	}
 }
 
@@ -122,8 +155,12 @@
 		if (showPredictions) {
 			if (value == nil || remoteness == -1) {
 				descLabel.text = [NSString stringWithFormat: @"%@'s turn (%@)\nPrediction unavailable", (turn ? p1Name : p2Name), (turn ? @"Red" : @"Black")];
-			} else
-				descLabel.text = [NSString stringWithFormat: @"%@'s turn (%@)\n%@ in %d", (turn ? p1Name : p2Name), (turn ? @"Red" : @"Black"), value, remoteness];
+			} else {
+				BOOL human = (turn ? p1Human : p2Human);
+				descLabel.text = [NSString stringWithFormat: @"%@ (%@)\n%@ %@ in %d", 
+								  (turn ? p1Name : p2Name), (turn ? @"Red" : @"Black"),
+								  (human ? @"should" : @"will"), value, remoteness];
+			}
 		} else
 			descLabel.text = [NSString stringWithFormat: @"%@'s turn (%@)\n", (turn ? p1Name : p2Name), (turn ? @"Red" : @"Black")];
 		
@@ -135,35 +172,33 @@
 					[column setBackgroundImage: [UIImage imageNamed: @"gridTopClear.png"] 
 									  forState: UIControlStateNormal];
 			} else if (currentValue == nil) {
-				if ([column.titleLabel.text isEqualToString: @"+"])
-					[column setBackgroundImage: [UIImage imageNamed: @"gridTopClear.png"]
-									  forState: UIControlStateNormal];
+				[column setBackgroundImage: [UIImage imageNamed: @"gridTopClear.png"]
+								  forState: UIControlStateNormal];
+			} else if ([currentValue isEqualToString: @"win"]) {
+				[column setBackgroundImage: [UIImage imageNamed: @"gridTopGreen.png"]
+								  forState: UIControlStateNormal];
+			} else if ([currentValue isEqualToString: @"lose"]) {
+				[column setBackgroundImage: [UIImage imageNamed: @"gridTopRed.png"]
+								  forState: UIControlStateNormal];
+			} else if ([currentValue isEqualToString: @"tie"] || [currentValue isEqualToString: @"draw"]) {
+				[column setBackgroundImage: [UIImage imageNamed: @"gridTopYellow.png"]
+								  forState: UIControlStateNormal];
 			} else {
-				if ([currentValue isEqualToString: @"win"])
-					[column setBackgroundImage: [UIImage imageNamed: @"gridTopGreen.png"] 
-									  forState: UIControlStateNormal];
-				else if ([currentValue isEqualToString: @"lose"])
-					[column setBackgroundImage: [UIImage imageNamed: @"gridTopRed.png"]
-									  forState: UIControlStateNormal];
-				else if ([currentValue isEqualToString: @"tie"] || [currentValue isEqualToString: @"draw"])
-					[column setBackgroundImage: [UIImage imageNamed: @"gridTopYellow.png"]
-									  forState: UIControlStateNormal];
-				else
-					[column setBackgroundImage: [UIImage imageNamed: @"gridTopClear.png"]
-									  forState: UIControlStateNormal];
+				[column setBackgroundImage: [UIImage imageNamed: @"gridTopClear.png"]
+								  forState: UIControlStateNormal];
 			}
 		}
 		if (remoteness == 0) {
 			[self disableButtons];
 			descLabel.numberOfLines = 1;
 			NSString *winner;
-			if ([value isEqualToString: @"tie"])
+			if ([value isEqualToString: @"tie"] || [value isEqualToString: @"draw"])
 				descLabel.text = @"It's a tie!";
 			else {
 				if ([value isEqualToString: @"win"])
-					winner = turn ? @"Red" : @"Black";
+					winner = turn ? p1Name : p2Name;
 				else
-					winner = turn ? @"Black" : @"Red";
+					winner = turn ? p2Name : p1Name;
 				descLabel.text = [NSString stringWithFormat: @"%@ wins!", winner];
 			}
 		}
@@ -296,6 +331,12 @@
 
 
 - (void)dealloc {
+	for (UIView *view in [self.view subviews]) {
+		if (view.tag == 1234) {
+			[view removeFromSuperview];
+			[view release];
+		}
+	}
 	[board release];
 	[service release];
     [super dealloc];

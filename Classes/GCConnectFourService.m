@@ -73,6 +73,17 @@
 	return value;
 }
 
+
+- (void) setPrevious: (NSArray *) board value: (NSString *) value remoteness: (NSInteger) remoteness {
+	/*NSArray *keys = [NSArray arrayWithObjects: @"board", @"remoteness", @"value", nil];
+	NSArray *objs = [NSArray arrayWithObjects: [self stringForBoard: board], remoteness, value, nil];
+	NSDictionary *position = [[NSDictionary alloc] initWithObjects: objs forKeys: keys];
+	previous = [[NSArray alloc] initWithObjects: position, nil];
+	status = YES;
+	connected = YES;*/
+}
+
+
 /**
  Gets the value of the current board, based on the most recent
  server data request.

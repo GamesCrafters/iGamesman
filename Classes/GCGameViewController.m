@@ -14,6 +14,7 @@
 @implementation GCGameViewController
 
 @synthesize delegate;
+@synthesize stepBack, stepForward;
 
 
 - (id)initWithGame: (id) _game {
@@ -22,6 +23,7 @@
 			game = _game;
 		
 		gameView = [game getGameViewController];
+		
 		[self.view addSubview: gameView.view];
 		showPredictions = NO;
 		showMoveValues = NO;
