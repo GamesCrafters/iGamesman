@@ -44,6 +44,7 @@
 		p2Name = player2Name;
 		p1Human = YES;
 		p2Human = YES;
+		spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle: UIActivityIndicatorViewStyleWhiteLarge];
 	}
 	return self;
 }
@@ -107,9 +108,43 @@
 			[board replaceObjectAtIndex: tag - 1 withObject: piece];
 		}
 		
-		[service retrieveDataForBoard: board width: width height: height pieces: pieces];		
+		[self disableButtons];
+		[spinner startAnimating];
+		fetch = [[NSThread alloc] initWithTarget: self selector: @selector(fetchNewData) object: nil];
+		[fetch start];
+		timer = [NSTimer scheduledTimerWithTimeInterval: 10 target: self selector: @selector(timedOut:) userInfo: nil repeats: NO];
+	}
+}
+
+
+- (void) fetchNewData {
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	[service retrieveDataForBoard: board width: width height: height pieces: pieces];
+	[self performSelectorOnMainThread: @selector(fetchFinished) withObject: nil waitUntilDone: NO];
+	[pool release];
+}
+
+
+- (void) fetchFinished {
+	if (fetch != nil) {
+		[self enableButtons];
+		[spinner stopAnimating];
+		[timer invalidate];
 		[self updateLabels];
 	}
+}
+
+
+- (void) timedOut: (NSTimer *) theTimer {
+	NSLog(@"Timed out");
+	[fetch cancel];
+	[fetch release];
+	fetch = nil;
+	[spinner stopAnimating];
+	
+	descLabel.numberOfLines = 4;
+	descLabel.lineBreakMode = UILineBreakModeWordWrap;
+	descLabel.text = @"Server request timed out. Check the strength of your Internet connection.";
 }
 
 
@@ -220,16 +255,17 @@
 		UIButton *B = (UIButton *) [self.view viewWithTag: i];
 		[B setEnabled: NO];
 	}
-	for (int i = 0; i < width; i += 1) {
-		UIButton *column = (UIButton *) [colHeads objectAtIndex: i];
-		if (column.titleLabel.text == @"+") {
-			CGSize squareSize = column.bounds.size;
-			squareSize.width += 1;
-			squareSize.height += 1;
-			[column setBackgroundImage: [UIImage imageNamed: @"gridTopClear.png"] forState: UIControlStateNormal];
-		}
+}
+
+
+/** Convenience method for enabling all of the board's buttons. */
+- (void) enableButtons {
+	for (int i = 1; i < width * height + 1; i += 1) {
+		UIButton *B = (UIButton *) [self.view viewWithTag: i];
+		[B setEnabled: YES];
 	}
 }
+
 
 /**
  Convenience method for getting a UIColor based on a game value (win, lose, tie/draw). 
@@ -294,7 +330,7 @@
 	descLabel.backgroundColor = [UIColor clearColor];
 	descLabel.textColor = [UIColor whiteColor];
 	descLabel.textAlignment = UITextAlignmentCenter;
-	descLabel.text = @"Label";
+	descLabel.text = @"";
 	[self.view addSubview: descLabel];
 	
 	int lastTag = width * height;
@@ -305,8 +341,21 @@
 	colHeads = [[NSArray alloc] initWithArray: tops];
 	[tops release];
 	
-	[service retrieveDataForBoard: board width: width height: height pieces: pieces];
-	[self updateLabels];
+	for (int i = 0; i < width; i += 1) {
+		UIButton *column = (UIButton *) [colHeads objectAtIndex: i];
+		if ([column.titleLabel.text isEqualToString: @"+"])
+			[column setBackgroundImage: [UIImage imageNamed: @"gridTopClear.png"] 
+							  forState: UIControlStateNormal];
+	}
+	
+	[spinner setFrame: CGRectMake(width/2.0 * squareSize, height/2.0  * squareSize,  37, 37)];
+	[self.view addSubview: spinner];
+	
+	[self disableButtons];
+	[spinner startAnimating];
+	fetch = [[NSThread alloc] initWithTarget: self selector: @selector(fetchNewData) object: nil];
+	[fetch start];
+	timer = [NSTimer scheduledTimerWithTimeInterval: 10 target: self selector: @selector(timedOut:) userInfo: nil repeats: NO];
 }
 
 
@@ -339,6 +388,7 @@
 	}
 	[board release];
 	[service release];
+	[spinner release];
     [super dealloc];
 }
 

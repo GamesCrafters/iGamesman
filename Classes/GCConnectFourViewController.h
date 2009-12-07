@@ -27,6 +27,9 @@
 	BOOL showMoveValues;			///< Keeps track of whether or not to display move values
 	NSString *p1Name, *p2Name;
 	BOOL p1Human, p2Human;
+	UIActivityIndicatorView *spinner;
+	NSTimer *timer;
+	NSThread *fetch;
 }
 
 
@@ -37,12 +40,20 @@
 /// Receives the button taps and interprets them as moves
 - (void) tapped: (UIButton *) sender;
 
+- (void) fetchNewData;
+
+- (void) fetchFinished;
+
+- (void) timedOut: (NSTimer *) theTimer;
 
 /// Update the message label and the display of move values
 - (void) updateLabels;
 
 /// Disables all of the board's buttons
 - (void) disableButtons;
+
+/// Enables all of the board's buttons
+- (void) enableButtons;
 
 /// Returns a UIColor for a given game value
 - (UIColor *) colorForValue: (NSString *) value;
