@@ -26,7 +26,7 @@
 	nav1.navigationBar.tintColor = [UIColor colorWithRed: 0 green: 0 blue: 139.0/256.0 alpha: 1];
 	[listController release];
 	
-	// View Controller #3 : About Gamesman
+	// View Controller #2 : About Gamesman
 	GCAboutController *aboutControl = [[GCAboutController alloc] initWithNibName: @"About" bundle: nil];
 	UINavigationController *nav2 = [[UINavigationController alloc] initWithRootViewController: aboutControl];
 	[aboutControl release];

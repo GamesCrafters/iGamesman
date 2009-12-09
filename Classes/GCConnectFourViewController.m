@@ -112,7 +112,7 @@
 		[spinner startAnimating];
 		fetch = [[NSThread alloc] initWithTarget: self selector: @selector(fetchNewData) object: nil];
 		[fetch start];
-		timer = [NSTimer scheduledTimerWithTimeInterval: 10 target: self selector: @selector(timedOut:) userInfo: nil repeats: NO];
+		timer = [NSTimer scheduledTimerWithTimeInterval: 30 target: self selector: @selector(timedOut:) userInfo: nil repeats: NO];
 	}
 }
 
@@ -355,7 +355,7 @@
 	[spinner startAnimating];
 	fetch = [[NSThread alloc] initWithTarget: self selector: @selector(fetchNewData) object: nil];
 	[fetch start];
-	timer = [NSTimer scheduledTimerWithTimeInterval: 10 target: self selector: @selector(timedOut:) userInfo: nil repeats: NO];
+	timer = [NSTimer scheduledTimerWithTimeInterval: 45 target: self selector: @selector(timedOut:) userInfo: nil repeats: NO];
 }
 
 

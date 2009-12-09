@@ -17,7 +17,7 @@
 - (id)initWithStyle:(UITableViewStyle)style {
     if (self = [super initWithStyle:style]) {
 		self.title = @"Games";
-		gameNames = [[NSArray alloc] initWithObjects: @"1 to 10", @"Connect-4", @"Tic-Tac-Toe", nil];
+		gameNames = [[NSArray alloc] initWithObjects: @"Connect-4", nil];
 		GCConnectFour *c4 = [[GCConnectFour alloc] init];
 		games = [[NSDictionary alloc] initWithObjectsAndKeys: c4, @"Connect-4", nil];
 		

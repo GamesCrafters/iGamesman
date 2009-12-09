@@ -22,7 +22,7 @@
 		NSArray *java = [NSArray arrayWithObjects: @"Alex Trofimov", @"David Spies", 
 						 @"James Yeh", @"Jason Davidson", @"Jeremy Fleischman", @"Jin-Su Oh", 
 						 @"Patrick Horn", @"Steven Schlansker", @"Wesley Hart", nil];
-		info    = [[NSArray alloc] initWithObjects: @"Version 0.5.7", @"Dan Garcia", @"Kevin Jorgensen", 
+		info    = [[NSArray alloc] initWithObjects: @"Version 0.5.8", @"Dan Garcia", @"Kevin Jorgensen", 
 				   @"Kevin Jorgensen", java, nil];
     }
     return self;
