@@ -35,7 +35,8 @@
 
 /// The designated initializer
 - (id) initWithWidth: (NSInteger) _width height: (NSInteger) _height pieces: (NSInteger) _pieces 
-		 player1Name: (NSString *) player1Name player2Name: (NSString *) player2Name;
+		 player1Name: (NSString *) player1Name player2Name: (NSString *) player2Name 
+		player1Human: (BOOL) p1Hum player2Human: (BOOL) p2Hum;
 
 /// Receives the button taps and interprets them as moves
 - (void) tapped: (UIButton *) sender;

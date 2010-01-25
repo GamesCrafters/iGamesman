@@ -13,7 +13,7 @@
 
 @protocol GCGame
 
-- (id<GCOptionMenu>) getOptionMenu;
+- (UIViewController<GCOptionMenu> *) getOptionMenu;
 - (UIViewController<GCGameView> *) getGameViewController;
 - (NSString *) player1Name;
 - (NSString *) player2Name;

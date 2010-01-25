@@ -144,7 +144,7 @@
 	else
 		[segment setSelectedSegmentIndex: selected - 4];
 	segment.segmentedControlStyle = UISegmentedControlStyleBar;
-	segment.tintColor = [UIColor colorWithRed: 26.0/255 green: 120.0/255 blue: 179.0/255 alpha: 1.0];
+	segment.tintColor = [UIColor colorWithRed: 28.0/255 green: 127.0/255 blue: 189.0/255 alpha: 1.0];
 	segment.tag = indexPath.section + 1;
 	[segment addTarget: self action: @selector(update:) forControlEvents: UIControlEventValueChanged];
 	[cell addSubview: segment];

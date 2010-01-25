@@ -74,16 +74,6 @@
 }
 
 
-- (void) setPrevious: (NSArray *) board value: (NSString *) value remoteness: (NSInteger) remoteness {
-	/*NSArray *keys = [NSArray arrayWithObjects: @"board", @"remoteness", @"value", nil];
-	NSArray *objs = [NSArray arrayWithObjects: [self stringForBoard: board], remoteness, value, nil];
-	NSDictionary *position = [[NSDictionary alloc] initWithObjects: objs forKeys: keys];
-	previous = [[NSArray alloc] initWithObjects: position, nil];
-	status = YES;
-	connected = YES;*/
-}
-
-
 /**
  Gets the value of the current board, based on the most recent
  server data request.
@@ -139,6 +129,22 @@
 		}
 	}
 	return nil;
+}
+
+/**
+ Gets the remoteness of the child board after MOVE, based on the most
+ recent server data request.
+ 
+ @param move a move in Connect-4 (an integer in the range [0, width - 1])
+ @return the remoteness of the resulting board. Returns -1 if the value is unavailable.
+ */
+- (NSInteger) getRemotenessAfterMove: (NSString *) move {
+	for (NSDictionary *position in current) {
+		NSString *aMove = [position objectForKey: @"move"];
+		if ([aMove isEqualToString: move])
+			return [[position objectForKey: @"remoteness"] integerValue];
+	}
+	return -1;
 }
 
 /** 

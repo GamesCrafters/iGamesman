@@ -28,7 +28,8 @@
  @param _pieces the number in a row needed to win
  */
 - (id) initWithWidth: (NSInteger) _width height: (NSInteger) _height pieces: (NSInteger) _pieces 
-		 player1Name: (NSString *) player1Name player2Name: (NSString *) player2Name {
+		 player1Name: (NSString *) player1Name player2Name: (NSString *) player2Name
+		player1Human: (BOOL) p1Hum player2Human: (BOOL) p2Hum {
 	if (self = [super init]) {
 		width  = _width;
 		height = _height;
@@ -42,8 +43,8 @@
 		showMoveValues  = NO;
 		p1Name = player1Name;
 		p2Name = player2Name;
-		p1Human = YES;
-		p2Human = YES;
+		p1Human = p1Hum;
+		p2Human = p2Hum;
 		spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle: UIActivityIndicatorViewStyleWhiteLarge];
 	}
 	return self;
@@ -83,11 +84,7 @@
 	if (tag <= width * height) {
 		UIButton *B = (UIButton *) [self.view viewWithTag: tag];
 		if (tag < width * height + 1) {
-			NSString *piece;
-			if (turn)
-				piece = @"X";
-			else
-				piece = @"O";
+			NSString *piece = (turn ? @"X" : @"O");
 			
 			UIImage *img = [UIImage imageNamed: [NSString stringWithFormat: @"%@.png", piece]];
 			double x = [B frame].origin.x;
@@ -115,7 +112,6 @@
 		timer = [NSTimer scheduledTimerWithTimeInterval: 30 target: self selector: @selector(timedOut:) userInfo: nil repeats: NO];
 	}
 }
-
 
 - (void) fetchNewData {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
@@ -189,15 +185,15 @@
 		descLabel.lineBreakMode = UILineBreakModeWordWrap;
 		if (showPredictions) {
 			if (value == nil || remoteness == -1) {
-				descLabel.text = [NSString stringWithFormat: @"%@'s turn (%@)\nPrediction unavailable", (turn ? p1Name : p2Name), (turn ? @"Red" : @"Black")];
+				descLabel.text = [NSString stringWithFormat: @"%@'s turn (%@)\nPrediction unavailable", (turn ? p1Name : p2Name), (turn ? @"Red" : @"Blue")];
 			} else {
 				BOOL human = (turn ? p1Human : p2Human);
 				descLabel.text = [NSString stringWithFormat: @"%@ (%@)\n%@ %@ in %d", 
-								  (turn ? p1Name : p2Name), (turn ? @"Red" : @"Black"),
+								  (turn ? p1Name : p2Name), (turn ? @"Red" : @"Blue"),
 								  (human ? @"should" : @"will"), value, remoteness];
 			}
 		} else
-			descLabel.text = [NSString stringWithFormat: @"%@'s turn (%@)\n", (turn ? p1Name : p2Name), (turn ? @"Red" : @"Black")];
+			descLabel.text = [NSString stringWithFormat: @"%@'s turn (%@)\n", (turn ? p1Name : p2Name), (turn ? @"Red" : @"Blue")];
 		
 		for (int i = 0; i < width; i += 1) {
 			UIButton *column = (UIButton *) [colHeads objectAtIndex: i];

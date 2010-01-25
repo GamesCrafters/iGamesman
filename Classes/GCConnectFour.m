@@ -35,7 +35,9 @@
 																					height: height
 																					pieces: pieces
 																			   player1Name: p1Name
-																			   player2Name: p2Name];
+																			   player2Name: p2Name 
+																			  player1Human: YES 
+																			  player2Human: YES];
 	return view;
 }
 
@@ -53,6 +55,12 @@
 
 - (void) setPlayer2Name:(NSString *) name {
 	p2Name = name;
+}
+
+- (void) dealloc {
+	[optionMenu release];
+	
+	[super dealloc];
 }
 
 @end

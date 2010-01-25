@@ -9,6 +9,7 @@
 #import "GCGameListController.h"
 #import "GCGameMenuController.h"
 #import "GCConnectFour.h"
+#import "NewGame.h"
 
 
 @implementation GCGameListController
@@ -17,9 +18,10 @@
 - (id)initWithStyle:(UITableViewStyle)style {
     if (self = [super initWithStyle:style]) {
 		self.title = @"Games";
-		gameNames = [[NSArray alloc] initWithObjects: @"Connect-4", nil];
+		gameNames = [[NSArray alloc] initWithObjects: @"Connect-4", @"New Game", nil];
 		GCConnectFour *c4 = [[GCConnectFour alloc] init];
-		games = [[NSDictionary alloc] initWithObjectsAndKeys: c4, @"Connect-4", nil];
+		NewGame *new = [[NewGame alloc] init];
+		games = [[NSDictionary alloc] initWithObjectsAndKeys: c4, @"Connect-4", new, @"New Game", nil];
 		
 		self.tableView.backgroundColor = [UIColor colorWithRed: 234.0/255 green: 234.0/255 blue: 255.0/255 alpha: 1];
 		self.tableView.separatorColor = [UIColor lightGrayColor];
@@ -85,11 +87,9 @@
 	id game = [games objectForKey: gameName];
 	[tableView deselectRowAtIndexPath: indexPath animated: YES];
 	
-	if ([gameName isEqualToString: @"Connect-4"]) {
-		GCGameMenuController *menuControl = [[GCGameMenuController alloc] initWithGame: game andName: gameName];
-		[self.navigationController pushViewController: menuControl animated: YES];
-		[menuControl release];
-	}
+	GCGameMenuController *menuControl = [[GCGameMenuController alloc] initWithGame: game andName: gameName];
+	[self.navigationController pushViewController: menuControl animated: YES];
+	[menuControl release];
 }
 
 

@@ -34,8 +34,6 @@
 /// Return the "opposite" game value
 - (NSString	*) flip: (NSString *) value;
 
-- (void) setPrevious: (NSArray *) board value: (NSString *) value remoteness: (NSInteger) remoteness;
-
 /// Return the value of the current board
 - (NSString *) getValue;
 
@@ -44,6 +42,9 @@
 
 /// Return the value of the position after a move
 - (NSString *) getValueAfterMove: (NSString *) move;
+
+/// Return the remoteness of the position after a move
+- (NSInteger) getRemotenessAfterMove: (NSString *) move;
 
 /// Requests the game data from the server
 - (void) retrieveDataForBoard: (NSArray *) board width: (NSInteger) width height: (NSInteger) height pieces: (NSInteger) pieces;
