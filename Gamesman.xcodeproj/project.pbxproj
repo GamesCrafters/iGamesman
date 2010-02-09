@@ -34,6 +34,57 @@
 		0A0F6D45109FBCB900A2F268 /* GameView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A0F6D42109FBCB900A2F268 /* GameView.xib */; };
 		0A13FA2510B49D56007AEC79 /* GCConnectFourOptionMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A13FA2410B49D56007AEC79 /* GCConnectFourOptionMenu.m */; };
 		0A5BCB6B1107AFE000903A83 /* O.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A5BCB6A1107AFE000903A83 /* O.png */; };
+		0A6582D0111395DB00D6485E /* About.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A0F6D26109FBC8C00A2F268 /* About.png */; };
+		0A6582D1111395DB00D6485E /* Back.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A0F6D27109FBC8C00A2F268 /* Back.png */; };
+		0A6582D2111395DB00D6485E /* Discover.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A0F6D28109FBC8C00A2F268 /* Discover.png */; };
+		0A6582D3111395DB00D6485E /* empty.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A0F6D29109FBC8C00A2F268 /* empty.png */; };
+		0A6582D4111395DB00D6485E /* Forward.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A0F6D2A109FBC8C00A2F268 /* Forward.png */; };
+		0A6582D5111395DB00D6485E /* oxy.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A0F6D2C109FBC8C00A2F268 /* oxy.png */; };
+		0A6582D6111395DB00D6485E /* Play.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A0F6D2D109FBC8C00A2F268 /* Play.png */; };
+		0A6582D7111395DB00D6485E /* PlayPause.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A0F6D2E109FBC8C00A2F268 /* PlayPause.png */; };
+		0A6582D8111395DB00D6485E /* Reverse.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A0F6D2F109FBC8C00A2F268 /* Reverse.png */; };
+		0A6582D9111395DB00D6485E /* StepForward.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A0F6D30109FBC8C00A2F268 /* StepForward.png */; };
+		0A6582DA111395DB00D6485E /* StepReverse.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A0F6D31109FBC8C00A2F268 /* StepReverse.png */; };
+		0A6582DD111395DB00D6485E /* grid.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AD2FB8010A0CB3900362251 /* grid.png */; };
+		0A6582DE111395DB00D6485E /* gridO.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AD2FBBB10A0D06F00362251 /* gridO.png */; };
+		0A6582DF111395DB00D6485E /* gridX.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AD2FBBD10A0D2CF00362251 /* gridX.png */; };
+		0A6582E0111395DB00D6485E /* gridTopClear.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AD2FC0910A0DF8300362251 /* gridTopClear.png */; };
+		0A6582E1111395DB00D6485E /* gridTopGreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AD2FC0A10A0DF8300362251 /* gridTopGreen.png */; };
+		0A6582E2111395DB00D6485E /* gridTopRed.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AD2FC0B10A0DF8300362251 /* gridTopRed.png */; };
+		0A6582E3111395DB00D6485E /* gridTopYellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AD2FC0C10A0DF8300362251 /* gridTopYellow.png */; };
+		0A6582E5111395DB00D6485E /* X.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AD7366210C49EBD003E8E3A /* X.png */; };
+		0A6582E6111395DB00D6485E /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0AB3D4E810D4B8E700A5F4B7 /* Entitlements.plist */; };
+		0A6582E7111395DB00D6485E /* O.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A5BCB6A1107AFE000903A83 /* O.png */; };
+		0A6582E9111395DB00D6485E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
+		0A6582EA111395DB00D6485E /* GamesmanAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* GamesmanAppDelegate.m */; };
+		0A6582EB111395DB00D6485E /* GCConnectFourService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A0F6CFD109FBC6200A2F268 /* GCConnectFourService.m */; };
+		0A6582EC111395DB00D6485E /* GCDiscoverListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A0F6D01109FBC6200A2F268 /* GCDiscoverListController.m */; };
+		0A6582ED111395DB00D6485E /* GCGameListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A0F6D03109FBC6200A2F268 /* GCGameListController.m */; };
+		0A6582EE111395DB00D6485E /* GCGameMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A0F6D05109FBC6200A2F268 /* GCGameMenuController.m */; };
+		0A6582EF111395DB00D6485E /* GCGameOptionsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A0F6D07109FBC6200A2F268 /* GCGameOptionsController.m */; };
+		0A6582F0111395DB00D6485E /* GCGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A0F6D09109FBC6200A2F268 /* GCGameViewController.m */; };
+		0A6582F1111395DB00D6485E /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A0F6D14109FBC6800A2F268 /* NSObject+SBJSON.m */; };
+		0A6582F2111395DB00D6485E /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A0F6D16109FBC6800A2F268 /* NSString+SBJSON.m */; };
+		0A6582F3111395DB00D6485E /* SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A0F6D18109FBC6800A2F268 /* SBJSON.m */; };
+		0A6582F4111395DB00D6485E /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A0F6D1A109FBC6800A2F268 /* SBJsonBase.m */; };
+		0A6582F5111395DB00D6485E /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A0F6D1C109FBC6800A2F268 /* SBJsonParser.m */; };
+		0A6582F6111395DB00D6485E /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A0F6D1E109FBC6800A2F268 /* SBJsonWriter.m */; };
+		0A6582F7111395DB00D6485E /* GCConnectFourViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AD6A06410A0B83200B37750 /* GCConnectFourViewController.m */; };
+		0A6582F8111395DB00D6485E /* GCNameChangeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AE7A95C10AA17D900D66ACA /* GCNameChangeController.m */; };
+		0A6582F9111395DB00D6485E /* GCConnectFourOptionMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A13FA2410B49D56007AEC79 /* GCConnectFourOptionMenu.m */; };
+		0A6582FA111395DB00D6485E /* GCConnectFour.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AD02DC110B5F10400600C12 /* GCConnectFour.m */; };
+		0A6582FB111395DB00D6485E /* GCAboutController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AAF5B3310BBCA4A00D98311 /* GCAboutController.m */; };
+		0A6582FC111395DB00D6485E /* GCCreditsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AAF5B5010BBCD0300D98311 /* GCCreditsController.m */; };
+		0A6582FD111395DB00D6485E /* NewGame.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ADC2BC0110D2C3D003B0FCA /* NewGame.m */; };
+		0A6582FE111395DB00D6485E /* NewGameOptionMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ADC2BD7110D2D80003B0FCA /* NewGameOptionMenu.m */; };
+		0A6582FF111395DB00D6485E /* NewGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ADC2BF8110D314C003B0FCA /* NewGameViewController.m */; };
+		0A658301111395DB00D6485E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		0A658302111395DB00D6485E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		0A658303111395DB00D6485E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
+		0A65830F111395DD00D6485E /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A65830B111395DD00D6485E /* MainWindow.xib */; };
+		0A658310111395DD00D6485E /* About.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A65830C111395DD00D6485E /* About.xib */; };
+		0A658311111395DD00D6485E /* GameView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A65830D111395DD00D6485E /* GameView.xib */; };
+		0A658312111395DD00D6485E /* NameChanger.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A65830E111395DD00D6485E /* NameChanger.xib */; };
 		0AAF5B3410BBCA4A00D98311 /* GCAboutController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AAF5B3310BBCA4A00D98311 /* GCAboutController.m */; };
 		0AAF5B5110BBCD0300D98311 /* GCCreditsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AAF5B5010BBCD0300D98311 /* GCCreditsController.m */; };
 		0AB3D4E910D4B8E700A5F4B7 /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0AB3D4E810D4B8E700A5F4B7 /* Entitlements.plist */; };
@@ -105,6 +156,11 @@
 		0A3F546110B64E790050C177 /* GCOptionMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCOptionMenu.h; sourceTree = "<group>"; };
 		0A3F548210B650E80050C177 /* GCRulesDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCRulesDelegate.h; sourceTree = "<group>"; };
 		0A5BCB6A1107AFE000903A83 /* O.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = O.png; sourceTree = "<group>"; };
+		0A658308111395DB00D6485E /* Gamesman-iPad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Gamesman-iPad.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0A65830B111395DD00D6485E /* MainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MainWindow.xib; path = "Resources-iPad/MainWindow.xib"; sourceTree = "<group>"; };
+		0A65830C111395DD00D6485E /* About.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = About.xib; path = "Resources-iPad/About.xib"; sourceTree = "<group>"; };
+		0A65830D111395DD00D6485E /* GameView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = GameView.xib; path = "Resources-iPad/GameView.xib"; sourceTree = "<group>"; };
+		0A65830E111395DD00D6485E /* NameChanger.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = NameChanger.xib; path = "Resources-iPad/NameChanger.xib"; sourceTree = "<group>"; };
 		0AAF5B3210BBCA4A00D98311 /* GCAboutController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCAboutController.h; sourceTree = "<group>"; };
 		0AAF5B3310BBCA4A00D98311 /* GCAboutController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCAboutController.m; sourceTree = "<group>"; };
 		0AAF5B4F10BBCD0300D98311 /* GCCreditsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCCreditsController.h; sourceTree = "<group>"; };
@@ -145,6 +201,16 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		0A658300111395DB00D6485E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0A658301111395DB00D6485E /* Foundation.framework in Frameworks */,
+				0A658302111395DB00D6485E /* UIKit.framework in Frameworks */,
+				0A658303111395DB00D6485E /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		1D60588F0D05DD3D006BFB54 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -245,6 +311,17 @@
 			name = Protocols;
 			sourceTree = "<group>";
 		};
+		0A65830A111395DC00D6485E /* Resources-iPad */ = {
+			isa = PBXGroup;
+			children = (
+				0A65830B111395DD00D6485E /* MainWindow.xib */,
+				0A65830C111395DD00D6485E /* About.xib */,
+				0A65830D111395DD00D6485E /* GameView.xib */,
+				0A65830E111395DD00D6485E /* NameChanger.xib */,
+			);
+			name = "Resources-iPad";
+			sourceTree = "<group>";
+		};
 		0AD02DC410B5F10F00600C12 /* ConnectFour */ = {
 			isa = PBXGroup;
 			children = (
@@ -277,6 +354,7 @@
 			isa = PBXGroup;
 			children = (
 				1D6058910D05DD3D006BFB54 /* Gamesman.app */,
+				0A658308111395DB00D6485E /* Gamesman-iPad.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -287,6 +365,7 @@
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
+				0A65830A111395DC00D6485E /* Resources-iPad */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 			);
@@ -329,6 +408,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		0A6582CD111395DB00D6485E /* Gamesman-iPad */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0A658304111395DB00D6485E /* Build configuration list for PBXNativeTarget "Gamesman-iPad" */;
+			buildPhases = (
+				0A6582CE111395DB00D6485E /* Resources */,
+				0A6582E8111395DB00D6485E /* Sources */,
+				0A658300111395DB00D6485E /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Gamesman-iPad";
+			productName = Gamesman;
+			productReference = 0A658308111395DB00D6485E /* Gamesman-iPad.app */;
+			productType = "com.apple.product-type.application";
+		};
 		1D6058900D05DD3D006BFB54 /* Gamesman */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "Gamesman" */;
@@ -359,11 +455,44 @@
 			projectRoot = "";
 			targets = (
 				1D6058900D05DD3D006BFB54 /* Gamesman */,
+				0A6582CD111395DB00D6485E /* Gamesman-iPad */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		0A6582CE111395DB00D6485E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0A6582D0111395DB00D6485E /* About.png in Resources */,
+				0A6582D1111395DB00D6485E /* Back.png in Resources */,
+				0A6582D2111395DB00D6485E /* Discover.png in Resources */,
+				0A6582D3111395DB00D6485E /* empty.png in Resources */,
+				0A6582D4111395DB00D6485E /* Forward.png in Resources */,
+				0A6582D5111395DB00D6485E /* oxy.png in Resources */,
+				0A6582D6111395DB00D6485E /* Play.png in Resources */,
+				0A6582D7111395DB00D6485E /* PlayPause.png in Resources */,
+				0A6582D8111395DB00D6485E /* Reverse.png in Resources */,
+				0A6582D9111395DB00D6485E /* StepForward.png in Resources */,
+				0A6582DA111395DB00D6485E /* StepReverse.png in Resources */,
+				0A6582DD111395DB00D6485E /* grid.png in Resources */,
+				0A6582DE111395DB00D6485E /* gridO.png in Resources */,
+				0A6582DF111395DB00D6485E /* gridX.png in Resources */,
+				0A6582E0111395DB00D6485E /* gridTopClear.png in Resources */,
+				0A6582E1111395DB00D6485E /* gridTopGreen.png in Resources */,
+				0A6582E2111395DB00D6485E /* gridTopRed.png in Resources */,
+				0A6582E3111395DB00D6485E /* gridTopYellow.png in Resources */,
+				0A6582E5111395DB00D6485E /* X.png in Resources */,
+				0A6582E6111395DB00D6485E /* Entitlements.plist in Resources */,
+				0A6582E7111395DB00D6485E /* O.png in Resources */,
+				0A65830F111395DD00D6485E /* MainWindow.xib in Resources */,
+				0A658310111395DD00D6485E /* About.xib in Resources */,
+				0A658311111395DD00D6485E /* GameView.xib in Resources */,
+				0A658312111395DD00D6485E /* NameChanger.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		1D60588D0D05DD3D006BFB54 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -399,6 +528,36 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		0A6582E8111395DB00D6485E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0A6582E9111395DB00D6485E /* main.m in Sources */,
+				0A6582EA111395DB00D6485E /* GamesmanAppDelegate.m in Sources */,
+				0A6582EB111395DB00D6485E /* GCConnectFourService.m in Sources */,
+				0A6582EC111395DB00D6485E /* GCDiscoverListController.m in Sources */,
+				0A6582ED111395DB00D6485E /* GCGameListController.m in Sources */,
+				0A6582EE111395DB00D6485E /* GCGameMenuController.m in Sources */,
+				0A6582EF111395DB00D6485E /* GCGameOptionsController.m in Sources */,
+				0A6582F0111395DB00D6485E /* GCGameViewController.m in Sources */,
+				0A6582F1111395DB00D6485E /* NSObject+SBJSON.m in Sources */,
+				0A6582F2111395DB00D6485E /* NSString+SBJSON.m in Sources */,
+				0A6582F3111395DB00D6485E /* SBJSON.m in Sources */,
+				0A6582F4111395DB00D6485E /* SBJsonBase.m in Sources */,
+				0A6582F5111395DB00D6485E /* SBJsonParser.m in Sources */,
+				0A6582F6111395DB00D6485E /* SBJsonWriter.m in Sources */,
+				0A6582F7111395DB00D6485E /* GCConnectFourViewController.m in Sources */,
+				0A6582F8111395DB00D6485E /* GCNameChangeController.m in Sources */,
+				0A6582F9111395DB00D6485E /* GCConnectFourOptionMenu.m in Sources */,
+				0A6582FA111395DB00D6485E /* GCConnectFour.m in Sources */,
+				0A6582FB111395DB00D6485E /* GCAboutController.m in Sources */,
+				0A6582FC111395DB00D6485E /* GCCreditsController.m in Sources */,
+				0A6582FD111395DB00D6485E /* NewGame.m in Sources */,
+				0A6582FE111395DB00D6485E /* NewGameOptionMenu.m in Sources */,
+				0A6582FF111395DB00D6485E /* NewGameViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		1D60588E0D05DD3D006BFB54 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -432,6 +591,51 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		0A658305111395DB00D6485E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Gamesman_Prefix.pch;
+				INFOPLIST_FILE = "Gamesman-Info.plist";
+				PRODUCT_NAME = "Gamesman-iPad";
+				SDKROOT = iphoneos3.2;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Debug;
+		};
+		0A658306111395DB00D6485E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Gamesman_Prefix.pch;
+				INFOPLIST_FILE = "Gamesman-Info.plist";
+				PRODUCT_NAME = "Gamesman-iPad";
+				SDKROOT = iphoneos3.2;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Release;
+		};
+		0A658307111395DB00D6485E /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Gamesman_Prefix.pch;
+				INFOPLIST_FILE = "Gamesman-Info.plist";
+				PRODUCT_NAME = "Gamesman-iPad";
+				SDKROOT = iphoneos3.2;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Distribution;
+		};
 		0AB3D4D710D4B5E400A5F4B7 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -456,6 +660,7 @@
 				GCC_PREFIX_HEADER = Gamesman_Prefix.pch;
 				INFOPLIST_FILE = "Gamesman-Info.plist";
 				PRODUCT_NAME = Gamesman;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Distribution;
 		};
@@ -470,6 +675,7 @@
 				GCC_PREFIX_HEADER = Gamesman_Prefix.pch;
 				INFOPLIST_FILE = "Gamesman-Info.plist";
 				PRODUCT_NAME = Gamesman;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -482,6 +688,7 @@
 				GCC_PREFIX_HEADER = Gamesman_Prefix.pch;
 				INFOPLIST_FILE = "Gamesman-Info.plist";
 				PRODUCT_NAME = Gamesman;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -514,6 +721,16 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		0A658304111395DB00D6485E /* Build configuration list for PBXNativeTarget "Gamesman-iPad" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0A658305111395DB00D6485E /* Debug */,
+				0A658306111395DB00D6485E /* Release */,
+				0A658307111395DB00D6485E /* Distribution */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "Gamesman" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

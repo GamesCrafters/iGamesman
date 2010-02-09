@@ -10,6 +10,13 @@
 #import "GCOptionMenu.h"
 #import "GCGameView.h"
 
+enum modes {
+	ONLINESOLVED,
+	OFFLINEUNSOLVED,
+	OFFLINESOLVED
+};
+typedef enum modes GameMode;
+
 
 @protocol GCGame
 
@@ -19,5 +26,6 @@
 - (NSString *) player2Name;
 - (void) setPlayer1Name:(NSString *) name;
 - (void) setPlayer2Name:(NSString *) name;
+- (BOOL) supportsGameMode: (GameMode) mode;
 
 @end

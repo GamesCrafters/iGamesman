@@ -47,6 +47,10 @@
 	p2Name = name;
 }
 
+- (BOOL) supportsGameMode:(GameMode)mode {
+	return (mode == ONLINESOLVED);
+}
+
 - (void) dealloc {
 	[optionMenu release];
 	

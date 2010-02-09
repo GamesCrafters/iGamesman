@@ -24,14 +24,16 @@
 /**
  The designated initializer
  
- @param game the game object (currently unused)
+ @param game the game object
  @param gameName the name of the game
  */
 - (id)initWithGame: (id) _game andName: (NSString *) gameName {
 	if (self = [super initWithStyle: UITableViewStyleGrouped]) {
 		self.title = gameName;
 		
-		NSArray *play = [[NSArray alloc] initWithObjects: @"Play solved game\n(Web connection required)", nil];
+		NSArray *play = [[NSArray alloc] initWithObjects: @"Play solved game\n(Web connection required)", 
+						 @"Play solved game offline\n(Solved database required)", 
+						 @"Play unsolved game\nNo Web connection", nil];
 		NSArray *options = [[NSArray alloc] initWithObjects: @"Change rules", 
 							@"Player 1 Name", @"Player 2 Name", nil];
 		cellLabels = [[NSArray alloc] initWithObjects: play, options, nil];
@@ -79,7 +81,14 @@
 
 // Customize the number of rows in the table view.
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [[cellLabels objectAtIndex: section] count];
+	if (section == 0) {
+		int supported = 0;
+		if ([game supportsGameMode: ONLINESOLVED]) supported += 1;
+		if ([game supportsGameMode: OFFLINESOLVED]) supported += 1;
+		if ([game supportsGameMode: OFFLINEUNSOLVED]) supported += 1;
+		return supported;
+	} else
+		return [[cellLabels objectAtIndex: section] count];
 }
 
 
@@ -105,7 +114,22 @@
     
 	// Set up the cell
 	UILabel *label = (UILabel *) [cell viewWithTag: 111];
-    label.text = [[cellLabels objectAtIndex: indexPath.section] objectAtIndex: indexPath.row];
+	if (indexPath.section == 0) {
+		int r = 0;
+		if ([game supportsGameMode: ONLINESOLVED]) {
+			r += 1;
+			label.text = [[cellLabels objectAtIndex: 0] objectAtIndex: 0];
+		}
+		if ([game supportsGameMode: OFFLINESOLVED]) {
+			r += 1;
+			label.text = [[cellLabels objectAtIndex: 0] objectAtIndex: 1];
+		}
+		if ([game supportsGameMode: OFFLINEUNSOLVED]) {
+			r += 1;
+			label.text = [[cellLabels objectAtIndex: 0] objectAtIndex: 2];
+		}
+	} else
+		label.text = [[cellLabels objectAtIndex: indexPath.section] objectAtIndex: indexPath.row];
 	label.numberOfLines = 2;
 	
 	if (indexPath.section == 1 && indexPath.row > 0) {
