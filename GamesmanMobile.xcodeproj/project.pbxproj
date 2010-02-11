@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		0A12AB841115770C00297EB8 /* GCConnectFourOptionMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A12AB831115770C00297EB8 /* GCConnectFourOptionMenu.m */; };
+		0A307FEE1123D4CC00BD4B8E /* grid.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A307FED1123D4CC00BD4B8E /* grid.png */; };
+		0A307FF31123D64000BD4B8E /* gridTopClear.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A307FF21123D64000BD4B8E /* gridTopClear.png */; };
+		0A307FFD1123D7AB00BD4B8E /* O.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A307FFC1123D7AB00BD4B8E /* O.png */; };
+		0A307FFF1123D7B000BD4B8E /* X.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A307FFE1123D7B000BD4B8E /* X.png */; };
+		0A30802F1123DF6600BD4B8E /* GCGameController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A30802E1123DF6600BD4B8E /* GCGameController.m */; };
 		0A65E638111CCFFC001400F6 /* GCYGame.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A65E637111CCFFC001400F6 /* GCYGame.m */; };
 		0A65E65E111CD5DD001400F6 /* GCYOptionMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A65E65D111CD5DD001400F6 /* GCYOptionMenu.m */; };
 		0A65E695111CDEDA001400F6 /* GCGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A65E694111CDEDA001400F6 /* GCGameViewController.m */; };
@@ -40,6 +45,12 @@
 		0A12AB831115770C00297EB8 /* GCConnectFourOptionMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCConnectFourOptionMenu.m; sourceTree = "<group>"; };
 		0A12ABD211157C7300297EB8 /* GCOptionMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCOptionMenu.h; sourceTree = "<group>"; };
 		0A12ABE011157CDA00297EB8 /* GCRulesDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCRulesDelegate.h; sourceTree = "<group>"; };
+		0A307FED1123D4CC00BD4B8E /* grid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grid.png; sourceTree = "<group>"; };
+		0A307FF21123D64000BD4B8E /* gridTopClear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gridTopClear.png; sourceTree = "<group>"; };
+		0A307FFC1123D7AB00BD4B8E /* O.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = O.png; sourceTree = "<group>"; };
+		0A307FFE1123D7B000BD4B8E /* X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = X.png; sourceTree = "<group>"; };
+		0A30802D1123DF6600BD4B8E /* GCGameController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCGameController.h; sourceTree = "<group>"; };
+		0A30802E1123DF6600BD4B8E /* GCGameController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCGameController.m; sourceTree = "<group>"; };
 		0A65E636111CCFFC001400F6 /* GCYGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCYGame.h; sourceTree = "<group>"; };
 		0A65E637111CCFFC001400F6 /* GCYGame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCYGame.m; sourceTree = "<group>"; };
 		0A65E65C111CD5DD001400F6 /* GCYOptionMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCYOptionMenu.h; sourceTree = "<group>"; };
@@ -111,6 +122,8 @@
 				0A8756101113FA3E006AB678 /* GCAboutController.m */,
 				0A87562A1113FB0A006AB678 /* GCCreditsController.h */,
 				0A87562B1113FB0A006AB678 /* GCCreditsController.m */,
+				0A30802D1123DF6600BD4B8E /* GCGameController.h */,
+				0A30802E1123DF6600BD4B8E /* GCGameController.m */,
 				0A8755F71113F8CE006AB678 /* GCGameListController.h */,
 				0A8755F81113F8CE006AB678 /* GCGameListController.m */,
 				0A8756B5111415BE006AB678 /* GCGameMenuController.h */,
@@ -163,8 +176,12 @@
 			children = (
 				0A87561E1113FA9D006AB678 /* About.png */,
 				0A65E6D6111CE1E7001400F6 /* Back.png */,
+				0A307FED1123D4CC00BD4B8E /* grid.png */,
+				0A307FF21123D64000BD4B8E /* gridTopClear.png */,
+				0A307FFC1123D7AB00BD4B8E /* O.png */,
 				0A8756261113FACE006AB678 /* oxy.png */,
 				0A8756031113F9C6006AB678 /* Play.png */,
+				0A307FFE1123D7B000BD4B8E /* X.png */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -271,6 +288,10 @@
 				0A87575C111425A2006AB678 /* NameChanger.xib in Resources */,
 				0A65E697111CDF06001400F6 /* GameView.xib in Resources */,
 				0A65E6D7111CE1E7001400F6 /* Back.png in Resources */,
+				0A307FEE1123D4CC00BD4B8E /* grid.png in Resources */,
+				0A307FF31123D64000BD4B8E /* gridTopClear.png in Resources */,
+				0A307FFD1123D7AB00BD4B8E /* O.png in Resources */,
+				0A307FFF1123D7B000BD4B8E /* X.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -296,6 +317,7 @@
 				0A65E695111CDEDA001400F6 /* GCGameViewController.m in Sources */,
 				0A65E6E3111CE375001400F6 /* GCGameOptionsController.m in Sources */,
 				0A65E715111CE538001400F6 /* GCConnectFourViewController.m in Sources */,
+				0A30802F1123DF6600BD4B8E /* GCGameController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

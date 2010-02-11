@@ -47,7 +47,7 @@ typedef enum { WIN, LOSE, TIE, DRAW, UNAVAILABLE } GameValue;
 - (UIViewController *) gameViewController;
 
 /// Do anything necessary to get the game started (return NO if something fails)
-- (BOOL) startGame;
+- (void) startGame;
 
 /// Getter for Predictions
 - (BOOL) predictions;
@@ -76,8 +76,8 @@ typedef enum { WIN, LOSE, TIE, DRAW, UNAVAILABLE } GameValue;
 /// Handle jump backward to beginning
 - (void) jumpBackward;
 
-/// Return the string representation of the current board
-- (NSString *) getBoard;
+/// Return the current board
+- (id) getBoard;
 
 /// Return the name of the player whose turn it is
 - (NSString *) getPlayer;
@@ -97,10 +97,19 @@ typedef enum { WIN, LOSE, TIE, DRAW, UNAVAILABLE } GameValue;
 /// Return an array of legal moves using the current board
 - (NSArray *) legalMoves;
 
-/// Return YES if the current board is primitive, NO if not
-- (BOOL) isPrimitive;
+/// Return YES if THEBOARD is primitive, NO if not
+- (BOOL) isPrimitive: (id) theBoard;
 
-/// Perform MOVE and update the view accordingly
+/// Ask the user for input
+- (void) askUserForInput;
+
+/// End asking for user input
+- (void) stopUserInput;
+
+/// Get the move the user chose (only called after the GameController receives a notification
+- (id) getHumanMove;
+
+/// Perform MOVE and update the view accordingly (MOVE is assumed to be legal)
 - (void) doMove: (id) move;
 
 @end

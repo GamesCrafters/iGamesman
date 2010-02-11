@@ -19,10 +19,16 @@
     if (self = [super initWithNibName: @"GameView" bundle: nil]) {
 		game = _game;
 		
+		[game startGame];
+		
+		gameControl = [[GCGameController alloc] initWithGame: game];
+		
 		gameView = [game gameViewController];
 		[self.view addSubview: gameView.view];
 		
 		/* Tell the game about the mode */
+		
+		[gameControl go];
     }
     return self;
 }
@@ -81,10 +87,10 @@
 				  predictions:(BOOL)predictions 
 				   moveValues:(BOOL)moveValues {
 	[self dismissModalViewControllerAnimated: YES];
-	SEL updater = @selector(updateDisplayOptions:);
-	NSDictionary *options = [[NSDictionary alloc] initWithObjectsAndKeys: 
-							 [NSNumber numberWithBool: predictions], @"predictions",
-							 [NSNumber numberWithBool: moveValues], @"movevalues", nil];
+	//SEL updater = @selector(updateDisplayOptions:);
+	//NSDictionary *options = [[NSDictionary alloc] initWithObjectsAndKeys: 
+	//						 [NSNumber numberWithBool: predictions], @"predictions",
+	//						 [NSNumber numberWithBool: moveValues], @"movevalues", nil];
 	/* Notify the game that the display options have changed */
 }
 
@@ -108,6 +114,7 @@
 
 
 - (void)dealloc {
+	[gameControl release];
     [super dealloc];
 }
 

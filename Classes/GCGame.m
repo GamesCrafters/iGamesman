@@ -32,9 +32,7 @@
 - (UIViewController *) gameViewController { return nil; }
 
 // Do anything necessary to get the game started (return NO if something fails)
-- (BOOL) startGame {
-	return YES;
-}
+- (void) startGame { }
 
 // Getters for Predictions and Move Values
 - (BOOL) predictions { return NO; }
@@ -60,8 +58,8 @@
 // Handle jump backward to beginning
 - (void) jumpBackward { }
 
-// Return the string representation of the current board
-- (NSString *) getBoard { return nil; }
+// Return the current board
+- (id) getBoard { return nil; }
 
 // Return the name of the player whose turn it is
 - (NSString *) getPlayer { return nil; }
@@ -81,8 +79,17 @@
 // Return an array of legal moves using the current board
 - (NSArray *) legalMoves { return nil; }
 
-// Return YES if the current board is primitive, NO if not
-- (BOOL) isPrimitive  { return NO; }
+// Return YES if THEBOARD is primitive, NO if not
+- (BOOL) isPrimitive: (id) theBoard  { return NO; }
+
+// Ask the user for input
+- (void) askUserForInput { }
+
+// End asking for user input
+- (void) stopUserInput { }
+
+// Get the move the user chose (only called after the GameController receives a notification
+- (id) getHumanMove { return nil; }
 
 // Perform MOVE and update the view accordingly
 - (void) doMove: (id) move { }

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "GCGame.h"
+#import "GCGameController.h"
 #import "GCGameOptionsController.h"
 
 @protocol FlipsideViewControllerDelegate;
@@ -20,6 +21,7 @@
 @interface GCGameViewController : UIViewController <OptionPanelDelegate> {
 	id <FlipsideViewControllerDelegate> delegate;
 	UIViewController *gameView;
+	GCGameController *gameControl;
 	GCGame *game;
 }
 

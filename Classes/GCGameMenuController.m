@@ -168,7 +168,7 @@
 		[self presentModalViewController: gameView animated: YES];
 		[gameView release];
 	} else if (indexPath.section == 1 && indexPath.row == 0) {
-		UIViewController *menu = [game optionMenu];
+		id menu = [game optionMenu];
 		if ([menu conformsToProtocol: @protocol(GCOptionMenu)]) {
 			[menu setDelegate: self];
 			
