@@ -16,6 +16,7 @@
 @implementation GCConnectFour
 
 @synthesize player1Name, player2Name;
+@synthesize player1Human, player2Human;
 @synthesize width, height, pieces;
 @synthesize board;
 @synthesize p1Turn;
@@ -24,6 +25,9 @@
 	if (self = [super init]) {
 		player1Name = @"Player 1";
 		player2Name = @"Player 2";
+		
+		player1Human = YES;
+		player2Human = YES;
 		
 		width = 6;
 		height = 5;
@@ -156,6 +160,10 @@
 
 - (NSString *) getHumanMove {
 	return humanMove;
+}
+
+- (BOOL) currentPlayerIsHuman {
+	return p1Turn ? player1Human : player2Human;
 }
 
 - (void) doMove: (NSString *) move {

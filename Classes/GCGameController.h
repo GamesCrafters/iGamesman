@@ -12,6 +12,7 @@
 
 @interface GCGameController : NSObject {
 	GCGame *game;
+	BOOL turn;
 }
 
 - (id) initWithGame: (GCGame *) _game;

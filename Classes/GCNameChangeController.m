@@ -11,7 +11,7 @@
 
 @implementation GCNameChangeController
 
-@synthesize delegate, nameField;
+@synthesize delegate, nameField, typePicker;
 
 /*
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
@@ -37,7 +37,10 @@
 
 - (void) done {
 	[nameField resignFirstResponder];
-	[delegate nameChangerDidFinishWithPlayer: playerNum andNewName: [nameField text]];
+	BOOL human = (0 == [typePicker selectedRowInComponent: 0]);
+	[delegate nameChangerDidFinishWithPlayer: playerNum 
+									 newName: [nameField text]
+							   andPlayerType: human];
 }
 
 /*
@@ -45,6 +48,27 @@
 - (void)loadView {
 }
 */
+
+// Hides the keyboard when the user taps the keyboard's "Done" button
+- (BOOL) textFieldShouldReturn: (UITextField *) theTextField {
+	[theTextField resignFirstResponder];
+	return YES;
+}
+
+// Picker view delegate methods
+- (NSString *) pickerView: (UIPickerView *) pickerView titleForRow: (NSInteger) row forComponent: (NSInteger) component {
+	return [[NSArray arrayWithObjects: @"Human", @"Computer", nil] objectAtIndex: row];
+}
+
+// Picker view data source methods
+
+- (NSInteger) numberOfComponentsInPickerView: (UIPickerView *) pickerView {
+	return 1;
+}
+
+- (NSInteger) pickerView: (UIPickerView *) pickerView numberOfRowsInComponent: (NSInteger) component {
+	return 2;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -60,7 +84,6 @@
 	[nameField setPlaceholder: [NSString stringWithFormat: @"Player %d", playerNum]];
 	[nameField becomeFirstResponder];
 }
-
 
 - (void)didReceiveMemoryWarning {
 	// Releases the view if it doesn't have a superview.

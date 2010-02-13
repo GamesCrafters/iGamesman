@@ -81,16 +81,6 @@
 		[UIView beginAnimations: @"Drop" context: NULL];
 		[imgView setFrame: CGRectMake(x, y, w, h)];
 		[UIView commitAnimations];
-		
-		// Update the board in the game state
-		//[game doMove: move];
-		
-		// Update the text labels of the buttons : Might not be necessary since the game objects knows this
-		NSArray *board = [[game board] copy];
-		for (int i = 0; i < [board count]; i += 1) {
-			UIButton *B = (UIButton *) [self.view viewWithTag: i + 1];
-			[B setTitle: [board objectAtIndex: i] forState: UIControlStateNormal];
-		}
 	}
 }
 
@@ -143,8 +133,6 @@
 		for (int i = 0; i < width; i += 1) {
 			UIButton *B = [[UIButton buttonWithType: UIButtonTypeCustom] 
 						   initWithFrame: CGRectMake((10 + width/2) + i * (squareSize - 1), 10 + j * (squareSize - 1), squareSize, squareSize)];
-			[B setTitle: [NSString stringWithFormat: @"%@", [[game getBoard] objectAtIndex: tagNum - 1]]
-			   forState: UIControlStateNormal];
 			[B setBackgroundImage: gridImg forState: UIControlStateNormal];
 			[B addTarget: self action: @selector(tapped:) forControlEvents: UIControlEventTouchUpInside];
 			B.adjustsImageWhenDisabled = NO;

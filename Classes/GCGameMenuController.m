@@ -197,16 +197,23 @@
 }
 
 
-- (void) nameChangerDidFinishWithPlayer:(NSInteger)playerNum andNewName: (NSString *) name {
+- (void) nameChangerDidFinishWithPlayer:(NSInteger)playerNum 
+								newName: (NSString *) name
+						  andPlayerType: (PlayerType) type {
 	UILabel *nameLabel = (UILabel *) [[self.tableView cellForRowAtIndexPath: 
 									   [NSIndexPath indexPathForRow: playerNum inSection: 1]] viewWithTag: 222];
 	nameLabel.text = name;
 	[self dismissModalViewControllerAnimated: YES];
 	
-	if (playerNum == 1)
+	BOOL human = (type == HUMAN);
+	
+	if (playerNum == 1) {
 		[game setPlayer1Name: name];
-	else
+		[game setPlayer1Human: human];
+	} else {
 		[game setPlayer2Name: name];
+		[game setPlayer2Human: human];
+	}
 }
 
 - (void) rulesPanelDidFinish {

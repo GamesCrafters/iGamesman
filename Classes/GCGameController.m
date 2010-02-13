@@ -14,13 +14,20 @@
 - (id) initWithGame: (GCGame *) _game {
 	if (self = [super init]) {
 		game = _game;
+		turn = NO;
 	}
 	return self;
 }
 
 - (void) go {
 	// Branch whether the current player is a human or a computer
-	[self takeHumanTurn];
+	// If going to a computer move, make sure to thread it!
+	if (![game isPrimitive: [game getBoard]]) {
+		//if ([game currentPlayerIsHuman])
+			[self takeHumanTurn];
+		//else
+		//	NSLog(@"Sweet");
+	}
 }
 
 - (void) takeHumanTurn {

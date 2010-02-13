@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		0A12AB841115770C00297EB8 /* GCConnectFourOptionMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A12AB831115770C00297EB8 /* GCConnectFourOptionMenu.m */; };
+		0A19F19C11260B2E0003F8C7 /* GCConnections.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A19F19B11260B2E0003F8C7 /* GCConnections.m */; };
+		0A19F1B111260E4F0003F8C7 /* GCConnectionsOptionMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A19F1B011260E4F0003F8C7 /* GCConnectionsOptionMenu.m */; };
 		0A307FEE1123D4CC00BD4B8E /* grid.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A307FED1123D4CC00BD4B8E /* grid.png */; };
 		0A307FF31123D64000BD4B8E /* gridTopClear.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A307FF21123D64000BD4B8E /* gridTopClear.png */; };
 		0A307FFD1123D7AB00BD4B8E /* O.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A307FFC1123D7AB00BD4B8E /* O.png */; };
@@ -45,6 +47,10 @@
 		0A12AB831115770C00297EB8 /* GCConnectFourOptionMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCConnectFourOptionMenu.m; sourceTree = "<group>"; };
 		0A12ABD211157C7300297EB8 /* GCOptionMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCOptionMenu.h; sourceTree = "<group>"; };
 		0A12ABE011157CDA00297EB8 /* GCRulesDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCRulesDelegate.h; sourceTree = "<group>"; };
+		0A19F19A11260B2E0003F8C7 /* GCConnections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCConnections.h; sourceTree = "<group>"; };
+		0A19F19B11260B2E0003F8C7 /* GCConnections.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCConnections.m; sourceTree = "<group>"; };
+		0A19F1AF11260E4F0003F8C7 /* GCConnectionsOptionMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCConnectionsOptionMenu.h; sourceTree = "<group>"; };
+		0A19F1B011260E4F0003F8C7 /* GCConnectionsOptionMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCConnectionsOptionMenu.m; sourceTree = "<group>"; };
 		0A307FED1123D4CC00BD4B8E /* grid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grid.png; sourceTree = "<group>"; };
 		0A307FF21123D64000BD4B8E /* gridTopClear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gridTopClear.png; sourceTree = "<group>"; };
 		0A307FFC1123D7AB00BD4B8E /* O.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = O.png; sourceTree = "<group>"; };
@@ -113,6 +119,7 @@
 			children = (
 				0A12AC671115821B00297EB8 /* Protocols */,
 				0A12AB8C1115771600297EB8 /* ConnectFour */,
+				0A19F18C11260A4F0003F8C7 /* Connections */,
 				0A65E635111CCFD6001400F6 /* Y */,
 				0A87563511140191006AB678 /* GCGame.h */,
 				0A87563611140191006AB678 /* GCGame.m */,
@@ -158,6 +165,17 @@
 				0A12ABE011157CDA00297EB8 /* GCRulesDelegate.h */,
 			);
 			name = Protocols;
+			sourceTree = "<group>";
+		};
+		0A19F18C11260A4F0003F8C7 /* Connections */ = {
+			isa = PBXGroup;
+			children = (
+				0A19F19A11260B2E0003F8C7 /* GCConnections.h */,
+				0A19F19B11260B2E0003F8C7 /* GCConnections.m */,
+				0A19F1AF11260E4F0003F8C7 /* GCConnectionsOptionMenu.h */,
+				0A19F1B011260E4F0003F8C7 /* GCConnectionsOptionMenu.m */,
+			);
+			name = Connections;
 			sourceTree = "<group>";
 		};
 		0A65E635111CCFD6001400F6 /* Y */ = {
@@ -318,6 +336,8 @@
 				0A65E6E3111CE375001400F6 /* GCGameOptionsController.m in Sources */,
 				0A65E715111CE538001400F6 /* GCConnectFourViewController.m in Sources */,
 				0A30802F1123DF6600BD4B8E /* GCGameController.m in Sources */,
+				0A19F19C11260B2E0003F8C7 /* GCConnections.m in Sources */,
+				0A19F1B111260E4F0003F8C7 /* GCConnectionsOptionMenu.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

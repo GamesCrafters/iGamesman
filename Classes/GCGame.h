@@ -37,6 +37,16 @@ typedef enum { WIN, LOSE, TIE, DRAW, UNAVAILABLE } GameValue;
 /// Setter for the Player 2's name
 - (void) setPlayer2Name: (NSString *) p2;
 
+/// Getter for Player 1 Human/Computer
+- (BOOL) isPlayer1Human;
+/// Getter for Player 2 Human/Computer
+- (BOOL) isPlayer2Human;
+
+/// Setter for Player 1 Human/Computer
+- (void) setPlayer1Human: (BOOL) human;
+/// Setter for Player 2 Human/Computer
+- (void) setPlayer2Human: (BOOL) human;
+
 /// Return YES for supported mode(s)
 - (BOOL) supportsPlayMode: (PlayMode) mode;
 
@@ -46,7 +56,7 @@ typedef enum { WIN, LOSE, TIE, DRAW, UNAVAILABLE } GameValue;
 /// Return the game's view controller
 - (UIViewController *) gameViewController;
 
-/// Do anything necessary to get the game started (return NO if something fails)
+/// Do anything necessary to get the game started
 - (void) startGame;
 
 /// Getter for Predictions
@@ -106,7 +116,10 @@ typedef enum { WIN, LOSE, TIE, DRAW, UNAVAILABLE } GameValue;
 /// End asking for user input
 - (void) stopUserInput;
 
-/// Get the move the user chose (only called after the GameController receives a notification
+/// Ask if the current player is a human
+- (BOOL) currentPlayerIsHuman;
+
+/// Get the move the user chose (only called after the GameController receives a notification)
 - (id) getHumanMove;
 
 /// Perform MOVE and update the view accordingly (MOVE is assumed to be legal)

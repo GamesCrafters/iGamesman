@@ -11,6 +11,7 @@
 
 #import "GCGame.h"
 #import "GCConnectFour.h"
+#import "GCConnections.h"
 #import "GCYGame.h"
 
 
@@ -22,8 +23,12 @@
 		self.title = @"Games";
 		
 		GCConnectFour *c4 = [[GCConnectFour alloc] init];
+		GCConnections *con = [[GCConnections alloc] init];
 		GCYGame *y = [[GCYGame alloc] init];
-		NSArray *objs = [[[NSArray alloc] initWithObjects: c4, y, nil] autorelease];
+		NSArray *objs = [[[NSArray alloc] initWithObjects: c4, con, y, nil] autorelease];
+		[c4 release];
+		[con release];
+		[y release];
 		
 		NSMutableArray *temp = [[NSMutableArray alloc] init];
 		for (GCGame *G in objs)
