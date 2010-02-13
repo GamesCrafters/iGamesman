@@ -23,9 +23,10 @@
 }
 */
 
-- (id) initWithPlayerNumber: (NSInteger) num {
+- (id) initWithPlayerNumber: (NSInteger) num andGame: (GCGame *) _game {
 	if (self = [super initWithNibName: @"NameChanger" bundle: nil]) {
 		playerNum = num;
+		game = _game;
 	}
 	return self;
 }
@@ -40,7 +41,7 @@
 	BOOL human = (0 == [typePicker selectedRowInComponent: 0]);
 	[delegate nameChangerDidFinishWithPlayer: playerNum 
 									 newName: [nameField text]
-							   andPlayerType: human];
+							   andPlayerType: (human ? HUMAN : COMPUTER)];
 }
 
 /*
@@ -80,9 +81,10 @@
 	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemDone
 																						   target: self 
 																						   action: @selector(done)];
+	nameField.text = ((playerNum == 1) ? [game player1Name] : [game player2Name]);
 	
-	[nameField setPlaceholder: [NSString stringWithFormat: @"Player %d", playerNum]];
-	[nameField becomeFirstResponder];
+	BOOL hum = (playerNum == 1) ? [game isPlayer1Human] : [game isPlayer2Human];
+	[typePicker selectRow: (hum ? 0 : 1) inComponent: 0 animated: NO];
 }
 
 - (void)didReceiveMemoryWarning {

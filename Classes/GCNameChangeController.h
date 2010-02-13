@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GCGame.h"
 
 
 typedef enum { HUMAN, COMPUTER } PlayerType;
@@ -15,6 +16,7 @@ typedef enum { HUMAN, COMPUTER } PlayerType;
 
 @interface GCNameChangeController : UIViewController <UIPickerViewDelegate, UIPickerViewDataSource> {
 	id <NameChangeDelegate> delegate;
+	GCGame *game;
 	int playerNum;
 	UITextField *nameField;
 	UIPickerView *typePicker;
@@ -24,7 +26,7 @@ typedef enum { HUMAN, COMPUTER } PlayerType;
 @property (nonatomic, retain) IBOutlet UITextField *nameField;
 @property (nonatomic, retain) IBOutlet UIPickerView *typePicker;
 
-- (id) initWithPlayerNumber: (NSInteger) num;
+- (id) initWithPlayerNumber: (NSInteger) num andGame: (GCGame *) _game;
 
 @end
 

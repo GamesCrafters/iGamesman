@@ -15,6 +15,8 @@
 	if (self = [super init]) {
 		game = _game;
 		turn = NO;
+		
+		srand(time(NULL));
 	}
 	return self;
 }
@@ -23,10 +25,12 @@
 	// Branch whether the current player is a human or a computer
 	// If going to a computer move, make sure to thread it!
 	if (![game isPrimitive: [game getBoard]]) {
-		//if ([game currentPlayerIsHuman])
+		if ([game currentPlayerIsHuman])
 			[self takeHumanTurn];
-		//else
-		//	NSLog(@"Sweet");
+		else {
+			runner = [[NSThread alloc] initWithTarget: self selector: @selector(takeComputerTurn) object: nil];
+			[runner start];
+		}
 	}
 }
 
@@ -45,6 +49,23 @@
 	
 	[game stopUserInput];
 	[self go];
+}
+
+- (void) takeComputerTurn {
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	
+	NSArray *legals = [game legalMoves];
+	int choice = rand() % [legals count];
+	
+	sleep(1);
+	[game doMove: [legals objectAtIndex: choice]];
+	
+	[runner cancel];
+	[runner release];
+	runner = nil;
+	
+	[self go];
+	[pool drain];
 }
 
 @end

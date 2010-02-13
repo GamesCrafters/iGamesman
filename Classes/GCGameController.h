@@ -12,11 +12,13 @@
 
 @interface GCGameController : NSObject {
 	GCGame *game;
+	NSThread *runner;
 	BOOL turn;
 }
 
 - (id) initWithGame: (GCGame *) _game;
 - (void) go;
 - (void) takeHumanTurn;
+- (void) takeComputerTurn;
 
 @end

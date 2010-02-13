@@ -63,6 +63,8 @@
 - (void) startGame {
 	[self resetBoard];
 	
+	p1Turn = YES;
+	
 	if (!c4view)
 		[c4view release];
 	c4view = [[GCConnectFourViewController alloc] initWithGame: self];

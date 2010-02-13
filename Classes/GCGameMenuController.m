@@ -179,7 +179,8 @@
 			[nav release];
 		}
 	} else if (indexPath.section == 1 && indexPath.row > 0) {
-		GCNameChangeController *nameChanger = [[GCNameChangeController alloc] initWithPlayerNumber: indexPath.row];
+		GCNameChangeController *nameChanger = [[GCNameChangeController alloc] initWithPlayerNumber: indexPath.row
+																						   andGame: game];
 		nameChanger.delegate = self;
 		
 		UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController: nameChanger];
