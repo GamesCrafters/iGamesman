@@ -13,7 +13,7 @@
 #import "GCGameViewController.h"
 
 
-@interface GCGameMenuController : UITableViewController <PlayerChangeDelegate, GCRulesDelegate, FlipsideViewControllerDelegate> {
+@interface GCGameMenuController : UITableViewController <PlayerChangeDelegate, GCRulesDelegate, FlipsideViewControllerDelegate, UIAlertViewDelegate> {
 	GCGame *game;
 	NSArray *section0, *section1;
 }

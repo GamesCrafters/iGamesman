@@ -117,6 +117,16 @@
 		label.backgroundColor = [UIColor clearColor];
 		[cell addSubview: label];
 		[label release];
+		
+		if (indexPath.section == 1 && indexPath.row > 0) {
+			UILabel *name = [[UILabel alloc] initWithFrame: 
+							 CGRectMake(135, 10, cell.bounds.size.width - 145, cell.bounds.size.height)];
+			name.backgroundColor = [UIColor clearColor];
+			name.numberOfLines = 2;
+			name.tag = 222;
+			[cell addSubview: name];
+			[name release];
+		}
     }
     
     // Set up the cell...
@@ -141,13 +151,7 @@
 			label.textColor = [UIColor lightGrayColor];
 			label.font = [UIFont systemFontOfSize: 16.0];
 			
-			NSString *firstLine = [label.text substringToIndex: [label.text rangeOfString: @"\n"].location];
-			
-			CGSize S = [firstLine sizeWithFont: label.font];
-			UILabel *name = [[UILabel alloc] initWithFrame: 
-							 CGRectMake(S.width + 30, 10, cell.bounds.size.width - S.width - 40, cell.bounds.size.height)];
-			name.backgroundColor = [UIColor clearColor];
-			name.numberOfLines = 2;
+			UILabel *name = (UILabel *) [cell viewWithTag: 222];
 			if (indexPath.row == 1) {
 				PlayerType p1 = [game player1Type];
 				NSString *type = (p1 == HUMAN) ? @"Human" : ( (p1 == COMPUTER_RANDOM) ? @"Computer (random)" : @"Computer (perfect");
@@ -157,14 +161,29 @@
 				NSString *type = (p2 == HUMAN) ? @"Human" : ( (p2 == COMPUTER_RANDOM) ? @"Computer (random)" : @"Computer (perfect");
 				name.text = [NSString stringWithFormat: @"%@\n%@", [game player2Name], type];
 			}
-			
-			name.tag = 222;
-			[cell addSubview: name];
-			[name release];
 		}
 	}
     
     return cell;
+}
+
+
+- (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+	if (buttonIndex == 1) {
+		if ([game player1Type] != HUMAN)
+			[game setPlayer1Type: COMPUTER_RANDOM];
+		if ([game player2Type] != HUMAN)
+			[game setPlayer2Type: COMPUTER_RANDOM];
+		
+		[self.tableView reloadData];
+		
+		PlayMode M = (index == 0) ? ONLINE_SOLVED : OFFLINE_UNSOLVED;
+		GCGameViewController *gameView = [[GCGameViewController alloc] initWithGame: game andPlayMode: M];
+		gameView.delegate = self;
+		gameView.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+		[self presentModalViewController: gameView animated: YES];
+		[gameView release];
+	}
 }
 
 
@@ -173,11 +192,22 @@
 		UILabel *L = (UILabel *) [[tableView cellForRowAtIndexPath: indexPath] viewWithTag: 111];
 		int index = [section0 indexOfObject: L.text];
 		PlayMode M = (index == 0) ? ONLINE_SOLVED : OFFLINE_UNSOLVED;
-		GCGameViewController *gameView = [[GCGameViewController alloc] initWithGame: game andPlayMode: M];
-		gameView.delegate = self;
-		gameView.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-		[self presentModalViewController: gameView animated: YES];
-		[gameView release];
+		
+		if (M == OFFLINE_UNSOLVED && ([game player1Type] == COMPUTER_PERFECT || [game player2Type] == COMPUTER_PERFECT)) {
+			UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Warning"
+															message: @"One or both of the players is a perfect computer, but you are not playing a solved game. In unsolved play, all computers will play randomly."
+														   delegate: self
+												  cancelButtonTitle: @"Cancel"
+												  otherButtonTitles: @"Okay", nil];
+			[alert show];
+			[tableView deselectRowAtIndexPath: indexPath animated: YES];
+		} else {		
+			GCGameViewController *gameView = [[GCGameViewController alloc] initWithGame: game andPlayMode: M];
+			gameView.delegate = self;
+			gameView.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+			[self presentModalViewController: gameView animated: YES];
+			[gameView release];
+		}
 	} else if (indexPath.section == 1 && indexPath.row == 0) {
 		id menu = [game optionMenu];
 		if ([menu conformsToProtocol: @protocol(GCOptionMenu)]) {
