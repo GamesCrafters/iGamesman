@@ -23,14 +23,14 @@
 - (void) setPlayer2Name: (NSString *) p2 { }
 
 // Getter for Player 1 Human/Computer
-- (BOOL) isPlayer1Human { return YES; }
+- (PlayerType) player1Type { return HUMAN; }
 // Getter for Player 2 Human/Computer
-- (BOOL) isPlayer2Human { return YES; }
+- (PlayerType) player2Type { return HUMAN; }
 
-// Setter for Player 1 Human/Computer
-- (void) setPlayer1Human: (BOOL) human { }
-// Setter for Player 2 Human/Computer
-- (void) setPlayer2Human: (BOOL) human { }
+// Setter for Player 1 Type
+- (void) setPlayer1Type: (PlayerType) type { }
+// Setter for Player 2 Type
+- (void) setPlayer2Type: (PlayerType) type { }
 
 // Return YES for supported mode(s)
 - (BOOL) supportsPlayMode: (PlayMode) mode { return NO; }
@@ -98,8 +98,8 @@
 // End asking for user input
 - (void) stopUserInput { }
 
-// Ask if the current player is a human
-- (BOOL) currentPlayerIsHuman { return YES; }
+// Get the current player
+- (Player) currentPlayer { return NONE; }
 
 // Get the move the user chose (only called after the GameController receives a notification)
 - (id) getHumanMove { return nil; }

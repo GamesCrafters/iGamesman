@@ -38,10 +38,11 @@
 
 - (void) done {
 	[nameField resignFirstResponder];
-	BOOL human = (0 == [typePicker selectedRowInComponent: 0]);
+	int selected = [typePicker selectedRowInComponent: 0];
+	PlayerType p = (selected == 0) ? HUMAN : ( (selected == 1) ? COMPUTER_RANDOM : COMPUTER_PERFECT);
 	[delegate nameChangerDidFinishWithPlayer: playerNum 
 									 newName: [nameField text]
-							   andPlayerType: (human ? HUMAN : COMPUTER)];
+							   andPlayerType: p];
 }
 
 /*
@@ -58,7 +59,7 @@
 
 // Picker view delegate methods
 - (NSString *) pickerView: (UIPickerView *) pickerView titleForRow: (NSInteger) row forComponent: (NSInteger) component {
-	return [[NSArray arrayWithObjects: @"Human", @"Computer", nil] objectAtIndex: row];
+	return [[NSArray arrayWithObjects: @"Human", @"Computer (random)", @"Computer (perfect)", nil] objectAtIndex: row];
 }
 
 // Picker view data source methods
@@ -68,7 +69,7 @@
 }
 
 - (NSInteger) pickerView: (UIPickerView *) pickerView numberOfRowsInComponent: (NSInteger) component {
-	return 2;
+	return 3;
 }
 
 - (void)viewDidLoad {
@@ -83,8 +84,9 @@
 																						   action: @selector(done)];
 	nameField.text = ((playerNum == 1) ? [game player1Name] : [game player2Name]);
 	
-	BOOL hum = (playerNum == 1) ? [game isPlayer1Human] : [game isPlayer2Human];
-	[typePicker selectRow: (hum ? 0 : 1) inComponent: 0 animated: NO];
+	PlayerType p = (playerNum == 1) ? [game player1Type] : [game player2Type];
+	[typePicker selectRow: (p == HUMAN) ? 0 : ( (p == COMPUTER_RANDOM) ? 1 : 2)
+			  inComponent: 0 animated: NO];
 }
 
 - (void)didReceiveMemoryWarning {

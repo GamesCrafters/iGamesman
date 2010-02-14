@@ -79,8 +79,8 @@
     if (section == 0) {
 		int supported = 0;
 		
-		if ([game supportsPlayMode: ONLINESOLVED]) supported += 1;
-		if ([game supportsPlayMode: OFFLINEUNSOLVED]) supported += 1;
+		if ([game supportsPlayMode: ONLINE_SOLVED]) supported += 1;
+		if ([game supportsPlayMode: OFFLINE_UNSOLVED]) supported += 1;
 		
 		return supported;
 	} else
@@ -128,9 +128,9 @@
 		if (r == 2)
 			label.text = [section0 objectAtIndex: indexPath.row];
 		if (r == 1) {
-			if ([game supportsPlayMode: ONLINESOLVED])
+			if ([game supportsPlayMode: ONLINE_SOLVED])
 				label.text = [section0 objectAtIndex: 0];
-			else if ([game supportsPlayMode: OFFLINEUNSOLVED])
+			else if ([game supportsPlayMode: OFFLINE_UNSOLVED])
 				label.text = [section0 objectAtIndex: 1];
 		}
 	} else {
@@ -149,10 +149,12 @@
 			name.backgroundColor = [UIColor clearColor];
 			name.numberOfLines = 2;
 			if (indexPath.row == 1) {
-				NSString *type = [game isPlayer1Human] ? @"Human" : @"Computer (random)";
+				PlayerType p1 = [game player1Type];
+				NSString *type = (p1 == HUMAN) ? @"Human" : ( (p1 == COMPUTER_RANDOM) ? @"Computer (random)" : @"Computer (perfect");
 				name.text = [NSString stringWithFormat: @"%@\n%@", [game player1Name], type];
 			} else {
-				NSString *type = [game isPlayer1Human] ? @"Human" : @"Computer (random)";
+				PlayerType p2 = [game player2Type];
+				NSString *type = (p2 == HUMAN) ? @"Human" : ( (p2 == COMPUTER_RANDOM) ? @"Computer (random)" : @"Computer (perfect");
 				name.text = [NSString stringWithFormat: @"%@\n%@", [game player2Name], type];
 			}
 			
@@ -170,7 +172,7 @@
 	if (indexPath.section == 0) {
 		UILabel *L = (UILabel *) [[tableView cellForRowAtIndexPath: indexPath] viewWithTag: 111];
 		int index = [section0 indexOfObject: L.text];
-		PlayMode M = (index == 0) ? ONLINESOLVED : OFFLINEUNSOLVED;
+		PlayMode M = (index == 0) ? ONLINE_SOLVED : OFFLINE_UNSOLVED;
 		GCGameViewController *gameView = [[GCGameViewController alloc] initWithGame: game andPlayMode: M];
 		gameView.delegate = self;
 		gameView.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
@@ -212,19 +214,17 @@
 						  andPlayerType: (PlayerType) type {
 	UILabel *nameLabel = (UILabel *) [[self.tableView cellForRowAtIndexPath: 
 									   [NSIndexPath indexPathForRow: playerNum inSection: 1]] viewWithTag: 222];
-	NSString *_type = (type == HUMAN) ? @"Human" : @"Computer (random)";
+	NSString *_type = (type == HUMAN) ? @"Human" : ( (type == COMPUTER_RANDOM) ? @"Computer (random)" : @"Computer (perfect)");
 	nameLabel.text = [NSString stringWithFormat: @"%@\n%@", [game player1Name], _type];
 	
 	[self dismissModalViewControllerAnimated: YES];
 	
-	BOOL human = (type == HUMAN);
-	
 	if (playerNum == 1) {
 		[game setPlayer1Name: name];
-		[game setPlayer1Human: human];
+		[game setPlayer1Type: type];
 	} else {
 		[game setPlayer2Name: name];
-		[game setPlayer2Human: human];
+		[game setPlayer2Type: type];
 	}
 }
 

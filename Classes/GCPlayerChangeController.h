@@ -10,8 +10,6 @@
 #import "GCGame.h"
 
 
-typedef enum { HUMAN, COMPUTER } PlayerType;
-
 @protocol PlayerChangeDelegate;
 
 @interface GCPlayerChangeController : UIViewController <UIPickerViewDelegate, UIPickerViewDataSource> {

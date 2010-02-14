@@ -28,7 +28,7 @@
 }
 
 - (BOOL) supportsPlayMode:(PlayMode)mode {
-	return mode == OFFLINEUNSOLVED;
+	return mode == OFFLINE_UNSOLVED;
 }
 
 - (UIViewController *) optionMenu {

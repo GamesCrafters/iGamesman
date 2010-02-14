@@ -8,16 +8,28 @@
 
 #import <Foundation/Foundation.h>
 #import "GCGame.h"
+#ifndef GCGameViewController
+#import "GCGameViewController.h"
+#endif
+
+@class GCGameViewController;
 
 
 @interface GCGameController : NSObject {
 	GCGame *game;
+	GCGameViewController *viewController;
 	NSThread *runner;
 	BOOL turn;
+	BOOL stopped;
+	id computerMove;
 }
 
-- (id) initWithGame: (GCGame *) _game;
+@property (nonatomic, assign, readonly) BOOL stopped;
+
+- (id) initWithGame: (GCGame *) _game andViewController: (GCGameViewController *) viewControl;
 - (void) go;
+- (void) stop;
+- (void) restart;
 - (void) takeHumanTurn;
 - (void) takeComputerTurn;
 

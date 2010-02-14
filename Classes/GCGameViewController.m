@@ -13,6 +13,7 @@
 @implementation GCGameViewController
 
 @synthesize delegate;
+@synthesize playPauseButton;
 
 
 - (id)initWithGame: (GCGame *) _game andPlayMode: (PlayMode) mode {
@@ -21,13 +22,12 @@
 		
 		[game startGame];
 		
-		gameControl = [[GCGameController alloc] initWithGame: game];
-		
 		gameView = [game gameViewController];
 		[self.view addSubview: gameView.view];
 		
 		/* Tell the game about the mode */
 		
+		gameControl = [[GCGameController alloc] initWithGame: game andViewController: self];
 		[gameControl go];
     }
     return self;
@@ -63,7 +63,17 @@
  Messages this view's delegate to dismiss me. 
  */
 - (void) done {
+	[gameControl stop];
 	[delegate flipsideViewControllerDidFinish: self];
+}
+
+
+- (void) playPause {
+	if (gameControl.stopped) {
+		[gameControl restart];
+	} else {
+		[gameControl stop];
+	}
 }
 
 
@@ -71,6 +81,8 @@
  Modally presents the option panel.
  */
 - (void) changeOptions {
+	[gameControl stop];
+	
 	GCGameOptionsController *options = [[GCGameOptionsController alloc] initWithOrientation: [self interfaceOrientation]];
 	options.delegate = self;
 	UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController: options];
@@ -92,12 +104,14 @@
 	//						 [NSNumber numberWithBool: predictions], @"predictions",
 	//						 [NSNumber numberWithBool: moveValues], @"movevalues", nil];
 	/* Notify the game that the display options have changed */
+	[gameControl restart];
 }
 
 
 /* Dismisses the option panel after the user cancels. */
 - (void) optionPanelDidCancel:(GCGameOptionsController *)controller {
 	[self dismissModalViewControllerAnimated: YES];
+	[gameControl restart];
 }
 
 

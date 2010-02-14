@@ -16,7 +16,7 @@
 @implementation GCConnectFour
 
 @synthesize player1Name, player2Name;
-@synthesize player1Human, player2Human;
+@synthesize player1Type, player2Type;
 @synthesize width, height, pieces;
 @synthesize board;
 @synthesize p1Turn;
@@ -26,8 +26,8 @@
 		player1Name = @"Player 1";
 		player2Name = @"Player 2";
 		
-		player1Human = YES;
-		player2Human = YES;
+		player1Type = HUMAN;
+		player2Type = HUMAN;
 		
 		width = 6;
 		height = 5;
@@ -47,8 +47,8 @@
 }
 
 - (BOOL) supportsPlayMode:(PlayMode)mode {
-	if (mode == ONLINESOLVED) return YES;
-	if (mode == OFFLINEUNSOLVED) return NO;
+	if (mode == ONLINE_SOLVED) return NO;
+	if (mode == OFFLINE_UNSOLVED) return YES;
 	return NO;
 }
 
@@ -164,8 +164,8 @@
 	return humanMove;
 }
 
-- (BOOL) currentPlayerIsHuman {
-	return p1Turn ? player1Human : player2Human;
+- (Player) currentPlayer {
+	return p1Turn ? PLAYER1 : PLAYER2;
 }
 
 - (void) doMove: (NSString *) move {

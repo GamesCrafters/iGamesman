@@ -17,7 +17,7 @@
 @interface GCConnectFour : GCGame {
 	GCConnectFourViewController *c4view;
 	NSString *player1Name, *player2Name;
-	BOOL player1Human, player2Human;
+	PlayerType player1Type, player2Type;
 	int width, height, pieces;
 	BOOL p1Turn;
 	NSMutableArray *board;
@@ -26,8 +26,7 @@
 }
 
 @property (nonatomic, retain) NSString *player1Name, *player2Name;
-@property (nonatomic, assign, getter=isPlayer1Human) BOOL player1Human;
-@property (nonatomic, assign, getter=isPlayer2Human) BOOL player2Human;
+@property (nonatomic, assign) PlayerType player1Type, player2Type;
 @property (nonatomic, assign) int width, height, pieces;
 @property (nonatomic, retain) NSArray *board;
 @property (nonatomic, readonly) BOOL p1Turn;
