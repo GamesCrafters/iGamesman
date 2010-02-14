@@ -8,7 +8,6 @@
 
 #import "GCGameMenuController.h"
 #import "GCOptionMenu.h"
-#import "GCGameViewController.h"
 
 
 @implementation GCGameMenuController
@@ -31,7 +30,8 @@
 		section0 = [[NSArray alloc] initWithObjects: @"Play solved game\n(Web connection required)",
 					@"Play unsolved game\nNo Web connection", nil];
 
-		section1 = [[NSArray alloc] initWithObjects: @"Change Rules", @"Player 1 Name", @"Player 2 Name", nil];
+		section1 = [[NSArray alloc] initWithObjects: @"Change Rules", @"Player 1 Name\nPlayer Type", 
+					@"Player 2 Name\nPlayer Type", nil];
 	}
 	return self;
 }
@@ -91,6 +91,8 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 	if (indexPath.section == 0)
 		return 66.0;
+	else if (indexPath.row == 1 || indexPath.row == 2)
+		return 62.0;
 	else
 		return 44.0;
 }
@@ -132,20 +134,27 @@
 				label.text = [section0 objectAtIndex: 1];
 		}
 	} else {
+		label.numberOfLines = 2;
 		label.text = [section1 objectAtIndex: indexPath.row];
 		
 		if (indexPath.row > 0) {
 			label.textColor = [UIColor lightGrayColor];
 			label.font = [UIFont systemFontOfSize: 16.0];
 			
-			CGSize S = [label.text sizeWithFont: label.font];
+			NSString *firstLine = [label.text substringToIndex: [label.text rangeOfString: @"\n"].location];
+			
+			CGSize S = [firstLine sizeWithFont: label.font];
 			UILabel *name = [[UILabel alloc] initWithFrame: 
-							 CGRectMake(S.width + 30, 10, cell.bounds.size.width - S.width - 40, cell.bounds.size.height - 20)];
+							 CGRectMake(S.width + 30, 10, cell.bounds.size.width - S.width - 40, cell.bounds.size.height)];
 			name.backgroundColor = [UIColor clearColor];
-			if (indexPath.row == 1)
-				name.text = [game player1Name];
-			else
-				name.text = [game player2Name];
+			name.numberOfLines = 2;
+			if (indexPath.row == 1) {
+				NSString *type = [game isPlayer1Human] ? @"Human" : @"Computer (random)";
+				name.text = [NSString stringWithFormat: @"%@\n%@", [game player1Name], type];
+			} else {
+				NSString *type = [game isPlayer1Human] ? @"Human" : @"Computer (random)";
+				name.text = [NSString stringWithFormat: @"%@\n%@", [game player2Name], type];
+			}
 			
 			name.tag = 222;
 			[cell addSubview: name];
@@ -179,7 +188,7 @@
 			[nav release];
 		}
 	} else if (indexPath.section == 1 && indexPath.row > 0) {
-		GCNameChangeController *nameChanger = [[GCNameChangeController alloc] initWithPlayerNumber: indexPath.row
+		GCPlayerChangeController *nameChanger = [[GCPlayerChangeController alloc] initWithPlayerNumber: indexPath.row
 																						   andGame: game];
 		nameChanger.delegate = self;
 		
@@ -203,7 +212,9 @@
 						  andPlayerType: (PlayerType) type {
 	UILabel *nameLabel = (UILabel *) [[self.tableView cellForRowAtIndexPath: 
 									   [NSIndexPath indexPathForRow: playerNum inSection: 1]] viewWithTag: 222];
-	nameLabel.text = name;
+	NSString *_type = (type == HUMAN) ? @"Human" : @"Computer (random)";
+	nameLabel.text = [NSString stringWithFormat: @"%@\n%@", [game player1Name], _type];
+	
 	[self dismissModalViewControllerAnimated: YES];
 	
 	BOOL human = (type == HUMAN);

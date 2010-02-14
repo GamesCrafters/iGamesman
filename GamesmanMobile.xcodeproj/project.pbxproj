@@ -32,8 +32,8 @@
 		0A87563711140191006AB678 /* GCGame.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A87563611140191006AB678 /* GCGame.m */; };
 		0A87568C111411F3006AB678 /* GCConnectFour.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A87568B111411F3006AB678 /* GCConnectFour.m */; };
 		0A8756B7111415BE006AB678 /* GCGameMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A8756B6111415BE006AB678 /* GCGameMenuController.m */; };
-		0A87575811142585006AB678 /* GCNameChangeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A87575711142585006AB678 /* GCNameChangeController.m */; };
-		0A87575C111425A2006AB678 /* NameChanger.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A87575B111425A2006AB678 /* NameChanger.xib */; };
+		0A87575811142585006AB678 /* GCPlayerChangeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A87575711142585006AB678 /* GCPlayerChangeController.m */; };
+		0A87575C111425A2006AB678 /* PlayerChanger.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A87575B111425A2006AB678 /* PlayerChanger.xib */; };
 		1D3623260D0F684500981E51 /* GamesmanMobileAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* GamesmanMobileAppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
@@ -85,9 +85,9 @@
 		0A87568B111411F3006AB678 /* GCConnectFour.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCConnectFour.m; sourceTree = "<group>"; };
 		0A8756B5111415BE006AB678 /* GCGameMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCGameMenuController.h; sourceTree = "<group>"; };
 		0A8756B6111415BE006AB678 /* GCGameMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCGameMenuController.m; sourceTree = "<group>"; };
-		0A87575611142585006AB678 /* GCNameChangeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCNameChangeController.h; sourceTree = "<group>"; };
-		0A87575711142585006AB678 /* GCNameChangeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCNameChangeController.m; sourceTree = "<group>"; };
-		0A87575B111425A2006AB678 /* NameChanger.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NameChanger.xib; sourceTree = "<group>"; };
+		0A87575611142585006AB678 /* GCPlayerChangeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCPlayerChangeController.h; sourceTree = "<group>"; };
+		0A87575711142585006AB678 /* GCPlayerChangeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCPlayerChangeController.m; sourceTree = "<group>"; };
+		0A87575B111425A2006AB678 /* PlayerChanger.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlayerChanger.xib; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* GamesmanMobileAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GamesmanMobileAppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* GamesmanMobileAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GamesmanMobileAppDelegate.m; sourceTree = "<group>"; };
@@ -139,8 +139,8 @@
 				0A65E6E2111CE375001400F6 /* GCGameOptionsController.m */,
 				0A65E693111CDEDA001400F6 /* GCGameViewController.h */,
 				0A65E694111CDEDA001400F6 /* GCGameViewController.m */,
-				0A87575611142585006AB678 /* GCNameChangeController.h */,
-				0A87575711142585006AB678 /* GCNameChangeController.m */,
+				0A87575611142585006AB678 /* GCPlayerChangeController.h */,
+				0A87575711142585006AB678 /* GCPlayerChangeController.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -240,7 +240,7 @@
 				0A8756221113FABB006AB678 /* About.xib */,
 				0A65E696111CDF06001400F6 /* GameView.xib */,
 				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
-				0A87575B111425A2006AB678 /* NameChanger.xib */,
+				0A87575B111425A2006AB678 /* PlayerChanger.xib */,
 				8D1107310486CEB800E47090 /* GamesmanMobile-Info.plist */,
 			);
 			name = "Resources-iPhone";
@@ -303,7 +303,7 @@
 				0A87561F1113FA9D006AB678 /* About.png in Resources */,
 				0A8756231113FABB006AB678 /* About.xib in Resources */,
 				0A8756271113FACE006AB678 /* oxy.png in Resources */,
-				0A87575C111425A2006AB678 /* NameChanger.xib in Resources */,
+				0A87575C111425A2006AB678 /* PlayerChanger.xib in Resources */,
 				0A65E697111CDF06001400F6 /* GameView.xib in Resources */,
 				0A65E6D7111CE1E7001400F6 /* Back.png in Resources */,
 				0A307FEE1123D4CC00BD4B8E /* grid.png in Resources */,
@@ -328,7 +328,7 @@
 				0A87563711140191006AB678 /* GCGame.m in Sources */,
 				0A87568C111411F3006AB678 /* GCConnectFour.m in Sources */,
 				0A8756B7111415BE006AB678 /* GCGameMenuController.m in Sources */,
-				0A87575811142585006AB678 /* GCNameChangeController.m in Sources */,
+				0A87575811142585006AB678 /* GCPlayerChangeController.m in Sources */,
 				0A12AB841115770C00297EB8 /* GCConnectFourOptionMenu.m in Sources */,
 				0A65E638111CCFFC001400F6 /* GCYGame.m in Sources */,
 				0A65E65E111CD5DD001400F6 /* GCYOptionMenu.m in Sources */,

@@ -6,10 +6,10 @@
 //  Copyright 2009 GamesCrafters. All rights reserved.
 //
 
-#import "GCNameChangeController.h"
+#import "GCPlayerChangeController.h"
 
 
-@implementation GCNameChangeController
+@implementation GCPlayerChangeController
 
 @synthesize delegate, nameField, typePicker;
 
@@ -24,7 +24,7 @@
 */
 
 - (id) initWithPlayerNumber: (NSInteger) num andGame: (GCGame *) _game {
-	if (self = [super initWithNibName: @"NameChanger" bundle: nil]) {
+	if (self = [super initWithNibName: @"PlayerChanger" bundle: nil]) {
 		playerNum = num;
 		game = _game;
 	}
@@ -74,7 +74,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
-	self.title = @"Change Name";
+	self.title = [NSString stringWithFormat: @"Change Player %d", playerNum];
 	self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemCancel 
 																						  target: self 
 																						  action: @selector(cancel)];

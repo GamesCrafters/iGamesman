@@ -12,17 +12,17 @@
 
 typedef enum { HUMAN, COMPUTER } PlayerType;
 
-@protocol NameChangeDelegate;
+@protocol PlayerChangeDelegate;
 
-@interface GCNameChangeController : UIViewController <UIPickerViewDelegate, UIPickerViewDataSource> {
-	id <NameChangeDelegate> delegate;
+@interface GCPlayerChangeController : UIViewController <UIPickerViewDelegate, UIPickerViewDataSource> {
+	id <PlayerChangeDelegate> delegate;
 	GCGame *game;
 	int playerNum;
 	UITextField *nameField;
 	UIPickerView *typePicker;
 }
 
-@property (nonatomic, assign) id <NameChangeDelegate> delegate;
+@property (nonatomic, assign) id <PlayerChangeDelegate> delegate;
 @property (nonatomic, retain) IBOutlet UITextField *nameField;
 @property (nonatomic, retain) IBOutlet UIPickerView *typePicker;
 
@@ -31,7 +31,7 @@ typedef enum { HUMAN, COMPUTER } PlayerType;
 @end
 
 
-@protocol NameChangeDelegate
+@protocol PlayerChangeDelegate
 
 - (void) nameChangerDidCancel;
 - (void) nameChangerDidFinishWithPlayer: (NSInteger) playerNum 

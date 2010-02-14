@@ -106,7 +106,7 @@
 		// Check the horizontal case
 		BOOL case1 = YES;
 		for (int j = i; j < i + pieces; j += 1) {
-			if (i % width > j % width || ![[theBoard objectAtIndex: j] isEqual: piece]) {
+			if (j >= width * height || i % width > j % width || ![[theBoard objectAtIndex: j] isEqual: piece]) {
 				case1 = NO;
 				break;
 			}
@@ -116,7 +116,7 @@
 		// Check the vertical case
 		BOOL case2 = YES;
 		for (int j = i; j < i + width * pieces; j += width) {
-			if ( j > width * height || ![[theBoard objectAtIndex: j] isEqual: piece] ) {
+			if ( j >= width * height || ![[theBoard objectAtIndex: j] isEqual: piece] ) {
 				case2 = NO;
 				break;
 			}
@@ -126,7 +126,7 @@
 		// Check the diagonal case (positive slope)
 		BOOL case3 = YES;
 		for (int j = i; j < i + pieces + width * pieces; j += (width + 1) ) {
-			if ( j > width * height || (i % width > j % width) || ![[theBoard objectAtIndex: j] isEqual: piece] ) {
+			if ( j >= width * height || (i % width > j % width) || ![[theBoard objectAtIndex: j] isEqual: piece] ) {
 				case3 = NO;
 				break;
 			}
@@ -136,7 +136,7 @@
 		// Check the diagonal case (negative slope)
 		BOOL case4 = YES;
 		for (int j = i; j < i + width * pieces - pieces; j += (width - 1) ) {
-			if ( j > width * height || (i % width < j % width) || ![[theBoard objectAtIndex: j] isEqual: piece] ) {
+			if ( j >= width * height || (i % width < j % width) || ![[theBoard objectAtIndex: j] isEqual: piece] ) {
 				case4 = NO;
 				break;
 			}

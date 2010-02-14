@@ -8,12 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "GCGame.h"
-#import "GCNameChangeController.h"
+#import "GCPlayerChangeController.h"
 #import "GCRulesDelegate.h"
 #import "GCGameViewController.h"
 
 
-@interface GCGameMenuController : UITableViewController <NameChangeDelegate, GCRulesDelegate, FlipsideViewControllerDelegate> {
+@interface GCGameMenuController : UITableViewController <PlayerChangeDelegate, GCRulesDelegate, FlipsideViewControllerDelegate> {
 	GCGame *game;
 	NSArray *section0, *section1;
 }
