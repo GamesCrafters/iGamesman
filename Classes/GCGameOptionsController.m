@@ -12,6 +12,7 @@
 @implementation GCGameOptionsController
 
 @synthesize delegate;
+@synthesize mode;
 
 /*
 - (id)initWithStyle:(UITableViewStyle)style {
@@ -131,7 +132,11 @@
 	else
 		switchFrame = CGRectMake(365.0, 9.0, 95.0, 20.0);
 	UISwitch *pSwitch = [[UISwitch alloc] initWithFrame: switchFrame];
-	pSwitch.on = switchOn;
+	if (mode == OFFLINE_UNSOLVED) {
+		pSwitch.on = NO;
+		pSwitch.enabled = NO;
+	} else
+		pSwitch.on = switchOn;
 	pSwitch.tag = indexPath.row + 1;
 	[cell addSubview: pSwitch];
 	[pSwitch release];

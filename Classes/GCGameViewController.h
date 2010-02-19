@@ -27,16 +27,21 @@
 	UIViewController *gameView;
 	GCGameController *gameControl;
 	GCGame *game;
+	PlayMode gameMode;
 	
 	UIBarButtonItem *playPauseButton;
+	UISlider *slider;
 }
 
 /// This view's delegate, to have this view dismissed
 @property (nonatomic, assign) id <FlipsideViewControllerDelegate> delegate;
 
 @property (nonatomic, retain) IBOutlet UIBarButtonItem *playPauseButton;
+@property (nonatomic, retain) IBOutlet UISlider *slider;
 
 - (id)initWithGame: (GCGame *) _game andPlayMode: (PlayMode) mode;
+
+- (IBAction) sliderTest: (UISlider *) sender;
 
 /// Called when the user taps the back button in the toolbar
 - (IBAction) done;

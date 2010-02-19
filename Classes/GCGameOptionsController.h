@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GCGame.h"
 
 @protocol OptionPanelDelegate;
 
@@ -18,10 +19,12 @@
 @interface GCGameOptionsController : UITableViewController {
 	UIInterfaceOrientation orientation;
 	id <OptionPanelDelegate> delegate;
+	PlayMode mode;
 }
 
 /// This view's delegate, to have this view dismissed.
 @property (nonatomic, assign) id <OptionPanelDelegate> delegate;
+@property (nonatomic, assign) PlayMode mode;
 
 - (id) initWithOrientation: (UIInterfaceOrientation) _orientation;
 

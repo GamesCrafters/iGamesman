@@ -22,6 +22,7 @@
 	BOOL turn;
 	BOOL stopped;
 	id computerMove;
+	int position;
 }
 
 @property (nonatomic, assign, readonly) BOOL stopped;

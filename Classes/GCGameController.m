@@ -21,22 +21,29 @@
 		stopped = NO;
 		computerMove = nil;
 		
-		if ([game player1Type] != HUMAN && [game player2Type] != HUMAN)
+		if ([game player1Type] != HUMAN && [game player2Type] != HUMAN) {
 			[viewController.playPauseButton setEnabled: YES];
+			[viewController.slider setEnabled: NO];
+		}
 		
 		srand(time(NULL));
+		
+		position = 0;
 	}
 	return self;
 }
 
 - (void) go {
-	// Branch whether the current player is a human or a computer
-	// If going to a computer move, make sure to thread it!
+	[viewController.slider setMaximumValue: position];
+	[viewController.slider setValue: position];
+	if ([game player1Type] == HUMAN || [game player2Type] == HUMAN)
+		[viewController.slider setEnabled: YES];
 	if (![game isPrimitive: [game getBoard]]) {
 		PlayerType p = ([game currentPlayer] == PLAYER1) ? [game player1Type] : [game player2Type];
 		if (p == HUMAN)
 			[self takeHumanTurn];
 		else if (!stopped) {
+			[viewController.slider setEnabled: NO];
 			runner = [[NSThread alloc] initWithTarget: self selector: @selector(takeComputerTurn) object: nil];
 			[runner start];
 		}
@@ -45,11 +52,14 @@
 
 - (void) stop {
 	stopped = YES;
+	[viewController.slider setEnabled: YES];
 	[[NSNotificationCenter defaultCenter] removeObserver: self];
 }
 
 - (void) restart {
 	stopped = NO;
+	if ([game player1Type] != HUMAN && [game player2Type] != HUMAN)
+		[viewController.slider setEnabled: NO];
 	[self go];
 }
 
@@ -67,6 +77,7 @@
 	[game doMove: [game getHumanMove]];
 	
 	[game stopUserInput];
+	position += 1;
 	[self go];
 }
 
@@ -85,6 +96,7 @@
 	runner = nil;
 	
 	[pool release];
+	position += 1;
 	[self performSelectorOnMainThread: @selector(go) withObject: nil waitUntilDone: NO];
 }
 

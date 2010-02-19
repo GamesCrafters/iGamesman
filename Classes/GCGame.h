@@ -73,21 +73,6 @@ typedef enum { PLAYER1, PLAYER2, NONE } Player;
 /// Must update the view to reflect the new settings
 - (void) setMoveValues: (BOOL) move;
 
-/// Return YES if Forward buttons should be enabled
-- (BOOL) forwardPossible;
-/// Return YES if Backward buttons should be enabled
-- (BOOL) backwardPossible;
-
-/// Handle one position forward
-- (void) stepForward;
-/// Handle one position backward
-- (void) stepBackward;
-
-/// Handle jump forward to "end"
-- (void) jumpForward;
-/// Handle jump backward to beginning
-- (void) jumpBackward;
-
 /// Return the current board
 - (id) getBoard;
 

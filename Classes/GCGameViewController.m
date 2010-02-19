@@ -13,12 +13,13 @@
 @implementation GCGameViewController
 
 @synthesize delegate;
-@synthesize playPauseButton;
+@synthesize playPauseButton, slider;
 
 
 - (id)initWithGame: (GCGame *) _game andPlayMode: (PlayMode) mode {
     if (self = [super initWithNibName: @"GameView" bundle: nil]) {
 		game = _game;
+		gameMode = mode;
 		
 		[game startGame];
 		
@@ -33,6 +34,11 @@
     return self;
 }
 
+- (void) sliderTest: (UISlider *) sender {
+	[slider setValue: round([slider value])];
+	NSLog(@"%f", round([slider value]));
+}
+
 
 /*
 - (void)loadView {	
@@ -42,6 +48,7 @@
 /*
 - (void)viewDidLoad { [super viewDidLoad]; }
 */
+
 
 - (void)didReceiveMemoryWarning {
 	// Releases the view if it doesn't have a superview.
@@ -71,8 +78,10 @@
 - (void) playPause {
 	if (gameControl.stopped) {
 		[gameControl restart];
+		[playPauseButton setImage: [UIImage imageNamed: @"Pause.png"]];
 	} else {
 		[gameControl stop];
+		[playPauseButton setImage: [UIImage imageNamed: @"Resume.png"]];
 	}
 }
 
@@ -85,6 +94,7 @@
 	
 	GCGameOptionsController *options = [[GCGameOptionsController alloc] initWithOrientation: [self interfaceOrientation]];
 	options.delegate = self;
+	options.mode = gameMode;
 	UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController: options];
 	nav.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
 	nav.navigationBar.tintColor = [UIColor colorWithRed: 0 green: 0 blue: 139.0/256.0 alpha: 1];
