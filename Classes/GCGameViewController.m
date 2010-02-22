@@ -114,14 +114,16 @@
 	//						 [NSNumber numberWithBool: predictions], @"predictions",
 	//						 [NSNumber numberWithBool: moveValues], @"movevalues", nil];
 	/* Notify the game that the display options have changed */
-	[gameControl restart];
+	if (![gameControl stopped])
+		[gameControl restart];
 }
 
 
 /* Dismisses the option panel after the user cancels. */
 - (void) optionPanelDidCancel:(GCGameOptionsController *)controller {
 	[self dismissModalViewControllerAnimated: YES];
-	[gameControl restart];
+	if (![gameControl stopped])
+		[gameControl restart];
 }
 
 

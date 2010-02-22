@@ -8,12 +8,19 @@
 
 #import <Foundation/Foundation.h>
 #import "GCGame.h"
+#import "GCConnectionsViewController.h"
 
 
 @interface GCConnections : GCGame {
+	GCConnectionsViewController *conView;
 	NSString *player1Name, *player2Name;
+	PlayerType player1Type, player2Type;
+	NSMutableArray *board;
+	int size;
+	BOOL p1Turn;
 }
 
 @property (nonatomic, retain) NSString *player1Name, *player2Name;
+@property (nonatomic, assign) PlayerType player1Type, player2Type;
 
 @end

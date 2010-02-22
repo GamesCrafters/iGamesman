@@ -57,7 +57,7 @@
 - (id) getBoard { return nil; }
 
 // Return the name of the player whose turn it is
-- (NSString *) getPlayer { return nil; }
+- (Player) getPlayer { return NONE; }
 
 // Return the value of the current board
 - (GameValue) getValue { return UNAVAILABLE; }

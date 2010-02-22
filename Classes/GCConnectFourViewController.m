@@ -46,7 +46,6 @@
 	
 	if ([[game legalMoves] containsObject: move])
 		[game postHumanMove: move];
-	
 }
 
 - (void) doMove: (NSString *) move {

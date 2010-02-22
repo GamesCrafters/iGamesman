@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A0481EA113218D300156CFF /* GCConnectionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A0481E9113218D300156CFF /* GCConnectionsViewController.m */; };
 		0A12AB841115770C00297EB8 /* GCConnectFourOptionMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A12AB831115770C00297EB8 /* GCConnectFourOptionMenu.m */; };
 		0A19F19C11260B2E0003F8C7 /* GCConnections.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A19F19B11260B2E0003F8C7 /* GCConnections.m */; };
 		0A19F1B111260E4F0003F8C7 /* GCConnectionsOptionMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A19F1B011260E4F0003F8C7 /* GCConnectionsOptionMenu.m */; };
@@ -46,6 +47,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0A0481E8113218D300156CFF /* GCConnectionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCConnectionsViewController.h; sourceTree = "<group>"; };
+		0A0481E9113218D300156CFF /* GCConnectionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCConnectionsViewController.m; sourceTree = "<group>"; };
 		0A12AB821115770C00297EB8 /* GCConnectFourOptionMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCConnectFourOptionMenu.h; sourceTree = "<group>"; };
 		0A12AB831115770C00297EB8 /* GCConnectFourOptionMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCConnectFourOptionMenu.m; sourceTree = "<group>"; };
 		0A12ABD211157C7300297EB8 /* GCOptionMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCOptionMenu.h; sourceTree = "<group>"; };
@@ -180,6 +183,8 @@
 				0A19F19B11260B2E0003F8C7 /* GCConnections.m */,
 				0A19F1AF11260E4F0003F8C7 /* GCConnectionsOptionMenu.h */,
 				0A19F1B011260E4F0003F8C7 /* GCConnectionsOptionMenu.m */,
+				0A0481E8113218D300156CFF /* GCConnectionsViewController.h */,
+				0A0481E9113218D300156CFF /* GCConnectionsViewController.m */,
 			);
 			name = Connections;
 			sourceTree = "<group>";
@@ -353,6 +358,7 @@
 				0A30802F1123DF6600BD4B8E /* GCGameController.m in Sources */,
 				0A19F19C11260B2E0003F8C7 /* GCConnections.m in Sources */,
 				0A19F1B111260E4F0003F8C7 /* GCConnectionsOptionMenu.m in Sources */,
+				0A0481EA113218D300156CFF /* GCConnectionsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -77,7 +77,7 @@ typedef enum { PLAYER1, PLAYER2, NONE } Player;
 - (id) getBoard;
 
 /// Return the name of the player whose turn it is
-- (NSString *) getPlayer;
+- (Player) getPlayer;
 
 /// Return the value of the current board
 - (GameValue) getValue;
