@@ -53,7 +53,6 @@
 - (void) stop {
 	stopped = YES;
 	[viewController.slider setEnabled: YES];
-	[[NSNotificationCenter defaultCenter] removeObserver: self];
 }
 
 - (void) restart {

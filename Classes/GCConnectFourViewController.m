@@ -64,7 +64,7 @@
 		UIButton *B = (UIButton *) [self.view viewWithTag: tag];
 		
 		NSString *piece = (game.p1Turn ? @"X" : @"O");
-		UIImage *img = [UIImage imageNamed: [NSString stringWithFormat: @"%@.png", piece]];
+		UIImage *img = [UIImage imageNamed: [NSString stringWithFormat: @"C4%@.png", piece]];
 		
 		// Set up the piece image view
 		double x = [B frame].origin.x;
@@ -126,7 +126,7 @@
 	else
 		squareSize = MIN(236.0 / height, 380.0 / width);
 	
-	UIImage *gridImg = [UIImage imageNamed: @"grid.png"];
+	UIImage *gridImg = [UIImage imageNamed: @"C4Grid.png"];
 	int tagNum = 1;
 	for (int j = height - 1; j >= 0; j -= 1) {
 		for (int i = 0; i < width; i += 1) {
@@ -141,7 +141,7 @@
 		}
 	}
 	
-	UIImage *gridTop = [UIImage imageNamed: @"gridTopClear.png"];
+	UIImage *gridTop = [UIImage imageNamed: @"C4GridTopClear.png"];
 	int lastTag = width * height;
 	for (int i = lastTag - width + 1; i <= width * height; i += 1) {
 		UIButton *B = (UIButton *) [self.view viewWithTag: i];

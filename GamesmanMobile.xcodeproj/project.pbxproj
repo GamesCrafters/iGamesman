@@ -11,11 +11,13 @@
 		0A12AB841115770C00297EB8 /* GCConnectFourOptionMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A12AB831115770C00297EB8 /* GCConnectFourOptionMenu.m */; };
 		0A19F19C11260B2E0003F8C7 /* GCConnections.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A19F19B11260B2E0003F8C7 /* GCConnections.m */; };
 		0A19F1B111260E4F0003F8C7 /* GCConnectionsOptionMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A19F1B011260E4F0003F8C7 /* GCConnectionsOptionMenu.m */; };
-		0A307FEE1123D4CC00BD4B8E /* grid.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A307FED1123D4CC00BD4B8E /* grid.png */; };
-		0A307FF31123D64000BD4B8E /* gridTopClear.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A307FF21123D64000BD4B8E /* gridTopClear.png */; };
-		0A307FFD1123D7AB00BD4B8E /* O.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A307FFC1123D7AB00BD4B8E /* O.png */; };
-		0A307FFF1123D7B000BD4B8E /* X.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A307FFE1123D7B000BD4B8E /* X.png */; };
+		0A307FEE1123D4CC00BD4B8E /* C4Grid.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A307FED1123D4CC00BD4B8E /* C4Grid.png */; };
+		0A307FF31123D64000BD4B8E /* C4GridTopClear.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A307FF21123D64000BD4B8E /* C4GridTopClear.png */; };
+		0A307FFD1123D7AB00BD4B8E /* C4O.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A307FFC1123D7AB00BD4B8E /* C4O.png */; };
+		0A307FFF1123D7B000BD4B8E /* C4X.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A307FFE1123D7B000BD4B8E /* C4X.png */; };
 		0A30802F1123DF6600BD4B8E /* GCGameController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A30802E1123DF6600BD4B8E /* GCGameController.m */; };
+		0A3292EE11323FF3006066E5 /* ConO.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A3292EC11323FF3006066E5 /* ConO.png */; };
+		0A3292EF11323FF3006066E5 /* ConX.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A3292ED11323FF3006066E5 /* ConX.png */; };
 		0A65E638111CCFFC001400F6 /* GCYGame.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A65E637111CCFFC001400F6 /* GCYGame.m */; };
 		0A65E65E111CD5DD001400F6 /* GCYOptionMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A65E65D111CD5DD001400F6 /* GCYOptionMenu.m */; };
 		0A65E695111CDEDA001400F6 /* GCGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A65E694111CDEDA001400F6 /* GCGameViewController.m */; };
@@ -57,12 +59,14 @@
 		0A19F19B11260B2E0003F8C7 /* GCConnections.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCConnections.m; sourceTree = "<group>"; };
 		0A19F1AF11260E4F0003F8C7 /* GCConnectionsOptionMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCConnectionsOptionMenu.h; sourceTree = "<group>"; };
 		0A19F1B011260E4F0003F8C7 /* GCConnectionsOptionMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCConnectionsOptionMenu.m; sourceTree = "<group>"; };
-		0A307FED1123D4CC00BD4B8E /* grid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grid.png; sourceTree = "<group>"; };
-		0A307FF21123D64000BD4B8E /* gridTopClear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gridTopClear.png; sourceTree = "<group>"; };
-		0A307FFC1123D7AB00BD4B8E /* O.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = O.png; sourceTree = "<group>"; };
-		0A307FFE1123D7B000BD4B8E /* X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = X.png; sourceTree = "<group>"; };
+		0A307FED1123D4CC00BD4B8E /* C4Grid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = C4Grid.png; sourceTree = "<group>"; };
+		0A307FF21123D64000BD4B8E /* C4GridTopClear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = C4GridTopClear.png; sourceTree = "<group>"; };
+		0A307FFC1123D7AB00BD4B8E /* C4O.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = C4O.png; sourceTree = "<group>"; };
+		0A307FFE1123D7B000BD4B8E /* C4X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = C4X.png; sourceTree = "<group>"; };
 		0A30802D1123DF6600BD4B8E /* GCGameController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCGameController.h; sourceTree = "<group>"; };
 		0A30802E1123DF6600BD4B8E /* GCGameController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCGameController.m; sourceTree = "<group>"; };
+		0A3292EC11323FF3006066E5 /* ConO.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ConO.png; sourceTree = "<group>"; };
+		0A3292ED11323FF3006066E5 /* ConX.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ConX.png; sourceTree = "<group>"; };
 		0A65E636111CCFFC001400F6 /* GCYGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCYGame.h; sourceTree = "<group>"; };
 		0A65E637111CCFFC001400F6 /* GCYGame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCYGame.m; sourceTree = "<group>"; };
 		0A65E65C111CD5DD001400F6 /* GCYOptionMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCYOptionMenu.h; sourceTree = "<group>"; };
@@ -189,6 +193,26 @@
 			name = Connections;
 			sourceTree = "<group>";
 		};
+		0A3292BB11323B49006066E5 /* ConnectFour */ = {
+			isa = PBXGroup;
+			children = (
+				0A307FED1123D4CC00BD4B8E /* C4Grid.png */,
+				0A307FF21123D64000BD4B8E /* C4GridTopClear.png */,
+				0A307FFC1123D7AB00BD4B8E /* C4O.png */,
+				0A307FFE1123D7B000BD4B8E /* C4X.png */,
+			);
+			name = ConnectFour;
+			sourceTree = "<group>";
+		};
+		0A3292D111323D64006066E5 /* Connections */ = {
+			isa = PBXGroup;
+			children = (
+				0A3292EC11323FF3006066E5 /* ConO.png */,
+				0A3292ED11323FF3006066E5 /* ConX.png */,
+			);
+			name = Connections;
+			sourceTree = "<group>";
+		};
 		0A65E635111CCFD6001400F6 /* Y */ = {
 			isa = PBXGroup;
 			children = (
@@ -203,17 +227,15 @@
 		0A8756021113F9B7006AB678 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				0A3292BB11323B49006066E5 /* ConnectFour */,
+				0A3292D111323D64006066E5 /* Connections */,
 				0A87561E1113FA9D006AB678 /* About.png */,
 				0A65E6D6111CE1E7001400F6 /* Back.png */,
-				0A307FED1123D4CC00BD4B8E /* grid.png */,
-				0A307FF21123D64000BD4B8E /* gridTopClear.png */,
-				0A307FFC1123D7AB00BD4B8E /* O.png */,
 				0A8756261113FACE006AB678 /* oxy.png */,
 				0A85D25B112E6E58007D2C3C /* Pause.png */,
 				0A8756031113F9C6006AB678 /* Play.png */,
 				0A85D25F112E6E86007D2C3C /* Resume.png */,
 				0A85D288112E7561007D2C3C /* Settings.png */,
-				0A307FFE1123D7B000BD4B8E /* X.png */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -323,13 +345,15 @@
 				0A87575C111425A2006AB678 /* PlayerChanger.xib in Resources */,
 				0A65E697111CDF06001400F6 /* GameView.xib in Resources */,
 				0A65E6D7111CE1E7001400F6 /* Back.png in Resources */,
-				0A307FEE1123D4CC00BD4B8E /* grid.png in Resources */,
-				0A307FF31123D64000BD4B8E /* gridTopClear.png in Resources */,
-				0A307FFD1123D7AB00BD4B8E /* O.png in Resources */,
-				0A307FFF1123D7B000BD4B8E /* X.png in Resources */,
+				0A307FEE1123D4CC00BD4B8E /* C4Grid.png in Resources */,
+				0A307FF31123D64000BD4B8E /* C4GridTopClear.png in Resources */,
+				0A307FFD1123D7AB00BD4B8E /* C4O.png in Resources */,
+				0A307FFF1123D7B000BD4B8E /* C4X.png in Resources */,
 				0A85D25D112E6E58007D2C3C /* Pause.png in Resources */,
 				0A85D260112E6E86007D2C3C /* Resume.png in Resources */,
 				0A85D289112E7561007D2C3C /* Settings.png in Resources */,
+				0A3292EE11323FF3006066E5 /* ConO.png in Resources */,
+				0A3292EF11323FF3006066E5 /* ConX.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
