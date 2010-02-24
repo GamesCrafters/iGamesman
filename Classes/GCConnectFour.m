@@ -47,7 +47,7 @@
 }
 
 - (BOOL) supportsPlayMode:(PlayMode)mode {
-	if (mode == ONLINE_SOLVED) return NO;
+	if (mode == ONLINE_SOLVED) return YES;
 	if (mode == OFFLINE_UNSOLVED) return YES;
 	return NO;
 }
@@ -60,14 +60,26 @@
 	return c4view;
 }
 
-- (void) startGame {
+- (void) startGameInMode: (PlayMode) mode {
 	[self resetBoard];
+	
+	if (mode == ONLINE_SOLVED)
+		service = [[GCConnectFourService alloc] init];
+	
+	gameMode = mode;
 	
 	p1Turn = YES;
 	
 	if (!c4view)
 		[c4view release];
 	c4view = [[GCConnectFourViewController alloc] initWithGame: self];
+	
+	PlayerType current = [self currentPlayer] == PLAYER1 ? player1Type : player2Type;
+	if (current == HUMAN)
+		c4view.buttonsEnabled = YES;
+	
+	if (mode == ONLINE_SOLVED)
+		[c4view updateServerDataWithService: service];
 }
 
 - (NSArray *) getBoard {
@@ -171,6 +183,9 @@
 - (void) doMove: (NSString *) move {
 	[c4view doMove: move];
 	
+	if (gameMode == ONLINE_SOLVED)
+		[c4view updateServerDataWithService: service];
+	
 	int slot = [move integerValue] - 1;
 	while (slot < width * height) {
 		if ([[board objectAtIndex: slot] isEqual: BLANK]) {
@@ -180,6 +195,8 @@
 		slot += width;
 	}
 	p1Turn = !p1Turn;
+	
+	[c4view updateLabels];
 }
 
 - (void) resetBoard {
@@ -195,6 +212,7 @@
 
 - (void) dealloc {
 	[board release];
+	[service release];
 	[super dealloc];
 }
 

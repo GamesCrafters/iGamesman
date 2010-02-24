@@ -59,7 +59,7 @@ typedef enum { PLAYER1, PLAYER2, NONE } Player;
 - (UIViewController *) gameViewController;
 
 /// Do anything necessary to get the game started
-- (void) startGame;
+- (void) startGameInMode: (PlayMode) mode;
 
 /// Getter for Predictions
 - (BOOL) predictions;

@@ -21,7 +21,7 @@
 		game = _game;
 		gameMode = mode;
 		
-		[game startGame];
+		[game startGameInMode: gameMode];
 		
 		gameView = [game gameViewController];
 		[self.view addSubview: gameView.view];

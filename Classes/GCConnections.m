@@ -24,7 +24,7 @@
 		
 		p1Turn = YES;
 		
-		size = 7;
+		size = 5;
 		
 		board = [[NSMutableArray alloc] initWithCapacity: size * size];
 		for (int i = 0; i < [board count]; i += 1)

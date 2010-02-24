@@ -42,7 +42,7 @@
 - (UIViewController *) gameViewController { return nil; }
 
 // Do anything necessary to get the game started (return NO if something fails)
-- (void) startGame { }
+- (void) startGameInMode: (PlayMode) mode { }
 
 // Getters for Predictions and Move Values
 - (BOOL) predictions { return NO; }

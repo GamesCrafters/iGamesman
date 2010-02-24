@@ -11,6 +11,8 @@
 
 @implementation GCConnectFourViewController
 
+@synthesize buttonsEnabled;
+
 /*
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -34,6 +36,10 @@
 		height = _game.height;
 		pieces = _game.pieces;
 		game = _game;
+		
+		buttonsEnabled = NO;
+		
+		spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle: UIActivityIndicatorViewStyleWhiteLarge];
 	}
 	return self;
 }
@@ -47,6 +53,59 @@
 	if ([[game legalMoves] containsObject: move])
 		[game postHumanMove: move];
 }
+
+- (void) updateServerDataWithService: (GCConnectFourService *) _service {
+	NSLog(@"%d", buttonsEnabled);
+	service = _service;
+	
+	[spinner startAnimating];
+	waiter = [[NSThread alloc] initWithTarget: self selector: @selector(fetchNewData:) object: [NSNumber numberWithBool:buttonsEnabled]];
+	[waiter start];
+	timer = [NSTimer scheduledTimerWithTimeInterval: 30 target: self selector: @selector(timedOut:) userInfo: nil repeats: NO];
+}
+
+- (void) fetchNewData: (BOOL) buttonsOn {
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	NSLog(@"Beginning fetch...");
+	[self performSelectorOnMainThread: @selector(disableButtons) withObject: nil waitUntilDone: NO];
+	[service retrieveDataForBoard: [game board] width: width height: height pieces: pieces];
+	[self performSelectorOnMainThread: @selector(fetchFinished:) withObject: [NSNumber numberWithBool: buttonsOn] waitUntilDone: NO];
+	[pool release];
+}
+
+
+- (void) fetchFinished: (BOOL) buttonsOn {
+	if (waiter != nil) {
+		if (buttonsOn)
+			[self enableButtons];
+		[spinner stopAnimating];
+		[timer invalidate];
+	}
+	NSLog(@"Server returned value: %@", [service getValue]);
+	NSLog(@"Server returned remoteness: %d", [service getRemoteness]);
+}
+
+
+- (void) timedOut: (NSTimer *) theTimer {
+	message.numberOfLines = 4;
+	message.lineBreakMode = UILineBreakModeWordWrap;
+	[message setText: @"Server request timed out. Check the strength of your Internet connection."];
+	
+	[waiter cancel];
+	[waiter release];
+	waiter = nil;
+	[spinner stopAnimating];
+}
+
+
+- (void) updateLabels {
+	NSString *player = ([game currentPlayer] == PLAYER1) ? [game player1Name] : [game player2Name];
+	NSString *color = ([game currentPlayer] == PLAYER1) ? @"Red" : @"Blue";
+	message.numberOfLines = 4;
+	message.lineBreakMode = UILineBreakModeWordWrap;
+	[message setText: [NSString stringWithFormat: @"%@ (%@)'s turn", player, color]];
+}
+
 
 - (void) doMove: (NSString *) move {
 	int col = [move integerValue];
@@ -90,6 +149,7 @@
 		UIButton *B = (UIButton *) [self.view viewWithTag: i];
 		[B setEnabled: NO];
 	}
+	buttonsEnabled = NO;
 }
 
 
@@ -99,6 +159,7 @@
 		UIButton *B = (UIButton *) [self.view viewWithTag: i];
 		[B setEnabled: YES];
 	}
+	buttonsEnabled = YES;
 }
 
 
@@ -148,7 +209,24 @@
 		[B setBackgroundImage: gridTop forState: UIControlStateNormal];
 	}
 	
-	[self disableButtons];	
+	if ([self interfaceOrientation] == UIInterfaceOrientationPortrait)
+		message = [[UILabel alloc] initWithFrame: CGRectMake(20, 25 + height * squareSize, 
+															   280, 416 - (35 + height * squareSize))];
+	else
+		message = [[UILabel alloc] initWithFrame: CGRectMake(10 + width * squareSize, 3, 
+															   480 - (10 + width * squareSize), 250)];
+	message.backgroundColor = [UIColor clearColor];
+	message.textColor = [UIColor whiteColor];
+	message.textAlignment = UITextAlignmentCenter;
+	message.text = @"";
+	[self.view addSubview: message];
+	
+	[spinner setFrame: CGRectMake(width/2.0 * squareSize, height/2.0  * squareSize,  37, 37)];
+	[self.view addSubview: spinner];
+	
+	[self disableButtons];
+	
+	[self updateLabels];
 }
 
 - (BOOL) shouldAutorotateToInterfaceOrientation: (UIInterfaceOrientation) interfaceOrientation {

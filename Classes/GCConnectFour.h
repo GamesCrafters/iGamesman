@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "GCGame.h"
+#import "GCConnectFourService.h"
 
 @class GCConnectFourViewController;
 
@@ -16,13 +17,14 @@
  */
 @interface GCConnectFour : GCGame {
 	GCConnectFourViewController *c4view;
+	GCConnectFourService *service;
 	NSString *player1Name, *player2Name;
 	PlayerType player1Type, player2Type;
 	int width, height, pieces;
 	BOOL p1Turn;
+	PlayMode gameMode;
 	NSMutableArray *board;
 	NSString *humanMove;
-	NSThread *waiter;
 }
 
 @property (nonatomic, retain) NSString *player1Name, *player2Name;
