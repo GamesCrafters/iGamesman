@@ -29,6 +29,7 @@
 		/* Tell the game about the mode */
 		
 		gameControl = [[GCGameController alloc] initWithGame: game andViewController: self];
+		while (![game gameReady]);
 		[gameControl go];
     }
     return self;

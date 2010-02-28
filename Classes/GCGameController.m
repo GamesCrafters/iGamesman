@@ -83,12 +83,61 @@
 - (void) takeComputerTurn {	
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	
-	NSArray *legals = [game legalMoves];
-	int choice = rand() % [legals count];
-	
-	[NSThread sleepForTimeInterval: 1.0];
-	
-	[game doMove: [legals objectAtIndex: choice]];
+	PlayerType p = ([game currentPlayer] == PLAYER1) ? [game player1Type] : [game player2Type];
+	if ([game playMode] == OFFLINE_UNSOLVED || p == COMPUTER_RANDOM) {
+		NSArray *legals = [game legalMoves];
+		int choice = rand() % [legals count];
+		
+		[NSThread sleepForTimeInterval: 1.0];
+		
+		[game doMove: [legals objectAtIndex: choice]];
+	} else {
+		NSArray *legals = [game legalMoves];
+		NSMutableArray *vals = [[NSMutableArray alloc] init];
+		NSMutableArray *remotes = [[NSMutableArray alloc] init];
+		for (id move in legals) {
+			[vals addObject: [[game getValueOfMove: move] uppercaseString]];
+			[remotes addObject: [NSNumber numberWithInteger: [game getRemotenessOfMove: move]]];
+		}
+		
+		NSMutableArray *wins = [[NSMutableArray alloc] init];
+		NSMutableArray *loses = [[NSMutableArray alloc] init];
+		NSMutableArray *ties = [[NSMutableArray alloc] init];
+		NSMutableArray *draws = [[NSMutableArray alloc] init];
+		for (int i = 0; i < [legals count]; i += 1) {
+			NSString *val = (NSString *) [vals objectAtIndex: i];
+			NSNumber *num = [NSNumber numberWithInt: i];
+			if ([val isEqual: @"WIN"]) [wins addObject: num];
+			if ([val isEqual: @"LOSE"]) [loses addObject: num];
+			if ([val isEqual: @"TIE"]) [ties addObject: num];
+			if ([val isEqual: @"DRAW"]) [draws addObject: num];
+		}
+		NSLog(@"W: %@\nL: %@\nT: %@", wins, loses, ties);
+		id move;
+		if ([wins count] != 0) {
+			int minRemote = 10000;
+			for (NSNumber *num in wins) {
+				minRemote = MIN(minRemote, [[remotes objectAtIndex: [num integerValue]] integerValue]);
+			}
+			move = [legals objectAtIndex: [remotes indexOfObject: [NSNumber numberWithInt: minRemote]]];
+		} else if ([ties count] != 0) {
+			int maxRemote = -1;
+			for (NSNumber *num in ties) {
+				maxRemote = MAX(maxRemote, [[remotes objectAtIndex: [num integerValue]] integerValue]);
+			}
+			move = [legals objectAtIndex: [remotes indexOfObject: [NSNumber numberWithInt: maxRemote]]];
+		} else if ([draws count] != 0) {
+			move = @"Some draw";
+		} else {
+			int maxRemote = -1;
+			for (NSNumber *num in loses) {
+				maxRemote = MAX(maxRemote, [[remotes objectAtIndex: [num integerValue]] integerValue]);
+			}
+			move = [legals objectAtIndex: [remotes indexOfObject: [NSNumber numberWithInt: maxRemote]]];
+		}
+		
+		[game doMove: move];
+	}
 	
 	[runner cancel];
 	[runner release];
@@ -100,6 +149,7 @@
 }
 
 - (void) dealloc {
+	[[NSNotificationCenter defaultCenter] removeObserver: self];
 	[super dealloc];
 }
 

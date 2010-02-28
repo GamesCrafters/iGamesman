@@ -55,9 +55,8 @@
 }
 
 - (void) updateServerDataWithService: (GCConnectFourService *) _service {
-	NSLog(@"%d", buttonsEnabled);
 	service = _service;
-	
+	NSLog(@"Started fetch...");
 	[spinner startAnimating];
 	waiter = [[NSThread alloc] initWithTarget: self selector: @selector(fetchNewData:) object: [NSNumber numberWithBool:buttonsEnabled]];
 	[waiter start];
@@ -66,9 +65,9 @@
 
 - (void) fetchNewData: (BOOL) buttonsOn {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	NSLog(@"Beginning fetch...");
 	[self performSelectorOnMainThread: @selector(disableButtons) withObject: nil waitUntilDone: NO];
 	[service retrieveDataForBoard: [game board] width: width height: height pieces: pieces];
+	game.gameReady = YES;
 	[self performSelectorOnMainThread: @selector(fetchFinished:) withObject: [NSNumber numberWithBool: buttonsOn] waitUntilDone: NO];
 	[pool release];
 }

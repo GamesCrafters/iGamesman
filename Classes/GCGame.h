@@ -61,6 +61,12 @@ typedef enum { PLAYER1, PLAYER2, NONE } Player;
 /// Do anything necessary to get the game started
 - (void) startGameInMode: (PlayMode) mode;
 
+/// Return YES if ready to go, NO if not
+- (BOOL) gameReady;
+
+/// Get the current play mode
+- (PlayMode) playMode;
+
 /// Getter for Predictions
 - (BOOL) predictions;
 /// Getter for Move Values
@@ -80,13 +86,13 @@ typedef enum { PLAYER1, PLAYER2, NONE } Player;
 - (Player) getPlayer;
 
 /// Return the value of the current board
-- (GameValue) getValue;
+- (NSString *) getValue;
 
 /// Return the remoteness of the current board (or -1 if not available)
 - (NSInteger) getRemoteness;
 
 /// Return the value of MOVE
-- (GameValue) getValueOfMove: (id) move;
+- (NSString *) getValueOfMove: (id) move;
 
 /// Return the remoteness of MOVE (or -1 if not available)
 - (NSInteger) getRemotenessOfMove: (id) move;

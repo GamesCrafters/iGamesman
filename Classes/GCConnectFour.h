@@ -22,6 +22,7 @@
 	PlayerType player1Type, player2Type;
 	int width, height, pieces;
 	BOOL p1Turn;
+	BOOL gameReady;
 	PlayMode gameMode;
 	NSMutableArray *board;
 	NSString *humanMove;
@@ -32,6 +33,7 @@
 @property (nonatomic, assign) int width, height, pieces;
 @property (nonatomic, retain) NSArray *board;
 @property (nonatomic, readonly) BOOL p1Turn;
+@property (assign) BOOL gameReady;
 
 - (void) resetBoard;
 - (void) postHumanMove: (NSString *) move;

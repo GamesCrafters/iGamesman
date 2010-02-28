@@ -20,6 +20,7 @@
 @synthesize width, height, pieces;
 @synthesize board;
 @synthesize p1Turn;
+@synthesize gameReady;
 
 - (id) init {
 	if (self = [super init]) {
@@ -78,12 +79,38 @@
 	if (current == HUMAN)
 		c4view.buttonsEnabled = YES;
 	
-	if (mode == ONLINE_SOLVED)
+	if (mode == OFFLINE_UNSOLVED)
+		gameReady = YES;
+	if (mode == ONLINE_SOLVED) {
+		gameReady = NO;
 		[c4view updateServerDataWithService: service];
+	}
+}
+
+- (PlayMode) playMode {
+	return gameMode;
 }
 
 - (NSArray *) getBoard {
 	return board;
+}
+
+- (NSString *) getValue {
+	return [[service getValue] uppercaseString];
+}
+
+- (NSInteger) getRemoteness {
+	return [service getRemoteness];
+}
+
+- (NSString *) getValueOfMove: (NSString *) move {
+	NSString *s = [[NSString alloc] initWithFormat: @"%d", [move intValue] - 1];
+	return [[service getValueAfterMove: s] uppercaseString];
+}
+
+- (NSInteger) getRemotenessOfMove: (NSString *) move {
+	NSString *s = [[NSString alloc] initWithFormat: @"%d", [move intValue] - 1];
+	return [service getRemotenessAfterMove: s];
 }
 
 - (NSArray *) legalMoves {

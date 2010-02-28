@@ -24,7 +24,7 @@
 		
 		p1Turn = YES;
 		
-		size = 5;
+		size = 7;
 		
 		board = [[NSMutableArray alloc] initWithCapacity: size * size];
 		for (int i = 0; i < [board count]; i += 1)
@@ -50,7 +50,7 @@
 	return conView;
 }
 
-- (void) startGame {
+- (void) startGameInMode: (PlayMode) mode {
 	if (!conView)
 		[conView release];
 	conView = [[GCConnectionsViewController alloc] initWithSize: size];

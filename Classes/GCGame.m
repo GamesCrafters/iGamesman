@@ -44,6 +44,12 @@
 // Do anything necessary to get the game started (return NO if something fails)
 - (void) startGameInMode: (PlayMode) mode { }
 
+// Return YES if ready to go, NO if not
+- (BOOL) gameReady { return YES; }
+
+// Get the current play mode
+- (PlayMode) playMode { return OFFLINE_UNSOLVED; }
+
 // Getters for Predictions and Move Values
 - (BOOL) predictions { return NO; }
 - (BOOL) moveValues { return NO; }
@@ -60,13 +66,13 @@
 - (Player) getPlayer { return NONE; }
 
 // Return the value of the current board
-- (GameValue) getValue { return UNAVAILABLE; }
+- (NSString *) getValue { return @"UNAVAILABLE"; }
 
 // Return the remoteness of the current board (or -1 if not available)
 - (NSInteger) getRemoteness { return -1; }
 
 // Return the value of MOVE
-- (GameValue) getValueOfMove: (id) move { return UNAVAILABLE; }
+- (NSString *) getValueOfMove: (id) move { return @"UNAVAILABLE"; }
 
 // Return the remoteness of MOVE (or -1 if not available)
 - (NSInteger) getRemotenessOfMove: (id) move { return -1; }
