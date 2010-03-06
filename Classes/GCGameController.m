@@ -34,8 +34,15 @@
 }
 
 - (void) go {
-	[viewController.slider setMaximumValue: position];
-	[viewController.slider setValue: position];
+	[[NSNotificationCenter defaultCenter] addObserver: self
+											 selector: @selector(goGameReady)
+												 name: @"GameIsReady"
+											   object: game];
+	[game notifyWhenReady];
+}
+
+- (void) goGameReady {
+	[[NSNotificationCenter defaultCenter] removeObserver: self];
 	if ([game player1Type] == HUMAN || [game player2Type] == HUMAN)
 		[viewController.slider setEnabled: YES];
 	if (![game isPrimitive: [game getBoard]]) {
@@ -47,11 +54,17 @@
 			runner = [[NSThread alloc] initWithTarget: self selector: @selector(takeComputerTurn) object: nil];
 			[runner start];
 		}
+	} else {
+		[viewController.slider setEnabled: YES];
+		stopped = YES;
+		[viewController.playPauseButton setImage: [UIImage imageNamed: @"Resume.png"]];
 	}
 }
 
 - (void) stop {
 	stopped = YES;
+	if (runner)
+		[runner cancel];
 	[viewController.slider setEnabled: YES];
 }
 
@@ -59,7 +72,11 @@
 	stopped = NO;
 	if ([game player1Type] != HUMAN && [game player2Type] != HUMAN)
 		[viewController.slider setEnabled: NO];
-	[self go];
+	[[NSNotificationCenter defaultCenter] addObserver: self
+											 selector: @selector(goGameReady)
+												 name: @"GameIsReady"
+											   object: game];
+	[self goGameReady];
 }
 
 - (void) takeHumanTurn {
@@ -77,6 +94,8 @@
 	
 	[game stopUserInput];
 	position += 1;
+	[viewController.slider setMaximumValue: position];
+	[viewController.slider setValue: position];
 	[self go];
 }
 
@@ -104,47 +123,80 @@
 		NSMutableArray *loses = [[NSMutableArray alloc] init];
 		NSMutableArray *ties = [[NSMutableArray alloc] init];
 		NSMutableArray *draws = [[NSMutableArray alloc] init];
+		NSMutableArray *winRemotes = [[NSMutableArray alloc] init];
+		NSMutableArray *loseRemotes = [[NSMutableArray alloc] init];
+		NSMutableArray *tieRemotes = [[NSMutableArray alloc] init];
+		NSMutableArray *drawRemotes = [[NSMutableArray alloc] init];
 		for (int i = 0; i < [legals count]; i += 1) {
 			NSString *val = (NSString *) [vals objectAtIndex: i];
-			NSNumber *num = [NSNumber numberWithInt: i];
-			if ([val isEqual: @"WIN"]) [wins addObject: num];
-			if ([val isEqual: @"LOSE"]) [loses addObject: num];
-			if ([val isEqual: @"TIE"]) [ties addObject: num];
-			if ([val isEqual: @"DRAW"]) [draws addObject: num];
+			id move = [legals objectAtIndex: i];
+			if ([val isEqual: @"WIN"]) [wins addObject: move];
+			if ([val isEqual: @"LOSE"]) [loses addObject: move];
+			if ([val isEqual: @"TIE"]) [ties addObject: move];
+			if ([val isEqual: @"DRAW"]) [draws addObject: move];
+			
+			NSNumber *R = (NSNumber *) [remotes objectAtIndex: i];
+			if ([val isEqual: @"WIN"]) [winRemotes addObject: R];
+			if ([val isEqual: @"LOSE"]) [loseRemotes addObject: R];
+			if ([val isEqual: @"TIE"]) [tieRemotes addObject: R];
+			if ([val isEqual: @"DRAW"]) [drawRemotes addObject: R];
 		}
 		NSLog(@"W: %@\nL: %@\nT: %@", wins, loses, ties);
 		id move;
 		if ([wins count] != 0) {
 			int minRemote = 10000;
-			for (NSNumber *num in wins) {
-				minRemote = MIN(minRemote, [[remotes objectAtIndex: [num integerValue]] integerValue]);
+			for (id a_move in wins) {
+				int index = [legals indexOfObject: a_move];
+				minRemote = MIN(minRemote, [[remotes objectAtIndex: index] integerValue]);
 			}
-			move = [legals objectAtIndex: [remotes indexOfObject: [NSNumber numberWithInt: minRemote]]];
+			move = [wins objectAtIndex: [winRemotes indexOfObject: [NSNumber numberWithInt: minRemote]]];
 		} else if ([ties count] != 0) {
 			int maxRemote = -1;
-			for (NSNumber *num in ties) {
-				maxRemote = MAX(maxRemote, [[remotes objectAtIndex: [num integerValue]] integerValue]);
+			for (id a_move in ties) {
+				int index = [legals indexOfObject: a_move];
+				NSLog(@"index: %d", index);
+				NSLog(@"remoteness: %d", [[remotes objectAtIndex: index] integerValue]);
+				maxRemote = MAX(maxRemote, [[remotes objectAtIndex: index] integerValue]);
 			}
-			move = [legals objectAtIndex: [remotes indexOfObject: [NSNumber numberWithInt: maxRemote]]];
+			NSLog(@"remotes: %@", remotes);
+			NSLog(@"legals: %@", legals);
+			NSLog(@"maxRemote: %d", maxRemote);
+			move = [ties objectAtIndex: [tieRemotes indexOfObject: [NSNumber numberWithInt: maxRemote]]];
 		} else if ([draws count] != 0) {
-			move = @"Some draw";
+			NSLog(@"Some draw");
 		} else {
 			int maxRemote = -1;
-			for (NSNumber *num in loses) {
-				maxRemote = MAX(maxRemote, [[remotes objectAtIndex: [num integerValue]] integerValue]);
+			for (id a_move in loses) {
+				int index = [legals indexOfObject: a_move];
+				maxRemote = MIN(maxRemote, [[remotes objectAtIndex: index] integerValue]);
 			}
-			move = [legals objectAtIndex: [remotes indexOfObject: [NSNumber numberWithInt: maxRemote]]];
+			move = [loses objectAtIndex: [loseRemotes indexOfObject: [NSNumber numberWithInt: maxRemote]]];
 		}
 		
+		NSLog(@"Move: %@", move);
+		
+		[NSThread sleepForTimeInterval: 1.0];
+		
 		[game doMove: move];
+		
+		[wins release];  [winRemotes release];
+		[loses release]; [loseRemotes release];
+		[ties release];  [tieRemotes release];
+		[draws release]; [drawRemotes release];
+		
+		[legals release];
+		[vals release];
+		[remotes release];
 	}
 	
 	[runner cancel];
 	[runner release];
 	runner = nil;
 	
-	[pool release];
 	position += 1;
+	[viewController.slider setMaximumValue: position];
+	[viewController.slider setValue: position];
+	[pool drain];
 	[self performSelectorOnMainThread: @selector(go) withObject: nil waitUntilDone: NO];
 }
 

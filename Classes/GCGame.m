@@ -44,9 +44,6 @@
 // Do anything necessary to get the game started (return NO if something fails)
 - (void) startGameInMode: (PlayMode) mode { }
 
-// Return YES if ready to go, NO if not
-- (BOOL) gameReady { return YES; }
-
 // Get the current play mode
 - (PlayMode) playMode { return OFFLINE_UNSOLVED; }
 
@@ -56,8 +53,12 @@
 
 // Setters for Predictions and Move Values
 // Must update the view to reflect the new settings
-- (void) setPredicitons: (BOOL) pred { }
+- (void) setPredictions: (BOOL) pred { }
 - (void) setMoveValues: (BOOL) move { }
+
+- (void) updateDisplay { }
+
+- (void) notifyWhenReady { }
 
 // Return the current board
 - (id) getBoard { return nil; }

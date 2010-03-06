@@ -31,6 +31,8 @@
 	
 	UIBarButtonItem *playPauseButton;
 	UISlider *slider;
+	
+	BOOL wasPaused;
 }
 
 /// This view's delegate, to have this view dismissed

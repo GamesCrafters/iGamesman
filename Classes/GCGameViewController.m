@@ -29,7 +29,7 @@
 		/* Tell the game about the mode */
 		
 		gameControl = [[GCGameController alloc] initWithGame: game andViewController: self];
-		while (![game gameReady]);
+		//while (![game gameReady]);
 		[gameControl go];
     }
     return self;
@@ -77,12 +77,14 @@
 
 
 - (void) playPause {
-	if (gameControl.stopped) {
-		[gameControl restart];
-		[playPauseButton setImage: [UIImage imageNamed: @"Pause.png"]];
-	} else {
-		[gameControl stop];
-		[playPauseButton setImage: [UIImage imageNamed: @"Resume.png"]];
+	if (![game isPrimitive: [game getBoard]]) {
+		if (gameControl.stopped) {
+			[gameControl restart];
+			[playPauseButton setImage: [UIImage imageNamed: @"Pause.png"]];
+		} else {
+			[gameControl stop];
+			[playPauseButton setImage: [UIImage imageNamed: @"Resume.png"]];
+		}
 	}
 }
 
@@ -91,6 +93,8 @@
  Modally presents the option panel.
  */
 - (void) changeOptions {
+	wasPaused = [gameControl stopped];
+	NSLog(@"%d", wasPaused);
 	[gameControl stop];
 	
 	GCGameOptionsController *options = [[GCGameOptionsController alloc] initWithOrientation: [self interfaceOrientation]];
@@ -110,12 +114,10 @@
 				  predictions:(BOOL)predictions 
 				   moveValues:(BOOL)moveValues {
 	[self dismissModalViewControllerAnimated: YES];
-	//SEL updater = @selector(updateDisplayOptions:);
-	//NSDictionary *options = [[NSDictionary alloc] initWithObjectsAndKeys: 
-	//						 [NSNumber numberWithBool: predictions], @"predictions",
-	//						 [NSNumber numberWithBool: moveValues], @"movevalues", nil];
-	/* Notify the game that the display options have changed */
-	if (![gameControl stopped])
+	[game setPredictions: predictions];
+	[game setMoveValues: moveValues];
+	[game updateDisplay];
+	if (!wasPaused)
 		[gameControl restart];
 }
 
@@ -123,7 +125,7 @@
 /* Dismisses the option panel after the user cancels. */
 - (void) optionPanelDidCancel:(GCGameOptionsController *)controller {
 	[self dismissModalViewControllerAnimated: YES];
-	if (![gameControl stopped])
+	if (!wasPaused)
 		[gameControl restart];
 }
 

@@ -38,6 +38,7 @@
 - (void) fetchFinished: (BOOL) buttonsOn;
 - (void) timedOut: (NSTimer *) theTimer;
 - (void) updateLabels;
+- (void) displayPrimitive;
 - (void) doMove: (NSString *) move;
 - (void) disableButtons;
 - (void) enableButtons;

@@ -29,6 +29,7 @@
 
 - (id) initWithGame: (GCGame *) _game andViewController: (GCGameViewController *) viewControl;
 - (void) go;
+- (void) goGameReady;
 - (void) stop;
 - (void) restart;
 - (void) takeHumanTurn;

@@ -21,6 +21,7 @@
 @synthesize board;
 @synthesize p1Turn;
 @synthesize gameReady;
+@synthesize predictions, moveValues;
 
 - (id) init {
 	if (self = [super init]) {
@@ -89,6 +90,19 @@
 
 - (PlayMode) playMode {
 	return gameMode;
+}
+
+- (void) updateDisplay {
+	[c4view updateLabels];
+}
+
+- (void) notifyWhenReady {
+	if (gameMode == OFFLINE_UNSOLVED)
+		[[NSNotificationCenter defaultCenter] postNotificationName: @"GameIsReady" object: self];
+}
+
+- (void) postReady {
+	[[NSNotificationCenter defaultCenter] postNotificationName: @"GameIsReady" object: self];
 }
 
 - (NSArray *) getBoard {
@@ -223,7 +237,8 @@
 	}
 	p1Turn = !p1Turn;
 	
-	[c4view updateLabels];
+	if (gameMode != ONLINE_SOLVED)
+		[c4view updateLabels];
 }
 
 - (void) resetBoard {

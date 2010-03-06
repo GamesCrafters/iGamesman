@@ -61,9 +61,6 @@ typedef enum { PLAYER1, PLAYER2, NONE } Player;
 /// Do anything necessary to get the game started
 - (void) startGameInMode: (PlayMode) mode;
 
-/// Return YES if ready to go, NO if not
-- (BOOL) gameReady;
-
 /// Get the current play mode
 - (PlayMode) playMode;
 
@@ -74,10 +71,14 @@ typedef enum { PLAYER1, PLAYER2, NONE } Player;
 
 /// Setter for Predictions
 /// Must update the view to reflect the new settings
-- (void) setPredicitons: (BOOL) pred;
+- (void) setPredictions: (BOOL) pred;
 /// Setter for Move Values
 /// Must update the view to reflect the new settings
 - (void) setMoveValues: (BOOL) move;
+
+- (void) updateDisplay;
+
+- (void) notifyWhenReady;
 
 /// Return the current board
 - (id) getBoard;

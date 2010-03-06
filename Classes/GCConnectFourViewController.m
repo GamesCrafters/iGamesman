@@ -55,12 +55,13 @@
 }
 
 - (void) updateServerDataWithService: (GCConnectFourService *) _service {
+	game.gameReady = NO;
 	service = _service;
 	NSLog(@"Started fetch...");
 	[spinner startAnimating];
 	waiter = [[NSThread alloc] initWithTarget: self selector: @selector(fetchNewData:) object: [NSNumber numberWithBool:buttonsEnabled]];
 	[waiter start];
-	timer = [NSTimer scheduledTimerWithTimeInterval: 30 target: self selector: @selector(timedOut:) userInfo: nil repeats: NO];
+	timer = [[NSTimer scheduledTimerWithTimeInterval: 30 target: self selector: @selector(timedOut:) userInfo: nil repeats: NO] retain];
 }
 
 - (void) fetchNewData: (BOOL) buttonsOn {
@@ -82,6 +83,9 @@
 	}
 	NSLog(@"Server returned value: %@", [service getValue]);
 	NSLog(@"Server returned remoteness: %d", [service getRemoteness]);
+	[self updateLabels];
+	game.gameReady = YES;
+	[game postReady];
 }
 
 
@@ -100,9 +104,60 @@
 - (void) updateLabels {
 	NSString *player = ([game currentPlayer] == PLAYER1) ? [game player1Name] : [game player2Name];
 	NSString *color = ([game currentPlayer] == PLAYER1) ? @"Red" : @"Blue";
+	PlayerType type = ([game currentPlayer] == PLAYER1) ? [game player1Type] : [game player2Type];
 	message.numberOfLines = 4;
 	message.lineBreakMode = UILineBreakModeWordWrap;
-	[message setText: [NSString stringWithFormat: @"%@ (%@)'s turn", player, color]];
+	if ([game predictions]) {
+		NSString *value = [service getValue];
+		int remoteness  = [service getRemoteness];
+		NSString *modifier = (type == COMPUTER_PERFECT) ? @"will" : @"should";
+		[message setText: [NSString stringWithFormat: @"%@ (%@)\n%@ %@ in %d", player, color, modifier, 
+						   value, remoteness]];
+	} else {
+		[message setText: [NSString stringWithFormat: @"%@ (%@)'s turn", player, color]];
+	}
+	
+	if ([game moveValues]) {
+		UIImage *gridTop = [UIImage imageNamed: @"C4GridTopClear.png"];
+		int lastTag = width * height;
+		for (int i = 0; i < width; i += 1) {
+			NSString *currentValue = [service getValueAfterMove: [NSString stringWithFormat: @"%d", i]];
+			UIButton *B = (UIButton *) [self.view viewWithTag: i + lastTag - width + 1];
+			if ([currentValue isEqualToString: @"win"])
+				[B setBackgroundImage: [UIImage imageNamed: @"C4GridTopGreen.png"] forState: UIControlStateNormal];
+			else if ([currentValue isEqualToString: @"lose"])
+				[B setBackgroundImage: [UIImage imageNamed: @"C4GridTopRed.png"] forState: UIControlStateNormal];
+			else if ([currentValue isEqualToString: @"tie"])
+				[B setBackgroundImage: [UIImage imageNamed: @"C4GridTopYellow.png"] forState: UIControlStateNormal];
+			else
+				[B setBackgroundImage: gridTop forState: UIControlStateNormal];
+		}
+	} else {
+		UIImage *gridTop = [UIImage imageNamed: @"C4GridTopClear.png"];
+		int lastTag = width * height;
+		for (int i = lastTag - width + 1; i <= width * height; i += 1) {
+			UIButton *B = (UIButton *) [self.view viewWithTag: i];
+			[B setBackgroundImage: gridTop forState: UIControlStateNormal];
+		}
+	}
+	
+	if ([game isPrimitive: [game getBoard]])
+		[self displayPrimitive];
+}
+
+
+- (void) displayPrimitive {
+	NSString *value = [service getValue];
+	NSString *winner;
+	if ([value isEqualToString: @"tie"] || [value isEqualToString: @"draw"])
+		message.text = @"It's a tie!";
+	else {
+		if ([value isEqualToString: @"win"])
+			winner = game.p1Turn ? game.player1Name : game.player2Name;
+		else
+			winner = game.p1Turn ? game.player2Name : game.player1Name;
+		message.text = [NSString stringWithFormat: @"%@ wins!", winner];
+	}
 }
 
 
