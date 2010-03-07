@@ -94,7 +94,6 @@
  */
 - (void) changeOptions {
 	wasPaused = [gameControl stopped];
-	NSLog(@"%d", wasPaused);
 	[gameControl stop];
 	
 	GCGameOptionsController *options = [[GCGameOptionsController alloc] initWithOrientation: [self interfaceOrientation]];

@@ -22,6 +22,7 @@
 @synthesize p1Turn;
 @synthesize gameReady;
 @synthesize predictions, moveValues;
+@synthesize gameMode;
 
 - (id) init {
 	if (self = [super init]) {
@@ -103,6 +104,10 @@
 
 - (void) postReady {
 	[[NSNotificationCenter defaultCenter] postNotificationName: @"GameIsReady" object: self];
+}
+
+- (void) postProblem {
+	[[NSNotificationCenter defaultCenter] postNotificationName: @"GameEncounteredProblem" object: self];
 }
 
 - (NSArray *) getBoard {
@@ -206,6 +211,17 @@
 
 - (void) stopUserInput {
 	[c4view disableButtons];
+}
+
+- (void) stop {
+	[c4view stop];
+}
+
+- (void) resume {
+	if (gameMode == ONLINE_SOLVED) {
+		gameReady = NO;
+		[c4view updateServerDataWithService: service];
+	}
 }
 
 - (void) postHumanMove: (NSString *) move {

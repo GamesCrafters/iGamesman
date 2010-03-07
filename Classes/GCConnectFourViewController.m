@@ -57,7 +57,6 @@
 - (void) updateServerDataWithService: (GCConnectFourService *) _service {
 	game.gameReady = NO;
 	service = _service;
-	NSLog(@"Started fetch...");
 	[spinner startAnimating];
 	waiter = [[NSThread alloc] initWithTarget: self selector: @selector(fetchNewData:) object: [NSNumber numberWithBool:buttonsEnabled]];
 	[waiter start];
@@ -81,11 +80,13 @@
 		[spinner stopAnimating];
 		[timer invalidate];
 	}
-	NSLog(@"Server returned value: %@", [service getValue]);
-	NSLog(@"Server returned remoteness: %d", [service getRemoteness]);
 	[self updateLabels];
-	game.gameReady = YES;
-	[game postReady];
+	if (![service connected] || ![service status])
+		[game postProblem];
+	else {
+		game.gameReady = YES;
+		[game postReady];
+	}
 }
 
 
@@ -110,9 +111,11 @@
 	if ([game predictions]) {
 		NSString *value = [service getValue];
 		int remoteness  = [service getRemoteness];
-		NSString *modifier = (type == COMPUTER_PERFECT) ? @"will" : @"should";
-		[message setText: [NSString stringWithFormat: @"%@ (%@)\n%@ %@ in %d", player, color, modifier, 
-						   value, remoteness]];
+		if (value != nil && remoteness != -1) {
+			NSString *modifier = (type == COMPUTER_PERFECT) ? @"will" : @"should";
+			[message setText: [NSString stringWithFormat: @"%@ (%@)\n%@ %@ in %d", player, color, modifier, 
+							   value, remoteness]];
+		}
 	} else {
 		[message setText: [NSString stringWithFormat: @"%@ (%@)'s turn", player, color]];
 	}
@@ -139,6 +142,13 @@
 			UIButton *B = (UIButton *) [self.view viewWithTag: i];
 			[B setBackgroundImage: gridTop forState: UIControlStateNormal];
 		}
+	}
+	
+	if (game.gameMode == ONLINE_SOLVED) {
+		if (![service status])
+			[message setText: @"Server error. Please try again later"];
+		if (![service connected])
+			[message setText: @"Server connection failed. Please check your Web connection"];
 	}
 	
 	if ([game isPrimitive: [game getBoard]])
@@ -214,6 +224,13 @@
 		[B setEnabled: YES];
 	}
 	buttonsEnabled = YES;
+}
+
+- (void) stop {
+	if (waiter)
+		[waiter cancel];
+	if (timer)
+		[timer invalidate];
 }
 
 
@@ -298,12 +315,13 @@
 
 - (void) viewDidUnload {
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
+	[message release];
+	[spinner release];
 }
 
 
 - (void) dealloc {
+	[spinner release];
     [super dealloc];
 }
 

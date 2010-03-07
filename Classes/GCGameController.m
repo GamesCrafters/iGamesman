@@ -38,6 +38,10 @@
 											 selector: @selector(goGameReady)
 												 name: @"GameIsReady"
 											   object: game];
+	[[NSNotificationCenter defaultCenter] addObserver: self
+											 selector: @selector(end)
+												 name: @"GameEncounteredProblem"
+											   object: game];
 	[game notifyWhenReady];
 }
 
@@ -61,20 +65,30 @@
 	}
 }
 
+- (void) end {
+	[[NSNotificationCenter defaultCenter] removeObserver: self];
+}
+
 - (void) stop {
 	stopped = YES;
 	if (runner)
 		[runner cancel];
+	[game stop];
 	[viewController.slider setEnabled: YES];
 }
 
 - (void) restart {
 	stopped = NO;
+	[game resume];
 	if ([game player1Type] != HUMAN && [game player2Type] != HUMAN)
 		[viewController.slider setEnabled: NO];
 	[[NSNotificationCenter defaultCenter] addObserver: self
 											 selector: @selector(goGameReady)
 												 name: @"GameIsReady"
+											   object: game];
+	[[NSNotificationCenter defaultCenter] addObserver: self
+											 selector: @selector(end)
+												 name: @"GameEncounteredProblem"
 											   object: game];
 	[self goGameReady];
 }
@@ -141,7 +155,6 @@
 			if ([val isEqual: @"TIE"]) [tieRemotes addObject: R];
 			if ([val isEqual: @"DRAW"]) [drawRemotes addObject: R];
 		}
-		NSLog(@"W: %@\nL: %@\nT: %@", wins, loses, ties);
 		id move;
 		if ([wins count] != 0) {
 			int minRemote = 10000;
@@ -154,13 +167,8 @@
 			int maxRemote = -1;
 			for (id a_move in ties) {
 				int index = [legals indexOfObject: a_move];
-				NSLog(@"index: %d", index);
-				NSLog(@"remoteness: %d", [[remotes objectAtIndex: index] integerValue]);
 				maxRemote = MAX(maxRemote, [[remotes objectAtIndex: index] integerValue]);
 			}
-			NSLog(@"remotes: %@", remotes);
-			NSLog(@"legals: %@", legals);
-			NSLog(@"maxRemote: %d", maxRemote);
 			move = [ties objectAtIndex: [tieRemotes indexOfObject: [NSNumber numberWithInt: maxRemote]]];
 		} else if ([draws count] != 0) {
 			NSLog(@"Some draw");
@@ -172,8 +180,6 @@
 			}
 			move = [loses objectAtIndex: [loseRemotes indexOfObject: [NSNumber numberWithInt: maxRemote]]];
 		}
-		
-		NSLog(@"Move: %@", move);
 		
 		[NSThread sleepForTimeInterval: 1.0];
 		

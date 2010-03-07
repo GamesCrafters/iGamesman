@@ -90,6 +90,10 @@
 // End asking for user input
 - (void) stopUserInput { }
 
+- (void) stop { }
+
+- (void) resume { }
+
 // Get the current player
 - (Player) currentPlayer { return NONE; }
 

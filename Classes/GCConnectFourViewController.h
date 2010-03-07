@@ -42,5 +42,6 @@
 - (void) doMove: (NSString *) move;
 - (void) disableButtons;
 - (void) enableButtons;
+- (void) stop;
 
 @end

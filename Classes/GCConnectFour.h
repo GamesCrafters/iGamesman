@@ -17,16 +17,16 @@
  */
 @interface GCConnectFour : GCGame {
 	GCConnectFourViewController *c4view;
-	GCConnectFourService *service;
-	NSString *player1Name, *player2Name;
-	PlayerType player1Type, player2Type;
-	int width, height, pieces;
-	BOOL p1Turn;
-	BOOL gameReady;
-	BOOL predictions, moveValues;
-	PlayMode gameMode;
-	NSMutableArray *board;
-	NSString *humanMove;
+	GCConnectFourService		*service;
+	NSString					*player1Name, *player2Name;
+	PlayerType					player1Type, player2Type;
+	int							width, height, pieces;
+	BOOL						p1Turn;
+	BOOL						gameReady;
+	BOOL						predictions, moveValues;
+	PlayMode					gameMode;
+	NSMutableArray				*board;
+	NSString					*humanMove;
 }
 
 @property (nonatomic, retain) NSString *player1Name, *player2Name;
@@ -36,9 +36,11 @@
 @property (nonatomic, readonly) BOOL p1Turn;
 @property (assign) BOOL gameReady;
 @property (nonatomic, assign) BOOL predictions, moveValues;
+@property (nonatomic, assign) PlayMode gameMode;
 
 - (void) resetBoard;
 - (void) postHumanMove: (NSString *) move;
 - (void) postReady;
+- (void) postProblem;
 
 @end

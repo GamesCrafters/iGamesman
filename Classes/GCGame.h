@@ -110,6 +110,10 @@ typedef enum { PLAYER1, PLAYER2, NONE } Player;
 /// End asking for user input
 - (void) stopUserInput;
 
+- (void) stop;
+
+- (void) resume;
+
 /// Get the current player
 - (Player) currentPlayer;
 
