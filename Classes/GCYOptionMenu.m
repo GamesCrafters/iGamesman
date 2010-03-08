@@ -15,7 +15,8 @@
 
 - (id) initWithGame: (GCYGame *) _game {
 	if (self = [super initWithStyle: UITableViewStyleGrouped]) {
-		
+		game = _game;
+		layers = game.layers;
 	}
 	
 	return self;
@@ -36,12 +37,19 @@
 
 
 - (void) done {
+	game.layers = layers;
 	[delegate rulesPanelDidFinish];
+}
+
+- (void) update: (UISegmentedControl *) sender{
+	layers = [sender selectedSegmentIndex];
 }
 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+	
+	self.title = @"Y Rules";
 
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemCancel
 																						  target: self
@@ -84,7 +92,11 @@
 
 // Customize the number of rows in the table view.
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 2;
+    return 1;
+}
+
+- (NSString *) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+	return @"Extra Layers";
 }
 
 
@@ -96,10 +108,22 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
-    }
+		cell.backgroundColor = [UIColor colorWithRed: 234.0/255 green: 234.0/255 blue: 255.0/255 alpha: 1];
+	}
     
     // Set up the cell...
-    
+	UISegmentedControl *segment = [[UISegmentedControl alloc] initWithFrame: CGRectMake(20, 10, 280, 26)];
+    [segment insertSegmentWithTitle: @"0" atIndex: 0 animated: NO];
+	[segment insertSegmentWithTitle: @"1" atIndex: 1 animated: NO];
+	
+	[segment setSelectedSegmentIndex: layers];
+	
+	segment.segmentedControlStyle = UISegmentedControlStyleBar;
+	segment.tintColor = [UIColor colorWithRed: 28.0/255 green: 127.0/255 blue: 189.0/255 alpha: 1.0];
+	
+	[segment addTarget: self action: @selector(update:) forControlEvents: UIControlEventValueChanged];
+	
+	[cell addSubview: segment];
     return cell;
 }
 

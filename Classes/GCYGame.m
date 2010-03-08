@@ -16,6 +16,7 @@
 
 @synthesize player1Name, player2Name;
 @synthesize player1Type, player2Type;
+@synthesize layers;
 
 - (id) init {
 	if (self = [super init]) {
@@ -25,7 +26,7 @@
 		player1Type = HUMAN;
 		player2Type = HUMAN;
 		
-		layers = 1;
+		layers = 0;
 		
 		p1Turn = YES;
 		
@@ -45,8 +46,18 @@
 	return mode == OFFLINE_UNSOLVED;
 }
 
+- (void) startGameInMode: (PlayMode) mode {
+	if (yGameView)  
+		[yGameView release];
+	yGameView = [[GCYGameViewController alloc] initWithLayers:layers];
+}
+
 - (UIViewController *) optionMenu {
 	return [[GCYOptionMenu alloc] initWithGame: self];
+}
+
+- (UIViewController *) gameViewController {
+	return yGameView;
 }
 
 - (NSArray *) getBoard {

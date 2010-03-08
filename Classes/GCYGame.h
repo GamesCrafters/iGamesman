@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "GCGame.h"
+#import "GCYGameViewController.h"
 
 
 @interface GCYGame : GCGame {
@@ -16,9 +17,11 @@
 	NSMutableArray *board;
 	int layers;
 	BOOL p1Turn;
+	GCYGameViewController *yGameView;
 }
 
 @property (nonatomic, retain) NSString *player1Name, *player2Name;
 @property (nonatomic, assign) PlayerType player1Type, player2Type;
+@property (nonatomic, assign) int layers;
 
 @end
