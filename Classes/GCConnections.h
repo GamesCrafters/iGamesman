@@ -22,5 +22,6 @@
 
 @property (nonatomic, retain) NSString *player1Name, *player2Name;
 @property (nonatomic, assign) PlayerType player1Type, player2Type;
+@property (nonatomic, assign) int size;
 
 @end

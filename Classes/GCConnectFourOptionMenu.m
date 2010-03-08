@@ -24,7 +24,6 @@
 
 - (id) initWithGame: (GCConnectFour *) _game {
 	if (self = [super initWithStyle: UITableViewStyleGrouped]) {
-		self.title = @"Connect-4 Rules";
 		self.tableView.allowsSelection = NO;
 		
 		game = _game;
@@ -64,6 +63,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+	
+	self.title = @"Connect-4 Rules";
 	
 	self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemCancel
 																						  target: self

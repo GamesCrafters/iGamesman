@@ -15,7 +15,9 @@
 
 - (id) initWithGame: (GCConnections *) _game {
 	if (self = [super initWithStyle: UITableViewStyleGrouped]) {
-		
+		self.tableView.allowsSelection = NO;
+		game = _game;
+		size = game.size;
 	}
 	return self;
 }
@@ -36,12 +38,17 @@
 
 
 - (void) done {
+	game.size = size;
 	[delegate rulesPanelDidFinish];
+}
+
+- (void) update: (UISegmentedControl *) sender{
+	size = ([sender selectedSegmentIndex] * 2) + 5;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+	self.title = @"Connections Rules";
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemCancel
 																						  target: self
 																						  action: @selector(cancel)];
@@ -102,7 +109,11 @@
 
 // Customize the number of rows in the table view.
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 2;
+    return 1;
+}
+
+- (NSString *) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+	return @"Size";
 }
 
 
@@ -114,11 +125,22 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+		
+		cell.backgroundColor = [UIColor colorWithRed: 234.0/255 green: 234.0/255 blue: 255.0/255 alpha: 1];
     }
     
     // Set up the cell...
-    
-    return cell;
+	UISegmentedControl *segment = [[UISegmentedControl alloc] initWithFrame: CGRectMake(20, 10, 280, 26)];
+	[segment insertSegmentWithTitle: @"5" atIndex: 0 animated: NO];
+	[segment insertSegmentWithTitle: @"7" atIndex: 1 animated: NO];
+	[segment insertSegmentWithTitle: @"9" atIndex: 2 animated: NO];
+	segment.segmentedControlStyle = UISegmentedControlStyleBar;
+	segment.tintColor = [UIColor colorWithRed: 28.0/255 green: 127.0/255 blue: 189.0/255 alpha: 1.0];
+	
+	[segment setSelectedSegmentIndex: (size - 5) / 2];
+	[segment addTarget: self action: @selector(update:) forControlEvents: UIControlEventValueChanged];
+    [cell addSubview: segment];
+	return cell;
 }
 
 

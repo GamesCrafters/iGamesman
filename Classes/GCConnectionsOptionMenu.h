@@ -9,11 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "GCRulesDelegate.h"
 #import "GCOptionMenu.h"
+#import "GCConnections.h"
 
 @class GCConnections;
 
 
 @interface GCConnectionsOptionMenu : UITableViewController <GCOptionMenu> {
+	GCConnections *game;
+	int size;
 	id <GCRulesDelegate> delegate;
 }
 
