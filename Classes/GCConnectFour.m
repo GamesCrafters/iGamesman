@@ -66,9 +66,6 @@
 - (void) startGameInMode: (PlayMode) mode {
 	[self resetBoard];
 	
-	if (mode == ONLINE_SOLVED)
-		service = [[GCConnectFourService alloc] init];
-	
 	gameMode = mode;
 	
 	p1Turn = YES;
@@ -80,6 +77,9 @@
 	PlayerType current = [self currentPlayer] == PLAYER1 ? player1Type : player2Type;
 	if (current == HUMAN)
 		c4view.buttonsEnabled = YES;
+	
+	if (mode == ONLINE_SOLVED)
+		service = [[GCConnectFourService alloc] init];
 	
 	if (mode == OFFLINE_UNSOLVED)
 		gameReady = YES;

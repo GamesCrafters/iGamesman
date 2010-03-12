@@ -7,6 +7,7 @@
 //
 
 #import "GCConnections.h"
+#import "GCConnectionsViewController.h"
 #import "GCConnectionsOptionMenu.h"
 
 #define BLANK @"+"
@@ -20,13 +21,12 @@
 @synthesize player1Name, player2Name;
 @synthesize player1Type, player2Type;
 @synthesize size;
+@synthesize p1Turn;
 
 - (id) init {
 	if (self = [super init]) {
 		player1Name = @"Player 1";
 		player2Name = @"Player 2";
-		
-		p1Turn = YES;
 		
 		size = 7;
 		
@@ -68,7 +68,13 @@
 - (void) startGameInMode: (PlayMode) mode {
 	if (!conView)
 		[conView release];
-	conView = [[GCConnectionsViewController alloc] initWithSize: size];
+	conView = [[GCConnectionsViewController alloc] initWithGame: self];
+	
+	p1Turn = YES;
+	
+	[self resetBoard];
+	
+	gameMode = mode;
 }
 
 - (NSArray *) getBoard {
@@ -104,12 +110,38 @@
 - (NSArray *) legalMoves {
 	NSMutableArray *moves = [[NSMutableArray alloc] init];
 	
-	for (int i = 0; i < [board count]; i += 1) {
-		if ([[board objectAtIndex: i] isEqual: BLANK])
-			[moves addObject: [board objectAtIndex: i]];
+	for (int j = 0; j < size; j += 1) {
+		for (int i = 0; i < size; i += 1) {
+			if ([[board objectAtIndex: i + j * size] isEqual: BLANK]) {
+				if (! ((i == 0 || i == size - 1) && (j == 0 || j == size - 1)))
+					[moves addObject: [NSNumber numberWithInt: i + j * size + 1]];
+			}
+		}
 	}
 	
 	return moves;
+}
+
+- (void) doMove: (NSNumber *) move {
+	[conView doMove: move];
+	
+	int slot = [move integerValue] - 1;
+	[board replaceObjectAtIndex: slot withObject: (p1Turn ? X : O)];
+	p1Turn = !p1Turn;
+	for (int j = 0; j < size; j += 1) {
+		NSString *row = @"";
+		for (int i = 0; i < size; i += 1) {
+			row = [row stringByAppendingString: [board objectAtIndex: i + j * size]];
+		}
+		NSLog(@"%@", row);
+	}
+	NSLog(@" ");
+	
+}
+
+- (void) notifyWhenReady {
+	if (gameMode == OFFLINE_UNSOLVED)
+		[[NSNotificationCenter defaultCenter] postNotificationName: @"GameIsReady" object: self];
 }
 
 @end

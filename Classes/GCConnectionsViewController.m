@@ -21,9 +21,10 @@
 }
 */
 
-- (id) initWithSize: (int) _size {
+- (id) initWithGame: (GCConnections *) _game {
 	if (self = [super init]) {
-		size = _size;
+		game = _game;
+		size = _game.size;
 	}
 	return self;
 }
@@ -65,27 +66,47 @@
 										initWithFrame: CGRectMake(10 + x, 
 																  10 + y, 
 																  squareSize,  squareSize)];
-					//[button setBackgroundColor: [UIColor whiteColor]];
 					[button setTitle: [NSString stringWithFormat: @"%d", tag] forState: UIControlStateNormal];
-					//[button setTitleColor: [UIColor blackColor] forState: UIControlStateNormal];
+					[button.titleLabel setFont: [UIFont systemFontOfSize: 12]];
+					button.tag = tag;
 					[self.view addSubview: button];
 				}
 			} else if (i % 2 == 0) {	// It's O
-				UIImageView *O = [[UIImageView alloc] initWithFrame: CGRectMake(10 + x, 10 + y, 
+				UIImageView *_O = [[UIImageView alloc] initWithFrame: CGRectMake(10 + x, 10 + y, 
 																				squareSize, 
 																				squareSize)];
-				[O setImage: [UIImage imageNamed: @"ConO.png"]];
-				[self.view addSubview: O];
+				[_O setImage: [UIImage imageNamed: @"ConO.png"]];
+				[self.view addSubview: _O];
 			} else {					// It's X
-				UIImageView *X = [[UIImageView alloc] initWithFrame: CGRectMake(10 + x, 10 + y, 
+				UIImageView *_X = [[UIImageView alloc] initWithFrame: CGRectMake(10 + x, 10 + y, 
 																				squareSize, 
 																				squareSize)];
-				[X setImage: [UIImage imageNamed: @"ConX.png"]];
-				[self.view addSubview: X];
+				[_X setImage: [UIImage imageNamed: @"ConX.png"]];
+				[self.view addSubview: _X];
 			}
 			tag += 1;
 		}
 	}
+}
+
+- (void) doMove: (NSNumber *) move {
+	UIButton *B = (UIButton *) [self.view viewWithTag: [move integerValue]];
+	[B retain];
+	[B removeFromSuperview];
+	[self.view insertSubview: B atIndex: 0];
+	[B release];
+	float B_width = B.frame.size.width;
+	//B.frame = CGRectMake(B.center.x - B_width / 4, B.center.y - B_width / 4, B_width / 2, B_width / 2);
+	[B setBackgroundImage: [UIImage imageNamed: (game.p1Turn ? @"ConX.png" : @"ConO.png")] forState: UIControlStateNormal];
+	
+	[UIView beginAnimations: @"Stretch" context: NULL];
+	int parity = ([move integerValue] / size) % 2;
+	if (game.p1Turn ^ parity) {
+		B.frame = CGRectMake(B.center.x - B_width * 2, B.center.y - B_width / 4,  B_width * 4, B_width / 2);
+	} else {
+		B.frame = CGRectMake(B.center.x - B_width / 4, B.center.y - B_width * 2,  B_width / 2, B_width * 4);
+	}
+	[UIView commitAnimations];
 }
 
 /*

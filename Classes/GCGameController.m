@@ -8,6 +8,8 @@
 
 #import "GCGameController.h"
 
+#define DELAY 0.5
+
 
 @implementation GCGameController
 
@@ -121,7 +123,7 @@
 		NSArray *legals = [game legalMoves];
 		int choice = rand() % [legals count];
 		
-		[NSThread sleepForTimeInterval: 1.0];
+		[NSThread sleepForTimeInterval: DELAY];
 		
 		[game doMove: [legals objectAtIndex: choice]];
 	} else {
@@ -181,7 +183,7 @@
 			move = [loses objectAtIndex: [loseRemotes indexOfObject: [NSNumber numberWithInt: maxRemote]]];
 		}
 		
-		[NSThread sleepForTimeInterval: 1.0];
+		[NSThread sleepForTimeInterval: DELAY];
 		
 		[game doMove: move];
 		

@@ -134,6 +134,7 @@
 	[segment insertSegmentWithTitle: @"5" atIndex: 0 animated: NO];
 	[segment insertSegmentWithTitle: @"7" atIndex: 1 animated: NO];
 	[segment insertSegmentWithTitle: @"9" atIndex: 2 animated: NO];
+	[segment insertSegmentWithTitle: @"11" atIndex: 3 animated: NO];
 	segment.segmentedControlStyle = UISegmentedControlStyleBar;
 	segment.tintColor = [UIColor colorWithRed: 28.0/255 green: 127.0/255 blue: 189.0/255 alpha: 1.0];
 	

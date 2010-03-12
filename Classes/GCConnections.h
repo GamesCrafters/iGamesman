@@ -8,7 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import "GCGame.h"
-#import "GCConnectionsViewController.h"
+
+@class GCConnectionsViewController;
 
 
 @interface GCConnections : GCGame {
@@ -18,10 +19,14 @@
 	NSMutableArray *board;
 	int size;
 	BOOL p1Turn;
+	PlayMode gameMode;
 }
 
 @property (nonatomic, retain) NSString *player1Name, *player2Name;
 @property (nonatomic, assign) PlayerType player1Type, player2Type;
 @property (nonatomic, assign) int size;
+@property (nonatomic, assign) BOOL p1Turn;
+
+- (void) resetBoard;
 
 @end

@@ -7,12 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GCConnections.h"
 
 
 @interface GCConnectionsViewController : UIViewController {
 	int size;
+	GCConnections *game;
 }
 
-- (id) initWithSize: (int) _size;
+- (id) initWithGame: (GCConnections *) _game;
+- (void) doMove: (NSNumber *) move;
 
 @end

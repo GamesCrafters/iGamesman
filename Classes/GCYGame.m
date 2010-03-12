@@ -50,6 +50,8 @@
 	if (yGameView)  
 		[yGameView release];
 	yGameView = [[GCYGameViewController alloc] initWithLayers:layers];
+	
+	gameMode = mode;
 }
 
 - (UIViewController *) optionMenu {
@@ -77,6 +79,11 @@
 	}
 	
 	return moves;
+}
+
+- (void) notifyWhenReady {
+	if (gameMode == OFFLINE_UNSOLVED)
+		[[NSNotificationCenter defaultCenter] postNotificationName: @"GameIsReady" object: self];
 }
 
 @end

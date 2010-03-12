@@ -18,6 +18,7 @@
 	int layers;
 	BOOL p1Turn;
 	GCYGameViewController *yGameView;
+	PlayMode gameMode;
 }
 
 @property (nonatomic, retain) NSString *player1Name, *player2Name;
