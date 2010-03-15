@@ -66,9 +66,9 @@
 										initWithFrame: CGRectMake(10 + x, 
 																  10 + y, 
 																  squareSize,  squareSize)];
-					[button setTitle: [NSString stringWithFormat: @"%d", tag] forState: UIControlStateNormal];
-					[button.titleLabel setFont: [UIFont systemFontOfSize: 12]];
 					button.tag = tag;
+					[button addTarget: self	action: @selector(tapped:) forControlEvents: UIControlEventTouchUpInside];
+					button.adjustsImageWhenDisabled = NO;
 					[self.view addSubview: button];
 				}
 			} else if (i % 2 == 0) {	// It's O
@@ -87,6 +87,8 @@
 			tag += 1;
 		}
 	}
+	
+	[self disableButtons];
 }
 
 - (void) doMove: (NSNumber *) move {
@@ -100,13 +102,40 @@
 	[B setBackgroundImage: [UIImage imageNamed: (game.p1Turn ? @"ConX.png" : @"ConO.png")] forState: UIControlStateNormal];
 	
 	[UIView beginAnimations: @"Stretch" context: NULL];
-	int parity = ([move integerValue] / size) % 2;
+	int parity = (([move integerValue] - 1) / size) % 2;
 	if (game.p1Turn ^ parity) {
 		B.frame = CGRectMake(B.center.x - B_width * 2, B.center.y - B_width / 4,  B_width * 4, B_width / 2);
 	} else {
 		B.frame = CGRectMake(B.center.x - B_width / 4, B.center.y - B_width * 2,  B_width / 2, B_width * 4);
 	}
 	[UIView commitAnimations];
+}
+
+- (void) tapped: (UIButton *) button{
+	NSNumber * num = [NSNumber numberWithInt: button.tag];
+	if([[game legalMoves] containsObject: num])
+		[game postHumanMove: num];
+}
+
+/** Convenience method for disabling all of the board's buttons. */
+- (void) disableButtons {
+	for (int i = 1; i < size * size + 1; i += 1) {
+		UIView *B = [self.view viewWithTag: i];
+		if ([B isKindOfClass: [UIButton class]]) {
+			[(UIButton *) B setEnabled: NO];
+		}
+	}
+}
+
+
+/** Convenience method for enabling all of the board's buttons. */
+- (void) enableButtons {
+	for (int i = 1; i < size * size + 1; i += 1) {
+		UIView *B = [self.view viewWithTag: i];
+		if ([B isKindOfClass: [UIButton class]]) {
+			[(UIButton *) B setEnabled: YES];
+		}
+	}
 }
 
 /*

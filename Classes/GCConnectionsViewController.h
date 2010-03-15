@@ -18,4 +18,9 @@
 - (id) initWithGame: (GCConnections *) _game;
 - (void) doMove: (NSNumber *) move;
 
+/// Convenience method for disabling all of the board's buttons.
+- (void) disableButtons;
+/// Convenience method for enabling all of the board's buttons.
+- (void) enableButtons;
+
 @end
