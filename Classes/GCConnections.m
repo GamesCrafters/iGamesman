@@ -9,6 +9,7 @@
 #import "GCConnections.h"
 #import "GCConnectionsViewController.h"
 #import "GCConnectionsOptionMenu.h"
+#import "IntegerQueue.h"
 
 #define BLANK @"+"
 #define X @"X"
@@ -29,7 +30,6 @@
 		player2Name = @"Player 2";
 		
 		size = 7;
-		fringe = [[NSMutableArray alloc] init];
 		
 		board = [[NSMutableArray alloc] initWithCapacity: size * size];
 		for (int j = 0; j < size; j += 1) {
@@ -158,101 +158,141 @@
 }
 
 - (BOOL) isPrimitive: (NSArray *) theBoard  { 
-	BOOL win = NO;
 	
-	//Check if player1 wins
-	// win =		
-	//fringe(check children)
-	//need another function continuousPath
+
+	if ([[self legalMoves] count] == 0)
+		return YES;
 	
-	[fringe removeAllObjects];
 	if(p1Turn){
 		//continuousPath going downwards
 	}
 	else{
 		//continuousPath going across
 	}
+	return NO;
 }
 
 - (BOOL) playerHasContinuousPath{
+	IntegerQueue * queue = [[IntegerQueue alloc] init];
 	int position;
 	int neighborPosition;
-	
-	// Iterate through the fringe until it is either empty or we have found a path to the end
-	while ([fringe count] > 0){
-		position = [[fringe objectAtIndex: 0] intValue];
-		[fringe removeObjectAtIndex: 0];
+
+	//////////////////p1 turn/////////////////////////
+	if (p1Turn){ 
 		
-	
-		//Check whose turn it is
-		//////////////////p1 turn/////////////////////////
-		if (p1Turn){ 
+		//add in initial positions, starting with the position directly below the top left connector
+		for (int i = size + 2; i < size * 2; i += 2){
+			if ([[board objectAtIndex: i] isEqual: X])
+				[queue push: i];
+		}
+		
+		while ([queue notEmpty]){
+			position = [queue pop];
+			
 			//Check to see if we are at the end of our path
-			if (position/size == size - 2) return YES;
+			if (position/size >= size - 2){
+				[queue release];
+				return YES;
+			}
 			
 			//add neighbors to the fringe
 			//////////////odd case///////////////	
 			if (position % 2){						
 				
-				//Check to be sure neighbor is filled and isn't in the fringe already
 				
-				/////left neighbor- only check if we are not in the leftmost column
+				/////left neighbor- only check if we are not in the leftmost column///////
 				if ((position % size) > 3){
 					neighborPosition = position - 2;
 					
 					//Check if The proper piece is in the neighboring position and that the position is not already in the fringe, then add it to the fringe
-					if ([[board objectAtIndex: neighborPosition] isEqual: X] && ![fringe containsObject:[NSNumber numberWithInt: neighborPosition]])
-						[fringe addObject: [NSNumber numberWithInt: neighborPosition]];
+					if ([[board objectAtIndex: neighborPosition] isEqual: X])
+						[queue push: neighborPosition];
 					
 				}
 				
-				
-				/////bottom left neighbor
+				/////bottom left neighbor///////
 				neighborPosition = position + size - 1;
 				
-				//Check if The proper piece is in the neighboring position and that the position is not already in the fringe, then add it to the fringe
-				if ([[board objectAtIndex: neighborPosition] isEqual: X] && ![fringe containsObject:[NSNumber numberWithInt: neighborPosition]])
-					[fringe addObject: [NSNumber numberWithInt: neighborPosition]];
+				//Check if The proper piece is in the neighboring position
+				if ([[board objectAtIndex: neighborPosition] isEqual: X])
+					[queue push: neighborPosition];
 				
-				
-				/////right neighbor- only check if we are not in the rightmost column
+				/////right neighbor- only check if we are not in the rightmost column///////
 				if ((position % size) < size - 2){
 					neighborPosition = position + 2;
 					
-					//Check if The proper piece is in the neighboring position and that the position is not already in the fringe, then add it to the fringe
-					if ([[board objectAtIndex: neighborPosition] isEqual: X] && ![fringe containsObject:[NSNumber numberWithInt: neighborPosition]])
-						[fringe addObject: [NSNumber numberWithInt: neighborPosition]];				
+					//Check if The proper piece is in the neighboring position
+					if ([[board objectAtIndex: neighborPosition] isEqual: X])
+						[queue push: neighborPosition];
 				}
 				
-				/////bottom right neighbor
+				/////bottom right neighbor///////
 				neighborPosition = position + size + 1;
 				
-				//Check if The proper piece is in the neighboring position and that the position is not already in the fringe, then add it to the fringe
-				if ([[board objectAtIndex: neighborPosition] isEqual: X] && ![fringe containsObject:[NSNumber numberWithInt: neighborPosition]])
-					[fringe addObject: [NSNumber numberWithInt: neighborPosition]];
-				
+				//Check if The proper piece is in the neighboring position
+				if ([[board objectAtIndex: neighborPosition] isEqual: X])
+					[queue push: neighborPosition];
 			}
 			//////////////even case///////////////
 			else{ 	
+				//////left neighbor- only check if we are not in the leftmost column
+				if ((position % size) > 2){
+					neighborPosition = position + size - 1;
+					
+					if ([[board objectAtIndex: neighborPosition] isEqual: X])
+						[queue push: neighborPosition];
+				}
+				
+				/////right neighbor- only check if we are not in the rightmost column
+				if ((position % size) < size - 1){
+					neighborPosition = position + size + 1;
+					
+					if ([[board objectAtIndex: neighborPosition] isEqual: X])
+						[queue push: neighborPosition];
+				}
+				
+				/////bottom neighbor
+				neighborPosition = position + size * 2;
+				if ([[board objectAtIndex: neighborPosition] isEqual: X])
+					[queue push: neighborPosition];
 			}
+		}
+	
+	//////////////////p2 turn/////////////////////////
+	}else { 
+		//add initial positions
+		for (int i = size + 2; i < size * (size - 1); i += size){
+			if ([[board objectAtIndex: i] isEqual: X])
+				[queue push: i];
+		}
 		
-		//////////////////p2 turn/////////////////////////
-		}else { 
-			//Check to see if we are at the end of our path
-			if (position % size == 1) return YES;
+		//check player
+		while ([queue notEmpty]){
+			position = [queue pop];
 			
-			//add neighbors to the fringe
+			//Check to see if we are at the end of our path
+			if (position % size >= size - 1){
+				[queue release];
+				return YES;
+			}
+			
+			//////////////odd case///////////////
 			if (position % 2){
+				//up- only check if not in topmost row
+				//down- only check if not in bottommost row
+				//upper left
+				//lower left
 				
 			}
+			//////////////even case///////////////
 			else{
 				
 			}
 		}
 	}
 	
+	[queue release];
 	return NO;
-	
 }
 						
 						
@@ -266,7 +306,6 @@
 	[player1Name release];
 	[player2Name release];
 	[board release];
-	[fringe release];
 	[humanMove release];
 	//[service release];
 	[super dealloc];

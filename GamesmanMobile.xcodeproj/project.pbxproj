@@ -56,6 +56,7 @@
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
 		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
+		9C692486115017B800E0EC4B /* IntegerQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C692485115017B800E0EC4B /* IntegerQueue.m */; };
 		C58F0D7511447A2A0058D6CE /* GCYBoardView0.xib in Resources */ = {isa = PBXBuildFile; fileRef = C58F0D7411447A2A0058D6CE /* GCYBoardView0.xib */; };
 		C58F0D7B114482CB0058D6CE /* GCYBoardView1.xib in Resources */ = {isa = PBXBuildFile; fileRef = C58F0D7A114482CB0058D6CE /* GCYBoardView1.xib */; };
 		C58F0D7F114484290058D6CE /* yboard.gif in Resources */ = {isa = PBXBuildFile; fileRef = C58F0D7E114484290058D6CE /* yboard.gif */; };
@@ -143,6 +144,8 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* GamesmanMobile_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GamesmanMobile_Prefix.pch; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* GamesmanMobile-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GamesmanMobile-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
+		9C692484115017B800E0EC4B /* IntegerQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntegerQueue.h; sourceTree = "<group>"; };
+		9C692485115017B800E0EC4B /* IntegerQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntegerQueue.m; sourceTree = "<group>"; };
 		C58F0D7411447A2A0058D6CE /* GCYBoardView0.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GCYBoardView0.xib; sourceTree = "<group>"; };
 		C58F0D7A114482CB0058D6CE /* GCYBoardView1.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GCYBoardView1.xib; sourceTree = "<group>"; };
 		C58F0D7E114484290058D6CE /* yboard.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = yboard.gif; sourceTree = "<group>"; };
@@ -229,6 +232,8 @@
 				0A19F1B011260E4F0003F8C7 /* GCConnectionsOptionMenu.m */,
 				0A0481E8113218D300156CFF /* GCConnectionsViewController.h */,
 				0A0481E9113218D300156CFF /* GCConnectionsViewController.m */,
+				9C692484115017B800E0EC4B /* IntegerQueue.h */,
+				9C692485115017B800E0EC4B /* IntegerQueue.m */,
 			);
 			name = Connections;
 			sourceTree = "<group>";
@@ -481,6 +486,7 @@
 				0A1ABC321135BD3300BA1B81 /* SBJsonParser.m in Sources */,
 				0A1ABC331135BD3300BA1B81 /* SBJsonWriter.m in Sources */,
 				C58F0D851144871B0058D6CE /* GCYGameViewController.m in Sources */,
+				9C692486115017B800E0EC4B /* IntegerQueue.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

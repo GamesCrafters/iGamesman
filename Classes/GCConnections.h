@@ -21,7 +21,6 @@
 	BOOL p1Turn;
 	NSNumber *humanMove;
 	PlayMode gameMode;
-	NSMutableArray *fringe;
 }
 
 @property (nonatomic, retain) NSString *player1Name, *player2Name;
