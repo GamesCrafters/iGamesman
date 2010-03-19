@@ -279,8 +279,24 @@
 			//////////////odd case///////////////
 			if (position % 2){
 				//up- only check if not in topmost row
+				//ART'S CHANGES/
+				if((position / size) > 3 * size){
+					neighborPosition = position - size;
+					
+					if([[board objectAtIndex: neighborPosition] isEqual: O])
+						[queue push: neighborPosition];
+				}
+			
 				//down- only check if not in bottommost row
+				if((position / size) < (size * (size - 3))){
+					neighborPosition = position + size;
+					
+					if([[board objectAtIndex: neighborPosition] isEqual: O])
+						[queue push: neighborPosition];
+					
+				}
 				//upper left
+				
 				//lower left
 				
 			}
