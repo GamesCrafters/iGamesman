@@ -8,7 +8,7 @@
 
 #import "GCGameController.h"
 
-#define DELAY 0.5
+#define DELAY 1
 
 
 @implementation GCGameController
@@ -180,6 +180,8 @@
 				int index = [legals indexOfObject: a_move];
 				maxRemote = MIN(maxRemote, [[remotes objectAtIndex: index] integerValue]);
 			}
+			int ind = [loseRemotes indexOfObject: [NSNumber numberWithInt: maxRemote]];
+			NSLog(@"L: %d", ind);
 			move = [loses objectAtIndex: [loseRemotes indexOfObject: [NSNumber numberWithInt: maxRemote]]];
 		}
 		

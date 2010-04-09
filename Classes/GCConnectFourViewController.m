@@ -262,8 +262,8 @@
 	int tagNum = 1;
 	for (int j = height - 1; j >= 0; j -= 1) {
 		for (int i = 0; i < width; i += 1) {
-			UIButton *B = [[UIButton buttonWithType: UIButtonTypeCustom] 
-						   initWithFrame: CGRectMake((10 + width/2) + i * (squareSize - 1), 10 + j * (squareSize - 1), squareSize, squareSize)];
+			UIButton *B = [UIButton buttonWithType: UIButtonTypeCustom];
+			[B setFrame: CGRectMake((10 + width/2) + i * (squareSize - 1), 10 + j * (squareSize - 1), squareSize, squareSize)];
 			[B setBackgroundImage: gridImg forState: UIControlStateNormal];
 			[B addTarget: self action: @selector(tapped:) forControlEvents: UIControlEventTouchUpInside];
 			B.adjustsImageWhenDisabled = NO;
