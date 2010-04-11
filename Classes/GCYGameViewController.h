@@ -7,13 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GCYGame.h"
 
 
 @interface GCYGameViewController : UIViewController {
-	
+	GCYGame *game;
 
 }
 
-- (id) initWithLayers: (int) layers;
+- (id) initWithLayers: (int) layers; //can probably delete
+- (id) initWithGame: (GCYGame *) _game;
+- (void) doMove: (NSNumber *) move;
+
+- (void) disableButtons;
+- (void) enableButtons;
+
 
 @end

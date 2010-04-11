@@ -19,6 +19,9 @@
 		case 1:
 			self = [super initWithNibName:@"GCYBoardView1" bundle: nil];
 			break;
+		case 2:
+			self = [super initWithNibName:@"GCYBoardView2" bundle: nil];
+			break;
 		default:
 			self = nil;
 			break;
@@ -27,11 +30,30 @@
 	return self;
 }
 
-/*
-// Implement loadView to create a view hierarchy programmatically, without using a nib.
-- (void)loadView {
+
+- (id) initWithGame: (GCYGame *) _game{
+	if (self = [super init]){
+		game = _game;
+		
+		switch  (game.layers){
+			case 0:
+				self = [super initWithNibName:@"GCYBoardView0" bundle: nil];
+				break;
+			case 1:
+				self = [super initWithNibName:@"GCYBoardView1" bundle: nil];
+				break;
+			case 2:
+				self = [super initWithNibName:@"GCYBoardView2" bundle: nil];
+				break;
+			default:
+				self = nil;
+				break;
+		}
+	}
+	return self;
 }
-*/
+
+
 
 /*
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.

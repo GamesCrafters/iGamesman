@@ -115,6 +115,7 @@
 	UISegmentedControl *segment = [[UISegmentedControl alloc] initWithFrame: CGRectMake(20, 10, 280, 26)];
     [segment insertSegmentWithTitle: @"0" atIndex: 0 animated: NO];
 	[segment insertSegmentWithTitle: @"1" atIndex: 1 animated: NO];
+	[segment insertSegmentWithTitle: @"2" atIndex: 2 animated: NO];
 	
 	[segment setSelectedSegmentIndex: layers];
 	
