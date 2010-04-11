@@ -61,6 +61,10 @@
 		C58F0D7B114482CB0058D6CE /* GCYBoardView1.xib in Resources */ = {isa = PBXBuildFile; fileRef = C58F0D7A114482CB0058D6CE /* GCYBoardView1.xib */; };
 		C58F0D7F114484290058D6CE /* yboard.gif in Resources */ = {isa = PBXBuildFile; fileRef = C58F0D7E114484290058D6CE /* yboard.gif */; };
 		C58F0D851144871B0058D6CE /* GCYGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C58F0D841144871B0058D6CE /* GCYGameViewController.m */; };
+		E4F6D8BC11716AE900BEAB78 /* yboard0aa.png in Resources */ = {isa = PBXBuildFile; fileRef = E4F6D8B911716AE900BEAB78 /* yboard0aa.png */; };
+		E4F6D8BD11716AE900BEAB78 /* yboard1aa.png in Resources */ = {isa = PBXBuildFile; fileRef = E4F6D8BA11716AE900BEAB78 /* yboard1aa.png */; };
+		E4F6D8BE11716AE900BEAB78 /* yBoard2aa.png in Resources */ = {isa = PBXBuildFile; fileRef = E4F6D8BB11716AE900BEAB78 /* yBoard2aa.png */; };
+		E4F6D8CE1171701000BEAB78 /* GCYBoardView2.xib in Resources */ = {isa = PBXBuildFile; fileRef = E4F6D8CD1171701000BEAB78 /* GCYBoardView2.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -151,6 +155,10 @@
 		C58F0D7E114484290058D6CE /* yboard.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = yboard.gif; sourceTree = "<group>"; };
 		C58F0D831144871B0058D6CE /* GCYGameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCYGameViewController.h; sourceTree = "<group>"; };
 		C58F0D841144871B0058D6CE /* GCYGameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCYGameViewController.m; sourceTree = "<group>"; };
+		E4F6D8B911716AE900BEAB78 /* yboard0aa.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yboard0aa.png; sourceTree = "<group>"; };
+		E4F6D8BA11716AE900BEAB78 /* yboard1aa.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yboard1aa.png; sourceTree = "<group>"; };
+		E4F6D8BB11716AE900BEAB78 /* yBoard2aa.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yBoard2aa.png; sourceTree = "<group>"; };
+		E4F6D8CD1171701000BEAB78 /* GCYBoardView2.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GCYBoardView2.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -369,6 +377,7 @@
 			children = (
 				C58F0D7411447A2A0058D6CE /* GCYBoardView0.xib */,
 				C58F0D7A114482CB0058D6CE /* GCYBoardView1.xib */,
+				E4F6D8CD1171701000BEAB78 /* GCYBoardView2.xib */,
 			);
 			name = YBoards;
 			sourceTree = "<group>";
@@ -376,6 +385,9 @@
 		C58F0D7D1144840D0058D6CE /* YGame */ = {
 			isa = PBXGroup;
 			children = (
+				E4F6D8B911716AE900BEAB78 /* yboard0aa.png */,
+				E4F6D8BA11716AE900BEAB78 /* yboard1aa.png */,
+				E4F6D8BB11716AE900BEAB78 /* yBoard2aa.png */,
 				C58F0D7E114484290058D6CE /* yboard.gif */,
 			);
 			name = YGame;
@@ -449,6 +461,10 @@
 				C58F0D7511447A2A0058D6CE /* GCYBoardView0.xib in Resources */,
 				C58F0D7B114482CB0058D6CE /* GCYBoardView1.xib in Resources */,
 				C58F0D7F114484290058D6CE /* yboard.gif in Resources */,
+				E4F6D8BC11716AE900BEAB78 /* yboard0aa.png in Resources */,
+				E4F6D8BD11716AE900BEAB78 /* yboard1aa.png in Resources */,
+				E4F6D8BE11716AE900BEAB78 /* yBoard2aa.png in Resources */,
+				E4F6D8CE1171701000BEAB78 /* GCYBoardView2.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
