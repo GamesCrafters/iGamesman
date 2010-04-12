@@ -21,6 +21,6 @@
 
 - (void) disableButtons;
 - (void) enableButtons;
-
+- (IBAction) tapped: (UIButton *) button;
 
 @end
