@@ -100,7 +100,7 @@
 
 
 - (void) doMove: (NSNumber *) move {
-	NSLog(@"do move: %d", move);
+	//NSLog(@"do move: %d", [move integerValue]);
 	UIButton *B = (UIButton *) [self.view viewWithTag: [move integerValue]];
 	//[B retain];
 	//[B removeFromSuperview];
