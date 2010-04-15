@@ -9,6 +9,7 @@
 #import "GCYGame.h"
 #import "GCYGameViewController.h"
 #import "GCYOptionMenu.h"
+#import "YGameQueue.h"
 
 #define BLANK @"+"
 #define X @"X"
@@ -41,356 +42,7 @@
 		for (int i = 0; i < 15; i += 1)
 			[board addObject: BLANK];
 		
-		
-		// Which pieces are connected to what
-		layer0Connections = [[NSDictionary alloc] initWithObjectsAndKeys: 
-							 
-							   [NSNumber numberWithInt: 1], [NSSet setWithObjects: [NSNumber numberWithInt: 2], [NSNumber numberWithInt: 3], nil], 
-		
-							   [NSNumber numberWithInt: 2], [NSSet setWithObjects: [NSNumber numberWithInt: 1], [NSNumber numberWithInt: 3], [NSNumber numberWithInt: 4], 
-															 [NSNumber numberWithInt: 5], nil], 
-		
-							   [NSNumber numberWithInt: 3], [NSSet setWithObjects: [NSNumber numberWithInt: 1], [NSNumber numberWithInt: 2], [NSNumber numberWithInt: 5], 
-															 [NSNumber numberWithInt: 6], nil], 
-		
-							   [NSNumber numberWithInt: 4], [NSSet setWithObjects: [NSNumber numberWithInt: 2], [NSNumber numberWithInt: 5], [NSNumber numberWithInt: 7], 
-															 [NSNumber numberWithInt: 8], nil], 
-		
-							   [NSNumber numberWithInt: 5], [NSSet setWithObjects: [NSNumber numberWithInt: 2], [NSNumber numberWithInt: 3], [NSNumber numberWithInt: 4], 
-															 [NSNumber numberWithInt: 6], [NSNumber numberWithInt: 8], [NSNumber numberWithInt: 9], nil], 
-		
-							   [NSNumber numberWithInt: 6], [NSSet setWithObjects: [NSNumber numberWithInt: 3], [NSNumber numberWithInt: 5], [NSNumber numberWithInt: 9], 
-															 [NSNumber numberWithInt: 10], nil], 
-		
-							   [NSNumber numberWithInt: 7], [NSSet setWithObjects: [NSNumber numberWithInt: 4], [NSNumber numberWithInt: 8], [NSNumber numberWithInt: 11], 
-															 [NSNumber numberWithInt: 12], nil], 
-		
-							   [NSNumber numberWithInt: 8], [NSSet setWithObjects: [NSNumber numberWithInt: 4], [NSNumber numberWithInt: 5], [NSNumber numberWithInt: 7], 
-															 [NSNumber numberWithInt: 9], [NSNumber numberWithInt: 12], [NSNumber numberWithInt: 13], nil], 
-							   
-							   [NSNumber numberWithInt: 9], [NSSet setWithObjects: [NSNumber numberWithInt: 5], [NSNumber numberWithInt: 6], [NSNumber numberWithInt: 8], 
-															  [NSNumber numberWithInt: 10], [NSNumber numberWithInt: 13], [NSNumber numberWithInt: 14], nil],
-		
-							   [NSNumber numberWithInt: 10], [NSSet setWithObjects: [NSNumber numberWithInt: 6], [NSNumber numberWithInt: 9], [NSNumber numberWithInt: 14], 
-															  [NSNumber numberWithInt: 15], nil],
-							   
-							   [NSNumber numberWithInt: 11], [NSSet setWithObjects: [NSNumber numberWithInt: 7], [NSNumber numberWithInt: 12], nil], 
-							   
-							   [NSNumber numberWithInt: 12], [NSSet setWithObjects: [NSNumber numberWithInt: 7], [NSNumber numberWithInt: 8], [NSNumber numberWithInt: 11], 
-															  [NSNumber numberWithInt: 13], nil], 
-		
-							   [NSNumber numberWithInt: 13], [NSSet setWithObjects: [NSNumber numberWithInt: 8], [NSNumber numberWithInt: 9], [NSNumber numberWithInt: 12], 
-															  [NSNumber numberWithInt: 14], nil], 
-		
-							   [NSNumber numberWithInt: 14], [NSSet setWithObjects: [NSNumber numberWithInt: 9], [NSNumber numberWithInt: 10], [NSNumber numberWithInt: 13], 
-															  [NSNumber numberWithInt: 15], nil], 
-		
-							   [NSNumber numberWithInt: 15], [NSSet setWithObjects: [NSNumber numberWithInt: 10], [NSNumber numberWithInt: 14], nil], nil];
-		
-		
-		layer1Connections = [[NSDictionary alloc] initWithObjectsAndKeys: 
-							 
-							 [NSNumber numberWithInt: 1], [NSSet setWithObjects: [NSNumber numberWithInt: 2], [NSNumber numberWithInt: 3], [NSNumber numberWithInt: 20], 
-														   [NSNumber numberWithInt: 21], [NSNumber numberWithInt: 22], nil], 
-							 
-							 [NSNumber numberWithInt: 2], [NSSet setWithObjects: [NSNumber numberWithInt: 1], [NSNumber numberWithInt: 3], [NSNumber numberWithInt: 4], 
-														   [NSNumber numberWithInt: 5], [NSNumber numberWithInt: 22], [NSNumber numberWithInt: 23], nil], 
-							 
-							 [NSNumber numberWithInt: 3], [NSSet setWithObjects: [NSNumber numberWithInt: 1], [NSNumber numberWithInt: 2], [NSNumber numberWithInt: 5], 
-														   [NSNumber numberWithInt: 6], [NSNumber numberWithInt: 19], [NSNumber numberWithInt: 20], nil], 
-							 
-							 [NSNumber numberWithInt: 4], [NSSet setWithObjects: [NSNumber numberWithInt: 2], [NSNumber numberWithInt: 5], [NSNumber numberWithInt: 7], 
-														   [NSNumber numberWithInt: 8], [NSNumber numberWithInt: 23], [NSNumber numberWithInt: 24], nil], 
-							 
-							 [NSNumber numberWithInt: 5], [NSSet setWithObjects: [NSNumber numberWithInt: 2], [NSNumber numberWithInt: 3], [NSNumber numberWithInt: 4], 
-														   [NSNumber numberWithInt: 6], [NSNumber numberWithInt: 8], [NSNumber numberWithInt: 9], nil], 
-							 
-							 [NSNumber numberWithInt: 6], [NSSet setWithObjects: [NSNumber numberWithInt: 3], [NSNumber numberWithInt: 5], [NSNumber numberWithInt: 9], 
-														   [NSNumber numberWithInt: 10], [NSNumber numberWithInt: 18], [NSNumber numberWithInt: 19], nil], 
-							 
-							 [NSNumber numberWithInt: 7], [NSSet setWithObjects: [NSNumber numberWithInt: 4], [NSNumber numberWithInt: 8], [NSNumber numberWithInt: 11], 
-														   [NSNumber numberWithInt: 12], [NSNumber numberWithInt: 24], [NSNumber numberWithInt: 25], nil], 
-							 
-							 [NSNumber numberWithInt: 8], [NSSet setWithObjects: [NSNumber numberWithInt: 4], [NSNumber numberWithInt: 5], [NSNumber numberWithInt: 7], 
-														   [NSNumber numberWithInt: 9], [NSNumber numberWithInt: 12], [NSNumber numberWithInt: 13], nil], 
-							 
-							 [NSNumber numberWithInt: 9], [NSSet setWithObjects: [NSNumber numberWithInt: 5], [NSNumber numberWithInt: 6], [NSNumber numberWithInt: 8], 
-														   [NSNumber numberWithInt: 10], [NSNumber numberWithInt: 13], [NSNumber numberWithInt: 14], nil],
-							 
-							 [NSNumber numberWithInt: 10], [NSSet setWithObjects: [NSNumber numberWithInt: 6], [NSNumber numberWithInt: 9], [NSNumber numberWithInt: 14], 
-															[NSNumber numberWithInt: 15], [NSNumber numberWithInt: 17], [NSNumber numberWithInt: 18], nil],
-							 
-							 [NSNumber numberWithInt: 11], [NSSet setWithObjects: [NSNumber numberWithInt: 7], [NSNumber numberWithInt: 12], [NSNumber numberWithInt: 25], 
-															[NSNumber numberWithInt: 26], [NSNumber numberWithInt: 27], nil], 
-							 
-							 [NSNumber numberWithInt: 12], [NSSet setWithObjects: [NSNumber numberWithInt: 7], [NSNumber numberWithInt: 8], [NSNumber numberWithInt: 11], 
-															[NSNumber numberWithInt: 13], [NSNumber numberWithInt: 27], [NSNumber numberWithInt: 28], nil], 
-							 
-							 [NSNumber numberWithInt: 13], [NSSet setWithObjects: [NSNumber numberWithInt: 8], [NSNumber numberWithInt: 9], [NSNumber numberWithInt: 12], 
-															[NSNumber numberWithInt: 14], [NSNumber numberWithInt: 28], [NSNumber numberWithInt: 29], nil], 
-							 
-							 [NSNumber numberWithInt: 14], [NSSet setWithObjects: [NSNumber numberWithInt: 9], [NSNumber numberWithInt: 10], [NSNumber numberWithInt: 13], 
-															[NSNumber numberWithInt: 15], [NSNumber numberWithInt: 29], [NSNumber numberWithInt: 30], nil], 
-							 
-							 [NSNumber numberWithInt: 15], [NSSet setWithObjects: [NSNumber numberWithInt: 10], [NSNumber numberWithInt: 14], [NSNumber numberWithInt: 16], 
-															[NSNumber numberWithInt: 17], [NSNumber numberWithInt: 30], nil], 
-							 
-							 [NSNumber numberWithInt: 16], [NSSet setWithObjects: [NSNumber numberWithInt: 15], [NSNumber numberWithInt: 17], [NSNumber numberWithInt: 30], nil], 
-							 
-							 [NSNumber numberWithInt: 17], [NSSet setWithObjects: [NSNumber numberWithInt: 10], [NSNumber numberWithInt: 15], [NSNumber numberWithInt: 16], 
-															[NSNumber numberWithInt: 18], nil], 
-							 
-							 [NSNumber numberWithInt: 18], [NSSet setWithObjects: [NSNumber numberWithInt: 6], [NSNumber numberWithInt: 10], [NSNumber numberWithInt: 17], 
-															[NSNumber numberWithInt: 19], nil],
-							 
-							 [NSNumber numberWithInt: 19], [NSSet setWithObjects: [NSNumber numberWithInt: 3], [NSNumber numberWithInt: 6], [NSNumber numberWithInt: 18], 
-															[NSNumber numberWithInt: 20], nil], 
-							 
-							 [NSNumber numberWithInt: 20], [NSSet setWithObjects: [NSNumber numberWithInt: 1], [NSNumber numberWithInt: 3], [NSNumber numberWithInt: 19], 
-															[NSNumber numberWithInt: 21], nil], 
-							 
-							 [NSNumber numberWithInt: 21], [NSSet setWithObjects: [NSNumber numberWithInt: 1], [NSNumber numberWithInt: 20], [NSNumber numberWithInt: 22], nil],
-							 
-							 [NSNumber numberWithInt: 22], [NSSet setWithObjects: [NSNumber numberWithInt: 1], [NSNumber numberWithInt: 2], [NSNumber numberWithInt: 21], 
-															[NSNumber numberWithInt: 23], nil], 
-							 
-							 [NSNumber numberWithInt: 23], [NSSet setWithObjects: [NSNumber numberWithInt: 2], [NSNumber numberWithInt: 4], [NSNumber numberWithInt: 22], 
-															[NSNumber numberWithInt: 24], nil], 
-							 
-							 [NSNumber numberWithInt: 24], [NSSet setWithObjects: [NSNumber numberWithInt: 4], [NSNumber numberWithInt: 7], [NSNumber numberWithInt: 23], 
-															[NSNumber numberWithInt: 25], nil],
-							 
-							 [NSNumber numberWithInt: 25], [NSSet setWithObjects: [NSNumber numberWithInt: 7], [NSNumber numberWithInt: 11], [NSNumber numberWithInt: 24], 
-															[NSNumber numberWithInt: 26], nil],
-							 
-							 [NSNumber numberWithInt: 26], [NSSet setWithObjects: [NSNumber numberWithInt: 11], [NSNumber numberWithInt: 25], [NSNumber numberWithInt: 27], nil],
-							 
-							 [NSNumber numberWithInt: 27], [NSSet setWithObjects: [NSNumber numberWithInt: 11], [NSNumber numberWithInt: 12], [NSNumber numberWithInt: 26], 
-															[NSNumber numberWithInt: 28], nil],
-							 
-							 [NSNumber numberWithInt: 28], [NSSet setWithObjects: [NSNumber numberWithInt: 12], [NSNumber numberWithInt: 13], [NSNumber numberWithInt: 27], 
-															[NSNumber numberWithInt: 29], nil],
-							 
-							 [NSNumber numberWithInt: 29], [NSSet setWithObjects: [NSNumber numberWithInt: 13], [NSNumber numberWithInt: 14], [NSNumber numberWithInt: 28], 
-															[NSNumber numberWithInt: 30], nil],
-							 
-							 [NSNumber numberWithInt: 30], [NSSet setWithObjects: [NSNumber numberWithInt: 14], [NSNumber numberWithInt: 15], [NSNumber numberWithInt: 16], 
-															[NSNumber numberWithInt: 29], nil], nil];
-		
-		
-		layer2Connections = [[NSDictionary alloc] initWithObjectsAndKeys: 
-							 
-							 [NSNumber numberWithInt: 1], [NSSet setWithObjects: [NSNumber numberWithInt: 2], [NSNumber numberWithInt: 3], [NSNumber numberWithInt: 20], 
-														   [NSNumber numberWithInt: 21], [NSNumber numberWithInt: 22], nil], 
-							 
-							 [NSNumber numberWithInt: 2], [NSSet setWithObjects: [NSNumber numberWithInt: 1], [NSNumber numberWithInt: 3], [NSNumber numberWithInt: 4], 
-														   [NSNumber numberWithInt: 5], [NSNumber numberWithInt: 22], [NSNumber numberWithInt: 23], nil], 
-							 
-							 [NSNumber numberWithInt: 3], [NSSet setWithObjects: [NSNumber numberWithInt: 1], [NSNumber numberWithInt: 2], [NSNumber numberWithInt: 5], 
-														   [NSNumber numberWithInt: 6], [NSNumber numberWithInt: 19], [NSNumber numberWithInt: 20], nil], 
-							 
-							 [NSNumber numberWithInt: 4], [NSSet setWithObjects: [NSNumber numberWithInt: 2], [NSNumber numberWithInt: 5], [NSNumber numberWithInt: 7], 
-														   [NSNumber numberWithInt: 8], [NSNumber numberWithInt: 23], [NSNumber numberWithInt: 24], nil], 
-							 
-							 [NSNumber numberWithInt: 5], [NSSet setWithObjects: [NSNumber numberWithInt: 2], [NSNumber numberWithInt: 3], [NSNumber numberWithInt: 4], 
-														   [NSNumber numberWithInt: 6], [NSNumber numberWithInt: 8], [NSNumber numberWithInt: 9], nil], 
-							 
-							 [NSNumber numberWithInt: 6], [NSSet setWithObjects: [NSNumber numberWithInt: 3], [NSNumber numberWithInt: 5], [NSNumber numberWithInt: 9], 
-														   [NSNumber numberWithInt: 10], [NSNumber numberWithInt: 18], [NSNumber numberWithInt: 19], nil], 
-							 
-							 [NSNumber numberWithInt: 7], [NSSet setWithObjects: [NSNumber numberWithInt: 4], [NSNumber numberWithInt: 8], [NSNumber numberWithInt: 11], 
-														   [NSNumber numberWithInt: 12], [NSNumber numberWithInt: 24], [NSNumber numberWithInt: 25], nil], 
-							 
-							 [NSNumber numberWithInt: 8], [NSSet setWithObjects: [NSNumber numberWithInt: 4], [NSNumber numberWithInt: 5], [NSNumber numberWithInt: 7], 
-														   [NSNumber numberWithInt: 9], [NSNumber numberWithInt: 12], [NSNumber numberWithInt: 13], nil], 
-							 
-							 [NSNumber numberWithInt: 9], [NSSet setWithObjects: [NSNumber numberWithInt: 5], [NSNumber numberWithInt: 6], [NSNumber numberWithInt: 8], 
-														   [NSNumber numberWithInt: 10], [NSNumber numberWithInt: 13], [NSNumber numberWithInt: 14], nil],
-							 
-							 [NSNumber numberWithInt: 10], [NSSet setWithObjects: [NSNumber numberWithInt: 6], [NSNumber numberWithInt: 9], [NSNumber numberWithInt: 14], 
-															[NSNumber numberWithInt: 15], [NSNumber numberWithInt: 17], [NSNumber numberWithInt: 18], nil],
-							 
-							 [NSNumber numberWithInt: 11], [NSSet setWithObjects: [NSNumber numberWithInt: 7], [NSNumber numberWithInt: 12], [NSNumber numberWithInt: 25], 
-															[NSNumber numberWithInt: 26], [NSNumber numberWithInt: 27], nil], 
-							 
-							 [NSNumber numberWithInt: 12], [NSSet setWithObjects: [NSNumber numberWithInt: 7], [NSNumber numberWithInt: 8], [NSNumber numberWithInt: 11], 
-															[NSNumber numberWithInt: 13], [NSNumber numberWithInt: 27], [NSNumber numberWithInt: 28], nil], 
-							 
-							 [NSNumber numberWithInt: 13], [NSSet setWithObjects: [NSNumber numberWithInt: 8], [NSNumber numberWithInt: 9], [NSNumber numberWithInt: 12], 
-															[NSNumber numberWithInt: 14], [NSNumber numberWithInt: 28], [NSNumber numberWithInt: 29], nil], 
-							 
-							 [NSNumber numberWithInt: 14], [NSSet setWithObjects: [NSNumber numberWithInt: 9], [NSNumber numberWithInt: 10], [NSNumber numberWithInt: 13], 
-															[NSNumber numberWithInt: 15], [NSNumber numberWithInt: 29], [NSNumber numberWithInt: 30], nil], 
-							 
-							 [NSNumber numberWithInt: 15], [NSSet setWithObjects: [NSNumber numberWithInt: 10], [NSNumber numberWithInt: 14], [NSNumber numberWithInt: 16], 
-															[NSNumber numberWithInt: 17], [NSNumber numberWithInt: 30], nil], 
-							 
-							 [NSNumber numberWithInt: 16], [NSSet setWithObjects: [NSNumber numberWithInt: 15], [NSNumber numberWithInt: 17], [NSNumber numberWithInt: 30],
-															[NSNumber numberWithInt: 31], [NSNumber numberWithInt: 32], [NSNumber numberWithInt: 48], nil], 
-							 
-							 [NSNumber numberWithInt: 17], [NSSet setWithObjects: [NSNumber numberWithInt: 10], [NSNumber numberWithInt: 15], [NSNumber numberWithInt: 16], 
-															[NSNumber numberWithInt: 18], [NSNumber numberWithInt: 32], [NSNumber numberWithInt: 33], nil], 
-							 
-							 [NSNumber numberWithInt: 18], [NSSet setWithObjects: [NSNumber numberWithInt: 6], [NSNumber numberWithInt: 10], [NSNumber numberWithInt: 17], 
-															[NSNumber numberWithInt: 19], [NSNumber numberWithInt: 33], [NSNumber numberWithInt: 34], nil],
-							 
-							 [NSNumber numberWithInt: 19], [NSSet setWithObjects: [NSNumber numberWithInt: 3], [NSNumber numberWithInt: 6], [NSNumber numberWithInt: 18], 
-															[NSNumber numberWithInt: 20], [NSNumber numberWithInt: 34], [NSNumber numberWithInt: 35], nil], 
-							 
-							 [NSNumber numberWithInt: 20], [NSSet setWithObjects: [NSNumber numberWithInt: 1], [NSNumber numberWithInt: 3], [NSNumber numberWithInt: 19], 
-															[NSNumber numberWithInt: 21], [NSNumber numberWithInt: 35], [NSNumber numberWithInt: 36], nil], 
-							 
-							 [NSNumber numberWithInt: 21], [NSSet setWithObjects: [NSNumber numberWithInt: 1], [NSNumber numberWithInt: 20], [NSNumber numberWithInt: 22], 
-															[NSNumber numberWithInt: 36], [NSNumber numberWithInt: 37], [NSNumber numberWithInt: 38], nil],
-							 
-							 [NSNumber numberWithInt: 22], [NSSet setWithObjects: [NSNumber numberWithInt: 1], [NSNumber numberWithInt: 2], [NSNumber numberWithInt: 21], 
-															[NSNumber numberWithInt: 23], [NSNumber numberWithInt: 38], [NSNumber numberWithInt: 39], nil], 
-							 
-							 [NSNumber numberWithInt: 23], [NSSet setWithObjects: [NSNumber numberWithInt: 2], [NSNumber numberWithInt: 4], [NSNumber numberWithInt: 22], 
-															[NSNumber numberWithInt: 24], [NSNumber numberWithInt: 39], [NSNumber numberWithInt: 40], nil], 
-							 
-							 [NSNumber numberWithInt: 24], [NSSet setWithObjects: [NSNumber numberWithInt: 4], [NSNumber numberWithInt: 7], [NSNumber numberWithInt: 23], 
-															[NSNumber numberWithInt: 25], [NSNumber numberWithInt: 40], [NSNumber numberWithInt: 41], nil],
-							 
-							 [NSNumber numberWithInt: 25], [NSSet setWithObjects: [NSNumber numberWithInt: 7], [NSNumber numberWithInt: 11], [NSNumber numberWithInt: 24], 
-															[NSNumber numberWithInt: 26], [NSNumber numberWithInt: 41], [NSNumber numberWithInt: 42], nil],
-							 
-							 [NSNumber numberWithInt: 26], [NSSet setWithObjects: [NSNumber numberWithInt: 11], [NSNumber numberWithInt: 25], [NSNumber numberWithInt: 27], 
-															[NSNumber numberWithInt: 42], [NSNumber numberWithInt: 43], [NSNumber numberWithInt: 44], nil],
-							 
-							 [NSNumber numberWithInt: 27], [NSSet setWithObjects: [NSNumber numberWithInt: 11], [NSNumber numberWithInt: 12], [NSNumber numberWithInt: 26], 
-															[NSNumber numberWithInt: 28], [NSNumber numberWithInt: 44], [NSNumber numberWithInt: 45], nil],
-							 
-							 [NSNumber numberWithInt: 28], [NSSet setWithObjects: [NSNumber numberWithInt: 12], [NSNumber numberWithInt: 13], [NSNumber numberWithInt: 27], 
-															[NSNumber numberWithInt: 29], [NSNumber numberWithInt: 45], [NSNumber numberWithInt: 46], nil],
-							 
-							 [NSNumber numberWithInt: 29], [NSSet setWithObjects: [NSNumber numberWithInt: 13], [NSNumber numberWithInt: 14], [NSNumber numberWithInt: 28], 
-															[NSNumber numberWithInt: 30], [NSNumber numberWithInt: 46], [NSNumber numberWithInt: 47], nil],
-							 
-							 [NSNumber numberWithInt: 30], [NSSet setWithObjects: [NSNumber numberWithInt: 14], [NSNumber numberWithInt: 15], [NSNumber numberWithInt: 16], 
-															[NSNumber numberWithInt: 29], [NSNumber numberWithInt: 47], [NSNumber numberWithInt: 48], nil], 
-							 
-							 [NSNumber numberWithInt: 31], [NSSet setWithObjects: [NSNumber numberWithInt: 16], [NSNumber numberWithInt: 32], [NSNumber numberWithInt: 48], nil], 
-							 
-							 [NSNumber numberWithInt: 32], [NSSet setWithObjects: [NSNumber numberWithInt: 16], [NSNumber numberWithInt: 17], [NSNumber numberWithInt: 31], 
-															[NSNumber numberWithInt: 33], nil], 
-							 
-							 [NSNumber numberWithInt: 33], [NSSet setWithObjects: [NSNumber numberWithInt: 17], [NSNumber numberWithInt: 18], [NSNumber numberWithInt: 32], 
-															[NSNumber numberWithInt: 34], nil], 
-							 
-							 [NSNumber numberWithInt: 34], [NSSet setWithObjects: [NSNumber numberWithInt: 18], [NSNumber numberWithInt: 19], [NSNumber numberWithInt: 33], 
-															[NSNumber numberWithInt: 35], nil], 
-							 
-							 [NSNumber numberWithInt: 35], [NSSet setWithObjects: [NSNumber numberWithInt: 19], [NSNumber numberWithInt: 20], [NSNumber numberWithInt: 34], 
-															[NSNumber numberWithInt: 36], nil], 
-							 
-							 [NSNumber numberWithInt: 36], [NSSet setWithObjects: [NSNumber numberWithInt: 20], [NSNumber numberWithInt: 21], [NSNumber numberWithInt: 35], 
-															[NSNumber numberWithInt: 37], nil], 
-							 
-							 [NSNumber numberWithInt: 37], [NSSet setWithObjects: [NSNumber numberWithInt: 21], [NSNumber numberWithInt: 36], [NSNumber numberWithInt: 38], nil], 
-							 
-							 [NSNumber numberWithInt: 38], [NSSet setWithObjects: [NSNumber numberWithInt: 21], [NSNumber numberWithInt: 22], [NSNumber numberWithInt: 37], 
-															[NSNumber numberWithInt: 39], nil], 
-							 
-							 [NSNumber numberWithInt: 39], [NSSet setWithObjects: [NSNumber numberWithInt: 22], [NSNumber numberWithInt: 23], [NSNumber numberWithInt: 38], 
-															[NSNumber numberWithInt: 40], nil], 
-							 
-							 [NSNumber numberWithInt: 40], [NSSet setWithObjects: [NSNumber numberWithInt: 23], [NSNumber numberWithInt: 24], [NSNumber numberWithInt: 39], 
-															[NSNumber numberWithInt: 41], nil], 
-							 
-							 [NSNumber numberWithInt: 41], [NSSet setWithObjects: [NSNumber numberWithInt: 24], [NSNumber numberWithInt: 25], [NSNumber numberWithInt: 40], 
-															[NSNumber numberWithInt: 42], nil], 
-							 
-							 [NSNumber numberWithInt: 42], [NSSet setWithObjects: [NSNumber numberWithInt: 25], [NSNumber numberWithInt: 26], [NSNumber numberWithInt: 41], 
-															[NSNumber numberWithInt: 43], nil], 
-							 
-							 [NSNumber numberWithInt: 43], [NSSet setWithObjects: [NSNumber numberWithInt: 26], [NSNumber numberWithInt: 42], [NSNumber numberWithInt: 44], nil], 
-							 
-							 [NSNumber numberWithInt: 44], [NSSet setWithObjects: [NSNumber numberWithInt: 26], [NSNumber numberWithInt: 27], [NSNumber numberWithInt: 43], 
-															[NSNumber numberWithInt: 45], nil], 
-							 
-							 [NSNumber numberWithInt: 45], [NSSet setWithObjects: [NSNumber numberWithInt: 27], [NSNumber numberWithInt: 28], [NSNumber numberWithInt: 44], 
-															[NSNumber numberWithInt: 46], nil], 
-							 
-							 [NSNumber numberWithInt: 46], [NSSet setWithObjects: [NSNumber numberWithInt: 28], [NSNumber numberWithInt: 29], [NSNumber numberWithInt: 45], 
-															[NSNumber numberWithInt: 47], nil], 
-							 
-							 [NSNumber numberWithInt: 47], [NSSet setWithObjects: [NSNumber numberWithInt: 29], [NSNumber numberWithInt: 30], [NSNumber numberWithInt: 46], 
-															[NSNumber numberWithInt: 48], nil], 
-							 
-							 [NSNumber numberWithInt: 48], [NSSet setWithObjects: [NSNumber numberWithInt: 16], [NSNumber numberWithInt: 30], [NSNumber numberWithInt: 31], 
-															[NSNumber numberWithInt: 47], nil], nil];
-		
-		positionConnections = layer0Connections;
-		
-		
-		//Which edges a point is connected to 
-		layer0edgesForPosition = [[NSDictionary alloc] initWithObjectsAndKeys: 
-								  [NSNumber numberWithInt: 1], [NSSet setWithObjects: [NSNumber numberWithInt: 1], [NSNumber numberWithInt: 3], nil], 
-								  [NSNumber numberWithInt: 2], [NSSet setWithObjects: [NSNumber numberWithInt: 1], nil],
-								  [NSNumber numberWithInt: 3], [NSSet setWithObjects: [NSNumber numberWithInt: 3], nil],
-								  [NSNumber numberWithInt: 4], [NSSet setWithObjects: [NSNumber numberWithInt: 1], nil],
-								  [NSNumber numberWithInt: 6], [NSSet setWithObjects: [NSNumber numberWithInt: 3], nil],
-								  [NSNumber numberWithInt: 7], [NSSet setWithObjects: [NSNumber numberWithInt: 1], nil],
-								  [NSNumber numberWithInt: 10], [NSSet setWithObjects: [NSNumber numberWithInt:	3], nil],
-								  [NSNumber numberWithInt: 11], [NSSet setWithObjects: [NSNumber numberWithInt: 1], [NSNumber numberWithInt: 2], nil],
-								  [NSNumber numberWithInt: 12], [NSSet setWithObjects: [NSNumber numberWithInt: 2], nil],
-								  [NSNumber numberWithInt: 13], [NSSet setWithObjects: [NSNumber numberWithInt: 2], nil],
-								  [NSNumber numberWithInt: 14], [NSSet setWithObjects: [NSNumber numberWithInt: 2], nil],
-								  [NSNumber numberWithInt: 15], [NSSet setWithObjects: [NSNumber numberWithInt: 2], [NSNumber numberWithInt: 3], nil], nil];
-		
-		layer1edgesForPosition = [[NSDictionary alloc] initWithObjectsAndKeys: 
-								  [NSNumber numberWithInt: 21], [NSSet setWithObjects: [NSNumber numberWithInt: 1], [NSNumber numberWithInt: 3], nil],
-								  [NSNumber numberWithInt: 22], [NSSet setWithObjects: [NSNumber numberWithInt: 1], nil],
-								  [NSNumber numberWithInt: 23], [NSSet setWithObjects: [NSNumber numberWithInt: 1], nil], 
-								  [NSNumber numberWithInt: 24], [NSSet setWithObjects: [NSNumber numberWithInt: 1], nil], 
-								  [NSNumber numberWithInt: 25], [NSSet setWithObjects: [NSNumber numberWithInt: 1], nil], 
-								  [NSNumber numberWithInt: 26], [NSSet setWithObjects: [NSNumber numberWithInt: 1], [NSNumber numberWithInt: 2], nil],
-								  [NSNumber numberWithInt: 27], [NSSet setWithObjects: [NSNumber numberWithInt: 2], nil], 
-								  [NSNumber numberWithInt: 28], [NSSet setWithObjects: [NSNumber numberWithInt: 2], nil], 
-								  [NSNumber numberWithInt: 29], [NSSet setWithObjects: [NSNumber numberWithInt: 2], nil], 
-								  [NSNumber numberWithInt: 30], [NSSet setWithObjects: [NSNumber numberWithInt: 2], nil], 
-								  [NSNumber numberWithInt: 16], [NSSet setWithObjects: [NSNumber numberWithInt: 2], [NSNumber numberWithInt: 3], nil],
-								  [NSNumber numberWithInt: 17], [NSSet setWithObjects: [NSNumber numberWithInt: 3], nil], 
-								  [NSNumber numberWithInt: 18], [NSSet setWithObjects: [NSNumber numberWithInt: 3], nil], 
-								  [NSNumber numberWithInt: 19], [NSSet setWithObjects: [NSNumber numberWithInt: 3], nil], 
-								  [NSNumber numberWithInt: 20], [NSSet setWithObjects: [NSNumber numberWithInt: 3], nil], nil];
-		
-		layer2edgesForPosition = [[NSDictionary alloc] initWithObjectsAndKeys: 
-								  [NSNumber numberWithInt: 37], [NSSet setWithObjects: [NSNumber numberWithInt: 1], [NSNumber numberWithInt: 3], nil],
-								  [NSNumber numberWithInt: 38], [NSSet setWithObjects: [NSNumber numberWithInt: 1], nil],
-								  [NSNumber numberWithInt: 39], [NSSet setWithObjects: [NSNumber numberWithInt: 1], nil], 
-								  [NSNumber numberWithInt: 40], [NSSet setWithObjects: [NSNumber numberWithInt: 1], nil], 
-								  [NSNumber numberWithInt: 41], [NSSet setWithObjects: [NSNumber numberWithInt: 1], nil], 
-								  [NSNumber numberWithInt: 42], [NSSet setWithObjects: [NSNumber numberWithInt: 1], nil], 
-								  [NSNumber numberWithInt: 43], [NSSet setWithObjects: [NSNumber numberWithInt: 1], [NSNumber numberWithInt: 3], nil],
-								  [NSNumber numberWithInt: 44], [NSSet setWithObjects: [NSNumber numberWithInt: 2], nil], 
-								  [NSNumber numberWithInt: 45], [NSSet setWithObjects: [NSNumber numberWithInt: 2], nil], 
-								  [NSNumber numberWithInt: 46], [NSSet setWithObjects: [NSNumber numberWithInt: 2], nil], 
-								  [NSNumber numberWithInt: 47], [NSSet setWithObjects: [NSNumber numberWithInt: 2], nil], 
-								  [NSNumber numberWithInt: 48], [NSSet setWithObjects: [NSNumber numberWithInt: 2], nil], 
-								  [NSNumber numberWithInt: 31], [NSSet setWithObjects: [NSNumber numberWithInt: 1], [NSNumber numberWithInt: 3], nil], 
-								  [NSNumber numberWithInt: 32], [NSSet setWithObjects: [NSNumber numberWithInt: 3], nil], 
-								  [NSNumber numberWithInt: 33], [NSSet setWithObjects: [NSNumber numberWithInt: 3], nil], 
-								  [NSNumber numberWithInt: 34], [NSSet setWithObjects: [NSNumber numberWithInt: 3], nil],
-								  [NSNumber numberWithInt: 35], [NSSet setWithObjects: [NSNumber numberWithInt: 3], nil],
-								  [NSNumber numberWithInt: 36], [NSSet setWithObjects: [NSNumber numberWithInt: 3], nil], nil];
-		
-		edgesForPosition = layer0edgesForPosition;
-		
-		
-		//What the side pieces are for the current layout
-		layer0leftEdges = [[NSArray alloc] initWithObjects: [NSNumber numberWithInt: 1], [NSNumber numberWithInt: 2], [NSNumber numberWithInt: 4], 
-						   [NSNumber numberWithInt: 7], [NSNumber numberWithInt: 11], nil];
-		
-		layer1leftEdges = [[NSArray alloc] initWithObjects: [NSNumber numberWithInt: 21], [NSNumber numberWithInt: 22], [NSNumber numberWithInt: 23], 
-						   [NSNumber numberWithInt: 24], [NSNumber numberWithInt: 25], [NSNumber numberWithInt: 26], nil];
-		
-		layer2leftEdges = [[NSArray alloc] initWithObjects: [NSNumber numberWithInt: 37], [NSNumber numberWithInt: 38], [NSNumber numberWithInt: 39], 
-						   [NSNumber numberWithInt: 40], [NSNumber numberWithInt: 41], [NSNumber numberWithInt: 42], [NSNumber numberWithInt: 43], nil];
-		
-		leftEdges = layer0leftEdges;
-		
+		[self setGrossDictionaryValues];
 	}
 	
 	return self;
@@ -430,32 +82,26 @@
 
 
 - (void) resetBoard {
-	if(board){
+	if (board)
 		[board release];
-	}
+	
 	
 	switch (layers){
 		case 0:
 			board = [[NSMutableArray alloc] initWithCapacity: 15];
-			positionConnections = layer0Connections;
-			leftEdges = layer0leftEdges;
-			edgesForPosition = layer0edgesForPosition;
+			[self setGrossDictionaryValues];
 			for (int i = 0; i < 15; i += 1)
 				[board addObject: BLANK];
 			break;
 		case 1:
 			board = [[NSMutableArray alloc] initWithCapacity: 30];
-			positionConnections = layer1Connections;
-			leftEdges = layer1leftEdges;
-			edgesForPosition = layer1edgesForPosition;
+			[self setGrossDictionaryValues];
 			for (int i = 0; i < 30; i += 1)
 				[board addObject: BLANK];
 			break;
 		case 2:
 			board = [[NSMutableArray alloc] initWithCapacity: 48];
-			positionConnections = layer2Connections;
-			leftEdges = layer2leftEdges;
-			edgesForPosition = layer2edgesForPosition;
+			[self setGrossDictionaryValues];
 			for (int i = 0; i < 48; i += 1)
 				[board addObject: BLANK];
 			break;
@@ -505,10 +151,11 @@
 
 
 - (void) doMove: (NSNumber *) move {
-	NSLog(@"do move alpha: %d", move);
+	
 	[yGameView doMove: move];
 	
 	int slot = [move integerValue] - 1;
+	//NSLog(@"do move alpha: %d", slot);
 	[board replaceObjectAtIndex: slot withObject: (p1Turn ? X : O)];
 	p1Turn = !p1Turn;
 	
@@ -518,11 +165,55 @@
 - (BOOL) isPrimitive: (NSArray *) theBoard  { 
 	if ([[self legalMoves] count] == 0)
 		return YES;
-	else return NO;
+	//else return NO;
 	
 	
 	//Super Happy Fun Time!!!
 	
+	NSMutableSet *edgesReached = [NSMutableSet set];
+	NSString *currentPlayerPiece;
+	NSNumber *currentPosition;
+	YGameQueue *queue = [[YGameQueue alloc] init];
+	
+	if (p1Turn)
+		currentPlayerPiece = O;
+	else 
+		currentPlayerPiece = X;
+	
+	//for each position in left edges
+	for (NSNumber * position in leftEdges){
+		[queue emptyFringe]; //don't empty the blacklist, just the queue
+			
+		//If the current player's piece is in that position, add it to the queue
+		if ([self boardContainsPlayerPiece: currentPlayerPiece forPosition: position]){
+			[queue push: position];
+			[edgesReached setSet: [edgesForPosition objectForKey: position]];
+			NSLog([edgesForPosition description]);
+		}
+		while ([queue notEmpty]){
+			currentPosition = [queue pop];
+			
+			
+			//Add each neighboring position that contains the current player's piece to the queue
+			for (NSNumber * neighborPosition in [edgesForPosition objectForKey: currentPosition]){
+				if ([self boardContainsPlayerPiece: currentPlayerPiece forPosition: neighborPosition]){
+					[queue push: neighborPosition];
+					NSSet * neighborEdges = [edgesForPosition objectForKey: neighborPosition];
+					//If neighborPosition touches any edges, add them to edgesReached
+					if (neighborEdges)
+						[edgesReached unionSet: neighborEdges];
+				}
+			}
+			if ([edgesReached count] == 3){
+				[queue release];
+				return YES;
+			}
+			
+		}
+	
+	}
+	[queue release];
+	return NO;
 }
 
 - (void) notifyWhenReady {
@@ -530,20 +221,389 @@
 		[[NSNotificationCenter defaultCenter] postNotificationName: @"GameIsReady" object: self];
 }
 
+
+/** A really simple utility function that deals with the whole 'convert an NSNumber to an int and check for a player's piece in that
+ ** position' thing **/
+- (BOOL) boardContainsPlayerPiece: (NSString *) piece forPosition: (NSNumber *) position{
+
+	if ([[board objectAtIndex: [position intValue] - 1] isEqual: piece]){
+		return YES;
+	}
+	else return NO;
+}
+
+
+/** The really gross function that sets values for position connections, leftEdges (technically an array, not a dictionary), and edgesForPosition **/
+- (void) setGrossDictionaryValues{
+	if (positionConnections)
+		[positionConnections release];
+	
+	if (leftEdges)
+		[leftEdges release];
+	
+	if (edgesForPosition)
+		[edgesForPosition release];
+	
+	switch (layers){
+		case 0:
+			positionConnections = [[NSDictionary alloc] initWithObjectsAndKeys: 
+								 
+								 [NSSet setWithObjects: [NSNumber numberWithInt: 2], [NSNumber numberWithInt: 3], nil], [NSNumber numberWithInt: 1], 
+								 
+								 [NSSet setWithObjects: [NSNumber numberWithInt: 1], [NSNumber numberWithInt: 3], [NSNumber numberWithInt: 4], 
+															   [NSNumber numberWithInt: 5], nil], 
+								 
+								 [NSNumber numberWithInt: 3], [NSSet setWithObjects: [NSNumber numberWithInt: 1], [NSNumber numberWithInt: 2], [NSNumber numberWithInt: 5], 
+															   [NSNumber numberWithInt: 6], nil], [NSNumber numberWithInt: 2], 
+								 
+								 [NSSet setWithObjects: [NSNumber numberWithInt: 2], [NSNumber numberWithInt: 5], [NSNumber numberWithInt: 7], 
+															   [NSNumber numberWithInt: 8], nil], [NSNumber numberWithInt: 4], 
+								 
+								 [NSSet setWithObjects: [NSNumber numberWithInt: 2], [NSNumber numberWithInt: 3], [NSNumber numberWithInt: 4], 
+															   [NSNumber numberWithInt: 6], [NSNumber numberWithInt: 8], [NSNumber numberWithInt: 9], nil], [NSNumber numberWithInt: 5], 
+								 
+								 [NSSet setWithObjects: [NSNumber numberWithInt: 3], [NSNumber numberWithInt: 5], [NSNumber numberWithInt: 9], 
+															   [NSNumber numberWithInt: 10], nil], [NSNumber numberWithInt: 6], 
+								 
+								 [NSSet setWithObjects: [NSNumber numberWithInt: 4], [NSNumber numberWithInt: 8], [NSNumber numberWithInt: 11], 
+															   [NSNumber numberWithInt: 12], nil], [NSNumber numberWithInt: 7], 
+								 
+								 [NSSet setWithObjects: [NSNumber numberWithInt: 4], [NSNumber numberWithInt: 5], [NSNumber numberWithInt: 7], 
+															   [NSNumber numberWithInt: 9], [NSNumber numberWithInt: 12], [NSNumber numberWithInt: 13], nil],  [NSNumber numberWithInt: 8], 
+								 
+								 [NSSet setWithObjects: [NSNumber numberWithInt: 5], [NSNumber numberWithInt: 6], [NSNumber numberWithInt: 8], 
+															   [NSNumber numberWithInt: 10], [NSNumber numberWithInt: 13], [NSNumber numberWithInt: 14], nil], [NSNumber numberWithInt: 9], 
+								 
+								 [NSSet setWithObjects: [NSNumber numberWithInt: 6], [NSNumber numberWithInt: 9], [NSNumber numberWithInt: 14], 
+																[NSNumber numberWithInt: 15], nil], [NSNumber numberWithInt: 10], 
+								 
+								 [NSSet setWithObjects: [NSNumber numberWithInt: 7], [NSNumber numberWithInt: 12], nil], 
+								 
+								 [NSNumber numberWithInt: 12], [NSSet setWithObjects: [NSNumber numberWithInt: 7], [NSNumber numberWithInt: 8], [NSNumber numberWithInt: 11], 
+																[NSNumber numberWithInt: 13], nil], [NSNumber numberWithInt: 11], 
+								 
+								 [NSSet setWithObjects: [NSNumber numberWithInt: 8], [NSNumber numberWithInt: 9], [NSNumber numberWithInt: 12], 
+																[NSNumber numberWithInt: 14], nil], [NSNumber numberWithInt: 13], 
+								 
+								 [NSSet setWithObjects: [NSNumber numberWithInt: 9], [NSNumber numberWithInt: 10], [NSNumber numberWithInt: 13], 
+																[NSNumber numberWithInt: 15], nil], [NSNumber numberWithInt: 14], 
+								 
+								 [NSSet setWithObjects: [NSNumber numberWithInt: 10], [NSNumber numberWithInt: 14], nil], [NSNumber numberWithInt: 15], nil];
+			
+			edgesForPosition = [[NSDictionary alloc] initWithObjectsAndKeys: 
+									  [NSSet setWithObjects: [NSNumber numberWithInt: 1], [NSNumber numberWithInt: 3], nil], [NSNumber numberWithInt: 1], 
+									  [NSSet setWithObjects: [NSNumber numberWithInt: 1], nil], [NSNumber numberWithInt: 2], 
+									  [NSSet setWithObjects: [NSNumber numberWithInt: 3], nil], [NSNumber numberWithInt: 3], 
+									  [NSSet setWithObjects: [NSNumber numberWithInt: 1], nil], [NSNumber numberWithInt: 4], 
+									  [NSSet setWithObjects: [NSNumber numberWithInt: 3], nil], [NSNumber numberWithInt: 6], 
+									  [NSSet setWithObjects: [NSNumber numberWithInt: 1], nil], [NSNumber numberWithInt: 7], 
+									  [NSSet setWithObjects: [NSNumber numberWithInt:	3], nil], [NSNumber numberWithInt: 10], 
+									  [NSSet setWithObjects: [NSNumber numberWithInt: 1], [NSNumber numberWithInt: 2], nil], [NSNumber numberWithInt: 11], 
+									  [NSSet setWithObjects: [NSNumber numberWithInt: 2], nil], [NSNumber numberWithInt: 12], 
+									  [NSSet setWithObjects: [NSNumber numberWithInt: 2], nil], [NSNumber numberWithInt: 13], 
+									  [NSSet setWithObjects: [NSNumber numberWithInt: 2], nil], [NSNumber numberWithInt: 14], 
+									  [NSSet setWithObjects: [NSNumber numberWithInt: 2], [NSNumber numberWithInt: 3], nil], [NSNumber numberWithInt: 15],  nil];
+			
+			leftEdges = [[NSArray alloc] initWithObjects: [NSNumber numberWithInt: 1], [NSNumber numberWithInt: 2], [NSNumber numberWithInt: 4], 
+							   [NSNumber numberWithInt: 7], [NSNumber numberWithInt: 11], nil];
+			break;
+		case 1:
+			positionConnections = [[NSDictionary alloc] initWithObjectsAndKeys: 
+								 
+								 [NSSet setWithObjects: [NSNumber numberWithInt: 2], [NSNumber numberWithInt: 3], [NSNumber numberWithInt: 20], 
+															   [NSNumber numberWithInt: 21], [NSNumber numberWithInt: 22], nil], [NSNumber numberWithInt: 1], 
+								 
+								 [NSSet setWithObjects: [NSNumber numberWithInt: 1], [NSNumber numberWithInt: 3], [NSNumber numberWithInt: 4], 
+															   [NSNumber numberWithInt: 5], [NSNumber numberWithInt: 22], [NSNumber numberWithInt: 23], nil], [NSNumber numberWithInt: 2], 
+								 
+								 [NSSet setWithObjects: [NSNumber numberWithInt: 1], [NSNumber numberWithInt: 2], [NSNumber numberWithInt: 5], 
+															   [NSNumber numberWithInt: 6], [NSNumber numberWithInt: 19], [NSNumber numberWithInt: 20], nil], [NSNumber numberWithInt: 3], 
+								 
+								 [NSSet setWithObjects: [NSNumber numberWithInt: 2], [NSNumber numberWithInt: 5], [NSNumber numberWithInt: 7], 
+															   [NSNumber numberWithInt: 8], [NSNumber numberWithInt: 23], [NSNumber numberWithInt: 24], nil], [NSNumber numberWithInt: 4], 
+								 
+								 [NSSet setWithObjects: [NSNumber numberWithInt: 2], [NSNumber numberWithInt: 3], [NSNumber numberWithInt: 4], 
+															   [NSNumber numberWithInt: 6], [NSNumber numberWithInt: 8], [NSNumber numberWithInt: 9], nil], [NSNumber numberWithInt: 5], 
+								 
+								 [NSSet setWithObjects: [NSNumber numberWithInt: 3], [NSNumber numberWithInt: 5], [NSNumber numberWithInt: 9], 
+															   [NSNumber numberWithInt: 10], [NSNumber numberWithInt: 18], [NSNumber numberWithInt: 19], nil], [NSNumber numberWithInt: 6], 
+								 
+								 [NSNumber numberWithInt: 7], [NSSet setWithObjects: [NSNumber numberWithInt: 4], [NSNumber numberWithInt: 8], [NSNumber numberWithInt: 11], 
+															   [NSNumber numberWithInt: 12], [NSNumber numberWithInt: 24], [NSNumber numberWithInt: 25], nil], 
+								 
+								 [NSNumber numberWithInt: 8], [NSSet setWithObjects: [NSNumber numberWithInt: 4], [NSNumber numberWithInt: 5], [NSNumber numberWithInt: 7], 
+															   [NSNumber numberWithInt: 9], [NSNumber numberWithInt: 12], [NSNumber numberWithInt: 13], nil], 
+								 
+								 [NSNumber numberWithInt: 9], [NSSet setWithObjects: [NSNumber numberWithInt: 5], [NSNumber numberWithInt: 6], [NSNumber numberWithInt: 8], 
+															   [NSNumber numberWithInt: 10], [NSNumber numberWithInt: 13], [NSNumber numberWithInt: 14], nil],
+								 
+								 [NSNumber numberWithInt: 10], [NSSet setWithObjects: [NSNumber numberWithInt: 6], [NSNumber numberWithInt: 9], [NSNumber numberWithInt: 14], 
+																[NSNumber numberWithInt: 15], [NSNumber numberWithInt: 17], [NSNumber numberWithInt: 18], nil],
+								 
+								 [NSNumber numberWithInt: 11], [NSSet setWithObjects: [NSNumber numberWithInt: 7], [NSNumber numberWithInt: 12], [NSNumber numberWithInt: 25], 
+																[NSNumber numberWithInt: 26], [NSNumber numberWithInt: 27], nil], 
+								 
+								 [NSNumber numberWithInt: 12], [NSSet setWithObjects: [NSNumber numberWithInt: 7], [NSNumber numberWithInt: 8], [NSNumber numberWithInt: 11], 
+																[NSNumber numberWithInt: 13], [NSNumber numberWithInt: 27], [NSNumber numberWithInt: 28], nil], 
+								 
+								 [NSNumber numberWithInt: 13], [NSSet setWithObjects: [NSNumber numberWithInt: 8], [NSNumber numberWithInt: 9], [NSNumber numberWithInt: 12], 
+																[NSNumber numberWithInt: 14], [NSNumber numberWithInt: 28], [NSNumber numberWithInt: 29], nil], 
+								 
+								 [NSNumber numberWithInt: 14], [NSSet setWithObjects: [NSNumber numberWithInt: 9], [NSNumber numberWithInt: 10], [NSNumber numberWithInt: 13], 
+																[NSNumber numberWithInt: 15], [NSNumber numberWithInt: 29], [NSNumber numberWithInt: 30], nil], 
+								 
+								 [NSNumber numberWithInt: 15], [NSSet setWithObjects: [NSNumber numberWithInt: 10], [NSNumber numberWithInt: 14], [NSNumber numberWithInt: 16], 
+																[NSNumber numberWithInt: 17], [NSNumber numberWithInt: 30], nil], 
+								 
+								 [NSNumber numberWithInt: 16], [NSSet setWithObjects: [NSNumber numberWithInt: 15], [NSNumber numberWithInt: 17], [NSNumber numberWithInt: 30], nil], 
+								 
+								 [NSNumber numberWithInt: 17], [NSSet setWithObjects: [NSNumber numberWithInt: 10], [NSNumber numberWithInt: 15], [NSNumber numberWithInt: 16], 
+																[NSNumber numberWithInt: 18], nil], 
+								 
+								 [NSNumber numberWithInt: 18], [NSSet setWithObjects: [NSNumber numberWithInt: 6], [NSNumber numberWithInt: 10], [NSNumber numberWithInt: 17], 
+																[NSNumber numberWithInt: 19], nil],
+								 
+								 [NSNumber numberWithInt: 19], [NSSet setWithObjects: [NSNumber numberWithInt: 3], [NSNumber numberWithInt: 6], [NSNumber numberWithInt: 18], 
+																[NSNumber numberWithInt: 20], nil], 
+								 
+								 [NSNumber numberWithInt: 20], [NSSet setWithObjects: [NSNumber numberWithInt: 1], [NSNumber numberWithInt: 3], [NSNumber numberWithInt: 19], 
+																[NSNumber numberWithInt: 21], nil], 
+								 
+								 [NSNumber numberWithInt: 21], [NSSet setWithObjects: [NSNumber numberWithInt: 1], [NSNumber numberWithInt: 20], [NSNumber numberWithInt: 22], nil],
+								 
+								 [NSNumber numberWithInt: 22], [NSSet setWithObjects: [NSNumber numberWithInt: 1], [NSNumber numberWithInt: 2], [NSNumber numberWithInt: 21], 
+																[NSNumber numberWithInt: 23], nil], 
+								 
+								 [NSNumber numberWithInt: 23], [NSSet setWithObjects: [NSNumber numberWithInt: 2], [NSNumber numberWithInt: 4], [NSNumber numberWithInt: 22], 
+																[NSNumber numberWithInt: 24], nil], 
+								 
+								 [NSNumber numberWithInt: 24], [NSSet setWithObjects: [NSNumber numberWithInt: 4], [NSNumber numberWithInt: 7], [NSNumber numberWithInt: 23], 
+																[NSNumber numberWithInt: 25], nil],
+								 
+								 [NSNumber numberWithInt: 25], [NSSet setWithObjects: [NSNumber numberWithInt: 7], [NSNumber numberWithInt: 11], [NSNumber numberWithInt: 24], 
+																[NSNumber numberWithInt: 26], nil],
+								 
+								 [NSNumber numberWithInt: 26], [NSSet setWithObjects: [NSNumber numberWithInt: 11], [NSNumber numberWithInt: 25], [NSNumber numberWithInt: 27], nil],
+								 
+								 [NSNumber numberWithInt: 27], [NSSet setWithObjects: [NSNumber numberWithInt: 11], [NSNumber numberWithInt: 12], [NSNumber numberWithInt: 26], 
+																[NSNumber numberWithInt: 28], nil],
+								 
+								 [NSNumber numberWithInt: 28], [NSSet setWithObjects: [NSNumber numberWithInt: 12], [NSNumber numberWithInt: 13], [NSNumber numberWithInt: 27], 
+																[NSNumber numberWithInt: 29], nil],
+								 
+								 [NSNumber numberWithInt: 29], [NSSet setWithObjects: [NSNumber numberWithInt: 13], [NSNumber numberWithInt: 14], [NSNumber numberWithInt: 28], 
+																[NSNumber numberWithInt: 30], nil],
+								 
+								 [NSNumber numberWithInt: 30], [NSSet setWithObjects: [NSNumber numberWithInt: 14], [NSNumber numberWithInt: 15], [NSNumber numberWithInt: 16], 
+																[NSNumber numberWithInt: 29], nil], nil];
+			
+
+			edgesForPosition = [[NSDictionary alloc] initWithObjectsAndKeys: 
+									  [NSNumber numberWithInt: 21], [NSSet setWithObjects: [NSNumber numberWithInt: 1], [NSNumber numberWithInt: 3], nil],
+									  [NSNumber numberWithInt: 22], [NSSet setWithObjects: [NSNumber numberWithInt: 1], nil],
+									  [NSNumber numberWithInt: 23], [NSSet setWithObjects: [NSNumber numberWithInt: 1], nil], 
+									  [NSNumber numberWithInt: 24], [NSSet setWithObjects: [NSNumber numberWithInt: 1], nil], 
+									  [NSNumber numberWithInt: 25], [NSSet setWithObjects: [NSNumber numberWithInt: 1], nil], 
+									  [NSNumber numberWithInt: 26], [NSSet setWithObjects: [NSNumber numberWithInt: 1], [NSNumber numberWithInt: 2], nil],
+									  [NSNumber numberWithInt: 27], [NSSet setWithObjects: [NSNumber numberWithInt: 2], nil], 
+									  [NSNumber numberWithInt: 28], [NSSet setWithObjects: [NSNumber numberWithInt: 2], nil], 
+									  [NSNumber numberWithInt: 29], [NSSet setWithObjects: [NSNumber numberWithInt: 2], nil], 
+									  [NSNumber numberWithInt: 30], [NSSet setWithObjects: [NSNumber numberWithInt: 2], nil], 
+									  [NSNumber numberWithInt: 16], [NSSet setWithObjects: [NSNumber numberWithInt: 2], [NSNumber numberWithInt: 3], nil],
+									  [NSNumber numberWithInt: 17], [NSSet setWithObjects: [NSNumber numberWithInt: 3], nil], 
+									  [NSNumber numberWithInt: 18], [NSSet setWithObjects: [NSNumber numberWithInt: 3], nil], 
+									  [NSNumber numberWithInt: 19], [NSSet setWithObjects: [NSNumber numberWithInt: 3], nil], 
+									  [NSNumber numberWithInt: 20], [NSSet setWithObjects: [NSNumber numberWithInt: 3], nil], nil];
+			
+			leftEdges = [[NSArray alloc] initWithObjects: [NSNumber numberWithInt: 21], [NSNumber numberWithInt: 22], [NSNumber numberWithInt: 23], 
+							   [NSNumber numberWithInt: 24], [NSNumber numberWithInt: 25], [NSNumber numberWithInt: 26], nil];
+			
+			
+			break;
+		case 2:
+			positionConnections = [[NSDictionary alloc] initWithObjectsAndKeys: 
+								 
+								 [NSNumber numberWithInt: 1], [NSSet setWithObjects: [NSNumber numberWithInt: 2], [NSNumber numberWithInt: 3], [NSNumber numberWithInt: 20], 
+															   [NSNumber numberWithInt: 21], [NSNumber numberWithInt: 22], nil], 
+								 
+								 [NSNumber numberWithInt: 2], [NSSet setWithObjects: [NSNumber numberWithInt: 1], [NSNumber numberWithInt: 3], [NSNumber numberWithInt: 4], 
+															   [NSNumber numberWithInt: 5], [NSNumber numberWithInt: 22], [NSNumber numberWithInt: 23], nil], 
+								 
+								 [NSNumber numberWithInt: 3], [NSSet setWithObjects: [NSNumber numberWithInt: 1], [NSNumber numberWithInt: 2], [NSNumber numberWithInt: 5], 
+															   [NSNumber numberWithInt: 6], [NSNumber numberWithInt: 19], [NSNumber numberWithInt: 20], nil], 
+								 
+								 [NSNumber numberWithInt: 4], [NSSet setWithObjects: [NSNumber numberWithInt: 2], [NSNumber numberWithInt: 5], [NSNumber numberWithInt: 7], 
+															   [NSNumber numberWithInt: 8], [NSNumber numberWithInt: 23], [NSNumber numberWithInt: 24], nil], 
+								 
+								 [NSNumber numberWithInt: 5], [NSSet setWithObjects: [NSNumber numberWithInt: 2], [NSNumber numberWithInt: 3], [NSNumber numberWithInt: 4], 
+															   [NSNumber numberWithInt: 6], [NSNumber numberWithInt: 8], [NSNumber numberWithInt: 9], nil], 
+								 
+								 [NSNumber numberWithInt: 6], [NSSet setWithObjects: [NSNumber numberWithInt: 3], [NSNumber numberWithInt: 5], [NSNumber numberWithInt: 9], 
+															   [NSNumber numberWithInt: 10], [NSNumber numberWithInt: 18], [NSNumber numberWithInt: 19], nil], 
+								 
+								 [NSNumber numberWithInt: 7], [NSSet setWithObjects: [NSNumber numberWithInt: 4], [NSNumber numberWithInt: 8], [NSNumber numberWithInt: 11], 
+															   [NSNumber numberWithInt: 12], [NSNumber numberWithInt: 24], [NSNumber numberWithInt: 25], nil], 
+								 
+								 [NSNumber numberWithInt: 8], [NSSet setWithObjects: [NSNumber numberWithInt: 4], [NSNumber numberWithInt: 5], [NSNumber numberWithInt: 7], 
+															   [NSNumber numberWithInt: 9], [NSNumber numberWithInt: 12], [NSNumber numberWithInt: 13], nil], 
+								 
+								 [NSNumber numberWithInt: 9], [NSSet setWithObjects: [NSNumber numberWithInt: 5], [NSNumber numberWithInt: 6], [NSNumber numberWithInt: 8], 
+															   [NSNumber numberWithInt: 10], [NSNumber numberWithInt: 13], [NSNumber numberWithInt: 14], nil],
+								 
+								 [NSNumber numberWithInt: 10], [NSSet setWithObjects: [NSNumber numberWithInt: 6], [NSNumber numberWithInt: 9], [NSNumber numberWithInt: 14], 
+																[NSNumber numberWithInt: 15], [NSNumber numberWithInt: 17], [NSNumber numberWithInt: 18], nil],
+								 
+								 [NSNumber numberWithInt: 11], [NSSet setWithObjects: [NSNumber numberWithInt: 7], [NSNumber numberWithInt: 12], [NSNumber numberWithInt: 25], 
+																[NSNumber numberWithInt: 26], [NSNumber numberWithInt: 27], nil], 
+								 
+								 [NSNumber numberWithInt: 12], [NSSet setWithObjects: [NSNumber numberWithInt: 7], [NSNumber numberWithInt: 8], [NSNumber numberWithInt: 11], 
+																[NSNumber numberWithInt: 13], [NSNumber numberWithInt: 27], [NSNumber numberWithInt: 28], nil], 
+								 
+								 [NSNumber numberWithInt: 13], [NSSet setWithObjects: [NSNumber numberWithInt: 8], [NSNumber numberWithInt: 9], [NSNumber numberWithInt: 12], 
+																[NSNumber numberWithInt: 14], [NSNumber numberWithInt: 28], [NSNumber numberWithInt: 29], nil], 
+								 
+								 [NSNumber numberWithInt: 14], [NSSet setWithObjects: [NSNumber numberWithInt: 9], [NSNumber numberWithInt: 10], [NSNumber numberWithInt: 13], 
+																[NSNumber numberWithInt: 15], [NSNumber numberWithInt: 29], [NSNumber numberWithInt: 30], nil], 
+								 
+								 [NSNumber numberWithInt: 15], [NSSet setWithObjects: [NSNumber numberWithInt: 10], [NSNumber numberWithInt: 14], [NSNumber numberWithInt: 16], 
+																[NSNumber numberWithInt: 17], [NSNumber numberWithInt: 30], nil], 
+								 
+								 [NSNumber numberWithInt: 16], [NSSet setWithObjects: [NSNumber numberWithInt: 15], [NSNumber numberWithInt: 17], [NSNumber numberWithInt: 30],
+																[NSNumber numberWithInt: 31], [NSNumber numberWithInt: 32], [NSNumber numberWithInt: 48], nil], 
+								 
+								 [NSNumber numberWithInt: 17], [NSSet setWithObjects: [NSNumber numberWithInt: 10], [NSNumber numberWithInt: 15], [NSNumber numberWithInt: 16], 
+																[NSNumber numberWithInt: 18], [NSNumber numberWithInt: 32], [NSNumber numberWithInt: 33], nil], 
+								 
+								 [NSNumber numberWithInt: 18], [NSSet setWithObjects: [NSNumber numberWithInt: 6], [NSNumber numberWithInt: 10], [NSNumber numberWithInt: 17], 
+																[NSNumber numberWithInt: 19], [NSNumber numberWithInt: 33], [NSNumber numberWithInt: 34], nil],
+								 
+								 [NSNumber numberWithInt: 19], [NSSet setWithObjects: [NSNumber numberWithInt: 3], [NSNumber numberWithInt: 6], [NSNumber numberWithInt: 18], 
+																[NSNumber numberWithInt: 20], [NSNumber numberWithInt: 34], [NSNumber numberWithInt: 35], nil], 
+								 
+								 [NSNumber numberWithInt: 20], [NSSet setWithObjects: [NSNumber numberWithInt: 1], [NSNumber numberWithInt: 3], [NSNumber numberWithInt: 19], 
+																[NSNumber numberWithInt: 21], [NSNumber numberWithInt: 35], [NSNumber numberWithInt: 36], nil], 
+								 
+								 [NSNumber numberWithInt: 21], [NSSet setWithObjects: [NSNumber numberWithInt: 1], [NSNumber numberWithInt: 20], [NSNumber numberWithInt: 22], 
+																[NSNumber numberWithInt: 36], [NSNumber numberWithInt: 37], [NSNumber numberWithInt: 38], nil],
+								 
+								 [NSNumber numberWithInt: 22], [NSSet setWithObjects: [NSNumber numberWithInt: 1], [NSNumber numberWithInt: 2], [NSNumber numberWithInt: 21], 
+																[NSNumber numberWithInt: 23], [NSNumber numberWithInt: 38], [NSNumber numberWithInt: 39], nil], 
+								 
+								 [NSNumber numberWithInt: 23], [NSSet setWithObjects: [NSNumber numberWithInt: 2], [NSNumber numberWithInt: 4], [NSNumber numberWithInt: 22], 
+																[NSNumber numberWithInt: 24], [NSNumber numberWithInt: 39], [NSNumber numberWithInt: 40], nil], 
+								 
+								 [NSNumber numberWithInt: 24], [NSSet setWithObjects: [NSNumber numberWithInt: 4], [NSNumber numberWithInt: 7], [NSNumber numberWithInt: 23], 
+																[NSNumber numberWithInt: 25], [NSNumber numberWithInt: 40], [NSNumber numberWithInt: 41], nil],
+								 
+								 [NSNumber numberWithInt: 25], [NSSet setWithObjects: [NSNumber numberWithInt: 7], [NSNumber numberWithInt: 11], [NSNumber numberWithInt: 24], 
+																[NSNumber numberWithInt: 26], [NSNumber numberWithInt: 41], [NSNumber numberWithInt: 42], nil],
+								 
+								 [NSNumber numberWithInt: 26], [NSSet setWithObjects: [NSNumber numberWithInt: 11], [NSNumber numberWithInt: 25], [NSNumber numberWithInt: 27], 
+																[NSNumber numberWithInt: 42], [NSNumber numberWithInt: 43], [NSNumber numberWithInt: 44], nil],
+								 
+								 [NSNumber numberWithInt: 27], [NSSet setWithObjects: [NSNumber numberWithInt: 11], [NSNumber numberWithInt: 12], [NSNumber numberWithInt: 26], 
+																[NSNumber numberWithInt: 28], [NSNumber numberWithInt: 44], [NSNumber numberWithInt: 45], nil],
+								 
+								 [NSNumber numberWithInt: 28], [NSSet setWithObjects: [NSNumber numberWithInt: 12], [NSNumber numberWithInt: 13], [NSNumber numberWithInt: 27], 
+																[NSNumber numberWithInt: 29], [NSNumber numberWithInt: 45], [NSNumber numberWithInt: 46], nil],
+								 
+								 [NSNumber numberWithInt: 29], [NSSet setWithObjects: [NSNumber numberWithInt: 13], [NSNumber numberWithInt: 14], [NSNumber numberWithInt: 28], 
+																[NSNumber numberWithInt: 30], [NSNumber numberWithInt: 46], [NSNumber numberWithInt: 47], nil],
+								 
+								 [NSNumber numberWithInt: 30], [NSSet setWithObjects: [NSNumber numberWithInt: 14], [NSNumber numberWithInt: 15], [NSNumber numberWithInt: 16], 
+																[NSNumber numberWithInt: 29], [NSNumber numberWithInt: 47], [NSNumber numberWithInt: 48], nil], 
+								 
+								 [NSNumber numberWithInt: 31], [NSSet setWithObjects: [NSNumber numberWithInt: 16], [NSNumber numberWithInt: 32], [NSNumber numberWithInt: 48], nil], 
+								 
+								 [NSNumber numberWithInt: 32], [NSSet setWithObjects: [NSNumber numberWithInt: 16], [NSNumber numberWithInt: 17], [NSNumber numberWithInt: 31], 
+																[NSNumber numberWithInt: 33], nil], 
+								 
+								 [NSNumber numberWithInt: 33], [NSSet setWithObjects: [NSNumber numberWithInt: 17], [NSNumber numberWithInt: 18], [NSNumber numberWithInt: 32], 
+																[NSNumber numberWithInt: 34], nil], 
+								 
+								 [NSNumber numberWithInt: 34], [NSSet setWithObjects: [NSNumber numberWithInt: 18], [NSNumber numberWithInt: 19], [NSNumber numberWithInt: 33], 
+																[NSNumber numberWithInt: 35], nil], 
+								 
+								 [NSNumber numberWithInt: 35], [NSSet setWithObjects: [NSNumber numberWithInt: 19], [NSNumber numberWithInt: 20], [NSNumber numberWithInt: 34], 
+																[NSNumber numberWithInt: 36], nil], 
+								 
+								 [NSNumber numberWithInt: 36], [NSSet setWithObjects: [NSNumber numberWithInt: 20], [NSNumber numberWithInt: 21], [NSNumber numberWithInt: 35], 
+																[NSNumber numberWithInt: 37], nil], 
+								 
+								 [NSNumber numberWithInt: 37], [NSSet setWithObjects: [NSNumber numberWithInt: 21], [NSNumber numberWithInt: 36], [NSNumber numberWithInt: 38], nil], 
+								 
+								 [NSNumber numberWithInt: 38], [NSSet setWithObjects: [NSNumber numberWithInt: 21], [NSNumber numberWithInt: 22], [NSNumber numberWithInt: 37], 
+																[NSNumber numberWithInt: 39], nil], 
+								 
+								 [NSNumber numberWithInt: 39], [NSSet setWithObjects: [NSNumber numberWithInt: 22], [NSNumber numberWithInt: 23], [NSNumber numberWithInt: 38], 
+																[NSNumber numberWithInt: 40], nil], 
+								 
+								 [NSNumber numberWithInt: 40], [NSSet setWithObjects: [NSNumber numberWithInt: 23], [NSNumber numberWithInt: 24], [NSNumber numberWithInt: 39], 
+																[NSNumber numberWithInt: 41], nil], 
+								 
+								 [NSNumber numberWithInt: 41], [NSSet setWithObjects: [NSNumber numberWithInt: 24], [NSNumber numberWithInt: 25], [NSNumber numberWithInt: 40], 
+																[NSNumber numberWithInt: 42], nil], 
+								 
+								 [NSNumber numberWithInt: 42], [NSSet setWithObjects: [NSNumber numberWithInt: 25], [NSNumber numberWithInt: 26], [NSNumber numberWithInt: 41], 
+																[NSNumber numberWithInt: 43], nil], 
+								 
+								 [NSNumber numberWithInt: 43], [NSSet setWithObjects: [NSNumber numberWithInt: 26], [NSNumber numberWithInt: 42], [NSNumber numberWithInt: 44], nil], 
+								 
+								 [NSNumber numberWithInt: 44], [NSSet setWithObjects: [NSNumber numberWithInt: 26], [NSNumber numberWithInt: 27], [NSNumber numberWithInt: 43], 
+																[NSNumber numberWithInt: 45], nil], 
+								 
+								 [NSNumber numberWithInt: 45], [NSSet setWithObjects: [NSNumber numberWithInt: 27], [NSNumber numberWithInt: 28], [NSNumber numberWithInt: 44], 
+																[NSNumber numberWithInt: 46], nil], 
+								 
+								 [NSNumber numberWithInt: 46], [NSSet setWithObjects: [NSNumber numberWithInt: 28], [NSNumber numberWithInt: 29], [NSNumber numberWithInt: 45], 
+																[NSNumber numberWithInt: 47], nil], 
+								 
+								 [NSNumber numberWithInt: 47], [NSSet setWithObjects: [NSNumber numberWithInt: 29], [NSNumber numberWithInt: 30], [NSNumber numberWithInt: 46], 
+																[NSNumber numberWithInt: 48], nil], 
+								 
+								 [NSNumber numberWithInt: 48], [NSSet setWithObjects: [NSNumber numberWithInt: 16], [NSNumber numberWithInt: 30], [NSNumber numberWithInt: 31], 
+																[NSNumber numberWithInt: 47], nil], nil];
+			
+			edgesForPosition = [[NSDictionary alloc] initWithObjectsAndKeys: 
+									  [NSNumber numberWithInt: 37], [NSSet setWithObjects: [NSNumber numberWithInt: 1], [NSNumber numberWithInt: 3], nil],
+									  [NSNumber numberWithInt: 38], [NSSet setWithObjects: [NSNumber numberWithInt: 1], nil],
+									  [NSNumber numberWithInt: 39], [NSSet setWithObjects: [NSNumber numberWithInt: 1], nil], 
+									  [NSNumber numberWithInt: 40], [NSSet setWithObjects: [NSNumber numberWithInt: 1], nil], 
+									  [NSNumber numberWithInt: 41], [NSSet setWithObjects: [NSNumber numberWithInt: 1], nil], 
+									  [NSNumber numberWithInt: 42], [NSSet setWithObjects: [NSNumber numberWithInt: 1], nil], 
+									  [NSNumber numberWithInt: 43], [NSSet setWithObjects: [NSNumber numberWithInt: 1], [NSNumber numberWithInt: 3], nil],
+									  [NSNumber numberWithInt: 44], [NSSet setWithObjects: [NSNumber numberWithInt: 2], nil], 
+									  [NSNumber numberWithInt: 45], [NSSet setWithObjects: [NSNumber numberWithInt: 2], nil], 
+									  [NSNumber numberWithInt: 46], [NSSet setWithObjects: [NSNumber numberWithInt: 2], nil], 
+									  [NSNumber numberWithInt: 47], [NSSet setWithObjects: [NSNumber numberWithInt: 2], nil], 
+									  [NSNumber numberWithInt: 48], [NSSet setWithObjects: [NSNumber numberWithInt: 2], nil], 
+									  [NSNumber numberWithInt: 31], [NSSet setWithObjects: [NSNumber numberWithInt: 1], [NSNumber numberWithInt: 3], nil], 
+									  [NSNumber numberWithInt: 32], [NSSet setWithObjects: [NSNumber numberWithInt: 3], nil], 
+									  [NSNumber numberWithInt: 33], [NSSet setWithObjects: [NSNumber numberWithInt: 3], nil], 
+									  [NSNumber numberWithInt: 34], [NSSet setWithObjects: [NSNumber numberWithInt: 3], nil],
+									  [NSNumber numberWithInt: 35], [NSSet setWithObjects: [NSNumber numberWithInt: 3], nil],
+									  [NSNumber numberWithInt: 36], [NSSet setWithObjects: [NSNumber numberWithInt: 3], nil], nil];
+			
+			leftEdges = [[NSArray alloc] initWithObjects: [NSNumber numberWithInt: 37], [NSNumber numberWithInt: 38], [NSNumber numberWithInt: 39], 
+							   [NSNumber numberWithInt: 40], [NSNumber numberWithInt: 41], [NSNumber numberWithInt: 42], [NSNumber numberWithInt: 43], nil];
+			break;
+		default:
+			positionConnections = nil;
+			edgesForPosition = nil;
+			leftEdges = nil;
+			break;
+	}
+}
+
+
 - (void) dealloc {
 	[player1Name release];
 	[player2Name release];
 	[board release];
 	[humanMove release];
-	[layer0Connections release];
-	[layer1Connections release];
-	[layer2Connections release];
-	[layer0leftEdges release];
-	[layer1leftEdges release];
-	[layer2leftEdges release];
-	[layer0edgesForPosition release];
-	[layer1edgesForPosition	release];
-	[layer2edgesForPosition release];
+	[positionConnections release];
+	[leftEdges release];
+	[edgesForPosition release];
 	//[service release];
 	[super dealloc];
 }

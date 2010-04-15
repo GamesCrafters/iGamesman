@@ -24,19 +24,6 @@
 	NSDictionary *edgesForPosition;
 	NSArray *leftEdges;
 	
-	//ghettotastic until I figure out what to do. 
-	NSDictionary *layer0Connections;
-	NSDictionary *layer1Connections;
-	NSDictionary *layer2Connections;
-	
-	//More ghettotastiliciousness
-	NSDictionary *layer0edgesForPosition;
-	NSDictionary *layer1edgesForPosition;
-	NSDictionary *layer2edgesForPosition;
-	
-	NSArray *layer0leftEdges;
-	NSArray *layer1leftEdges;
-	NSArray *layer2leftEdges;
 }
 
 @property (nonatomic, retain) NSDictionary *edgesForPosition;
@@ -49,5 +36,7 @@
 
 - (void) resetBoard;
 - (void) postHumanMove: (NSNumber *) num;
+- (BOOL) boardContainsPlayerPiece: (NSString *) piece forPosition: (NSNumber *) position;
+- (void) setGrossDictionaryValues;
 
 @end
