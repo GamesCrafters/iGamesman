@@ -22,6 +22,8 @@
 @synthesize layers;
 @synthesize p1Turn;
 @synthesize positionConnections;
+@synthesize edgesForPosition;
+@synthesize leftEdges;
 
 - (id) init {
 	if (self = [super init]) {
@@ -39,6 +41,8 @@
 		for (int i = 0; i < 15; i += 1)
 			[board addObject: BLANK];
 		
+		
+		// Which pieces are connected to what
 		layer0Connections = [[NSDictionary alloc] initWithObjectsAndKeys: 
 							 
 							   [NSNumber numberWithInt: 1], [NSSet setWithObjects: [NSNumber numberWithInt: 2], [NSNumber numberWithInt: 3], nil], 
@@ -318,6 +322,75 @@
 															[NSNumber numberWithInt: 47], nil], nil];
 		
 		positionConnections = layer0Connections;
+		
+		
+		//Which edges a point is connected to 
+		layer0edgesForPosition = [[NSDictionary alloc] initWithObjectsAndKeys: 
+								  [NSNumber numberWithInt: 1], [NSSet setWithObjects: [NSNumber numberWithInt: 1], [NSNumber numberWithInt: 3], nil], 
+								  [NSNumber numberWithInt: 2], [NSSet setWithObjects: [NSNumber numberWithInt: 1], nil],
+								  [NSNumber numberWithInt: 3], [NSSet setWithObjects: [NSNumber numberWithInt: 3], nil],
+								  [NSNumber numberWithInt: 4], [NSSet setWithObjects: [NSNumber numberWithInt: 1], nil],
+								  [NSNumber numberWithInt: 6], [NSSet setWithObjects: [NSNumber numberWithInt: 3], nil],
+								  [NSNumber numberWithInt: 7], [NSSet setWithObjects: [NSNumber numberWithInt: 1], nil],
+								  [NSNumber numberWithInt: 10], [NSSet setWithObjects: [NSNumber numberWithInt:	3], nil],
+								  [NSNumber numberWithInt: 11], [NSSet setWithObjects: [NSNumber numberWithInt: 1], [NSNumber numberWithInt: 2], nil],
+								  [NSNumber numberWithInt: 12], [NSSet setWithObjects: [NSNumber numberWithInt: 2], nil],
+								  [NSNumber numberWithInt: 13], [NSSet setWithObjects: [NSNumber numberWithInt: 2], nil],
+								  [NSNumber numberWithInt: 14], [NSSet setWithObjects: [NSNumber numberWithInt: 2], nil],
+								  [NSNumber numberWithInt: 15], [NSSet setWithObjects: [NSNumber numberWithInt: 2], [NSNumber numberWithInt: 3], nil], nil];
+		
+		layer1edgesForPosition = [[NSDictionary alloc] initWithObjectsAndKeys: 
+								  [NSNumber numberWithInt: 21], [NSSet setWithObjects: [NSNumber numberWithInt: 1], [NSNumber numberWithInt: 3], nil],
+								  [NSNumber numberWithInt: 22], [NSSet setWithObjects: [NSNumber numberWithInt: 1], nil],
+								  [NSNumber numberWithInt: 23], [NSSet setWithObjects: [NSNumber numberWithInt: 1], nil], 
+								  [NSNumber numberWithInt: 24], [NSSet setWithObjects: [NSNumber numberWithInt: 1], nil], 
+								  [NSNumber numberWithInt: 25], [NSSet setWithObjects: [NSNumber numberWithInt: 1], nil], 
+								  [NSNumber numberWithInt: 26], [NSSet setWithObjects: [NSNumber numberWithInt: 1], [NSNumber numberWithInt: 2], nil],
+								  [NSNumber numberWithInt: 27], [NSSet setWithObjects: [NSNumber numberWithInt: 2], nil], 
+								  [NSNumber numberWithInt: 28], [NSSet setWithObjects: [NSNumber numberWithInt: 2], nil], 
+								  [NSNumber numberWithInt: 29], [NSSet setWithObjects: [NSNumber numberWithInt: 2], nil], 
+								  [NSNumber numberWithInt: 30], [NSSet setWithObjects: [NSNumber numberWithInt: 2], nil], 
+								  [NSNumber numberWithInt: 16], [NSSet setWithObjects: [NSNumber numberWithInt: 2], [NSNumber numberWithInt: 3], nil],
+								  [NSNumber numberWithInt: 17], [NSSet setWithObjects: [NSNumber numberWithInt: 3], nil], 
+								  [NSNumber numberWithInt: 18], [NSSet setWithObjects: [NSNumber numberWithInt: 3], nil], 
+								  [NSNumber numberWithInt: 19], [NSSet setWithObjects: [NSNumber numberWithInt: 3], nil], 
+								  [NSNumber numberWithInt: 20], [NSSet setWithObjects: [NSNumber numberWithInt: 3], nil], nil];
+		
+		layer2edgesForPosition = [[NSDictionary alloc] initWithObjectsAndKeys: 
+								  [NSNumber numberWithInt: 37], [NSSet setWithObjects: [NSNumber numberWithInt: 1], [NSNumber numberWithInt: 3], nil],
+								  [NSNumber numberWithInt: 38], [NSSet setWithObjects: [NSNumber numberWithInt: 1], nil],
+								  [NSNumber numberWithInt: 39], [NSSet setWithObjects: [NSNumber numberWithInt: 1], nil], 
+								  [NSNumber numberWithInt: 40], [NSSet setWithObjects: [NSNumber numberWithInt: 1], nil], 
+								  [NSNumber numberWithInt: 41], [NSSet setWithObjects: [NSNumber numberWithInt: 1], nil], 
+								  [NSNumber numberWithInt: 42], [NSSet setWithObjects: [NSNumber numberWithInt: 1], nil], 
+								  [NSNumber numberWithInt: 43], [NSSet setWithObjects: [NSNumber numberWithInt: 1], [NSNumber numberWithInt: 3], nil],
+								  [NSNumber numberWithInt: 44], [NSSet setWithObjects: [NSNumber numberWithInt: 2], nil], 
+								  [NSNumber numberWithInt: 45], [NSSet setWithObjects: [NSNumber numberWithInt: 2], nil], 
+								  [NSNumber numberWithInt: 46], [NSSet setWithObjects: [NSNumber numberWithInt: 2], nil], 
+								  [NSNumber numberWithInt: 47], [NSSet setWithObjects: [NSNumber numberWithInt: 2], nil], 
+								  [NSNumber numberWithInt: 48], [NSSet setWithObjects: [NSNumber numberWithInt: 2], nil], 
+								  [NSNumber numberWithInt: 31], [NSSet setWithObjects: [NSNumber numberWithInt: 1], [NSNumber numberWithInt: 3], nil], 
+								  [NSNumber numberWithInt: 32], [NSSet setWithObjects: [NSNumber numberWithInt: 3], nil], 
+								  [NSNumber numberWithInt: 33], [NSSet setWithObjects: [NSNumber numberWithInt: 3], nil], 
+								  [NSNumber numberWithInt: 34], [NSSet setWithObjects: [NSNumber numberWithInt: 3], nil],
+								  [NSNumber numberWithInt: 35], [NSSet setWithObjects: [NSNumber numberWithInt: 3], nil],
+								  [NSNumber numberWithInt: 36], [NSSet setWithObjects: [NSNumber numberWithInt: 3], nil], nil];
+		
+		edgesForPosition = layer0edgesForPosition;
+		
+		
+		//What the side pieces are for the current layout
+		layer0leftEdges = [[NSArray alloc] initWithObjects: [NSNumber numberWithInt: 1], [NSNumber numberWithInt: 2], [NSNumber numberWithInt: 4], 
+						   [NSNumber numberWithInt: 7], [NSNumber numberWithInt: 11], nil];
+		
+		layer1leftEdges = [[NSArray alloc] initWithObjects: [NSNumber numberWithInt: 21], [NSNumber numberWithInt: 22], [NSNumber numberWithInt: 23], 
+						   [NSNumber numberWithInt: 24], [NSNumber numberWithInt: 25], [NSNumber numberWithInt: 26], nil];
+		
+		layer2leftEdges = [[NSArray alloc] initWithObjects: [NSNumber numberWithInt: 37], [NSNumber numberWithInt: 38], [NSNumber numberWithInt: 39], 
+						   [NSNumber numberWithInt: 40], [NSNumber numberWithInt: 41], [NSNumber numberWithInt: 42], [NSNumber numberWithInt: 43], nil];
+		
+		leftEdges = layer0leftEdges;
+		
 	}
 	
 	return self;
@@ -365,18 +438,24 @@
 		case 0:
 			board = [[NSMutableArray alloc] initWithCapacity: 15];
 			positionConnections = layer0Connections;
+			leftEdges = layer0leftEdges;
+			edgesForPosition = layer0edgesForPosition;
 			for (int i = 0; i < 15; i += 1)
 				[board addObject: BLANK];
 			break;
 		case 1:
 			board = [[NSMutableArray alloc] initWithCapacity: 30];
 			positionConnections = layer1Connections;
+			leftEdges = layer1leftEdges;
+			edgesForPosition = layer1edgesForPosition;
 			for (int i = 0; i < 30; i += 1)
 				[board addObject: BLANK];
 			break;
 		case 2:
 			board = [[NSMutableArray alloc] initWithCapacity: 48];
 			positionConnections = layer2Connections;
+			leftEdges = layer2leftEdges;
+			edgesForPosition = layer2edgesForPosition;
 			for (int i = 0; i < 48; i += 1)
 				[board addObject: BLANK];
 			break;
@@ -440,6 +519,10 @@
 	if ([[self legalMoves] count] == 0)
 		return YES;
 	else return NO;
+	
+	
+	//Super Happy Fun Time!!!
+	
 }
 
 - (void) notifyWhenReady {
@@ -455,6 +538,12 @@
 	[layer0Connections release];
 	[layer1Connections release];
 	[layer2Connections release];
+	[layer0leftEdges release];
+	[layer1leftEdges release];
+	[layer2leftEdges release];
+	[layer0edgesForPosition release];
+	[layer1edgesForPosition	release];
+	[layer2edgesForPosition release];
 	//[service release];
 	[super dealloc];
 }
