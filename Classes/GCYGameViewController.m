@@ -15,7 +15,6 @@
 	switch (layers){
 		case 0:
 			self = [super initWithNibName:@"GCYBoardView0" bundle: nil];
-			
 			for (int i = 1; i < 16; i++){
 				UIButton *button = (UIButton *) [self.view viewWithTag: i];
 				[button addTarget: self	action: @selector(tapped:) forControlEvents: UIControlEventTouchUpInside];
@@ -54,32 +53,12 @@
 		switch  (game.layers){
 			case 0:
 				self = [super initWithNibName:@"GCYBoardView0" bundle: nil];
-				
-//				for (int i = 1; i < 16; i++){
-//					UIView *button = [self.view viewWithTag: i];
-//					if ([button isKindOfClass: [UIButton class]]){
-//						NSLog(@"altering %d", i);
-//						[(UIButton *) button addTarget: self	action: @selector(tapped:) forControlEvents: UIControlEventTouchUpInside];
-//					}
-//				} 
 				break;
 			case 1:
 				self = [super initWithNibName:@"GCYBoardView1" bundle: nil];
-				
-//				for (int i = 1; i < 31; i++){
-//					UIView *button = [self.view viewWithTag: i];
-//					if ([button isKindOfClass: [UIButton class]])
-//						[(UIButton *) button addTarget: self	action: @selector(tapped:) forControlEvents: UIControlEventTouchUpInside];
-//				} 
 				break;
 			case 2:
 				self = [super initWithNibName:@"GCYBoardView2" bundle: nil];
-				
-//				for (int i = 1; i < 49; i++){
-//					UIView *button = [self.view viewWithTag: i];
-//					if ([button isKindOfClass: [UIButton class]])
-//						[(UIButton *) button addTarget: self	action: @selector(tapped:) forControlEvents: UIControlEventTouchUpInside];
-//				} 
 				break;
 			default:
 				self = nil;
@@ -88,7 +67,6 @@
 	}
 	return self;
 }
-
 
 
 

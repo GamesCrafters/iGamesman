@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-
+@class GCYGame;
 @interface GCYBoardView : UIView {
 	GCYGame *game;
 }
+
+@property (nonatomic, retain) GCYGame *game;
 
 @end

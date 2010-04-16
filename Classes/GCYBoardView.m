@@ -7,14 +7,13 @@
 //
 
 #import "GCYBoardView.h"
-
+#import "GCYGame.h"
 
 @implementation GCYBoardView
-
+@synthesize game;
 
 - (id)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
-        // Initialization code
     }
     return self;
 }
