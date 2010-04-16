@@ -180,6 +180,7 @@
 		currentPlayerPiece = X;
 	
 	//for each position in left edges
+	NSLog(currentPlayerPiece);
 	for (NSNumber * position in leftEdges){
 		[queue emptyFringe]; //don't empty the blacklist, just the queue
 			
@@ -193,7 +194,8 @@
 			
 			
 			//Add each neighboring position that contains the current player's piece to the queue
-			for (NSNumber * neighborPosition in [edgesForPosition objectForKey: currentPosition]){
+			for (NSNumber * neighborPosition in [positionConnections objectForKey: currentPosition]){
+				NSLog(@"%@, %@", [currentPosition description], [neighborPosition description]);
 				if ([self boardContainsPlayerPiece: currentPlayerPiece forPosition: neighborPosition]){
 					[queue push: neighborPosition];
 					NSSet * neighborEdges = [edgesForPosition objectForKey: neighborPosition];
@@ -209,6 +211,7 @@
 			}
 			
 		}
+		//NSLog([edgesReached description]);
 	
 	}
 	[queue release];
@@ -570,13 +573,13 @@
 									  [NSSet setWithObjects: [NSNumber numberWithInt: 1], nil], [NSNumber numberWithInt: 40], 
 									  [NSSet setWithObjects: [NSNumber numberWithInt: 1], nil], [NSNumber numberWithInt: 41], 
 									  [NSSet setWithObjects: [NSNumber numberWithInt: 1], nil], [NSNumber numberWithInt: 42], 
-									  [NSSet setWithObjects: [NSNumber numberWithInt: 1], [NSNumber numberWithInt: 3], nil], [NSNumber numberWithInt: 43], 
+									  [NSSet setWithObjects: [NSNumber numberWithInt: 1], [NSNumber numberWithInt: 2], nil], [NSNumber numberWithInt: 43], 
 									  [NSSet setWithObjects: [NSNumber numberWithInt: 2], nil], [NSNumber numberWithInt: 44], 
 									  [NSSet setWithObjects: [NSNumber numberWithInt: 2], nil], [NSNumber numberWithInt: 45], 
 									  [NSSet setWithObjects: [NSNumber numberWithInt: 2], nil], [NSNumber numberWithInt: 46], 
 									  [NSSet setWithObjects: [NSNumber numberWithInt: 2], nil], [NSNumber numberWithInt: 47], 
 									  [NSSet setWithObjects: [NSNumber numberWithInt: 2], nil], [NSNumber numberWithInt: 48], 
-									  [NSSet setWithObjects: [NSNumber numberWithInt: 1], [NSNumber numberWithInt: 3], nil], [NSNumber numberWithInt: 31], 
+									  [NSSet setWithObjects: [NSNumber numberWithInt: 2], [NSNumber numberWithInt: 3], nil], [NSNumber numberWithInt: 31], 
 									  [NSSet setWithObjects: [NSNumber numberWithInt: 3], nil], [NSNumber numberWithInt: 32], 
 									  [NSSet setWithObjects: [NSNumber numberWithInt: 3], nil], [NSNumber numberWithInt: 33], 
 									  [NSSet setWithObjects: [NSNumber numberWithInt: 3], nil], [NSNumber numberWithInt: 34], 
