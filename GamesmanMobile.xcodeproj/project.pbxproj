@@ -62,6 +62,7 @@
 		C58F0D7F114484290058D6CE /* yboard.gif in Resources */ = {isa = PBXBuildFile; fileRef = C58F0D7E114484290058D6CE /* yboard.gif */; };
 		C58F0D851144871B0058D6CE /* GCYGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C58F0D841144871B0058D6CE /* GCYGameViewController.m */; };
 		E485E2621177BDBF002B7F15 /* YGameQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = E485E2611177BDBF002B7F15 /* YGameQueue.m */; };
+		E4DD1A541177E4DB00ED1C07 /* GCYBoardView.m in Sources */ = {isa = PBXBuildFile; fileRef = E4DD1A531177E4DB00ED1C07 /* GCYBoardView.m */; };
 		E4F6D8BC11716AE900BEAB78 /* yboard0aa.png in Resources */ = {isa = PBXBuildFile; fileRef = E4F6D8B911716AE900BEAB78 /* yboard0aa.png */; };
 		E4F6D8BD11716AE900BEAB78 /* yboard1aa.png in Resources */ = {isa = PBXBuildFile; fileRef = E4F6D8BA11716AE900BEAB78 /* yboard1aa.png */; };
 		E4F6D8BE11716AE900BEAB78 /* yBoard2aa.png in Resources */ = {isa = PBXBuildFile; fileRef = E4F6D8BB11716AE900BEAB78 /* yBoard2aa.png */; };
@@ -158,6 +159,8 @@
 		C58F0D841144871B0058D6CE /* GCYGameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCYGameViewController.m; sourceTree = "<group>"; };
 		E485E2601177BDBF002B7F15 /* YGameQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YGameQueue.h; sourceTree = "<group>"; };
 		E485E2611177BDBF002B7F15 /* YGameQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YGameQueue.m; sourceTree = "<group>"; };
+		E4DD1A521177E4DB00ED1C07 /* GCYBoardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCYBoardView.h; sourceTree = "<group>"; };
+		E4DD1A531177E4DB00ED1C07 /* GCYBoardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCYBoardView.m; sourceTree = "<group>"; };
 		E4F6D8B911716AE900BEAB78 /* yboard0aa.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yboard0aa.png; sourceTree = "<group>"; };
 		E4F6D8BA11716AE900BEAB78 /* yboard1aa.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yboard1aa.png; sourceTree = "<group>"; };
 		E4F6D8BB11716AE900BEAB78 /* yBoard2aa.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yBoard2aa.png; sourceTree = "<group>"; };
@@ -303,6 +306,8 @@
 				C58F0D841144871B0058D6CE /* GCYGameViewController.m */,
 				E485E2601177BDBF002B7F15 /* YGameQueue.h */,
 				E485E2611177BDBF002B7F15 /* YGameQueue.m */,
+				E4DD1A521177E4DB00ED1C07 /* GCYBoardView.h */,
+				E4DD1A531177E4DB00ED1C07 /* GCYBoardView.m */,
 			);
 			name = Y;
 			sourceTree = "<group>";
@@ -509,6 +514,7 @@
 				C58F0D851144871B0058D6CE /* GCYGameViewController.m in Sources */,
 				9C692486115017B800E0EC4B /* IntegerQueue.m in Sources */,
 				E485E2621177BDBF002B7F15 /* YGameQueue.m in Sources */,
+				E4DD1A541177E4DB00ED1C07 /* GCYBoardView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
