@@ -11,8 +11,12 @@
 @class GCYGame;
 @interface GCYBoardView : UIView {
 	GCYGame *game;
+	NSMutableArray *p1Connectors;
+	NSMutableArray *p2Connectors;
 }
 
 @property (nonatomic, retain) GCYGame *game;
+
+- (void) doMove: (NSNumber *) move;
 
 @end

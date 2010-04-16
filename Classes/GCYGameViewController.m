@@ -11,45 +11,48 @@
 
 @implementation GCYGameViewController
 
-- (id) initWithLayers: (int) layers{
-	switch (layers){
-		case 0:
-			self = [super initWithNibName:@"GCYBoardView0" bundle: nil];
-			for (int i = 1; i < 16; i++){
-				UIButton *button = (UIButton *) [self.view viewWithTag: i];
-				[button addTarget: self	action: @selector(tapped:) forControlEvents: UIControlEventTouchUpInside];
-			} 
-			break;
-		case 1:
-			self = [super initWithNibName:@"GCYBoardView1" bundle: nil];
-			
-			for (int i = 1; i < 31; i++){
-				UIButton *button = (UIButton *) [self.view viewWithTag: i];
-				[button addTarget: self	action: @selector(tapped:) forControlEvents: UIControlEventTouchUpInside];
-			} 
-			break;
-		case 2:
-			self = [super initWithNibName:@"GCYBoardView2" bundle: nil];
-			
-			for (int i = 1; i < 49; i++){
-				UIButton *button = (UIButton *) [self.view viewWithTag: i];
-				[button addTarget: self	action: @selector(tapped:) forControlEvents: UIControlEventTouchUpInside];
-			} 
-			break;
-		default:
-			self = nil;
-			break;
-	}
-	
-	
-	return self;
-}
+//- (id) initWithLayers: (int) layers{
+//	boardView = [[GCYBoardView alloc] init];
+//	switch (layers){
+//		case 0:
+//			self = [super initWithNibName:@"GCYBoardView0" bundle: nil];
+//			for (int i = 1; i < 16; i++){
+//				UIButton *button = (UIButton *) [self.view viewWithTag: i];
+//				[button addTarget: self	action: @selector(tapped:) forControlEvents: UIControlEventTouchUpInside];
+//			} 
+//			[[self view] addSubview: GCYBoardView];
+//			break;
+//		case 1:
+//			self = [super initWithNibName:@"GCYBoardView1" bundle: nil];
+//			
+//			for (int i = 1; i < 31; i++){
+//				UIButton *button = (UIButton *) [self.view viewWithTag: i];
+//				[button addTarget: self	action: @selector(tapped:) forControlEvents: UIControlEventTouchUpInside];
+//			} 
+//			break;
+//		case 2:
+//			self = [super initWithNibName:@"GCYBoardView2" bundle: nil];
+//			
+//			for (int i = 1; i < 49; i++){
+//				UIButton *button = (UIButton *) [self.view viewWithTag: i];
+//				[button addTarget: self	action: @selector(tapped:) forControlEvents: UIControlEventTouchUpInside];
+//			} 
+//			break;
+//		default:
+//			self = nil;
+//			break;
+//	}
+//	
+//	
+//	return self;
+//}
 
 
 - (id) initWithGame: (GCYGame *) _game{
 	if (self = [super init]){
 		game = _game;
-		
+		boardView = [[GCYBoardView alloc] init];
+		boardView.game = _game;
 		switch  (game.layers){
 			case 0:
 				self = [super initWithNibName:@"GCYBoardView0" bundle: nil];
@@ -99,6 +102,7 @@
 //		}
 //	}
 //	[UIView commitAnimations];
+	[boardView doMove: move];
 }
 
 
@@ -184,6 +188,7 @@
 
 
 - (void)dealloc {
+	[GCYBoardView release];
     [super dealloc];
 }
 

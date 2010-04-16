@@ -19,6 +19,8 @@
 }
 
 
+- (void) doMove: (NSNumber *) move;
+
 - (void)drawRect:(CGRect)rect {
 	[super drawRect:rect];
 	
