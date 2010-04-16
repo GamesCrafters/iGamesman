@@ -34,6 +34,7 @@
 @property (nonatomic, assign) PlayerType player1Type, player2Type;
 @property (nonatomic, assign) int layers;
 @property (nonatomic, assign) BOOL p1Turn;
+@property (readonly) GCYGameViewController *yGameView;
 
 - (void) resetBoard;
 - (void) postHumanMove: (NSNumber *) num;

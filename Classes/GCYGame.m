@@ -25,6 +25,7 @@
 @synthesize positionConnections;
 @synthesize edgesForPosition;
 @synthesize leftEdges;
+@synthesize yGameView;;
 
 - (id) init {
 	if (self = [super init]) {
