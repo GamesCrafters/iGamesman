@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "GCGame.h"
 
+
 @class GCYGameViewController;
 
 @interface GCYGame : GCGame {

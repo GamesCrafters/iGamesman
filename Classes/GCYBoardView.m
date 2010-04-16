@@ -23,7 +23,7 @@
 	[super drawRect:rect];
 	
 	
-    // Drawing code
+    
 }
 
 
