@@ -11,48 +11,11 @@
 
 @implementation GCYGameViewController
 
-//- (id) initWithLayers: (int) layers{
-//	boardView = [[GCYBoardView alloc] init];
-//	switch (layers){
-//		case 0:
-//			self = [super initWithNibName:@"GCYBoardView0" bundle: nil];
-//			for (int i = 1; i < 16; i++){
-//				UIButton *button = (UIButton *) [self.view viewWithTag: i];
-//				[button addTarget: self	action: @selector(tapped:) forControlEvents: UIControlEventTouchUpInside];
-//			} 
-//			[[self view] addSubview: GCYBoardView];
-//			break;
-//		case 1:
-//			self = [super initWithNibName:@"GCYBoardView1" bundle: nil];
-//			
-//			for (int i = 1; i < 31; i++){
-//				UIButton *button = (UIButton *) [self.view viewWithTag: i];
-//				[button addTarget: self	action: @selector(tapped:) forControlEvents: UIControlEventTouchUpInside];
-//			} 
-//			break;
-//		case 2:
-//			self = [super initWithNibName:@"GCYBoardView2" bundle: nil];
-//			
-//			for (int i = 1; i < 49; i++){
-//				UIButton *button = (UIButton *) [self.view viewWithTag: i];
-//				[button addTarget: self	action: @selector(tapped:) forControlEvents: UIControlEventTouchUpInside];
-//			} 
-//			break;
-//		default:
-//			self = nil;
-//			break;
-//	}
-//	
-//	
-//	return self;
-//}
-
-
 - (id) initWithGame: (GCYGame *) _game{
 	if (self = [super init]){
 		game = _game;
-		boardView = [[GCYBoardView alloc] init];
-		boardView.game = _game;
+		//boardView = [[GCYBoardView alloc] init];
+		//boardView.game = _game;
 		switch  (game.layers){
 			case 0:
 				self = [super initWithNibName:@"GCYBoardView0" bundle: nil];
@@ -81,17 +44,52 @@
 
 
 - (void) doMove: (NSNumber *) move {
+	NSInteger tag;
+	UIView *connectionView;
+	NSInteger neighborInt;
+	NSInteger moveInt = [move integerValue];
+	
 	//NSLog(@"do move: %d", [move integerValue]);
-	UIButton *B = (UIButton *) [self.view viewWithTag: [move integerValue]];
+	UIButton *B = (UIButton *) [self.view viewWithTag: moveInt];
 	//[B retain];
 	//[B removeFromSuperview];
 	//[self.view insertSubview: B atIndex: 0];
 	//[B release];
 	//float B_width = B.frame.size.width;
 	//B.frame = CGRectMake(B.center.x - B_width / 4, B.center.y - B_width / 4, B_width / 2, B_width / 2);
+	NSLog([move description]);
 	[B setBackgroundImage: [UIImage imageNamed: (game.p1Turn ? @"C4X.png" : @"C4O.png")] forState: UIControlStateNormal];
 	
 	// do the board animations here (ie piece and connection animations)
+	for (NSNumber *neighborPosition in [[game positionConnections] objectForKey: move]){
+		neighborInt = [neighborPosition integerValue];
+		
+		if (game.p1Turn){
+			if ([game boardContainsPlayerPiece: @"X" forPosition: neighborPosition]){
+				if (moveInt > neighborInt)
+					tag = (neighborInt*100) + moveInt;
+				else tag = (moveInt*100) + neighborInt;
+				NSLog(@" %d, %d, %d", moveInt, neighborInt, tag);
+				
+				connectionView = [self.view viewWithTag: tag];
+				connectionView.hidden = NO;
+				[connectionView setBackgroundColor: [UIColor redColor]];
+			}
+		}
+		else{
+			if ([game boardContainsPlayerPiece: @"O" forPosition: neighborPosition]){
+				if (moveInt > neighborInt)
+					tag = (neighborInt*100) + moveInt;
+				else tag = (moveInt*100) + neighborInt;
+				NSLog(@" %d, %d, %d", moveInt, neighborInt, tag);
+				
+				connectionView = [self.view viewWithTag: tag];
+				connectionView.hidden = NO;
+				[connectionView setBackgroundColor: [UIColor blueColor]];
+			}
+		}
+	}
+	
 //	UIImageView *image = [[UIImageView alloc] initWithImage: (game.p1Turn? @"ConX.png" : @"ConO.png")];
 //	[UIView beginAnimations: @"Stretch" context: NULL];
 //	for (NSNumber *neighbor in [[game positionConnections] objectForKey: move]){
@@ -102,7 +100,7 @@
 //		}
 //	}
 //	[UIView commitAnimations];
-	[boardView doMove: move];
+	//[boardView doMove: move];
 }
 
 
@@ -188,7 +186,7 @@
 
 
 - (void)dealloc {
-	[GCYBoardView release];
+	///[GCYBoardView release];
     [super dealloc];
 }
 

@@ -112,7 +112,7 @@
 	}
 	
 
-	NSLog(@"board count: %d", [board count]);
+	//NSLog(@"board count: %d", [board count]);
 }
 	
 
@@ -196,7 +196,7 @@
 			
 			//Add each neighboring position that contains the current player's piece to the queue
 			for (NSNumber * neighborPosition in [positionConnections objectForKey: currentPosition]){
-				NSLog(@"%@, %@", [currentPosition description], [neighborPosition description]);
+				//NSLog(@"%@, %@", [currentPosition description], [neighborPosition description]);
 				if ([self boardContainsPlayerPiece: currentPlayerPiece forPosition: neighborPosition]){
 					[queue push: neighborPosition];
 					NSSet * neighborEdges = [edgesForPosition objectForKey: neighborPosition];
@@ -205,6 +205,7 @@
 						[edgesReached unionSet: neighborEdges];
 				}
 			}
+			//Check if all of the edges are reached
 			if ([edgesReached count] == 3){
 				[queue release];
 				NSLog(@"Game Over");

@@ -13,7 +13,7 @@
 
 @interface GCYGameViewController : UIViewController {
 	GCYGame *game;
-	GCYBoardView *boardView;
+	//GCYBoardView *boardView;
 }
 
 //- (id) initWithLayers: (int) layers; //can probably delete
