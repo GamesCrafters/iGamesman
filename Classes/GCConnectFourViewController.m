@@ -60,7 +60,7 @@
 	[spinner startAnimating];
 	waiter = [[NSThread alloc] initWithTarget: self selector: @selector(fetchNewData:) object: [NSNumber numberWithBool:buttonsEnabled]];
 	[waiter start];
-	timer = [[NSTimer scheduledTimerWithTimeInterval: 30 target: self selector: @selector(timedOut:) userInfo: nil repeats: NO] retain];
+	timer = [[NSTimer scheduledTimerWithTimeInterval: 60 target: self selector: @selector(timedOut:) userInfo: nil repeats: NO] retain];
 }
 
 - (void) fetchNewData: (BOOL) buttonsOn {
@@ -302,7 +302,8 @@
 
 - (BOOL) shouldAutorotateToInterfaceOrientation: (UIInterfaceOrientation) interfaceOrientation {
 	if (width > 5)
-		return (interfaceOrientation == UIInterfaceOrientationLandscapeRight);
+		return (interfaceOrientation == UIInterfaceOrientationLandscapeLeft ||
+				interfaceOrientation == UIInterfaceOrientationLandscapeRight);
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
