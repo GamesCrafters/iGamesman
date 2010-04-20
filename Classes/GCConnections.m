@@ -146,42 +146,32 @@
 	int slot = [move integerValue] - 1;
 	[board replaceObjectAtIndex: slot withObject: (p1Turn ? X : O)];
 	p1Turn = !p1Turn;
-	for (int j = 0; j < size; j += 1) {
-		NSString *row = @"";
-		for (int i = 0; i < size; i += 1) {
-			row = [row stringByAppendingString: [board objectAtIndex: i + j * size]];
-		}
-		NSLog(@"%@", row);
-	}
-	NSLog(@" ");
+//	for (int j = 0; j < size; j += 1) {
+//		NSString *row = @"";
+//		for (int i = 0; i < size; i += 1) {
+//			row = [row stringByAppendingString: [board objectAtIndex: i + j * size]];
+//		}
+//		NSLog(@"%@", row);
+//	}
+//	NSLog(@" ");
+
 	
 }
 
 - (BOOL) isPrimitive: (NSArray *) theBoard  { 
-	
-
-	if ([[self legalMoves] count] == 0)
-		return YES;
-	
-	if(p1Turn){
-		//continuousPath going downwards
-	}
-	else{
-		//continuousPath going across
-	}
-	return NO;
-}
-
-- (BOOL) playerHasContinuousPath{
 	IntegerQueue * queue = [[IntegerQueue alloc] init];
 	int position;
 	int neighborPosition;
 
+	if ([[self legalMoves] count] == 0)
+		return YES;
+	
+
 	//////////////////p1 turn/////////////////////////
-	if (p1Turn){ 
+	if (!p1Turn){ 
 		
 		//add in initial positions, starting with the position directly below the top left connector
-		for (int i = size + 2; i < size * 2; i += 2){
+		for (int i = size + 1; i < size * 2 - 1; i += 2){
 			if ([[board objectAtIndex: i] isEqual: X])
 				[queue push: i];
 		}
@@ -192,13 +182,37 @@
 			//Check to see if we are at the end of our path
 			if (position/size >= size - 2){
 				[queue release];
+				NSLog(@"Game Over");
 				return YES;
 			}
 			
 			//add neighbors to the fringe
-			//////////////odd case///////////////	
-			if (position % 2){						
+			//////////////odd case///////////////	In terms of column number from 0-size and position in terms of array (index at 0)
+			if ((position % size) % 2){						
+				//////left neighbor- only check if we are not in the leftmost column
+				if ((position % size) > 1){
+					neighborPosition = position + size - 1;
+					
+					if ([[board objectAtIndex: neighborPosition] isEqual: X])
+						[queue push: neighborPosition];
+				}
 				
+				/////right neighbor- only check if we are not in the rightmost column
+				if ((position % size) < size - 2){
+					neighborPosition = position + size + 1;
+					
+					if ([[board objectAtIndex: neighborPosition] isEqual: X])
+						[queue push: neighborPosition];
+				}
+				
+				/////bottom neighbor
+				neighborPosition = position + size * 2;
+				if ([[board objectAtIndex: neighborPosition] isEqual: X])
+					[queue push: neighborPosition];
+				
+			}
+			//////////////even case///////////////
+			else{ 	
 				
 				/////left neighbor- only check if we are not in the leftmost column///////
 				if ((position % size) > 3){
@@ -212,96 +226,91 @@
 				
 				/////bottom left neighbor///////
 				neighborPosition = position + size - 1;
-				
-				//Check if The proper piece is in the neighboring position
 				if ([[board objectAtIndex: neighborPosition] isEqual: X])
 					[queue push: neighborPosition];
 				
 				/////right neighbor- only check if we are not in the rightmost column///////
 				if ((position % size) < size - 2){
 					neighborPosition = position + 2;
-					
-					//Check if The proper piece is in the neighboring position
 					if ([[board objectAtIndex: neighborPosition] isEqual: X])
 						[queue push: neighborPosition];
 				}
 				
 				/////bottom right neighbor///////
 				neighborPosition = position + size + 1;
-				
-				//Check if The proper piece is in the neighboring position
-				if ([[board objectAtIndex: neighborPosition] isEqual: X])
-					[queue push: neighborPosition];
-			}
-			//////////////even case///////////////
-			else{ 	
-				//////left neighbor- only check if we are not in the leftmost column
-				if ((position % size) > 2){
-					neighborPosition = position + size - 1;
-					
-					if ([[board objectAtIndex: neighborPosition] isEqual: X])
-						[queue push: neighborPosition];
-				}
-				
-				/////right neighbor- only check if we are not in the rightmost column
-				if ((position % size) < size - 1){
-					neighborPosition = position + size + 1;
-					
-					if ([[board objectAtIndex: neighborPosition] isEqual: X])
-						[queue push: neighborPosition];
-				}
-				
-				/////bottom neighbor
-				neighborPosition = position + size * 2;
 				if ([[board objectAtIndex: neighborPosition] isEqual: X])
 					[queue push: neighborPosition];
 			}
 		}
-	
-	//////////////////p2 turn/////////////////////////
+		
+		//////////////////p2 turn/////////////////////////
 	}else { 
 		//add initial positions
-		for (int i = size + 2; i < size * (size - 1); i += size){
-			if ([[board objectAtIndex: i] isEqual: X])
+		for (int i = size + 1; i < size * (size - 1); i += size){
+			if ([[board objectAtIndex: i] isEqual: O])
 				[queue push: i];
 		}
 		
 		//check player
 		while ([queue notEmpty]){
 			position = [queue pop];
+		    NSLog(@"X queue not empty: %d", position);
 			
 			//Check to see if we are at the end of our path
-			if (position % size >= size - 1){
+			if (position % size >= size - 2){
 				[queue release];
+				NSLog(@"Game Over");
 				return YES;
 			}
 			
 			//////////////odd case///////////////
-			if (position % 2){
+			if ((position % size) % 2){
 				//up- only check if not in topmost row
-				//ART'S CHANGES/
-				if((position / size) > 3 * size){
-					neighborPosition = position - size;
+				if(position > 2 * size){
+					neighborPosition = position - size + 1;
 					
 					if([[board objectAtIndex: neighborPosition] isEqual: O])
 						[queue push: neighborPosition];
 				}
-			
-				//down- only check if not in bottommost row
-				if((position / size) < (size * (size - 3))){
-					neighborPosition = position + size;
-					
-					if([[board objectAtIndex: neighborPosition] isEqual: O])
-						[queue push: neighborPosition];
-					
-				}
-				//upper left
 				
-				//lower left
+				//down- only check if not in bottommost row
+				if(position < size * (size - 2)){
+					neighborPosition = position + size + 1;
+					
+					if([[board objectAtIndex: neighborPosition] isEqual: O])
+						[queue push: neighborPosition];
+					
+				}
+				//right
+				neighborPosition = position + 2;
+				if ([[board objectAtIndex: neighborPosition] isEqual: O])
+					[queue push: neighborPosition];
 				
 			}
 			//////////////even case///////////////
 			else{
+				//up- only if not in the third row
+				if (position > size * 3){
+					neighborPosition = position - size * 2;
+					if ([[board objectAtIndex: neighborPosition] isEqual: O])
+						[queue push: neighborPosition];
+				}
+				
+				//down- only if not in the third row from the bottom
+				if (position < size * (size - 3)){
+					neighborPosition = position + size * 2;
+					if ([[board objectAtIndex: neighborPosition] isEqual: O])
+						[queue push: neighborPosition];
+				}
+				//upper right
+				neighborPosition = position - size + 1;
+				if ([[board objectAtIndex: neighborPosition] isEqual: O])
+					[queue push: neighborPosition];
+				
+				//lower right
+				neighborPosition = position + size + 1;
+				if ([[board objectAtIndex: neighborPosition] isEqual: O])
+					[queue push: neighborPosition];
 				
 			}
 		}
@@ -310,7 +319,11 @@
 	[queue release];
 	return NO;
 }
-						
+
+//- (BOOL) playerHasContinuousPath{
+//
+//}
+//						
 						
 
 - (void) notifyWhenReady {
