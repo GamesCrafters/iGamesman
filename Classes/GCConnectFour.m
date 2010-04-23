@@ -20,7 +20,6 @@
 @synthesize width, height, pieces;
 @synthesize board;
 @synthesize p1Turn;
-@synthesize gameReady;
 @synthesize predictions, moveValues;
 @synthesize gameMode;
 
@@ -81,10 +80,7 @@
 	if (mode == ONLINE_SOLVED)
 		service = [[GCConnectFourService alloc] init];
 	
-	if (mode == OFFLINE_UNSOLVED)
-		gameReady = YES;
 	if (mode == ONLINE_SOLVED) {
-		gameReady = NO;
 		[c4view updateServerDataWithService: service];
 	}
 }
@@ -219,7 +215,6 @@
 
 - (void) resume {
 	if (gameMode == ONLINE_SOLVED) {
-		gameReady = NO;
 		[c4view updateServerDataWithService: service];
 	}
 }
@@ -240,9 +235,6 @@
 - (void) doMove: (NSString *) move {
 	[c4view doMove: move];
 	
-	if (gameMode == ONLINE_SOLVED)
-		[c4view updateServerDataWithService: service];
-	
 	int slot = [move integerValue] - 1;
 	while (slot < width * height) {
 		if ([[board objectAtIndex: slot] isEqual: BLANK]) {
@@ -252,6 +244,10 @@
 		slot += width;
 	}
 	p1Turn = !p1Turn;
+	
+	if (gameMode == ONLINE_SOLVED) {
+		[c4view updateServerDataWithService: service];
+	}
 	
 	if (gameMode != ONLINE_SOLVED)
 		[c4view updateLabels];

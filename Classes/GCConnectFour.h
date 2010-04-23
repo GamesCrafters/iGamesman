@@ -22,7 +22,6 @@
 	PlayerType					player1Type, player2Type;
 	int							width, height, pieces;
 	BOOL						p1Turn;
-	BOOL						gameReady;
 	BOOL						predictions, moveValues;
 	PlayMode					gameMode;
 	NSMutableArray				*board;
@@ -34,7 +33,6 @@
 @property (nonatomic, assign) int width, height, pieces;
 @property (nonatomic, retain) NSArray *board;
 @property (nonatomic, readonly) BOOL p1Turn;
-@property (assign) BOOL gameReady;
 @property (nonatomic, assign) BOOL predictions, moveValues;
 @property (nonatomic, assign) PlayMode gameMode;
 

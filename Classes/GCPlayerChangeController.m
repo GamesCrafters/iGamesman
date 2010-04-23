@@ -59,7 +59,7 @@
 
 // Picker view delegate methods
 - (NSString *) pickerView: (UIPickerView *) pickerView titleForRow: (NSInteger) row forComponent: (NSInteger) component {
-	return [[NSArray arrayWithObjects: @"Human", @"Computer (random)", /* REMOVED FOR CAL DAY DEMO @"Computer (perfect)",*/ nil] objectAtIndex: row];
+	return [[NSArray arrayWithObjects: @"Human", @"Computer (random)", @"Computer (perfect)", nil] objectAtIndex: row];
 }
 
 // Picker view data source methods
@@ -69,8 +69,7 @@
 }
 
 - (NSInteger) pickerView: (UIPickerView *) pickerView numberOfRowsInComponent: (NSInteger) component {
-	/* return 3; REMOVED FOR CAL DAY DEMO */
-	return 2;
+	return 3;
 }
 
 - (void)viewDidLoad {

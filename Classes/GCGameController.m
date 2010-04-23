@@ -48,6 +48,7 @@
 }
 
 - (void) goGameReady {
+	NSLog(@"Actually going...");
 	[[NSNotificationCenter defaultCenter] removeObserver: self];
 	if ([game player1Type] == HUMAN || [game player2Type] == HUMAN)
 		[viewController.slider setEnabled: YES];
@@ -92,7 +93,7 @@
 											 selector: @selector(end)
 												 name: @"GameEncounteredProblem"
 											   object: game];
-	[self goGameReady];
+	[game notifyWhenReady];
 }
 
 - (void) takeHumanTurn {

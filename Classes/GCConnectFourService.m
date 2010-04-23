@@ -206,6 +206,8 @@
 	} else
 		connected = NO;
 	[parser release];
+	
+	[NSThread sleepForTimeInterval: 5];
 }
 
 @end
