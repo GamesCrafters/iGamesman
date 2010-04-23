@@ -96,7 +96,17 @@
 
 // Customize the number of rows in the table view.
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 2;
+    return 3;
+}
+
+
+- (CGFloat) tableView: (UITableView *) tableView heightForRowAtIndexPath: (NSIndexPath *) indexPath {
+	if (orientation == UIInterfaceOrientationPortrait) {
+		if (indexPath.row != 2) return 44.0;
+		return 88.0;
+	} else {
+		return 44.0;
+	}
 }
 
 
@@ -110,36 +120,53 @@
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
 		
 		cell.backgroundColor = [UIColor colorWithRed: 234.0/255 green: 234.0/255 blue: 255.0/255 alpha: 1];
-		
-		UILabel *label = [[UILabel alloc] initWithFrame: CGRectMake(20, 0, 280, 44)];
-		label.tag = 111;
-		label.backgroundColor = [UIColor clearColor];
     }
     
     // Set up the cell
-	BOOL switchOn;
-	if (indexPath.row == 0) {
-		cell.textLabel.text = @"Show Predictions";
-		switchOn = [delegate showingPredictions];
+	if (indexPath.row == 0 || indexPath.row == 1) {
+		BOOL switchOn;
+		if (indexPath.row == 0) {
+			cell.textLabel.text = @"Show Predictions";
+			switchOn = [delegate showingPredictions];
+		}
+		if (indexPath.row == 1) {
+			cell.textLabel.text = @"Show Move Values";
+			switchOn = [delegate showingMoveValues];
+		}
+		CGRect switchFrame;
+		if (orientation == UIInterfaceOrientationPortrait)
+			switchFrame = CGRectMake(205.0, 10.0, 95.0, 20.0);
+		else
+			switchFrame = CGRectMake(365.0, 10.0, 95.0, 20.0);
+		UISwitch *pSwitch = [[UISwitch alloc] initWithFrame: switchFrame];
+		if (mode == OFFLINE_UNSOLVED) {
+			pSwitch.on = NO;
+			pSwitch.enabled = NO;
+		} else
+			pSwitch.on = switchOn;
+		pSwitch.tag = indexPath.row + 1;
+	
+		[cell addSubview: pSwitch];
+		[pSwitch release];
+	} else {
+		CGRect labelFrame;
+		if (orientation == UIInterfaceOrientationPortrait)
+			labelFrame = CGRectMake(20.0, 5.0, 270.0, 34.0);
+		else
+			labelFrame = CGRectMake(20.0, 5.0, 430.0, 34.0);
+		UILabel *label = [[UILabel alloc] initWithFrame: labelFrame];
+		label.text = @"Computer Move Delay";
+		label.backgroundColor = [UIColor clearColor];
+		label.font = [UIFont boldSystemFontOfSize: 16.0];
+		CGRect slideFrame;
+		if (orientation == UIInterfaceOrientationPortrait)
+			slideFrame = CGRectMake(175.0, 54.0, 125.0, 20.0);
+		else
+			slideFrame = CGRectMake(335.0, 12.0, 125.0, 20.0);
+		UISlider *slide = [[UISlider alloc] initWithFrame: slideFrame];
+		[cell addSubview: label];
+		[cell addSubview: slide];
 	}
-	if (indexPath.row == 1) {
-		cell.textLabel.text = @"Show Move Values";
-		switchOn = [delegate showingMoveValues];
-	}
-	CGRect switchFrame;
-	if (orientation == UIInterfaceOrientationPortrait)
-		switchFrame = CGRectMake(205.0, 9.0, 95.0, 20.0);
-	else
-		switchFrame = CGRectMake(365.0, 9.0, 95.0, 20.0);
-	UISwitch *pSwitch = [[UISwitch alloc] initWithFrame: switchFrame];
-	if (mode == OFFLINE_UNSOLVED) {
-		pSwitch.on = NO;
-		pSwitch.enabled = NO;
-	} else
-		pSwitch.on = switchOn;
-	pSwitch.tag = indexPath.row + 1;
-	[cell addSubview: pSwitch];
-	[pSwitch release];
 	
     return cell;
 }

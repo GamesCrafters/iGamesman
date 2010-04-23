@@ -69,6 +69,9 @@
 	
 	p1Turn = YES;
 	
+	predictions = NO;
+	moveValues = NO;
+	
 	if (!c4view)
 		[c4view release];
 	c4view = [[GCConnectFourViewController alloc] initWithGame: self];

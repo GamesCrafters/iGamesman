@@ -48,7 +48,6 @@
 }
 
 - (void) goGameReady {
-	NSLog(@"Actually going...");
 	[[NSNotificationCenter defaultCenter] removeObserver: self];
 	if ([game player1Type] == HUMAN || [game player2Type] == HUMAN)
 		[viewController.slider setEnabled: YES];
@@ -158,21 +157,31 @@
 			if ([val isEqual: @"TIE"]) [tieRemotes addObject: R];
 			if ([val isEqual: @"DRAW"]) [drawRemotes addObject: R];
 		}
-		id move;
+		NSMutableArray *moveChoices = [[NSMutableArray alloc] initWithCapacity: [legals count]];
 		if ([wins count] != 0) {
 			int minRemote = 10000;
 			for (id a_move in wins) {
 				int index = [legals indexOfObject: a_move];
 				minRemote = MIN(minRemote, [[remotes objectAtIndex: index] integerValue]);
 			}
-			move = [wins objectAtIndex: [winRemotes indexOfObject: [NSNumber numberWithInt: minRemote]]];
+			NSNumber *R = [NSNumber numberWithInt: minRemote];
+			int moveIndex = [winRemotes indexOfObject: R];
+			while (moveIndex != NSNotFound) {
+				[moveChoices addObject: [wins objectAtIndex: moveIndex]];
+				moveIndex = [winRemotes indexOfObject: R inRange: NSMakeRange(moveIndex + 1, [winRemotes count] - moveIndex - 1)];
+			}
 		} else if ([ties count] != 0) {
 			int maxRemote = -1;
 			for (id a_move in ties) {
 				int index = [legals indexOfObject: a_move];
 				maxRemote = MAX(maxRemote, [[remotes objectAtIndex: index] integerValue]);
 			}
-			move = [ties objectAtIndex: [tieRemotes indexOfObject: [NSNumber numberWithInt: maxRemote]]];
+			NSNumber *R = [NSNumber numberWithInt: maxRemote];
+			int moveIndex = [tieRemotes indexOfObject: R];
+			while (moveIndex != NSNotFound) {
+				[moveChoices addObject: [ties objectAtIndex: moveIndex]];
+				moveIndex = [tieRemotes indexOfObject: R inRange: NSMakeRange(moveIndex + 1, [tieRemotes count] - moveIndex - 1)];
+			}
 		} else if ([draws count] != 0) {
 			NSLog(@"Some draw");
 		} else {
@@ -181,14 +190,18 @@
 				int index = [legals indexOfObject: a_move];
 				maxRemote = MIN(maxRemote, [[remotes objectAtIndex: index] integerValue]);
 			}
-			int ind = [loseRemotes indexOfObject: [NSNumber numberWithInt: maxRemote]];
-			NSLog(@"L: %d", ind);
-			move = [loses objectAtIndex: [loseRemotes indexOfObject: [NSNumber numberWithInt: maxRemote]]];
+			NSNumber *R = [NSNumber numberWithInt: maxRemote];
+			int moveIndex = [tieRemotes indexOfObject: R];
+			while (moveIndex != NSNotFound) {
+				[moveChoices addObject: [ties objectAtIndex: moveIndex]];
+				moveIndex = [tieRemotes indexOfObject: R inRange: NSMakeRange(moveIndex + 1, [tieRemotes count] - moveIndex - 1)];
+			}
 		}
 		
 		[NSThread sleepForTimeInterval: DELAY];
 		
-		[game doMove: move];
+		int choice = rand() % [moveChoices count];
+		[game doMove: [moveChoices objectAtIndex: choice]];
 		
 		[wins release];  [winRemotes release];
 		[loses release]; [loseRemotes release];

@@ -25,7 +25,7 @@
 						 @"Patrick Horn", @"Steven Schlansker", @"Wesley Hart", nil];
 		NSArray *connections = [NSArray arrayWithObjects: @"Arturo Wu Zhou", @"Kevin Jorgensen", nil];
 		NSArray *y = [NSArray arrayWithObjects: @"Kevin Jorgensen", @"Linsey Hansen", nil];
-		info    = [[NSArray alloc] initWithObjects: @"Version 0.7.0", @"Dan Garcia", @"Kevin Jorgensen", 
+		info    = [[NSArray alloc] initWithObjects: @"Version 0.7.2", @"Dan Garcia", @"Kevin Jorgensen", 
 				   @"Kevin Jorgensen", java, connections, y, nil];
     }
     return self;

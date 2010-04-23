@@ -1,4 +1,4 @@
-    //
+//
 //  GCConnectFourViewController.m
 //  GamesmanMobile
 //
@@ -65,9 +65,7 @@
 - (void) fetchNewData: (BOOL) buttonsOn {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	[self performSelectorOnMainThread: @selector(disableButtons) withObject: nil waitUntilDone: NO];
-	NSLog(@"Starting fetch...");
 	[service retrieveDataForBoard: [game board] width: width height: height pieces: pieces];
-	NSLog(@"Calling fetchFinished");
 	[self performSelectorOnMainThread: @selector(fetchFinished:) withObject: [NSNumber numberWithBool: buttonsOn] waitUntilDone: NO];
 	[pool release];
 }
@@ -104,16 +102,28 @@
 - (void) updateLabels {
 	NSString *player = ([game currentPlayer] == PLAYER1) ? [game player1Name] : [game player2Name];
 	NSString *color = ([game currentPlayer] == PLAYER1) ? @"Red" : @"Blue";
-	PlayerType type = ([game currentPlayer] == PLAYER1) ? [game player1Type] : [game player2Type];
+	PlayerType typePlay = ([game currentPlayer] == PLAYER1) ? [game player1Type] : [game player2Type];
+	PlayerType typeOpp  = ([game currentPlayer] == PLAYER1) ? [game player2Type] : [game player1Type];
 	message.numberOfLines = 4;
 	message.lineBreakMode = UILineBreakModeWordWrap;
 	if ([game predictions]) {
 		NSString *value = [service getValue];
 		int remoteness  = [service getRemoteness];
 		if (value != nil && remoteness != -1) {
-			NSString *modifier = (type == COMPUTER_PERFECT) ? @"will" : @"should";
+			NSString *modifier;
+			if (typePlay == COMPUTER_PERFECT && value == @"win") modifier = @"will";
+			else if (typeOpp == COMPUTER_PERFECT && value == @"lose") modifier = @"will";
+			else if (typePlay == COMPUTER_PERFECT && typeOpp == COMPUTER_PERFECT) modifier = @"will";
+			else modifier = @"should";
 			[message setText: [NSString stringWithFormat: @"%@ (%@)\n%@ %@ in %d", player, color, modifier, 
 							   value, remoteness]];
+		} else if (value != nil) {
+			NSString *modifier;
+			if (typePlay == COMPUTER_PERFECT && value == @"win") modifier = @"will";
+			else if (typeOpp == COMPUTER_PERFECT && value == @"lose") modifier = @"will";
+			else if (typePlay == COMPUTER_PERFECT && typeOpp == COMPUTER_PERFECT) modifier = @"will";
+			else modifier = @"should";
+			[message setText: [NSString stringWithFormat: @"%@ (%@)\n%@ %@", player, color, modifier, value]];
 		}
 	} else {
 		[message setText: [NSString stringWithFormat: @"%@ (%@)'s turn", player, color]];

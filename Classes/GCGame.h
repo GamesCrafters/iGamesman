@@ -10,7 +10,6 @@
 #import "GCOptionMenu.h"
 
 typedef enum { ONLINE_SOLVED, OFFLINE_UNSOLVED } PlayMode;
-typedef enum { WIN, LOSE, TIE, DRAW, UNAVAILABLE } GameValue;
 typedef enum { HUMAN, COMPUTER_RANDOM, COMPUTER_PERFECT } PlayerType;
 typedef enum { PLAYER1, PLAYER2, NONE } Player;
 
