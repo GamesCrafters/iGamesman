@@ -51,6 +51,12 @@ typedef enum { PLAYER1, PLAYER2, NONE } Player;
 /// Return YES for supported mode(s)
 - (BOOL) supportsPlayMode: (PlayMode) mode;
 
+/// Getter for misere (YES)/standard (NO)
+- (BOOL) isMisere;
+
+/// Setter for misere (YES)/standard (NO)
+- (void) setMisere: (BOOL) mis;
+
 /// Return the option menu
 - (UIViewController<GCOptionMenu> *) optionMenu;
 

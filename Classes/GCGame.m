@@ -35,6 +35,12 @@
 // Return YES for supported mode(s)
 - (BOOL) supportsPlayMode: (PlayMode) mode { return NO; }
 
+// Getter for misere (YES)/standard (NO)
+- (BOOL) isMisere { return NO; }
+
+// Setter for misere (YES)/standard (NO)
+- (void) setMisere: (BOOL) mis { }
+
 // Return the option menu
 - (UIViewController *) optionMenu { return nil; }
 

@@ -20,11 +20,15 @@
 	UIInterfaceOrientation orientation;
 	id <OptionPanelDelegate> delegate;
 	PlayMode mode;
+	float delay;
+	BOOL sliderOn;
 }
 
 /// This view's delegate, to have this view dismissed.
 @property (nonatomic, assign) id <OptionPanelDelegate> delegate;
 @property (nonatomic, assign) PlayMode mode;
+@property (nonatomic, assign) float delay;
+@property (nonatomic, assign) BOOL sliderOn;
 
 - (id) initWithOrientation: (UIInterfaceOrientation) _orientation;
 
@@ -33,6 +37,8 @@
 
 /// Report to delegate that the user tapped CANCEL
 - (void) cancel;
+
+- (void) sliderChanged: (UISlider *) sender;
 
 @end
 
@@ -49,7 +55,8 @@
  */
 - (void) optionPanelDidFinish: (GCGameOptionsController *) controller 
 				  predictions: (BOOL) predictions 
-				   moveValues: (BOOL) moveValues;
+				   moveValues: (BOOL) moveValues 
+				computerDelay: (float) delay;
 
 /**
  @brief Called when the option panel is finished and the user

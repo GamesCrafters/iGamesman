@@ -99,6 +99,8 @@
 	GCGameOptionsController *options = [[GCGameOptionsController alloc] initWithOrientation: [self interfaceOrientation]];
 	options.delegate = self;
 	options.mode = gameMode;
+	options.delay = gameControl.DELAY;
+	options.sliderOn = ([game player1Type] != HUMAN && [game player2Type] != HUMAN) ? YES : NO;
 	UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController: options];
 	nav.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
 	nav.navigationBar.tintColor = [UIColor colorWithRed: 0 green: 0 blue: 139.0/256.0 alpha: 1];
@@ -111,11 +113,13 @@
 /* Cleans up after the option panel finishes (with updated values). */
 - (void) optionPanelDidFinish:(GCGameOptionsController *)controller 
 				  predictions:(BOOL)predictions 
-				   moveValues:(BOOL)moveValues {
+				   moveValues:(BOOL)moveValues
+				computerDelay:(float) delay {
 	[self dismissModalViewControllerAnimated: YES];
 	[game setPredictions: predictions];
 	[game setMoveValues: moveValues];
 	[game updateDisplay];
+	gameControl.DELAY = delay;
 	if (!wasPaused)
 		[gameControl restart];
 }

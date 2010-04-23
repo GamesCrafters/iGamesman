@@ -23,9 +23,11 @@
 	BOOL stopped;
 	id computerMove;
 	int position;
+	float DELAY;
 }
 
 @property (nonatomic, assign, readonly) BOOL stopped;
+@property (nonatomic, assign) float DELAY;
 
 - (id) initWithGame: (GCGame *) _game andViewController: (GCGameViewController *) viewControl;
 - (void) go;

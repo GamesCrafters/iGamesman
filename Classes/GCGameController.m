@@ -8,12 +8,10 @@
 
 #import "GCGameController.h"
 
-#define DELAY 1
-
 
 @implementation GCGameController
 
-@synthesize stopped;
+@synthesize stopped, DELAY;
 
 - (id) initWithGame: (GCGame *) _game andViewController: (GCGameViewController *) viewControl {
 	if (self = [super init]) {
@@ -22,6 +20,8 @@
 		turn = NO;
 		stopped = NO;
 		computerMove = nil;
+		
+		DELAY = 1.0;
 		
 		if ([game player1Type] != HUMAN && [game player2Type] != HUMAN) {
 			[viewController.playPauseButton setEnabled: YES];

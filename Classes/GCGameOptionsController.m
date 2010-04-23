@@ -13,6 +13,7 @@
 
 @synthesize delegate;
 @synthesize mode;
+@synthesize delay, sliderOn;
 
 /*
 - (id)initWithStyle:(UITableViewStyle)style {
@@ -39,7 +40,8 @@
 - (void) done {
 	UISwitch *s1 = (UISwitch *) [self.tableView viewWithTag: 1];
 	UISwitch *s2 = (UISwitch *) [self.tableView viewWithTag: 2];
-	[delegate optionPanelDidFinish: self predictions: s1.on	moveValues: s2.on];
+	UILabel *valueLabel = (UILabel *) [self.tableView viewWithTag: 1234];
+	[delegate optionPanelDidFinish: self predictions: s1.on	moveValues: s2.on computerDelay: [valueLabel.text floatValue]];
 }
 
 
@@ -48,6 +50,15 @@
  */
 - (void) cancel {
 	[delegate optionPanelDidCancel: self];
+}
+
+
+- (void) sliderChanged: (UISlider *) sender {
+	delay = round(5.0 * sender.value) / 5.0;
+	[sender setValue: delay];
+	
+	UILabel *valueLabel = (UILabel *) [self.tableView viewWithTag: 1234];
+	[valueLabel setText: [NSString stringWithFormat: @"%.1f", sender.value]];
 }
 
 
@@ -150,22 +161,38 @@
 		[pSwitch release];
 	} else {
 		CGRect labelFrame;
-		if (orientation == UIInterfaceOrientationPortrait)
+		CGRect slideFrame;
+		CGRect slideValFrame;
+		if (orientation == UIInterfaceOrientationPortrait) {
 			labelFrame = CGRectMake(20.0, 5.0, 270.0, 34.0);
-		else
+			slideFrame = CGRectMake(175.0, 54.0, 125.0, 20.0);
+			slideValFrame = CGRectMake(175.0, 5.0, 125.0, 34.0);
+		} else {
 			labelFrame = CGRectMake(20.0, 5.0, 430.0, 34.0);
+			slideFrame = CGRectMake(335.0, 12.0, 125.0, 20.0);
+			slideValFrame = CGRectMake(285.0, 5.0, 50.0, 34.0);
+		}
 		UILabel *label = [[UILabel alloc] initWithFrame: labelFrame];
 		label.text = @"Computer Move Delay";
 		label.backgroundColor = [UIColor clearColor];
 		label.font = [UIFont boldSystemFontOfSize: 16.0];
-		CGRect slideFrame;
-		if (orientation == UIInterfaceOrientationPortrait)
-			slideFrame = CGRectMake(175.0, 54.0, 125.0, 20.0);
-		else
-			slideFrame = CGRectMake(335.0, 12.0, 125.0, 20.0);
+			
 		UISlider *slide = [[UISlider alloc] initWithFrame: slideFrame];
+		slide.continuous = YES;
+		[slide addTarget: self action: @selector(sliderChanged:) forControlEvents: UIControlEventValueChanged];
 		[cell addSubview: label];
 		[cell addSubview: slide];
+		slide.minimumValue = 0;
+		slide.maximumValue = 2;
+		slide.value = delay;
+		slide.enabled = sliderOn ? YES : NO;
+		
+		UILabel *valLabel = [[UILabel alloc] initWithFrame: slideValFrame];
+		valLabel.text = [NSString stringWithFormat: @"%.1f", slide.value];
+		valLabel.backgroundColor = [UIColor clearColor];
+		valLabel.textAlignment = UITextAlignmentCenter;
+		valLabel.tag = 1234;
+		[cell addSubview: valLabel];
 	}
 	
     return cell;
