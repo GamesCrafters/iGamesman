@@ -11,7 +11,6 @@
 		0A12AB841115770C00297EB8 /* GCConnectFourOptionMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A12AB831115770C00297EB8 /* GCConnectFourOptionMenu.m */; };
 		0A19F19C11260B2E0003F8C7 /* GCConnections.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A19F19B11260B2E0003F8C7 /* GCConnections.m */; };
 		0A19F1B111260E4F0003F8C7 /* GCConnectionsOptionMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A19F1B011260E4F0003F8C7 /* GCConnectionsOptionMenu.m */; };
-		0A1ABC1D1135BD2000BA1B81 /* GCConnectFourService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A1ABC1C1135BD2000BA1B81 /* GCConnectFourService.m */; };
 		0A1ABC2E1135BD3300BA1B81 /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A1ABC231135BD3300BA1B81 /* NSObject+SBJSON.m */; };
 		0A1ABC2F1135BD3300BA1B81 /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A1ABC251135BD3300BA1B81 /* NSString+SBJSON.m */; };
 		0A1ABC301135BD3300BA1B81 /* SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A1ABC271135BD3300BA1B81 /* SBJSON.m */; };
@@ -50,6 +49,7 @@
 		0A8756B7111415BE006AB678 /* GCGameMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A8756B6111415BE006AB678 /* GCGameMenuController.m */; };
 		0A87575811142585006AB678 /* GCPlayerChangeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A87575711142585006AB678 /* GCPlayerChangeController.m */; };
 		0A87575C111425A2006AB678 /* PlayerChanger.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A87575B111425A2006AB678 /* PlayerChanger.xib */; };
+		0AFC30BF11841E3A005CD671 /* GCJSONService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AFC30BE11841E3A005CD671 /* GCJSONService.m */; };
 		1D3623260D0F684500981E51 /* GamesmanMobileAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* GamesmanMobileAppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
@@ -79,8 +79,6 @@
 		0A19F19B11260B2E0003F8C7 /* GCConnections.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCConnections.m; sourceTree = "<group>"; };
 		0A19F1AF11260E4F0003F8C7 /* GCConnectionsOptionMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCConnectionsOptionMenu.h; sourceTree = "<group>"; };
 		0A19F1B011260E4F0003F8C7 /* GCConnectionsOptionMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCConnectionsOptionMenu.m; sourceTree = "<group>"; };
-		0A1ABC1B1135BD2000BA1B81 /* GCConnectFourService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCConnectFourService.h; sourceTree = "<group>"; };
-		0A1ABC1C1135BD2000BA1B81 /* GCConnectFourService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCConnectFourService.m; sourceTree = "<group>"; };
 		0A1ABC211135BD3300BA1B81 /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
 		0A1ABC221135BD3300BA1B81 /* NSObject+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJSON.h"; sourceTree = "<group>"; };
 		0A1ABC231135BD3300BA1B81 /* NSObject+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJSON.m"; sourceTree = "<group>"; };
@@ -139,6 +137,8 @@
 		0A87575611142585006AB678 /* GCPlayerChangeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCPlayerChangeController.h; sourceTree = "<group>"; };
 		0A87575711142585006AB678 /* GCPlayerChangeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCPlayerChangeController.m; sourceTree = "<group>"; };
 		0A87575B111425A2006AB678 /* PlayerChanger.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlayerChanger.xib; sourceTree = "<group>"; };
+		0AFC30BD11841E3A005CD671 /* GCJSONService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCJSONService.h; sourceTree = "<group>"; };
+		0AFC30BE11841E3A005CD671 /* GCJSONService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCJSONService.m; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* GamesmanMobileAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GamesmanMobileAppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* GamesmanMobileAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GamesmanMobileAppDelegate.m; sourceTree = "<group>"; };
@@ -206,6 +206,8 @@
 				0A65E694111CDEDA001400F6 /* GCGameViewController.m */,
 				0A87575611142585006AB678 /* GCPlayerChangeController.h */,
 				0A87575711142585006AB678 /* GCPlayerChangeController.m */,
+				0AFC30BD11841E3A005CD671 /* GCJSONService.h */,
+				0AFC30BE11841E3A005CD671 /* GCJSONService.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -219,8 +221,6 @@
 				0A12AB831115770C00297EB8 /* GCConnectFourOptionMenu.m */,
 				0A65E713111CE538001400F6 /* GCConnectFourViewController.h */,
 				0A65E714111CE538001400F6 /* GCConnectFourViewController.m */,
-				0A1ABC1B1135BD2000BA1B81 /* GCConnectFourService.h */,
-				0A1ABC1C1135BD2000BA1B81 /* GCConnectFourService.m */,
 			);
 			name = ConnectFour;
 			sourceTree = "<group>";
@@ -499,7 +499,6 @@
 				0A19F19C11260B2E0003F8C7 /* GCConnections.m in Sources */,
 				0A19F1B111260E4F0003F8C7 /* GCConnectionsOptionMenu.m in Sources */,
 				0A0481EA113218D300156CFF /* GCConnectionsViewController.m in Sources */,
-				0A1ABC1D1135BD2000BA1B81 /* GCConnectFourService.m in Sources */,
 				0A1ABC2E1135BD3300BA1B81 /* NSObject+SBJSON.m in Sources */,
 				0A1ABC2F1135BD3300BA1B81 /* NSString+SBJSON.m in Sources */,
 				0A1ABC301135BD3300BA1B81 /* SBJSON.m in Sources */,
@@ -509,6 +508,7 @@
 				C58F0D851144871B0058D6CE /* GCYGameViewController.m in Sources */,
 				9C692486115017B800E0EC4B /* IntegerQueue.m in Sources */,
 				E485E2621177BDBF002B7F15 /* YGameQueue.m in Sources */,
+				0AFC30BF11841E3A005CD671 /* GCJSONService.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

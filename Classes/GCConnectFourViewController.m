@@ -54,7 +54,7 @@
 		[game postHumanMove: move];
 }
 
-- (void) updateServerDataWithService: (GCConnectFourService *) _service {
+- (void) updateServerDataWithService: (GCJSONService *) _service {
 	service = _service;
 	[spinner startAnimating];
 	waiter = [[NSThread alloc] initWithTarget: self selector: @selector(fetchNewData:) object: [NSNumber numberWithBool:buttonsEnabled]];
@@ -65,7 +65,11 @@
 - (void) fetchNewData: (BOOL) buttonsOn {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	[self performSelectorOnMainThread: @selector(disableButtons) withObject: nil waitUntilDone: NO];
-	[service retrieveDataForBoard: [game board] width: width height: height pieces: pieces misere: game.misere];
+	NSString *boardString = [GCConnectFour stringForBoard: game.board];
+	NSString *boardURL = [boardString stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
+	NSString *boardVal = [[NSString stringWithFormat: @"http://nyc.cs.berkeley.edu:8080/gcweb/service/gamesman/puzzles/connect4/getMoveValue;width=%d;height=%d;pieces=%d;board=%@", width, height, pieces, boardURL] retain];
+	NSString *moveVals = [[NSString stringWithFormat: @"http://nyc.cs.berkeley.edu:8080/gcweb/service/gamesman/puzzles/connect4/getNextMoveValues;width=%d;height=%d;pieces=%d;board=%@", width, height, pieces, boardURL] retain];
+	[service retrieveDataForBoard: boardString URL: boardVal andNextMovesURL: moveVals];
 	[self performSelectorOnMainThread: @selector(fetchFinished:) withObject: [NSNumber numberWithBool: buttonsOn] waitUntilDone: NO];
 	[pool release];
 }

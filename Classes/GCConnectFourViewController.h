@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "GCConnectFour.h"
-#import "GCConnectFourService.h"
+#import "GCJSONService.h"
 
 
 @interface GCConnectFourViewController : UIViewController {
@@ -18,7 +18,7 @@
 	
 	UILabel *message;
 	
-	GCConnectFourService *service;
+	GCJSONService *service;
 	GCConnectFour *game;			///< The Connect-4 controlling object for this VC
 	int width;						///< The number of columns
 	int height;						///< The number of rows
@@ -33,7 +33,7 @@
 
 /// Receiver of button taps. Simply converts the button into a move and sends it to GAME
 - (void) tapped: (UIButton *) sender;
-- (void) updateServerDataWithService: (GCConnectFourService *) service;
+- (void) updateServerDataWithService: (GCJSONService *) service;
 - (void) fetchNewData: (BOOL) buttonsOn;
 - (void) fetchFinished: (BOOL) buttonsOn;
 - (void) timedOut: (NSTimer *) theTimer;

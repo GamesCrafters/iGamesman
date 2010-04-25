@@ -77,7 +77,7 @@
 
 
 - (void) playPause {
-	if (![game isPrimitive: [game getBoard]]) {
+	if (![game primitive: [game getBoard]]) {
 		if (gameControl.stopped) {
 			[gameControl restart];
 			[playPauseButton setImage: [UIImage imageNamed: @"Pause.png"]];

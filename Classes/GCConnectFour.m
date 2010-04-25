@@ -45,6 +45,23 @@
 	return self;
 }
 
+/** 
+ Convert the NSArray representation of a board to an NSString.
+ A convenience method for making server requests.
+ 
+ @param board a Connect-4 board, represented as an NSArray
+ @return the same board, represented as an NSString
+ */
++ (NSString *) stringForBoard: (NSArray *) _board {
+	NSString *boardString = @"";
+	for (NSString *piece in _board) {
+		if ([piece isEqualToString: @"+"])
+			piece = @" ";
+		boardString = [NSString stringWithFormat: @"%@%@", boardString, piece];
+	}
+	return boardString;
+}
+
 - (NSString *) gameName { 
 	return @"Connect-4"; 
 }
@@ -82,7 +99,7 @@
 		c4view.buttonsEnabled = YES;
 	
 	if (mode == ONLINE_SOLVED)
-		service = [[GCConnectFourService alloc] init];
+		service = [[GCJSONService alloc] init];
 	
 	if (mode == ONLINE_SOLVED) {
 		[c4view updateServerDataWithService: service];

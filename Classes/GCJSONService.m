@@ -1,25 +1,25 @@
 //
-//  GCConnectFourService.m
+//  GCJSONService.m
 //  GamesmanMobile
 //
-//  Created by Kevin Jorgensen on 10/28/09.
-//  Copyright 2009 GamesCrafters. All rights reserved.
+//  Created by Kevin Jorgensen on 4/24/10.
+//  Copyright 2010 GamesCrafters. All rights reserved.
 //
 
-#import "GCConnectFourService.h"
-#import "JSON.h"
+#import "GCJSONService.h"
+#import "SBJsonParser.h"
 
 
-@implementation GCConnectFourService
+@implementation GCJSONService
 
 /** Designated initializer */
 - (id) init {
 	if (self = [super init]) {
-		previous = nil;
-		current = nil;
-		myBoard = nil;
+		previous  = nil;
+		current   = nil;
+		myBoard   = nil;
+		status    = NO;
 		connected = NO;
-		status = NO;
 	}
 	return self;
 }
@@ -45,34 +45,16 @@
 }
 
 /** 
- Convert the NSArray representation of a board to an NSString.
- A convenience method for making server requests.
- 
- @param board a Connect-4 board, represented as an NSArray
- @return the same board, represented as an NSString
- */
-- (NSString *) stringForBoard: (NSArray *) board {
-	NSString *boardString = @"";
-	for (NSString *piece in board) {
-		if ([piece isEqualToString: @"+"])
-			piece = @" ";
-		boardString = [NSString stringWithFormat: @"%@%@", boardString, piece];
-	}
-	return boardString;
-}
-
-/** 
  Returns the "opposite" position value.
  
  @param value a game value (win, lose, tie, or draw)
  @return the opposite game value
  */
-- (NSString *) flip: (NSString *) value {
++ (NSString *) flip: (NSString *) value {
 	if ([value isEqualToString: @"win"]) return @"lose";
 	if ([value isEqualToString: @"lose"]) return @"win";
 	return value;
 }
-
 
 /**
  Gets the value of the current board, based on the most recent
@@ -83,13 +65,13 @@
 - (NSString *) getValue {
 	for (NSDictionary *position in previous) {
 		NSString *aBoard = [position objectForKey: @"board"];
-		if ([aBoard isEqual: [self stringForBoard: myBoard]]) {
+		if ([aBoard isEqual: myBoard]) {
 			NSString *val = [position objectForKey: @"value"];
 			if (val == nil) 
 				return nil;
 			if ([position objectForKey: @"move"] == nil) // Handles the case of the first position
 				return val;								 // where the value is NOT flipped
-			return [self flip: val];
+			return [GCJSONService flip: val];
 		}
 	}
 	return nil;
@@ -104,7 +86,7 @@
 - (NSInteger) getRemoteness {
 	for (NSDictionary *position in previous) {
 		NSString *aBoard = [position objectForKey: @"board"];
-		if ([aBoard isEqual: [self stringForBoard: myBoard]]) {
+		if ([aBoard isEqual: myBoard]) {
 			NSString *remote = [position objectForKey: @"remoteness"];
 			if (remote == nil) return -1;
 			return [remote intValue];
@@ -117,7 +99,7 @@
  Gets the value of the child board after MOVE, based on the most recent
  server data request.
  
- @param move a move in Connect-4 (an integer in the range [0, width - 1])
+ @param move a move in the game in the format used by the server
  @return the value of the resulting board. Returns nil if the value is unavailable.
  */
 - (NSString *) getValueAfterMove: (NSString *) move {
@@ -135,7 +117,7 @@
  Gets the remoteness of the child board after MOVE, based on the most
  recent server data request.
  
- @param move a move in Connect-4 (an integer in the range [0, width - 1])
+ @param move a move in the game in the format used by the server
  @return the remoteness of the resulting board. Returns -1 if the value is unavailable.
  */
 - (NSInteger) getRemotenessAfterMove: (NSString *) move {
@@ -147,30 +129,23 @@
 	return -1;
 }
 
-/** 
- Handles the requests to the server. Given a board and its parameters,
- it makes the request and stores the result for later access by the 
- above methods.
+
+/**
+ Handles requests to the server. Given a URL for position value
+ and another for next move values, makes the request and stores
+ the result for later access by the above methods.
  
- @param board a Connect-4 board
- @param width the number of columns
- @param height the number of rows
- @param pieces the number needed in a row to win
- @param misere the game is misere (YES) or standard (NO) mode
+ @param board a board in the game in the format used by the server
+ @param posURL the URL of the server request that yields the value of a position
+ @param nextURL the URL of the server request that gives the values of children positions
  */
-- (void) retrieveDataForBoard: (NSArray *) board width: (NSInteger) width height: (NSInteger) height pieces: (NSInteger) pieces misere: (BOOL) misere {
-	myBoard = board;
+- (void) retrieveDataForBoard: (NSString *) board URL: (NSString *) posURL andNextMovesURL: (NSString *) nextURL {
+	myBoard = [board retain];
 	
-	// Convert the board to a string
-	NSString *boardString = [self stringForBoard: board];
-	boardString = [boardString stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
-	
-	if (previous == nil) {
-		NSString *result = [NSString stringWithContentsOfURL: 
-							[NSURL URLWithString: 
-							 [NSString stringWithFormat: @"http://nyc.cs.berkeley.edu:8080/gcweb/service/gamesman/puzzles/connect4/getMoveValue;width=%d;height=%d;pieces=%d;board=%@", width, height, pieces, boardString]]
-													encoding: NSUTF8StringEncoding
-													   error: NULL];
+	if (!previous) {
+		NSString *result = [[NSString alloc] initWithContentsOfURL: [NSURL URLWithString: posURL]
+														  encoding: NSUTF8StringEncoding
+															 error: NULL];
 		SBJsonParser *parser = [[SBJsonParser alloc] init];
 		id response = [parser objectWithString: result];
 		if (response != nil) {
@@ -188,11 +163,9 @@
 	} else
 		previous = current;
 	
-	NSString *result = [NSString stringWithContentsOfURL: 
-						[NSURL URLWithString: 
-						 [NSString stringWithFormat: @"http://nyc.cs.berkeley.edu:8080/gcweb/service/gamesman/puzzles/connect4/getNextMoveValues;width=%d;height=%d;pieces=%d;misere=%@;board=%@", width, height, pieces, (misere ? @"true" : @"false"), boardString]]
-												encoding: NSUTF8StringEncoding
-												   error: NULL];
+	NSString *result = [[NSString alloc] initWithContentsOfURL: [NSURL URLWithString: nextURL]
+													  encoding: NSUTF8StringEncoding
+														 error: NULL];
 	SBJsonParser *parser = [[SBJsonParser alloc] init];
 	id response = [parser objectWithString: result];
 	if (response != nil) {
@@ -207,6 +180,13 @@
 	} else
 		connected = NO;
 	[parser release];
+}
+
+
+- (void) dealloc {
+	if (previous) [previous release];
+	if (current) [current release];
+	[super dealloc];
 }
 
 @end

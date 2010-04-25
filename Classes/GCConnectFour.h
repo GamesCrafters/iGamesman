@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "GCGame.h"
-#import "GCConnectFourService.h"
+#import "GCJSONService.h"
 
 @class GCConnectFourViewController;
 
@@ -17,7 +17,7 @@
  */
 @interface GCConnectFour : GCGame {
 	GCConnectFourViewController *c4view;
-	GCConnectFourService		*service;
+	GCJSONService				*service;
 	NSString					*player1Name, *player2Name;
 	PlayerType					player1Type, player2Type;
 	int							width, height, pieces;
@@ -38,6 +38,7 @@
 @property (nonatomic, assign, getter=isMisere) BOOL misere;
 @property (nonatomic, assign) PlayMode gameMode;
 
++ (NSString *) stringForBoard: (NSArray *) _board;
 - (void) resetBoard;
 - (void) postHumanMove: (NSString *) move;
 - (void) postReady;
