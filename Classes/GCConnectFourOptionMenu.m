@@ -30,8 +30,9 @@
 		width  = game.width;
 		height = game.height;
 		pieces = game.pieces;
+		misere = [game isMisere];
 		
-		headings = [[NSArray alloc] initWithObjects: @"Width", @"Height", @"In-a-Row", nil];
+		headings = [[NSArray alloc] initWithObjects: @"Width", @"Height", @"In-a-Row", @"Misère", nil];
 	}
 	return self;
 }
@@ -46,6 +47,7 @@
 	game.width  = width;
 	game.height = height;
 	game.pieces = pieces;
+	game.misere = misere;
 	
 	[game resetBoard];
 	
@@ -57,7 +59,8 @@
 	int tag = sender.tag;
 	if (tag == 1) width = [sender selectedSegmentIndex] + 4;
 	else if (tag == 2) height = [sender selectedSegmentIndex] + 4;
-	else pieces = [sender selectedSegmentIndex] + 3;
+	else if (tag == 3) pieces = [sender selectedSegmentIndex] + 3;
+	else misere = [sender selectedSegmentIndex] == 0 ? NO : YES;
 }
 
 
@@ -100,7 +103,7 @@
 #pragma mark Table view methods
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 3;
+    return 4;
 }
 
 
@@ -128,7 +131,10 @@
     
     // Set up the cell...
 	UISegmentedControl *segment = [[UISegmentedControl alloc] initWithFrame: CGRectMake(20, 10, 280, 26)];
-	if (indexPath.section == 2) {
+	if (indexPath.section == 3) {
+		[segment insertSegmentWithTitle: @"Standard" atIndex: 0 animated: NO];
+		[segment insertSegmentWithTitle: @"Misère" atIndex: 1 animated: NO];
+	} else if (indexPath.section == 2) {
 		[segment insertSegmentWithTitle: @"3" atIndex: 0 animated: NO];
 		[segment insertSegmentWithTitle: @"4" atIndex: 1 animated: NO];
 		[segment insertSegmentWithTitle: @"5" atIndex: 2 animated: NO];
@@ -143,7 +149,8 @@
 	int selected;
 	if (indexPath.section == 0) selected = width - 4;
 	else if (indexPath.section == 1) selected = height - 4;
-	else selected = pieces - 3;
+	else if (indexPath.section == 2) selected = pieces - 3;
+	else selected = [game isMisere] ? 1 : 0;
 	[segment setSelectedSegmentIndex: selected];
 	
 	segment.segmentedControlStyle = UISegmentedControlStyleBar;

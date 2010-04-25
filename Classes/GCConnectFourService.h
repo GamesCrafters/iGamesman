@@ -47,6 +47,6 @@
 - (NSInteger) getRemotenessAfterMove: (NSString *) move;
 
 /// Requests the game data from the server
-- (void) retrieveDataForBoard: (NSArray *) board width: (NSInteger) width height: (NSInteger) height pieces: (NSInteger) pieces;
+- (void) retrieveDataForBoard: (NSArray *) board width: (NSInteger) width height: (NSInteger) height pieces: (NSInteger) pieces misere: (BOOL) misere;
 
 @end

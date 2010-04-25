@@ -65,7 +65,7 @@
 - (void) fetchNewData: (BOOL) buttonsOn {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	[self performSelectorOnMainThread: @selector(disableButtons) withObject: nil waitUntilDone: NO];
-	[service retrieveDataForBoard: [game board] width: width height: height pieces: pieces];
+	[service retrieveDataForBoard: [game board] width: width height: height pieces: pieces misere: game.misere];
 	[self performSelectorOnMainThread: @selector(fetchFinished:) withObject: [NSNumber numberWithBool: buttonsOn] waitUntilDone: NO];
 	[pool release];
 }
@@ -160,18 +160,18 @@
 			[message setText: @"Server connection failed. Please check your Web connection"];
 	}
 	
-	if ([game isPrimitive: [game getBoard]])
+	if ([game primitive: [game getBoard]])
 		[self displayPrimitive];
 }
 
 
 - (void) displayPrimitive {
-	NSString *value = [service getValue];
+	NSString *value = [game primitive: game.board];
 	NSString *winner;
-	if ([value isEqualToString: @"tie"] || [value isEqualToString: @"draw"])
+	if ([value isEqualToString: @"TIE"])
 		message.text = @"It's a tie!";
 	else {
-		if ([value isEqualToString: @"win"])
+		if ([value isEqualToString: @"WIN"])
 			winner = game.p1Turn ? game.player1Name : game.player2Name;
 		else
 			winner = game.p1Turn ? game.player2Name : game.player1Name;

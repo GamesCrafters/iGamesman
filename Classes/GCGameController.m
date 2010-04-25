@@ -51,7 +51,7 @@
 	[[NSNotificationCenter defaultCenter] removeObserver: self];
 	if ([game player1Type] == HUMAN || [game player2Type] == HUMAN)
 		[viewController.slider setEnabled: YES];
-	if (![game isPrimitive: [game getBoard]]) {
+	if (![game primitive: [game getBoard]]) {
 		PlayerType p = ([game currentPlayer] == PLAYER1) ? [game player1Type] : [game player2Type];
 		if (p == HUMAN)
 			[self takeHumanTurn];

@@ -87,8 +87,8 @@
 // Return an array of legal moves using the current board
 - (NSArray *) legalMoves { return nil; }
 
-// Return YES if THEBOARD is primitive, NO if not
-- (BOOL) isPrimitive: (id) theBoard  { return NO; }
+// Return @"WIN", @"LOSE", @"TIE", or @"DRAW", as appropriate, if theBoard is primitive; return nil if not
+- (NSString *) primitive: (id) theBoard { return nil; }
 
 // Ask the user for input
 - (void) askUserForInput { }

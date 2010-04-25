@@ -17,6 +17,7 @@
 @interface GCConnectFourOptionMenu : UITableViewController <GCOptionMenu> {
 	GCConnectFour *game;
 	int width, height, pieces;
+	BOOL misere;
 	NSArray *headings;
 	id <GCRulesDelegate> delegate;
 }

@@ -21,6 +21,7 @@
 @synthesize board;
 @synthesize p1Turn;
 @synthesize predictions, moveValues;
+@synthesize misere;
 @synthesize gameMode;
 
 - (id) init {
@@ -144,17 +145,7 @@
 	return moves;
 }
 
-- (BOOL) isPrimitive: (NSArray *) theBoard {
-	// First check if the board is full
-	BOOL full = YES;
-	for (int i = 0; i < width * height; i += 1) {
-		if ([[theBoard objectAtIndex: i] isEqual: BLANK]) {
-			full = NO;
-			break;
-		}
-	}
-	if (full) return full;
-	
+- (NSString *) primitive: (NSArray *) theBoard {	
 	for (int i = 0; i < width * height; i += 1) {
 		NSString *piece = [theBoard objectAtIndex: i];
 		if ([piece isEqual: BLANK])
@@ -168,7 +159,6 @@
 				break;
 			}
 		}
-		if (case1) return case1;
 		
 		// Check the vertical case
 		BOOL case2 = YES;
@@ -178,7 +168,6 @@
 				break;
 			}
 		}
-		if (case2) return case2;
 		
 		// Check the diagonal case (positive slope)
 		BOOL case3 = YES;
@@ -188,7 +177,6 @@
 				break;
 			}
 		}
-		if (case3) return case3;
 		
 		// Check the diagonal case (negative slope)
 		BOOL case4 = YES;
@@ -197,9 +185,20 @@
 				case4 = NO;
 				break;
 			}
-		}
-		if (case4) return case4;
+		}		
+		if (case1 || case2 || case3 || case4)
+			return [piece isEqual: (p1Turn ? @"X" : @"O")] ? (misere ? @"LOSE" : @"WIN") : (misere ? @"WIN" : @"LOSE");
 	}
+	
+	// Finally, check if the board is full
+	BOOL full = YES;
+	for (int i = 0; i < width * height; i += 1) {
+		if ([[theBoard objectAtIndex: i] isEqual: BLANK]) {
+			full = NO;
+			break;
+		}
+	}
+	if (full) return @"TIE";
 	
 	return NO;
 }

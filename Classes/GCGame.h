@@ -106,8 +106,8 @@ typedef enum { PLAYER1, PLAYER2, NONE } Player;
 /// Return an array of legal moves using the current board
 - (NSArray *) legalMoves;
 
-/// Return YES if THEBOARD is primitive, NO if not
-- (BOOL) isPrimitive: (id) theBoard;
+/// Return @"WIN", @"LOSE", @"TIE", or @"DRAW", as appropriate, if theBoard is primitive; return nil if not
+- (NSString *) primitive: (id) theBoard;
 
 /// Ask the user for input
 - (void) askUserForInput;

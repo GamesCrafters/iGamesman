@@ -156,8 +156,9 @@
  @param width the number of columns
  @param height the number of rows
  @param pieces the number needed in a row to win
+ @param misere the game is misere (YES) or standard (NO) mode
  */
-- (void) retrieveDataForBoard: (NSArray *) board width: (NSInteger) width height: (NSInteger) height pieces: (NSInteger) pieces {
+- (void) retrieveDataForBoard: (NSArray *) board width: (NSInteger) width height: (NSInteger) height pieces: (NSInteger) pieces misere: (BOOL) misere {
 	myBoard = board;
 	
 	// Convert the board to a string
@@ -189,7 +190,7 @@
 	
 	NSString *result = [NSString stringWithContentsOfURL: 
 						[NSURL URLWithString: 
-						 [NSString stringWithFormat: @"http://nyc.cs.berkeley.edu:8080/gcweb/service/gamesman/puzzles/connect4/getNextMoveValues;width=%d;height=%d;pieces=%d;board=%@", width, height, pieces, boardString]]
+						 [NSString stringWithFormat: @"http://nyc.cs.berkeley.edu:8080/gcweb/service/gamesman/puzzles/connect4/getNextMoveValues;width=%d;height=%d;pieces=%d;misere=%@;board=%@", width, height, pieces, (misere ? @"true" : @"false"), boardString]]
 												encoding: NSUTF8StringEncoding
 												   error: NULL];
 	SBJsonParser *parser = [[SBJsonParser alloc] init];

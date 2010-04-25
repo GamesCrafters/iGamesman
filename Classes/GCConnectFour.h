@@ -23,6 +23,7 @@
 	int							width, height, pieces;
 	BOOL						p1Turn;
 	BOOL						predictions, moveValues;
+	BOOL						misere;
 	PlayMode					gameMode;
 	NSMutableArray				*board;
 	NSString					*humanMove;
@@ -34,6 +35,7 @@
 @property (nonatomic, retain) NSArray *board;
 @property (nonatomic, readonly) BOOL p1Turn;
 @property (nonatomic, assign) BOOL predictions, moveValues;
+@property (nonatomic, assign, getter=isMisere) BOOL misere;
 @property (nonatomic, assign) PlayMode gameMode;
 
 - (void) resetBoard;
