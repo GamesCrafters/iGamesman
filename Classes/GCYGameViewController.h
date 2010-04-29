@@ -22,6 +22,9 @@
 
 - (void) disableButtons;
 - (void) enableButtons;
+- (void) drawBoard;
+- (void) drawLines;
+- (void) drawConnections;
 - (IBAction) tapped: (UIButton *) button;
 
 @end
