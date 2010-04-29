@@ -2,21 +2,15 @@
 //  GCYBoardView.h
 //  GamesmanMobile
 //
-//  Created by Class Account on 4/15/10.
+//  Created by Class Account on 4/29/10.
 //  Copyright 2010 __MyCompanyName__. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@class GCYGame;
+
 @interface GCYBoardView : UIView {
-	GCYGame *game;
-	NSMutableArray *p1Connectors;
-	NSMutableArray *p2Connectors;
+
 }
-
-@property (nonatomic, retain) GCYGame *game;
-
-- (void) doMove: (NSNumber *) move;
 
 @end

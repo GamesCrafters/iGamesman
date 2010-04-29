@@ -1,15 +1,15 @@
 //
-//  GCYBoardView.m
+//  GCYBoardConnectionsView.m
 //  GamesmanMobile
 //
 //  Created by Class Account on 4/29/10.
 //  Copyright 2010 __MyCompanyName__. All rights reserved.
 //
 
-#import "GCYBoardView.h"
+#import "GCYBoardConnectionsView.h"
 
 
-@implementation GCYBoardView
+@implementation GCYBoardConnectionsView
 
 
 - (id)initWithFrame:(CGRect)frame {
