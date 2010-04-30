@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "GCYGame.h"
-#import "GCYBoardView.h"
+//#import "GCYBoardView.h"
 
 
 @interface GCYGameViewController : UIViewController {
@@ -22,9 +22,7 @@
 
 - (void) disableButtons;
 - (void) enableButtons;
-- (void) drawBoard;
-- (void) drawLines;
-- (void) drawConnections;
+- (void) newBoard;
 - (IBAction) tapped: (UIButton *) button;
 
 @end

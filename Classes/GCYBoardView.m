@@ -10,6 +10,10 @@
 
 
 @implementation GCYBoardView
+@synthesize layers, innerTriangleLength;
+@synthesize bottomEdgePieces, centers;
+@synthesize edgesForPosition, neighborsForPosition;
+@synthesize connectionsView;
 
 
 - (id)initWithFrame:(CGRect)frame {
@@ -22,6 +26,9 @@
 
 - (void)drawRect:(CGRect)rect {
     // Drawing code
+	
+	//draw the board
+	//draw the other stuff
 }
 
 

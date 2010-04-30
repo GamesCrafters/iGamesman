@@ -163,18 +163,21 @@
 	//printing this out would be disgusting.	
 }
 
-- (BOOL) isPrimitive: (NSArray *) theBoard  { 
+/** Returns @"WIN" or @"LOSE" if in a primitive state since Y has no draws/ties.  Returns nil if not in a primitive state **/
+- (NSString *) isPrimitive: (NSArray *) theBoard  { 
 	NSMutableSet *edgesReached = [NSMutableSet set];
 	NSString *currentPlayerPiece;
 	NSNumber *currentPosition;
 	YGameQueue *queue = [[YGameQueue alloc] init];
 	
+	//Might need to do away with this... 
 	if ([[self legalMoves] count] == 0){
 		[queue release];
-		return YES;
+		return @"WIN";
 	}
 	
 	//Super Happy Fun Time!!!
+	//Check current player's pieces
 	if (p1Turn)
 		currentPlayerPiece = O;
 	else 
@@ -209,15 +212,56 @@
 			if ([edgesReached count] == 3){
 				[queue release];
 				NSLog(@"Game Over");
-				return YES;
+				return @"WIN";
 			}
 			
 		}
-		//NSLog([edgesReached description]);
-	
 	}
+	
+	
+	//Check opponent's pieces
+	if (!p1Turn)
+		currentPlayerPiece = O;
+	else 
+		currentPlayerPiece = X;
+	
+	//for each position in left edges
+	NSLog(currentPlayerPiece);
+	for (NSNumber * position in leftEdges){
+		[queue emptyFringe]; //don't empty the blacklist, just the queue
+		
+		//If the current player's piece is in that position, add it to the queue
+		if ([self boardContainsPlayerPiece: currentPlayerPiece forPosition: position]){
+			[queue push: position];
+			[edgesReached setSet: [edgesForPosition objectForKey: position]];
+		}
+		while ([queue notEmpty]){
+			currentPosition = [queue pop];
+			
+			
+			//Add each neighboring position that contains the current player's piece to the queue
+			for (NSNumber * neighborPosition in [positionConnections objectForKey: currentPosition]){
+				//NSLog(@"%@, %@", [currentPosition description], [neighborPosition description]);
+				if ([self boardContainsPlayerPiece: currentPlayerPiece forPosition: neighborPosition]){
+					[queue push: neighborPosition];
+					NSSet * neighborEdges = [edgesForPosition objectForKey: neighborPosition];
+					//If neighborPosition touches any edges, add them to edgesReached
+					if (neighborEdges)
+						[edgesReached unionSet: neighborEdges];
+				}
+			}
+			//Check if all of the edges are reached
+			if ([edgesReached count] == 3){
+				[queue release];
+				NSLog(@"Game Over");
+				return @"LOSE";
+			}
+			
+		}
+	}
+	
 	[queue release];
-	return NO;
+	return nil;
 }
 
 - (void) notifyWhenReady {
