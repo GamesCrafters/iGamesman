@@ -61,6 +61,8 @@
 		C58F0D7B114482CB0058D6CE /* GCYBoardView1.xib in Resources */ = {isa = PBXBuildFile; fileRef = C58F0D7A114482CB0058D6CE /* GCYBoardView1.xib */; };
 		C58F0D7F114484290058D6CE /* yboard.gif in Resources */ = {isa = PBXBuildFile; fileRef = C58F0D7E114484290058D6CE /* yboard.gif */; };
 		C58F0D851144871B0058D6CE /* GCYGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C58F0D841144871B0058D6CE /* GCYGameViewController.m */; };
+		E423EBE9118A14F000360BDF /* GCYBoardView.m in Sources */ = {isa = PBXBuildFile; fileRef = E423EBE8118A14F000360BDF /* GCYBoardView.m */; };
+		E423EBEC118A15EC00360BDF /* GCYBoardConnectionsView.m in Sources */ = {isa = PBXBuildFile; fileRef = E423EBEB118A15EC00360BDF /* GCYBoardConnectionsView.m */; };
 		E485E2621177BDBF002B7F15 /* YGameQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = E485E2611177BDBF002B7F15 /* YGameQueue.m */; };
 		E4F6D8BC11716AE900BEAB78 /* yboard0aa.png in Resources */ = {isa = PBXBuildFile; fileRef = E4F6D8B911716AE900BEAB78 /* yboard0aa.png */; };
 		E4F6D8BD11716AE900BEAB78 /* yboard1aa.png in Resources */ = {isa = PBXBuildFile; fileRef = E4F6D8BA11716AE900BEAB78 /* yboard1aa.png */; };
@@ -156,6 +158,10 @@
 		C58F0D7E114484290058D6CE /* yboard.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = yboard.gif; sourceTree = "<group>"; };
 		C58F0D831144871B0058D6CE /* GCYGameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCYGameViewController.h; sourceTree = "<group>"; };
 		C58F0D841144871B0058D6CE /* GCYGameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCYGameViewController.m; sourceTree = "<group>"; };
+		E423EBE7118A14F000360BDF /* GCYBoardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCYBoardView.h; sourceTree = "<group>"; };
+		E423EBE8118A14F000360BDF /* GCYBoardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCYBoardView.m; sourceTree = "<group>"; };
+		E423EBEA118A15EC00360BDF /* GCYBoardConnectionsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCYBoardConnectionsView.h; sourceTree = "<group>"; };
+		E423EBEB118A15EC00360BDF /* GCYBoardConnectionsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCYBoardConnectionsView.m; sourceTree = "<group>"; };
 		E485E2601177BDBF002B7F15 /* YGameQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YGameQueue.h; sourceTree = "<group>"; };
 		E485E2611177BDBF002B7F15 /* YGameQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YGameQueue.m; sourceTree = "<group>"; };
 		E4F6D8B911716AE900BEAB78 /* yboard0aa.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yboard0aa.png; sourceTree = "<group>"; };
@@ -303,6 +309,10 @@
 				C58F0D841144871B0058D6CE /* GCYGameViewController.m */,
 				E485E2601177BDBF002B7F15 /* YGameQueue.h */,
 				E485E2611177BDBF002B7F15 /* YGameQueue.m */,
+				E423EBE7118A14F000360BDF /* GCYBoardView.h */,
+				E423EBE8118A14F000360BDF /* GCYBoardView.m */,
+				E423EBEA118A15EC00360BDF /* GCYBoardConnectionsView.h */,
+				E423EBEB118A15EC00360BDF /* GCYBoardConnectionsView.m */,
 			);
 			name = Y;
 			sourceTree = "<group>";
@@ -509,6 +519,8 @@
 				9C692486115017B800E0EC4B /* IntegerQueue.m in Sources */,
 				E485E2621177BDBF002B7F15 /* YGameQueue.m in Sources */,
 				0AFC30BF11841E3A005CD671 /* GCJSONService.m in Sources */,
+				E423EBE9118A14F000360BDF /* GCYBoardView.m in Sources */,
+				E423EBEC118A15EC00360BDF /* GCYBoardConnectionsView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
