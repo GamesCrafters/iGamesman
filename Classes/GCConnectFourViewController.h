@@ -23,10 +23,10 @@
 	int width;						///< The number of columns
 	int height;						///< The number of rows
 	int pieces;						///< The number in a row needed to win
-	BOOL buttonsEnabled;
+	BOOL touchesEnabled;
 }
 
-@property (nonatomic, assign) BOOL buttonsEnabled;
+@property (nonatomic, assign) BOOL touchesEnabled;
 
 /// The designated initializer
 - (id) initWithGame: (GCConnectFour *) _game;
@@ -40,8 +40,8 @@
 - (void) updateLabels;
 - (void) displayPrimitive;
 - (void) doMove: (NSString *) move;
-- (void) disableButtons;
-- (void) enableButtons;
+//- (void) disableButtons;
+//- (void) enableButtons;
 - (void) stop;
 
 @end

@@ -99,7 +99,7 @@
 	
 	PlayerType current = [self currentPlayer] == PLAYER1 ? player1Type : player2Type;
 	if (current == HUMAN)
-		c4view.buttonsEnabled = YES;
+		c4view.touchesEnabled = YES;
 	
 	if (mode == ONLINE_SOLVED)
 		service = [[GCJSONService alloc] init];
@@ -224,11 +224,13 @@
 }
 
 - (void) askUserForInput {
-	[c4view enableButtons];
+	//[c4view enableButtons];
+	c4view.touchesEnabled = YES;
 }
 
 - (void) stopUserInput {
-	[c4view disableButtons];
+	//[c4view disableButtons];
+	c4view.touchesEnabled = NO;
 }
 
 - (void) stop {

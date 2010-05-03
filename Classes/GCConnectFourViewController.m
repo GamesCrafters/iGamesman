@@ -11,7 +11,7 @@
 
 @implementation GCConnectFourViewController
 
-@synthesize buttonsEnabled;
+@synthesize touchesEnabled;
 
 /*
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
@@ -37,7 +37,9 @@
 		pieces = _game.pieces;
 		game = _game;
 		
-		buttonsEnabled = NO;
+		touchesEnabled = NO;
+		
+		self.view.multipleTouchEnabled = NO;
 		
 		spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle: UIActivityIndicatorViewStyleWhiteLarge];
 	}
@@ -57,14 +59,14 @@
 - (void) updateServerDataWithService: (GCJSONService *) _service {
 	service = _service;
 	[spinner startAnimating];
-	waiter = [[NSThread alloc] initWithTarget: self selector: @selector(fetchNewData:) object: [NSNumber numberWithBool:buttonsEnabled]];
+	waiter = [[NSThread alloc] initWithTarget: self selector: @selector(fetchNewData:) object: [NSNumber numberWithBool:touchesEnabled]];
 	[waiter start];
 	timer = [[NSTimer scheduledTimerWithTimeInterval: 60 target: self selector: @selector(timedOut:) userInfo: nil repeats: NO] retain];
 }
 
 - (void) fetchNewData: (BOOL) buttonsOn {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	[self performSelectorOnMainThread: @selector(disableButtons) withObject: nil waitUntilDone: NO];
+	//[self performSelectorOnMainThread: @selector(disableButtons) withObject: nil waitUntilDone: NO];
 	NSString *boardString = [GCConnectFour stringForBoard: game.board];
 	NSString *boardURL = [boardString stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
 	NSString *boardVal = [[NSString stringWithFormat: @"http://nyc.cs.berkeley.edu:8080/gcweb/service/gamesman/puzzles/connect4/getMoveValue;width=%d;height=%d;pieces=%d;board=%@", width, height, pieces, boardURL] retain];
@@ -77,8 +79,8 @@
 
 - (void) fetchFinished: (BOOL) buttonsOn {
 	if (waiter != nil) {
-		if (buttonsOn)
-			[self enableButtons];
+		if (buttonsOn);
+			//[self enableButtons];
 		[spinner stopAnimating];
 		[timer invalidate];
 	}
@@ -138,22 +140,22 @@
 		int lastTag = width * height;
 		for (int i = 0; i < width; i += 1) {
 			NSString *currentValue = [service getValueAfterMove: [NSString stringWithFormat: @"%d", i]];
-			UIButton *B = (UIButton *) [self.view viewWithTag: i + lastTag - width + 1];
+			UIImageView *B = (UIImageView *) [self.view viewWithTag: i + lastTag - width + 1];
 			if ([currentValue isEqualToString: @"win"])
-				[B setBackgroundImage: [UIImage imageNamed: @"C4GridTopGreen.png"] forState: UIControlStateNormal];
+				[B setImage: [UIImage imageNamed: @"C4GridTopGreen.png"]];
 			else if ([currentValue isEqualToString: @"lose"])
-				[B setBackgroundImage: [UIImage imageNamed: @"C4GridTopRed.png"] forState: UIControlStateNormal];
+				[B setImage: [UIImage imageNamed: @"C4GridTopRed.png"]];
 			else if ([currentValue isEqualToString: @"tie"])
-				[B setBackgroundImage: [UIImage imageNamed: @"C4GridTopYellow.png"] forState: UIControlStateNormal];
+				[B setImage: [UIImage imageNamed: @"C4GridTopYellow.png"]];
 			else
-				[B setBackgroundImage: gridTop forState: UIControlStateNormal];
+				[B setImage: gridTop];
 		}
 	} else {
 		UIImage *gridTop = [UIImage imageNamed: @"C4GridTopClear.png"];
 		int lastTag = width * height;
 		for (int i = lastTag - width + 1; i <= width * height; i += 1) {
-			UIButton *B = (UIButton *) [self.view viewWithTag: i];
-			[B setBackgroundImage: gridTop forState: UIControlStateNormal];
+			UIImageView *B = (UIImageView *) [self.view viewWithTag: i];
+			[B setImage: gridTop];
 		}
 	}
 	
@@ -220,24 +222,27 @@
 }
 
 
-/** Convenience method for disabling all of the board's buttons. */
-- (void) disableButtons {
-	for (int i = 1; i < width * height + 1; i += 1) {
-		UIButton *B = (UIButton *) [self.view viewWithTag: i];
-		[B setEnabled: NO];
-	}
-	buttonsEnabled = NO;
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+	
 }
 
 
-/** Convenience method for enabling all of the board's buttons. */
-- (void) enableButtons {
-	for (int i = 1; i < width * height + 1; i += 1) {
-		UIButton *B = (UIButton *) [self.view viewWithTag: i];
-		[B setEnabled: YES];
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+	if (touchesEnabled) {
+		UITouch *aTouch = [touches anyObject];
+		NSLog(@"%f", [aTouch locationInView: self.view].x);
+		float x = [aTouch locationInView: self.view].x;
+		UIImageView *V = (UIImageView *) [self.view viewWithTag: 1];
+		int col = (int) ((x - 10)/V.frame.size.width);
+		if (0 <= col && col < width) {
+			NSString *move = [NSString stringWithFormat: @"%d", col + 1];
+			
+			if ([[game legalMoves] containsObject: move])
+				[game postHumanMove: move];
+		}
 	}
-	buttonsEnabled = YES;
 }
+
 
 - (void) stop {
 	if (waiter)
@@ -275,11 +280,10 @@
 	int tagNum = 1;
 	for (int j = height - 1; j >= 0; j -= 1) {
 		for (int i = 0; i < width; i += 1) {
-			UIButton *B = [UIButton buttonWithType: UIButtonTypeCustom];
-			[B setFrame: CGRectMake((10 + width/2) + i * (squareSize - 1), 10 + j * (squareSize - 1), squareSize, squareSize)];
-			[B setBackgroundImage: gridImg forState: UIControlStateNormal];
-			[B addTarget: self action: @selector(tapped:) forControlEvents: UIControlEventTouchUpInside];
-			B.adjustsImageWhenDisabled = NO;
+			UIImageView *B = [[UIImageView alloc] initWithFrame: CGRectMake((10 + width/2) + i * (squareSize - 1), 10 + j * (squareSize - 1), squareSize, squareSize)];
+			[B setImage: gridImg];
+			//[B addTarget: self action: @selector(tapped:) forControlEvents: UIControlEventTouchUpInside];
+			//B.adjustsImageWhenDisabled = NO;
 			B.tag = tagNum;
 			tagNum += 1;
 			[self.view addSubview: B];
@@ -289,8 +293,8 @@
 	UIImage *gridTop = [UIImage imageNamed: @"C4GridTopClear.png"];
 	int lastTag = width * height;
 	for (int i = lastTag - width + 1; i <= width * height; i += 1) {
-		UIButton *B = (UIButton *) [self.view viewWithTag: i];
-		[B setBackgroundImage: gridTop forState: UIControlStateNormal];
+		UIImageView *B = (UIImageView *) [self.view viewWithTag: i];
+		[B setImage: gridTop];
 	}
 	
 	if ([self interfaceOrientation] == UIInterfaceOrientationPortrait)
@@ -308,7 +312,7 @@
 	[spinner setFrame: CGRectMake(width/2.0 * squareSize, height/2.0  * squareSize,  37, 37)];
 	[self.view addSubview: spinner];
 	
-	[self disableButtons];
+	//[self disableButtons];
 	
 	[self updateLabels];
 }
