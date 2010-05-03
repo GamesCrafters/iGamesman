@@ -29,6 +29,13 @@
 	return self;
 }
 
+//added this method to label whose turn it is! 
+- (void) updateLabels{
+	NSString *player = ([game currentPlayer] == PLAYER1) ? [game player1Name] : [game player2Name];
+	NSString *color = ([game currentPlayer] == PLAYER1) ? @"Red" : @"Blue";
+	[message setText: [NSString stringWithFormat: @"%@ (%@)'s turn", player, color]];
+}
+
 /*
 // Implement loadView to create a view hierarchy programmatically, without using a nib.
 - (void)loadView {
@@ -88,10 +95,28 @@
 		}
 	}
 	
+	///dislaying who's turn it is
+	if ([self interfaceOrientation] == UIInterfaceOrientationPortrait)
+		message = [[UILabel alloc] initWithFrame: CGRectMake(20, 25 + size * squareSize, 
+															 280, 416 - (35 + size * squareSize))];
+	message.backgroundColor = [UIColor clearColor];
+	message.textColor = [UIColor whiteColor];
+	message.textAlignment = UITextAlignmentCenter;
+	message.text = @"";
+	[self.view addSubview: message];	
+	
 	[self disableButtons];
+	
+	[self updateLabels];
+}
+
+// don't think this works
+- (void) displayPrimitive{
+	[message setText: [NSString stringWithFormat: @"%@ wins!", [game currentPlayer]]];
 }
 
 - (void) doMove: (NSNumber *) move {
+	
 	UIButton *B = (UIButton *) [self.view viewWithTag: [move integerValue]];
 	[B retain];
 	[B removeFromSuperview];

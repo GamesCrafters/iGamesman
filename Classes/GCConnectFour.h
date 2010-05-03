@@ -32,7 +32,7 @@
 @property (nonatomic, retain) NSString *player1Name, *player2Name;
 @property (nonatomic, assign) PlayerType player1Type, player2Type;
 @property (nonatomic, assign) int width, height, pieces;
-@property (nonatomic, retain) NSArray *board;
+@property (nonatomic, retain) NSMutableArray *board;
 @property (nonatomic, readonly) BOOL p1Turn;
 @property (nonatomic, assign) BOOL predictions, moveValues;
 @property (nonatomic, assign, getter=isMisere) BOOL misere;

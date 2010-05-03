@@ -154,7 +154,9 @@
 //		NSLog(@"%@", row);
 //	}
 //	NSLog(@" ");
-
+	
+	//put here??
+	[conView updateLabels];
 	
 }
 
@@ -163,9 +165,13 @@
 	int position;
 	int neighborPosition;
 
-	if ([[self legalMoves] count] == 0)
+	if ([[self legalMoves] count] == 0){
+		
+		//should I put this here?
+		[conView displayPrimitive];
+		
 		return YES;
-	
+	}
 
 	//////////////////p1 turn/////////////////////////
 	if (!p1Turn){ 
@@ -183,6 +189,10 @@
 			if (position/size >= size - 2){
 				[queue release];
 				NSLog(@"Game Over");
+				
+				//should I put this here?
+				[conView displayPrimitive];
+				
 				return YES;
 			}
 			
@@ -260,6 +270,10 @@
 			if (position % size >= size - 2){
 				[queue release];
 				NSLog(@"Game Over");
+				
+				//should I put this here?
+				[conView displayPrimitive];
+				
 				return YES;
 			}
 			

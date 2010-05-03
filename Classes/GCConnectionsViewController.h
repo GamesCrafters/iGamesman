@@ -11,11 +11,15 @@
 
 
 @interface GCConnectionsViewController : UIViewController {
-	int size;
+	UILabel *message;
+	
 	GCConnections *game;
+	int size;
 }
 
 - (id) initWithGame: (GCConnections *) _game;
+- (void) updateLabels;
+- (void) displayPrimitive;
 - (void) doMove: (NSNumber *) move;
 
 /// Convenience method for disabling all of the board's buttons.
