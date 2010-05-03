@@ -220,7 +220,7 @@
 	}
 	if (full) return @"TIE";
 	
-	return NO;
+	return nil;
 }
 
 - (void) askUserForInput {

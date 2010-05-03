@@ -160,7 +160,7 @@
 	
 }
 
-- (BOOL) isPrimitive: (NSArray *) theBoard  { 
+- (NSString *) primitive: (NSArray *) theBoard  { 
 	IntegerQueue * queue = [[IntegerQueue alloc] init];
 	int position;
 	int neighborPosition;
@@ -170,7 +170,7 @@
 		//should I put this here?
 		[conView displayPrimitive];
 		
-		return YES;
+		return @"WIN";
 	}
 
 	//////////////////p1 turn/////////////////////////
@@ -188,7 +188,7 @@
 			//Check to see if we are at the end of our path
 			if (position/size >= size - 2){
 				[queue release];
-				NSLog(@"Game Over");
+				//NSLog(@"Game Over");
 				
 				//should I put this here?
 				[conView displayPrimitive];

@@ -118,6 +118,28 @@
 - (void) doMove: (NSNumber *) move {
 	
 	UIButton *B = (UIButton *) [self.view viewWithTag: [move integerValue]];
+	float B_width = B.frame.size.width;
+	
+
+	UIImageView *img = [[UIImageView alloc] initWithFrame: CGRectMake(B.center.x - 5, B.center.y - 5, 10, 10)];
+	[self.view insertSubview: img atIndex: 0];
+	[img setImage: [UIImage imageNamed: (game.p1Turn ? @"ConXBar.png" : @"ConOBar.png")]];
+	
+	[UIView beginAnimations: @"Stretch" context: NULL];
+	int parity = (([move integerValue] - 1) / size) % 2;
+	if (game.p1Turn ^ parity) {
+		[img setFrame: CGRectMake(B.center.x - .75 * B_width, B.center.y - B_width/6.0 , 1.5 * B_width ,  B_width/3.0)];
+	}
+	else{
+		[img setFrame: CGRectMake(B.center.x - B_width/6.0, B.center.y - .75 * B_width, B_width/3.0, 1.5 * B_width)];
+	}
+	
+	[UIView commitAnimations];
+	
+	[img release];
+	//[B removeFromSuperview];
+	
+	/*
 	[B retain];
 	[B removeFromSuperview];
 	[self.view insertSubview: B atIndex: 0];
@@ -133,7 +155,7 @@
 	} else {
 		B.frame = CGRectMake(B.center.x - B_width / 4, B.center.y - B_width * 2,  B_width / 2, B_width * 4);
 	}
-	[UIView commitAnimations];
+	[UIView commitAnimations];*/
 }
 
 - (void) tapped: (UIButton *) button{
