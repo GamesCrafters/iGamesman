@@ -34,6 +34,10 @@
 	NSString *player = ([game currentPlayer] == PLAYER1) ? [game player1Name] : [game player2Name];
 	NSString *color = ([game currentPlayer] == PLAYER1) ? @"Red" : @"Blue";
 	[message setText: [NSString stringWithFormat: @"%@ (%@)'s turn", player, color]];
+	
+	if([game primitive: [game getBoard]]){
+		[self displayPrimitive];
+	}
 }
 
 /*
@@ -112,7 +116,13 @@
 
 // don't think this works
 - (void) displayPrimitive{
-	[message setText: [NSString stringWithFormat: @"%@ wins!", [game currentPlayer]]];
+	NSString *value = [game primitive: [game getBoard]];
+	NSString *winner;
+	if ([value isEqualToString: @"WIN"])
+		winner = game.p1Turn ? game.player2Name : game.player1Name;
+	else
+		winner = game.p1Turn ? game.player1Name : game.player2Name;
+	message.text = [NSString stringWithFormat: @"%@ wins!", winner];
 }
 
 - (void) doMove: (NSNumber *) move {

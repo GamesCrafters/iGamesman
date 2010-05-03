@@ -23,6 +23,7 @@
 @synthesize player1Type, player2Type;
 @synthesize size;
 @synthesize p1Turn;
+@synthesize misere;
 
 - (id) init {
 	if (self = [super init]) {
@@ -30,6 +31,7 @@
 		player2Name = @"Player 2";
 		
 		size = 7;
+		misere = NO;
 		
 		board = [[NSMutableArray alloc] initWithCapacity: size * size];
 		for (int j = 0; j < size; j += 1) {
@@ -166,11 +168,7 @@
 	int neighborPosition;
 
 	if ([[self legalMoves] count] == 0){
-		
-		//should I put this here?
-		[conView displayPrimitive];
-		
-		return @"WIN";
+		return misere ? @"LOSE" : @"WIN";
 	}
 
 	//////////////////p1 turn/////////////////////////
@@ -188,12 +186,7 @@
 			//Check to see if we are at the end of our path
 			if (position/size >= size - 2){
 				[queue release];
-				//NSLog(@"Game Over");
-				
-				//should I put this here?
-				[conView displayPrimitive];
-				
-				return YES;
+				return misere ? @"LOSE" : @"WIN";
 			}
 			
 			//add neighbors to the fringe
@@ -264,17 +257,13 @@
 		//check player
 		while ([queue notEmpty]){
 			position = [queue pop];
-		    NSLog(@"X queue not empty: %d", position);
+		    //NSLog(@"X queue not empty: %d", position);
 			
 			//Check to see if we are at the end of our path
 			if (position % size >= size - 2){
 				[queue release];
-				NSLog(@"Game Over");
-				
-				//should I put this here?
-				[conView displayPrimitive];
-				
-				return YES;
+				//NSLog(@"Game Over");
+				return misere ? @"LOSE" : @"WIN";
 			}
 			
 			//////////////odd case///////////////
@@ -331,7 +320,7 @@
 	}
 	
 	[queue release];
-	return NO;
+	return nil;
 }
 
 //- (BOOL) playerHasContinuousPath{

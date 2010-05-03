@@ -18,6 +18,7 @@
 		self.tableView.allowsSelection = NO;
 		game = _game;
 		size = game.size;
+		misere = game.misere;
 	}
 	return self;
 }
@@ -39,11 +40,15 @@
 
 - (void) done {
 	game.size = size;
+	game.misere = misere;
 	[delegate rulesPanelDidFinish];
 }
 
 - (void) update: (UISegmentedControl *) sender{
-	size = ([sender selectedSegmentIndex] * 2) + 5;
+	if(sender.tag == 1)
+		size = ([sender selectedSegmentIndex] * 2) + 5;
+	else 
+		misere = [sender selectedSegmentIndex] == 0 ? NO : YES;
 }
 
 - (void)viewDidLoad {
@@ -103,7 +108,7 @@
 #pragma mark Table view methods
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return 2;
 }
 
 
@@ -113,7 +118,7 @@
 }
 
 - (NSString *) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-	return @"Size";
+	return (section == 0 ? @"Size" : @"Misère");
 }
 
 
@@ -131,16 +136,26 @@
     
     // Set up the cell...
 	UISegmentedControl *segment = [[UISegmentedControl alloc] initWithFrame: CGRectMake(20, 10, 280, 26)];
-	[segment insertSegmentWithTitle: @"3x3" atIndex: 0 animated: NO];
-	[segment insertSegmentWithTitle: @"4x4" atIndex: 1 animated: NO];
-	[segment insertSegmentWithTitle: @"5x5" atIndex: 2 animated: NO];
-	[segment insertSegmentWithTitle: @"6x6" atIndex: 3 animated: NO];
+	if(indexPath.section == 0){
+		[segment insertSegmentWithTitle: @"3x3" atIndex: 0 animated: NO];
+		[segment insertSegmentWithTitle: @"4x4" atIndex: 1 animated: NO];
+		[segment insertSegmentWithTitle: @"5x5" atIndex: 2 animated: NO];
+		[segment insertSegmentWithTitle: @"6x6" atIndex: 3 animated: NO];
+		[segment setSelectedSegmentIndex: (size - 5) / 2];
+		segment.tag = 1;
+	}
+	else{
+		[segment insertSegmentWithTitle: @"Standard" atIndex: 0 animated: NO];
+		[segment insertSegmentWithTitle: @"Misère" atIndex: 1 animated: NO];
+		[segment setSelectedSegmentIndex: ([game isMisere] ? 1 : 0)];
+		segment.tag = 2;
+	}
 	segment.segmentedControlStyle = UISegmentedControlStyleBar;
 	segment.tintColor = [UIColor colorWithRed: 28.0/255 green: 127.0/255 blue: 189.0/255 alpha: 1.0];
 	
-	[segment setSelectedSegmentIndex: (size - 5) / 2];
 	[segment addTarget: self action: @selector(update:) forControlEvents: UIControlEventValueChanged];
-    [cell addSubview: segment];
+	
+	[cell addSubview: segment];
 	return cell;
 }
 
