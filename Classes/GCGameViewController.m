@@ -118,7 +118,7 @@
 	[self dismissModalViewControllerAnimated: YES];
 	[game setPredictions: predictions];
 	[game setMoveValues: moveValues];
-	[game updateDisplay];
+	//[game updateDisplay];
 	gameControl.DELAY = delay;
 	if (!wasPaused)
 		[gameControl restart];

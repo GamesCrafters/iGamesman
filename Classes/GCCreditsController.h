@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-
+/**
+ The view controller for the credits screen
+ */
 @interface GCCreditsController : UITableViewController {
-	NSArray *headers;
-	NSArray *info;
+	NSArray *headers; ///< An array containing the section headers
+	NSArray *info;	  ///< An array containing the table data
 }
 
 @end

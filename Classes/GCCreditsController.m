@@ -117,7 +117,11 @@
 }
 
 
+#pragma mark Memory management
+
 - (void)dealloc {
+	[headers release];
+	[info release];
     [super dealloc];
 }
 

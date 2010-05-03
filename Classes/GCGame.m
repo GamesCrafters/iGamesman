@@ -62,8 +62,7 @@
 - (void) setPredictions: (BOOL) pred { }
 - (void) setMoveValues: (BOOL) move { }
 
-- (void) updateDisplay { }
-
+// Tell the game object to post a notification when it's ready to go (i.e. the server request finished, etc.)
 - (void) notifyWhenReady { }
 
 // Return the current board
@@ -96,8 +95,10 @@
 // End asking for user input
 - (void) stopUserInput { }
 
+// Called when the pause button is tapped. Should shut down any tasks the game is running (such as server requests)
 - (void) stop { }
 
+// Called when the resume button is tapped. Should restart any tasks shut down by the pause call
 - (void) resume { }
 
 // Get the current player

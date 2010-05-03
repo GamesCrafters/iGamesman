@@ -38,6 +38,9 @@
 		
 		p1Turn = YES;
 		
+		predictions = NO;
+		moveValues = NO;
+		
 		board = [[NSMutableArray alloc] initWithCapacity: width * height];
 		for (int i = 0; i < width * height; i += 1)
 			[board addObject: BLANK];
@@ -87,8 +90,8 @@
 	
 	p1Turn = YES;
 	
-	predictions = NO;
-	moveValues = NO;
+	//predictions = NO;
+	//moveValues = NO;
 	
 	if (!c4view)
 		[c4view release];

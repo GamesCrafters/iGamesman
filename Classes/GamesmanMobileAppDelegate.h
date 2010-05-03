@@ -9,11 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @interface GamesmanMobileAppDelegate : NSObject <UIApplicationDelegate> {
-	UITabBarController *tBarControl;
-    UIWindow *window;
+	UITabBarController *tBarControl; ///< The tab bar controller
+    UIWindow *window;				 ///< The window
 }
 
-@property (nonatomic, retain) IBOutlet UIWindow *window;
+@property (nonatomic, retain) IBOutlet UIWindow *window; ///< The window
 
 @end
 

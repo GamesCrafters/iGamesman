@@ -17,6 +17,8 @@
 		0A1ABC311135BD3300BA1B81 /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A1ABC291135BD3300BA1B81 /* SBJsonBase.m */; };
 		0A1ABC321135BD3300BA1B81 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A1ABC2B1135BD3300BA1B81 /* SBJsonParser.m */; };
 		0A1ABC331135BD3300BA1B81 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A1ABC2D1135BD3300BA1B81 /* SBJsonWriter.m */; };
+		0A22EDD4118F79A0006855AE /* ConOBar.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A22EDD2118F79A0006855AE /* ConOBar.png */; };
+		0A22EDD5118F79A0006855AE /* ConXBar.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A22EDD3118F79A0006855AE /* ConXBar.png */; };
 		0A307FEE1123D4CC00BD4B8E /* C4Grid.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A307FED1123D4CC00BD4B8E /* C4Grid.png */; };
 		0A307FF31123D64000BD4B8E /* C4GridTopClear.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A307FF21123D64000BD4B8E /* C4GridTopClear.png */; };
 		0A307FFD1123D7AB00BD4B8E /* C4O.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A307FFC1123D7AB00BD4B8E /* C4O.png */; };
@@ -94,6 +96,8 @@
 		0A1ABC2B1135BD3300BA1B81 /* SBJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonParser.m; sourceTree = "<group>"; };
 		0A1ABC2C1135BD3300BA1B81 /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
 		0A1ABC2D1135BD3300BA1B81 /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
+		0A22EDD2118F79A0006855AE /* ConOBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ConOBar.png; sourceTree = "<group>"; };
+		0A22EDD3118F79A0006855AE /* ConXBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ConXBar.png; sourceTree = "<group>"; };
 		0A307FED1123D4CC00BD4B8E /* C4Grid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = C4Grid.png; sourceTree = "<group>"; };
 		0A307FF21123D64000BD4B8E /* C4GridTopClear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = C4GridTopClear.png; sourceTree = "<group>"; };
 		0A307FFC1123D7AB00BD4B8E /* C4O.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = C4O.png; sourceTree = "<group>"; };
@@ -294,6 +298,8 @@
 			children = (
 				0A3292EC11323FF3006066E5 /* ConO.png */,
 				0A3292ED11323FF3006066E5 /* ConX.png */,
+				0A22EDD2118F79A0006855AE /* ConOBar.png */,
+				0A22EDD3118F79A0006855AE /* ConXBar.png */,
 			);
 			name = Connections;
 			sourceTree = "<group>";
@@ -480,6 +486,8 @@
 				E4F6D8BD11716AE900BEAB78 /* yboard1aa.png in Resources */,
 				E4F6D8BE11716AE900BEAB78 /* yBoard2aa.png in Resources */,
 				E4F6D8CE1171701000BEAB78 /* GCYBoardView2.xib in Resources */,
+				0A22EDD4118F79A0006855AE /* ConOBar.png in Resources */,
+				0A22EDD5118F79A0006855AE /* ConXBar.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

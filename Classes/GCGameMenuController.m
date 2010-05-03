@@ -202,7 +202,7 @@
 			[alert show];
 			[tableView deselectRowAtIndexPath: indexPath animated: YES];
 		} else {		
-			GCGameViewController *gameView = [[GCGameViewController alloc] initWithGame: game andPlayMode: M];
+			GCGameViewController *gameView = [[GCGameViewController alloc] initWithGame: game andPlayMode: M];	
 			gameView.delegate = self;
 			gameView.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
 			[self presentModalViewController: gameView animated: YES];
