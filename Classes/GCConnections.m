@@ -168,10 +168,11 @@
 	int neighborPosition;
 
 	if ([[self legalMoves] count] == 0){
-		return misere ? @"LOSE" : @"WIN";
+		//return misere ? @"LOSE" : @"WIN";
+		return misere ? @"WIN" : @"LOSE";
 	}
 
-	//////////////////p1 turn/////////////////////////
+	//////////////////p1 turn finished/////////////////////////
 	if (!p1Turn){ 
 		
 		//add in initial positions, starting with the position directly below the top left connector
@@ -186,7 +187,8 @@
 			//Check to see if we are at the end of our path
 			if (position/size >= size - 2){
 				[queue release];
-				return misere ? @"LOSE" : @"WIN";
+				//return misere ? @"LOSE" : @"WIN";
+				return misere ? @"WIN" : @"LOSE";
 			}
 			
 			//add neighbors to the fringe
@@ -263,7 +265,8 @@
 			if (position % size >= size - 2){
 				[queue release];
 				//NSLog(@"Game Over");
-				return misere ? @"LOSE" : @"WIN";
+				//return misere ? @"LOSE" : @"WIN";
+				return misere ? @"WIN" : @"LOSE";
 			}
 			
 			//////////////odd case///////////////
