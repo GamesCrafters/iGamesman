@@ -12,12 +12,9 @@
 @interface GCYBoardView : UIView {
 	int layers;
 	int innerTriangleLength;
-	NSMutableArray *bottomEdgePieces;
-	NSMutableDictionary *edgesForPosition;
-	NSMutableDictionary *neighborsForPosition;
 	NSMutableArray *centers;
 	GCYBoardConnectionsView *connectionsView;
-	
+	NSMutableDictionary *neighborsForPosition;
 	NSMutableArray *outsideCorners;
 	CGFloat *smallestDistance;
 	
@@ -25,10 +22,8 @@
 
 @property (nonatomic, assign) int layers;
 @property (nonatomic, assign) int innerTriangleLength;
-@property (nonatomic, retain) NSMutableArray *bottomEdgePieces;
-@property (nonatomic, retain) NSMutableDictionary *edgesForPosition;
-@property (nonatomic, retain) NSMutableDictionary *neighborsForPosition;
 @property (nonatomic, retain) NSMutableArray  *centers;
+@property (nonatomic, retain) NSMutableDictionary *neighborsForPosition;
 @property (nonatomic, retain) GCYBoardConnectionsView *connectionsView;
 
 /** Does all of the initial calculations, then procedes to find centers, connections, and edges **/
@@ -46,12 +41,21 @@
 /** Draws the connections on the conectionsView when pieces of the same color are placed next to each other **/
 - (void) drawConnections;
 
-
-/** Calculates the number of positions, probably unnecessary **/
-- (void) calculateNumberOfPositions;
-
-
 /** Find the neighboring pieces for a position and adds them to neighborsForPosition **/
-- (void) calculateConnectionsForPosition: (int) position inLayer: (int) layer;
+- (void) calculateConnectionsForPosition: (int) position inLayerPosition: (int) layerPosition forLayer: (int) layer;
+
+/** Utility function that solves for n! **/
+- (int) positionsInTriangle: (int) triangleSideLength;
+
+/** Utility function that returns the board size **/
+- (int) boardSize;
+
+/** Returns the edges for a position **/
+(NSMutableSet *) edgesForPosition: (int) position;
+
+
+/** Returns the starting edges **/
+(NSMutableArray *) startingEdges;
+
 
 @end
