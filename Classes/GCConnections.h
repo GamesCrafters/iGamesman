@@ -33,5 +33,6 @@
 
 - (void) resetBoard;
 - (void) postHumanMove: (NSNumber *) num;
+- (BOOL) encircled: (NSArray *) theBoard;
 
 @end
