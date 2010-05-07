@@ -7,7 +7,7 @@
 //
 
 #import "GCYBoardView.h"
-
+#import "GCYBoardConnectionsView.h"
 
 @implementation GCYBoardView
 @synthesize layers, innerTriangleLength;
