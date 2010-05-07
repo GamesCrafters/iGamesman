@@ -16,7 +16,7 @@
 	GCYBoardConnectionsView *connectionsView;
 	NSMutableDictionary *neighborsForPosition;
 	NSMutableArray *outsideCorners;
-	CGFloat *smallestDistance;
+	CGFloat circleRadius;
 	
 }
 
@@ -25,9 +25,20 @@
 @property (nonatomic, retain) NSMutableArray  *centers;
 @property (nonatomic, retain) NSMutableDictionary *neighborsForPosition;
 @property (nonatomic, retain) GCYBoardConnectionsView *connectionsView;
+@property (nonatomic, assign) CGFloat circleRadius;
+
+
+
+/** Inits the boardview **/
+- (id) initWithFrame:(CGRect)frame withLayers: (int) myLayers andInnerLength: (int) innerLength;
 
 /** Does all of the initial calculations, then procedes to find centers, connections, and edges **/
 - (void) createBoardView;
+
+
+/** Given two corners, the current layer, the current position number, and a radius, calculates the centers along the arc 
+ ** between the two corners and returns the new position.  Assumes it is going clockwise **/
+- (int) centersAlongLayer: (int) layer fromPointA: (CGPoint *) pointA toPointB: (CGPoint *) pointB withCenter: (CGPoint *) arcCenter startingAt: (int) position;
 
 
 /** Draws the initial board shape based on the positions of the outsideCorners **/
@@ -51,11 +62,11 @@
 - (int) boardSize;
 
 /** Returns the edges for a position **/
-(NSMutableSet *) edgesForPosition: (int) position;
+- (NSMutableSet *) edgesForPosition: (int) position;
 
 
 /** Returns the starting edges **/
-(NSMutableArray *) startingEdges;
+- (NSMutableArray *) startingEdges;
 
 
 @end

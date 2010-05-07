@@ -38,6 +38,8 @@
 		p2Connections = [[NSMutableArray alloc] init];
 		p1Color = [UIColor redColor];
 		p2Color = [UIColor blueColor];
+		p1Count = 0;
+		p2Count = 0;
     }
     return self;
 }
