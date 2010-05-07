@@ -24,6 +24,9 @@
 @synthesize size;
 @synthesize p1Turn;
 @synthesize misere;
+@synthesize predictions, moveValues;
+@synthesize service;
+@synthesize gameMode;
 
 - (id) init {
 	if (self = [super init]) {
@@ -57,7 +60,7 @@
 }
 
 - (BOOL) supportsPlayMode:(PlayMode)mode {
-	return mode == OFFLINE_UNSOLVED;
+	return mode == OFFLINE_UNSOLVED || mode == ONLINE_SOLVED;
 }
 
 - (UIViewController *) optionMenu {
@@ -77,6 +80,10 @@
 	
 	[self resetBoard];
 	
+	if(mode == ONLINE_SOLVED){
+		service = [[GCJSONService alloc] init];
+		[self fetchNewData];
+	}
 	gameMode = mode;
 }
 
@@ -160,6 +167,9 @@
 	//put here??
 	[conView updateLabels];
 	
+	if(gameMode == ONLINE_SOLVED){
+		[self fetchNewData];
+	}
 }
 
 - (NSString *) primitive: (NSArray *) theBoard  { 
@@ -638,8 +648,49 @@
 //
 //}
 //						
-						
+	
+- (NSString *) stringForBoard: (NSArray *) _board{
+	NSString * result = @"";
+	for(int row = size - 2; row > 0; row -= 2){
+		for(int col = 1; col < size - 1; col += 2){
+			NSString * piece = (NSString *) [_board objectAtIndex: row*size + col];
+			if([piece isEqual: BLANK]){
+				result = [result stringByAppendingString: @" "];
+			}
+			else
+				result = [result stringByAppendingString: piece];
+		}
+	}
+	
+	for(int row = size - 3; row > 0; row -= 2){
+		for(int col = 2; col < size - 1; col += 2){
+			NSString * piece = (NSString *) [_board objectAtIndex: row*size + col];
+			if([piece isEqual: BLANK]){
+				result = [result stringByAppendingString: @" "];
+			}
+			else
+				result = [result stringByAppendingString: piece];
+		}
+	}
+	return result;
+}
  
+- (void) fetchNewData{
+	NSString *boardString = [self stringForBoard: board];
+	NSString *boardURL = [boardString stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
+	NSString *boardVal = [[NSString stringWithFormat: @"http://nyc.cs.berkeley.edu:8080/gcweb/service/gamesman/puzzles/connections/getMoveValue;side=%d;board=%@", (size - 5)/2 +2, boardURL] retain];
+	NSString *moveVals = [[NSString stringWithFormat: @"http://nyc.cs.berkeley.edu:8080/gcweb/service/gamesman/puzzles/connections/getNextMoveValues;side=%d;board=%@", (size - 5)/2 +2, boardURL] retain];
+	[service retrieveDataForBoard: boardString URL: boardVal andNextMovesURL: moveVals];
+	
+	if(![service status] || ![service connected]){
+		[[NSNotificationCenter defaultCenter] postNotificationName: @"GameEncounteredProblem" object: self ];
+	}
+	else{
+		[[NSNotificationCenter defaultCenter] postNotificationName: @"GameIsReady" object: self ];
+	}
+	
+}
+
 - (void) notifyWhenReady {
 	if (gameMode == OFFLINE_UNSOLVED)
 		[[NSNotificationCenter defaultCenter] postNotificationName: @"GameIsReady" object: self];
@@ -653,6 +704,5 @@
 	//[service release];
 	[super dealloc];
 }
-
 
 @end

@@ -33,8 +33,12 @@
 - (void) updateLabels{
 	NSString *player = ([game currentPlayer] == PLAYER1) ? [game player1Name] : [game player2Name];
 	NSString *color = ([game currentPlayer] == PLAYER1) ? @"Red" : @"Blue";
-	[message setText: [NSString stringWithFormat: @"%@ (%@)'s turn", player, color]];
-	
+	if(game.gameMode == ONLINE_SOLVED && game.predictions){
+		
+	}
+	else{
+		[message setText: [NSString stringWithFormat: @"%@ (%@)'s turn", player, color]];
+	}
 	if([game primitive: [game getBoard]]){
 		[self displayPrimitive];
 	}
