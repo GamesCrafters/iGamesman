@@ -160,6 +160,7 @@
 	[board replaceObjectAtIndex: slot withObject: (p1Turn ? X : O)];
 	p1Turn = !p1Turn;
 	
+	[yGameView updateLabels];
 	//printing this out would be disgusting.	
 }
 
