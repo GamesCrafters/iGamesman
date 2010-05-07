@@ -13,6 +13,7 @@
 
 @interface GCYGameViewController : UIViewController {
 	GCYGame *game;
+	UILabel *message;
 	//GCYBoardView *boardView;
 }
 
@@ -23,6 +24,8 @@
 - (void) disableButtons;
 - (void) enableButtons;
 - (void) newBoard;
+- (void) displayPrimitive;
 - (IBAction) tapped: (UIButton *) button;
+- (void) updateLabels;
 
 @end

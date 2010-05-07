@@ -49,6 +49,8 @@
 - (void) createBoardView{
 	double triangleHeight;
 	double triangleWidth;
+	double layerWidth;
+	double layerHeight;
 	CGFloat xCoord;
 	CGFloat yCoord;
 	CGPoint currentCenter;
@@ -83,6 +85,9 @@
 		}
 		xCoordStart -= .5 * triangleWidth;
 	}
+	
+	layerWidth = xCoordStart - leftCorner.x;
+	layerHeight = leftCorner.y - (innerTriangleTop.y + innerTriangleLength * triangleHeight);
 	
 	
 	/* Calculate layer positions */

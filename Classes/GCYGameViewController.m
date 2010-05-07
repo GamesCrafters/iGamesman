@@ -36,10 +36,30 @@
 
 
 
+//added this method to label whose turn it is! 
+- (void) updateLabels{
+	NSString *player = ([game currentPlayer] == PLAYER1) ? [game player1Name] : [game player2Name];
+	NSString *color = ([game currentPlayer] == PLAYER1) ? @"Red" : @"Blue";
+	[message setText: [NSString stringWithFormat: @"%@ (%@)'s turn", player, color]];
+	
+	if([game primitive: [game getBoard]]){
+		[self displayPrimitive];
+	}
+}
+
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
+	message = [[UILabel alloc] initWithFrame: CGRectMake(20, 25 + 320, 
+														 280, 416 - (35 + 320))];
+	message.backgroundColor = [UIColor clearColor];
+	message.textColor = [UIColor whiteColor];
+	message.textAlignment = UITextAlignmentCenter;
+	message.text = @"";
+	[self.view addSubview: message];
+	
 	[self disableButtons];
+	[self updateLabels];
 }
 
 
@@ -113,6 +133,19 @@
 	}
 }
 
+
+// don't think this works
+- (void) displayPrimitive{
+	NSString *value = [game primitive: [game getBoard]];
+	NSString *winner;
+	if ([value isEqualToString: @"WIN"])
+		//winner = game.p1Turn ? game.player2Name : game.player1Name;
+		winner = game.p1Turn ? game.player1Name : game.player2Name;
+	else
+		//winner = game.p1Turn ? game.player1Name : game.player2Name;
+		winner = game.p1Turn ? game.player2Name : game.player1Name;
+	message.text = [NSString stringWithFormat: @"%@ wins!", winner];
+}
 
 /** Convenience method for disabling all of the board's buttons. */
 - (void) disableButtons {
