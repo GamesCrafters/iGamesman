@@ -167,9 +167,9 @@
 	int position;
 	int neighborPosition;
 
-	if([self encircled: theBoard]){
-		return misere ? @"WIN" : @"LOSE";
-	}
+	//if([self encircled: theBoard]){
+//		return misere ? @"WIN" : @"LOSE";
+//	}
 	
 	if ([[self legalMoves] count] == 0){
 		//return misere ? @"LOSE" : @"WIN";
@@ -333,27 +333,34 @@
 - (BOOL) encircled: (NSArray *) theBoard{
 	//this will hold the degrees of the vertices
 	//indexing is congruent to theBoard
-	NSMutableArray * loop = [[NSMutableArray alloc] initWithCapacity: size*size];
+	//NSMutableArray * loop = [[NSMutableArray alloc] initWithCapacity: size*size];
+	NSMutableArray * loop = [NSMutableArray arrayWithCapacity: size*size];
+	NSMutableArray * vertices = [[NSMutableArray alloc] init];
+	
+	for(int i = 0; i < size*size; i += 1){
+		[loop addObject: [NSNumber numberWithInt: -1]];
+	}
 	
 	//player 2's turn
 	if(!p1Turn){
 		for(int row = 0; row <= size - 1; row += 2){
 			for(int col = 1; col <= size - 2; col += 2){
 				int connectorPos = row*size + col;
-				
+				int edge = 0;
+				int otherConnector = 0;
 				//stop checking once we hit the bottom rightmost connector
-				if(row == size - 1 && col == size - 2){
-					break;
-				}
+				if(row == size - 1 && col == size - 2)
+					continue;
 					
 				//only check right if in last row for player 1, increase degree of connectorPos 
 				//and the corresponding connector to the right
 				if(row == size - 1){
-					
-					if([[theBoard objectAtIndex: connectorPos + 1] isEqual: X]){
+					edge = connectorPos + 1;
+					if([[theBoard objectAtIndex: edge] isEqual: X]){
+						
 						int val = 0;
 						//first connector
-						if([loop objectAtIndex: connectorPos] != nil){
+						if([[loop objectAtIndex: connectorPos] intValue] != -1){
 							val = [[loop objectAtIndex: connectorPos] intValue];
 						}
 						val += 1;
@@ -362,68 +369,87 @@
 						
 						val = 0;
 						//second connector
-						if([loop objectAtIndex: connectorPos + 2] != nil){
-							val = [[loop objectAtIndex: connectorPos + 2] intValue];
+						otherConnector = connectorPos + 2;
+						if([[loop objectAtIndex: otherConnector] intValue] != -1){
+							val = [[loop objectAtIndex: otherConnector] intValue];
 						}
+						
 						val += 1;
 						NSNumber * newDegree2 = [NSNumber numberWithInt: val];
-						[loop replaceObjectAtIndex: (NSUInteger) connectorPos withObject: newDegree2];
+						[loop replaceObjectAtIndex: (NSUInteger) otherConnector withObject: newDegree2];
+						
 					}
 					
 				}
 				
 				//only check down if in last column for player 1
 				else if(col == size - 2){
-					if([[theBoard objectAtIndex: connectorPos + size] isEqual: X]){
+					edge = connectorPos + size;
+					if([[theBoard objectAtIndex: edge] isEqual: X]){
 						//update degrees of connectors
 						int val = 0;
 						//first connector
-						if([loop objectAtIndex: connectorPos] != nil){
+							
+						if([[loop objectAtIndex: connectorPos] intValue] != -1){
 							val = [[loop objectAtIndex: connectorPos] intValue];
 						}
 						val += 1;
+						
 						NSNumber * newDegree = [NSNumber numberWithInt: val];
 						[loop replaceObjectAtIndex: (NSUInteger) connectorPos withObject: newDegree];
 						
 						val = 0;
 						//second connector
-						if([loop objectAtIndex: connectorPos + 2*size] != nil){
-							val = [[loop objectAtIndex: connectorPos + 2*size] intValue];
+						otherConnector = connectorPos +2*size;
+						if([[loop objectAtIndex: otherConnector] intValue] != -1){
+							val = [[loop objectAtIndex: otherConnector] intValue];
 						}
 						val += 1;
+						
 						NSNumber * newDegree2 = [NSNumber numberWithInt: val];
-						[loop replaceObjectAtIndex: (NSUInteger) connectorPos + 2*size withObject: newDegree2];
+						[loop replaceObjectAtIndex: (NSUInteger) otherConnector withObject: newDegree2];
+						
 					}
 				}
 				
 				//check down and right to look for a connection
 				else{
-					if([[theBoard objectAtIndex: connectorPos + 1] isEqual: X]){
+					edge = connectorPos + 1;
+					if([[theBoard objectAtIndex: edge] isEqual: X]){
 						//update degrees of connectors
 						int val = 0;
+						
 						//first connector
-						if([loop objectAtIndex: connectorPos] != nil){
+						if([[loop objectAtIndex: connectorPos] intValue] != -1){
 							val = [[loop objectAtIndex: connectorPos] intValue];
 						}
+						
 						val += 1;
 						NSNumber * newDegree = [NSNumber numberWithInt: val];
 						[loop replaceObjectAtIndex: (NSUInteger) connectorPos withObject: newDegree];
 						
 						//second connector to the right
 						val = 0;
-						if([loop objectAtIndex:	(NSUInteger) connectorPos + 2] != nil){
-							val = [[loop objectAtIndex: connectorPos + 2] intValue];
+						otherConnector = connectorPos + 2;
+						if([[loop objectAtIndex:	(NSUInteger) otherConnector] intValue] != -1){
+							val = [[loop objectAtIndex: otherConnector] intValue];
 						}
+						
 						val += 1;
 						NSNumber * newDegree2 = [NSNumber numberWithInt: val];
-						[loop replaceObjectAtIndex: (NSUInteger) val + 2 withObject: newDegree2];
+						[loop replaceObjectAtIndex: (NSUInteger) otherConnector withObject: newDegree2];
 					}
+					
 					// down part
-					if([[theBoard objectAtIndex: connectorPos + size] isEqual: X]){
+					edge = connectorPos + size;
+					if([[theBoard objectAtIndex: edge] isEqual: X]){
 						//update degrees of connectors
+						
 						int val = 0;
 						//first connector
-						if([loop objectAtIndex: connectorPos] != nil){
+					
+						if([[loop objectAtIndex: connectorPos] intValue] != -1){
+							
 							val = [[loop objectAtIndex: connectorPos] intValue];
 						}
 						val += 1;
@@ -433,20 +459,21 @@
 						
 						//second connector to the right
 						val = 0;
-						if([loop objectAtIndex: connectorPos + 2*size] != nil){
-							val = [[loop objectAtIndex: connectorPos + 2*size] intValue];
+						otherConnector = connectorPos + 2*size;
+						if([[loop objectAtIndex: otherConnector] intValue] != -1){
+							val = [[loop objectAtIndex: otherConnector] intValue];
 						}
 						val += 1; 
 						NSNumber * newDegree2 = [NSNumber numberWithInt: val];
 						
-						[loop replaceObjectAtIndex: connectorPos withObject: newDegree2];
+						[loop replaceObjectAtIndex: otherConnector withObject: newDegree2];
 					}
 					
 				}
 			}
 		}
-		
-		
+		NSLog(@"error bleh");
+		//NSMutableArray * vertices = [[NSMutableArray alloc] init];
 		//get rid of all connectors with one degree in loop array
 		for(int row = 0; row <= size - 1; row += 2){
 			for(int col = 1; col <= size - 2; col += 2){
@@ -455,51 +482,158 @@
 				//decrement degree of connecting connector
 				
 				// getting rid of first connector with degree 1
-				if([loop objectAtIndex: connectorPos] != nil && [[loop objectAtIndex: connectorPos] intValue] == 1){
-					[loop replaceObjectAtIndex: connectorPos withObject: nil];
+				NSLog(@"connector degree %d", [[loop objectAtIndex: connectorPos] intValue]);
+				if([[loop objectAtIndex: connectorPos] intValue] == 1){
+				
+					[loop replaceObjectAtIndex: connectorPos withObject: [NSNumber numberWithInt: -1]];
 					int val = 0;
+					int secondConnectorPos = 0;
 					int left = connectorPos - 2;
-					//if connecting connector is to the left and we're not at the leftmost column
-					if(col != 1 && [loop objectAtIndex: left] != nil){
-						val = [[loop objectAtIndex: left] intValue] - 1;
-						[loop replaceObjectAtIndex: left withObject: (val == 0) ? nil : [NSNumber numberWithInt: val]];
-					}
-					
 					int right = connectorPos + 2;
-					//if connecting connector is to the right and we're not in the right most column
-					if(col != size - 2 && [loop objectAtIndex: right] != nil){
-						val = [[loop objectAtIndex: right] intValue] - 1;
-						[loop replaceObjectAtIndex: right withObject: (val == 0) ? nil : [NSNumber numberWithInt: val]];
-					}
-					
 					int above = connectorPos - 2*size;
-					//if connecting connector is above and we're not in the topmost row
-					if(row != 0 && [loop objectAtIndex: above] != nil){
-						val = [[loop objectAtIndex: above] intValue] - 1;
-						[loop replaceObjectAtIndex: above withObject: (val == 0) ? nil: [NSNumber numberWithInt: val]];
-					}
-					
 					int below = connectorPos + 2*size;
-					//if connecting connector is below and we're not in the bottom most row
-					if(row != size - 1 && [loop objectAtIndex: below] != nil){
-						val = [[loop objectAtIndex: below] intValue] -1;
-						[loop replaceObjectAtIndex: below withObject: (val == 0) ? nil: [NSNumber numberWithInt: val]];
-						
+					
+					//if connecting connector is to the left and we're not at the leftmost column
+					if(col != 1 && [[loop objectAtIndex: left] intValue] != -1){
+						secondConnectorPos = left;
 					}
 					
+					//if connecting connector is to the right and we're not in the right most column
+					else if(col != size - 2 && [[loop objectAtIndex: right] intValue] != -1){
+						secondConnectorPos = right;
+					}
+										
+					//if connecting connector is above and we're not in the topmost row
+					else if(row != 0 && [[loop objectAtIndex: above] intValue] != -1){
+						secondConnectorPos = above;
+					}
+										
+					//if connecting connector is below and we're not in the bottom most row
+					else if(row != size - 1 && [[loop objectAtIndex: below] intValue] != -1){
+						secondConnectorPos = below;
+					}
+					
+					val = [[loop objectAtIndex: secondConnectorPos] intValue] - 1;
+					[loop replaceObjectAtIndex: secondConnectorPos withObject: [NSNumber numberWithInt: val]];
+					[vertices addObject: [NSNumber numberWithInt: secondConnectorPos]];
+					//[self decrementVertices: &vertices inArray: &loop];
+					
+					
+					while ([vertices count] > 0) {
+						int connectorPos = [[vertices objectAtIndex: 0] intValue];
+						[vertices removeObjectAtIndex: 0];
+						
+						if([[loop objectAtIndex: connectorPos] intValue] == 1){
+							[loop replaceObjectAtIndex: connectorPos withObject: [NSNumber numberWithInt: -1]];
+							val = 0;
+							secondConnectorPos = 0;
+							left = connectorPos - 2;
+							right = connectorPos + 2;
+							above = connectorPos - 2*size;
+							below = connectorPos + 2*size;
+							
+							//if connecting connector is to the left and we're not at the leftmost column
+							if(connectorPos != 1 && [[loop objectAtIndex: left] intValue] != -1){
+								secondConnectorPos = left;
+							}
+							
+							//if connecting connector is to the right and we're not in the right most column
+							else if(connectorPos != size - 2 && [[loop objectAtIndex: right] intValue] != -1){
+								secondConnectorPos = right;
+							}
+							
+							//if connecting connector is above and we're not in the topmost row
+							else if((connectorPos % size) != 0 && [[loop objectAtIndex: above] intValue] != -1){
+								secondConnectorPos = above;
+							}
+							
+							//if connecting connector is below and we're not in the bottom most row
+							else if((connectorPos % size) != size - 1 && [[loop objectAtIndex: below] intValue] != -1){
+								secondConnectorPos = below;
+							}
+							
+							val = [[loop objectAtIndex: secondConnectorPos] intValue] - 1;
+							[loop replaceObjectAtIndex: secondConnectorPos withObject: [NSNumber numberWithInt: val]];
+							[vertices addObject: [NSNumber numberWithInt: secondConnectorPos]];
+							
+						}
+					}
 				}
 
 			}		
 		}
 		
+		if([loop count] >= 4){
+			[loop dealloc];
+			[vertices dealloc];
+			return YES;
+		}
+		else{
+			[loop dealloc];
+			[vertices dealloc];
+			return NO;
+		}
+	}
+	else{
+		[loop dealloc];
+		//[vertices dealloc];
+	}
+	return NO;
+}
+
+/*- (void) decrementVertices: (NSMutableArray *) vertices
+				   inArray: (NSMutableArray *) loop{
+	//decreasing the degrees of the vertices that are connected (chain decrementing)
+	while ([vertices count] > 0) {
+		NSLog(@" number connected %d", [vertices count]);
+		//for(int row = 0; row <= size - 1; row += 2){
+			//for(int col = 1; col <= size - 2; col += 2){
+				NSLog(@"here?1");
+				int connectorPos = [[vertices objectAtIndex: 0] intValue];
+				NSLog(@"error b");
+				[vertices removeObjectAtIndex: 0];
+				NSLog(@"here?2  %d", [[loop objectAtIndex: connectorPos] intValue]);
+				if([[loop objectAtIndex: connectorPos] intValue] == 1){
+					[loop replaceObjectAtIndex: connectorPos withObject: [NSNumber numberWithInt: -1]];
+					int val = 0;
+					int secondConnectorPos = 0;
+					int left = connectorPos - 2;
+					int right = connectorPos + 2;
+					int above = connectorPos - 2*size;
+					int below = connectorPos + 2*size;
+					NSLog(@"here?3");
+					//if connecting connector is to the left and we're not at the leftmost column
+					if(connectorPos != 1 && [[loop objectAtIndex: left] intValue] != -1){
+						secondConnectorPos = left;
+					}
+										
+					//if connecting connector is to the right and we're not in the right most column
+					else if(connectorPos != size - 2 && [[loop objectAtIndex: right] intValue] != -1){
+						secondConnectorPos = right;
+					}
+										
+					//if connecting connector is above and we're not in the topmost row
+					else if((connectorPos % size) != 0 && [[loop objectAtIndex: above] intValue] != -1){
+						secondConnectorPos = above;
+					}
+										
+					//if connecting connector is below and we're not in the bottom most row
+					else if((connectorPos % size) != size - 1 && [[loop objectAtIndex: below] intValue] != -1){
+						secondConnectorPos = below;
+					}
+					
+					val = [[loop objectAtIndex: secondConnectorPos] intValue] - 1;
+					[loop replaceObjectAtIndex: secondConnectorPos withObject: [NSNumber numberWithInt: val]];
+					[vertices addObject: [NSNumber numberWithInt: secondConnectorPos]];
+					
+				}
+				
+		//	}
+		//}
 	}
 	
 }
-
-- (void) decrementVertices: (NSMutableArray *) vertices
-				   inArray: (NSMutableArray *) loop{
-	
-}
+ */
 //- (BOOL) playerHasContinuousPath{
 //
 //}
