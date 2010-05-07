@@ -411,7 +411,7 @@
 						
 						//second connector to the right
 						val = 0;
-						if([loop objectAtIndex:	(NSUInteger connectorPos + 2)] != nil){
+						if([loop objectAtIndex:	(NSUInteger) connectorPos + 2] != nil){
 							val = [[loop objectAtIndex: connectorPos + 2] intValue];
 						}
 						val += 1;
@@ -453,32 +453,37 @@
 				int connectorPos = row*size + col;
 				//find all connectors with degree one and get rid of it and 
 				//decrement degree of connecting connector
+				
+				// getting rid of first connector with degree 1
 				if([loop objectAtIndex: connectorPos] != nil && [[loop objectAtIndex: connectorPos] intValue] == 1){
 					[loop replaceObjectAtIndex: connectorPos withObject: nil];
 					int val = 0;
-					
-					//if connecting connector is to the left
-					if(col != 1 && [loop objectAtIndex: connectorPos - 2] != nil){
-						val = [[loop objectAtIndex: connectorPos - 2] intValue] - 1;
-						[loop replaceObjectAtIndex: connectorPos - 2 withObject: [NSNumber numberWithInt: val]];
+					int left = connectorPos - 2;
+					//if connecting connector is to the left and we're not at the leftmost column
+					if(col != 1 && [loop objectAtIndex: left] != nil){
+						val = [[loop objectAtIndex: left] intValue] - 1;
+						[loop replaceObjectAtIndex: left withObject: [NSNumber numberWithInt: val]];
 					}
 					
-					//if connecting connector is to the right
-					if(col != size - 2 && [loop objectAtIndex: connectorPos + 2] != nil){
-						val = [[loop objectAtIndex: connectorPos + 2] intValue] - 1;
-						[loop replaceObjectAtIndex: connectorPos + 2 withObject: [NSNumber numberWithInt: val]];
+					int right = connectorPos + 2;
+					//if connecting connector is to the right and we're not in the right most column
+					if(col != size - 2 && [loop objectAtIndex: right] != nil){
+						val = [[loop objectAtIndex: right] intValue] - 1;
+						[loop replaceObjectAtIndex: right withObject: [NSNumber numberWithInt: val]];
 					}
 					
-					//if connecting connector is above
-					if(row != 0 && [loop objectAtIndex: connectorPos - 2*size] != nil){
-						val = [[loop objectAtIndex: connectorPos - 2*size] intValue] - 1;
-						[loop replaceObjectAtIndex: connectorPos - 2*size withObject: [NSNumber numberWithInt: val]];
+					int above = connectorPos - 2*size;
+					//if connecting connector is above and we're not in the topmost row
+					if(row != 0 && [loop objectAtIndex: above] != nil){
+						val = [[loop objectAtIndex: above] intValue] - 1;
+						[loop replaceObjectAtIndex: above withObject: [NSNumber numberWithInt: val]];
 					}
 					
-					//if connecting connector is below
-					if(row != size - 1 && [loop objectAtIndex: connectorPos + 2*size] != nil){
-						val = [[loop objectAtIndex: connectorPos + 2*size] intValue] -1;
-						[loop replaceObjectAtIndex: connectorPos + 2*size withObject: [NSNumber numberWithInt: val]];
+					int below = connectorPos + 2*size;
+					//if connecting connector is below and we're not in the bottom most row
+					if(row != size - 1 && [loop objectAtIndex: below] != nil){
+						val = [[loop objectAtIndex: below] intValue] -1;
+						[loop replaceObjectAtIndex: below withObject: [NSNumber numberWithInt: val]];
 					}
 					
 				}
