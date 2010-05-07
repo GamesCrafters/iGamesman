@@ -462,39 +462,44 @@
 					//if connecting connector is to the left and we're not at the leftmost column
 					if(col != 1 && [loop objectAtIndex: left] != nil){
 						val = [[loop objectAtIndex: left] intValue] - 1;
-						[loop replaceObjectAtIndex: left withObject: [NSNumber numberWithInt: val]];
+						[loop replaceObjectAtIndex: left withObject: (val == 0) ? nil : [NSNumber numberWithInt: val]];
 					}
 					
 					int right = connectorPos + 2;
 					//if connecting connector is to the right and we're not in the right most column
 					if(col != size - 2 && [loop objectAtIndex: right] != nil){
 						val = [[loop objectAtIndex: right] intValue] - 1;
-						[loop replaceObjectAtIndex: right withObject: [NSNumber numberWithInt: val]];
+						[loop replaceObjectAtIndex: right withObject: (val == 0) ? nil : [NSNumber numberWithInt: val]];
 					}
 					
 					int above = connectorPos - 2*size;
 					//if connecting connector is above and we're not in the topmost row
 					if(row != 0 && [loop objectAtIndex: above] != nil){
 						val = [[loop objectAtIndex: above] intValue] - 1;
-						[loop replaceObjectAtIndex: above withObject: [NSNumber numberWithInt: val]];
+						[loop replaceObjectAtIndex: above withObject: (val == 0) ? nil: [NSNumber numberWithInt: val]];
 					}
 					
 					int below = connectorPos + 2*size;
 					//if connecting connector is below and we're not in the bottom most row
 					if(row != size - 1 && [loop objectAtIndex: below] != nil){
 						val = [[loop objectAtIndex: below] intValue] -1;
-						[loop replaceObjectAtIndex: below withObject: [NSNumber numberWithInt: val]];
+						[loop replaceObjectAtIndex: below withObject: (val == 0) ? nil: [NSNumber numberWithInt: val]];
+						
 					}
 					
 				}
-			}
+
+			}		
 		}
-		
 		
 	}
 	
 }
 
+- (void) decrementVertices: (NSMutableArray *) vertices
+				   inArray: (NSMutableArray *) loop{
+	
+}
 //- (BOOL) playerHasContinuousPath{
 //
 //}
