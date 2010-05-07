@@ -174,14 +174,18 @@
 - (void) displayPrimitive {
 	NSString *value = [game primitive: game.board];
 	NSString *winner;
+	NSString *color;
 	if ([value isEqualToString: @"TIE"])
 		message.text = @"It's a tie!";
 	else {
-		if ([value isEqualToString: @"WIN"])
+		if ([value isEqualToString: @"WIN"]) {
 			winner = game.p1Turn ? game.player1Name : game.player2Name;
-		else
+			color  = game.p1Turn ? @"Red" : @"Blue";
+		} else {
 			winner = game.p1Turn ? game.player2Name : game.player1Name;
-		message.text = [NSString stringWithFormat: @"%@ wins!", winner];
+			color  = game.p1Turn ? @"Blue" : @"Red";
+		}
+		message.text = [NSString stringWithFormat: @"%@ (%@) wins!", winner, color];
 	}
 }
 

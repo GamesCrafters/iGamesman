@@ -118,13 +118,17 @@
 - (void) displayPrimitive{
 	NSString *value = [game primitive: [game getBoard]];
 	NSString *winner;
-	if ([value isEqualToString: @"WIN"])
+	NSString *color;
+	if ([value isEqualToString: @"WIN"]) {
 		//winner = game.p1Turn ? game.player2Name : game.player1Name;
 		winner = game.p1Turn ? game.player1Name : game.player2Name;
-	else
+		color = game.p1Turn ? @"Red" : @"Blue";
+	} else {
 		//winner = game.p1Turn ? game.player1Name : game.player2Name;
 		winner = game.p1Turn ? game.player2Name : game.player1Name;
-	message.text = [NSString stringWithFormat: @"%@ wins!", winner];
+		color = game.p1Turn ? @"Blue" : @"Red";
+	}
+	message.text = [NSString stringWithFormat: @"%@ (%@) wins!", winner, color];
 }
 
 - (void) doMove: (NSNumber *) move {
