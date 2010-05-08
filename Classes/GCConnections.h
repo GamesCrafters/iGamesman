@@ -40,6 +40,9 @@
 - (void) resetBoard;
 - (void) postHumanMove: (NSNumber *) num;
 - (BOOL) encircled: (NSArray *) theBoard;
+- (void) decrementVerticesIn: (NSMutableArray *) loop;
+- (void) chainDecrement: (NSMutableArray *) loop
+				  given: (NSMutableArray *) decrementedVerts;
 //- (void) decrementVertices: (NSMutableArray *) vertices 
 //				   inArray: (NSMutableArray *) loop;
 - (NSString *) stringForBoard: (NSArray *) _board;
