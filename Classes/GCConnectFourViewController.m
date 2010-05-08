@@ -120,8 +120,7 @@
 			else if (typeOpp == COMPUTER_PERFECT && value == @"lose") modifier = @"will";
 			else if (typePlay == COMPUTER_PERFECT && typeOpp == COMPUTER_PERFECT) modifier = @"will";
 			else modifier = @"should";
-			[message setText: [NSString stringWithFormat: @"%@ (%@)\n%@ %@ in %d", player, color, modifier, 
-							   value, remoteness]];
+			[message setText: [NSString stringWithFormat: @"%@ (%@)\n%@ %@ in %d", player, color, modifier, value, remoteness]];
 		} else if (value != nil) {
 			NSString *modifier;
 			if (typePlay == COMPUTER_PERFECT && value == @"win") modifier = @"will";
@@ -242,7 +241,11 @@
 		float tapX = [aTouch locationInView: self.view].x;
 		UIImageView *V = (UIImageView *) [self.view viewWithTag: 1];
 		double w = V.frame.size.width, h = V.frame.size.height;
-		float newX = tapX - w/2.0;
+		int col = (int) (tapX - (10 + width/2.0) ) / w;
+		if (col >= width) col = width - 1;
+		if (col < 0) col = 0;
+		float newX = 10 + width/2.0 + col * (w - 1);
+		/*float newX = tapX - w/2.0;*/
 		if (newX >= 10 + width/2.0 - w/2.0 && newX <= 10 + width/2.0 + w/2.0 + (w - 1) * (width - 1) ) {
 			UIImageView *pieceView = [[UIImageView alloc] initWithFrame: CGRectMake(newX, 10 - h/2.0, w, h)];
 			[pieceView setImage: [UIImage imageNamed: [NSString stringWithFormat: @"C4%@.png", (game.p1Turn ? @"X" : @"O")]]];
@@ -260,12 +263,23 @@
 		UIImageView *pieceView = (UIImageView *) [self.view viewWithTag: 55555];
 		if (pieceView) {
 			double w = pieceView.frame.size.width, h = pieceView.frame.size.height;
-			[UIView beginAnimations: @"Slide" context: NULL];
-			float newX = x - w/2.0;
+			int col = (int) (x - (10 + width/2.0) ) / w;
+			if (col >= width) col = width - 1;
+			if (col < 0) col = 0;
+			float newX = 10 + width/2.0 + col * (w - 1);
+			if (![[game legalMoves] containsObject: [NSString stringWithFormat: @"%d", col + 1]]) {
+				float middle = newX + w/2.0;
+				if (x - middle > 0)
+					newX += (w - 1);
+				else
+					newX -= (w - 1);
+			}
+			/*float newX = x - w/2.0;
 			if (newX > 10 + width/2.0 + (w - 1) * (width - 1) )
 				newX = 10 + width/2.0 + (w - 1) * (width - 1);
 			if (newX < 10 + width/2.0)
-				newX = 10 + width/2.0;
+				newX = 10 + width/2.0;*/
+			[UIView beginAnimations: @"Slide" context: NULL];
 			[pieceView setFrame: CGRectMake(newX, pieceView.frame.origin.y, w, h)];
 			[UIView commitAnimations];
 		}

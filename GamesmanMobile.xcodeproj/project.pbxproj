@@ -25,6 +25,7 @@
 		0A30802F1123DF6600BD4B8E /* GCGameController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A30802E1123DF6600BD4B8E /* GCGameController.m */; };
 		0A3292EE11323FF3006066E5 /* ConO.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A3292EC11323FF3006066E5 /* ConO.png */; };
 		0A3292EF11323FF3006066E5 /* ConX.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A3292ED11323FF3006066E5 /* ConX.png */; };
+		0A33F7BE1196239F0062B418 /* ConGreenH.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A33F7BD1196239F0062B418 /* ConGreenH.png */; };
 		0A65E638111CCFFC001400F6 /* GCYGame.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A65E637111CCFFC001400F6 /* GCYGame.m */; };
 		0A65E65E111CD5DD001400F6 /* GCYOptionMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A65E65D111CD5DD001400F6 /* GCYOptionMenu.m */; };
 		0A65E695111CDEDA001400F6 /* GCGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A65E694111CDEDA001400F6 /* GCGameViewController.m */; };
@@ -105,6 +106,7 @@
 		0A30802E1123DF6600BD4B8E /* GCGameController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCGameController.m; sourceTree = "<group>"; };
 		0A3292EC11323FF3006066E5 /* ConO.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ConO.png; sourceTree = "<group>"; };
 		0A3292ED11323FF3006066E5 /* ConX.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ConX.png; sourceTree = "<group>"; };
+		0A33F7BD1196239F0062B418 /* ConGreenH.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ConGreenH.png; sourceTree = "<group>"; };
 		0A65E636111CCFFC001400F6 /* GCYGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCYGame.h; sourceTree = "<group>"; };
 		0A65E637111CCFFC001400F6 /* GCYGame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCYGame.m; sourceTree = "<group>"; };
 		0A65E65C111CD5DD001400F6 /* GCYOptionMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCYOptionMenu.h; sourceTree = "<group>"; };
@@ -296,6 +298,7 @@
 		0A3292D111323D64006066E5 /* Connections */ = {
 			isa = PBXGroup;
 			children = (
+				0A33F7BD1196239F0062B418 /* ConGreenH.png */,
 				0A3292EC11323FF3006066E5 /* ConO.png */,
 				0A3292ED11323FF3006066E5 /* ConX.png */,
 				0A22EDD2118F79A0006855AE /* ConOBar.png */,
@@ -447,6 +450,7 @@
 			hasScannedForEncodings = 1;
 			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
 			projectDirPath = "";
+			projectRoot = "";
 			targets = (
 				1D6058900D05DD3D006BFB54 /* GamesmanMobile */,
 			);
@@ -487,6 +491,7 @@
 				0A22EDD4118F79A0006855AE /* ConOBar.png in Resources */,
 				0A22EDD5118F79A0006855AE /* ConXBar.png in Resources */,
 				0AD633E611951C7A00526842 /* C4Grid.png in Resources */,
+				0A33F7BE1196239F0062B418 /* ConGreenH.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
