@@ -141,14 +141,20 @@
 		for (int i = 0; i < width; i += 1) {
 			NSString *currentValue = [service getValueAfterMove: [NSString stringWithFormat: @"%d", i]];
 			UIImageView *B = (UIImageView *) [self.view viewWithTag: i + lastTag - width + 1];
-			if ([currentValue isEqualToString: @"win"])
+			UIView *colorRect = [self.view viewWithTag: 100 + i];
+			if ([currentValue isEqualToString: @"win"]) {
 				[B setImage: [UIImage imageNamed: @"C4GridTopGreen.png"]];
-			else if ([currentValue isEqualToString: @"lose"])
+				[colorRect setBackgroundColor: [UIColor greenColor]];
+			} else if ([currentValue isEqualToString: @"lose"]) {
 				[B setImage: [UIImage imageNamed: @"C4GridTopRed.png"]];
-			else if ([currentValue isEqualToString: @"tie"])
+				[colorRect setBackgroundColor: [UIColor colorWithRed: 139.0/255.0 green: 0.0 blue: 0.0 alpha: 1.0]];
+			} else if ([currentValue isEqualToString: @"tie"]) {
 				[B setImage: [UIImage imageNamed: @"C4GridTopYellow.png"]];
-			else
+				[colorRect setBackgroundColor: [UIColor yellowColor]];
+			} else {
 				[B setImage: gridTop];
+				[colorRect setBackgroundColor: [UIColor clearColor]];
+			}
 		}
 	} else {
 		UIImage *gridTop = [UIImage imageNamed: @"C4GridTopClear.png"];
@@ -213,10 +219,13 @@
 		double y = [B frame].origin.y;
 		double w = [B frame].size.width;
 		double h = [B frame].size.height;
-		UIImageView *imgView = [[UIImageView alloc] initWithFrame: CGRectMake(x, -30, w, h)];
+		UIImageView *imgView = [[UIImageView alloc] initWithFrame: CGRectMake(x, 10 - h/2.0, w, h)];
 		[imgView setImage: img];
 		imgView.tag = 1234;
 		[self.view insertSubview: imgView atIndex: 0];
+		
+		for (int i = 0; i < width; i += 1)
+			[self.view sendSubviewToBack: [self.view viewWithTag: 100 + i]];
 		
 		// Animate the piece
 		[UIView beginAnimations: @"Drop" context: NULL];
@@ -227,23 +236,65 @@
 
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-	
+	if (touchesEnabled) {
+		UITouch *aTouch = [touches anyObject];
+		float tapX = [aTouch locationInView: self.view].x;
+		UIImageView *V = (UIImageView *) [self.view viewWithTag: 1];
+		double w = V.frame.size.width, h = V.frame.size.height;
+		UIImageView *pieceView = [[UIImageView alloc] initWithFrame: CGRectMake(tapX - w/2.0, 10 - h/2.0, w, h)];
+		[pieceView setImage: [UIImage imageNamed: [NSString stringWithFormat: @"C4%@.png", (game.p1Turn ? @"X" : @"O")]]];
+		pieceView.tag = 55555;
+		[self.view insertSubview: pieceView atIndex: width];
+	}
+}
+
+
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+	if (touchesEnabled) {
+		UITouch *aTouch = [touches anyObject];
+		float x = [aTouch locationInView: self.view].x;
+		UIImageView *pieceView = (UIImageView *) [self.view viewWithTag: 55555];
+		double w = pieceView.frame.size.width, h = pieceView.frame.size.height;
+		[UIView beginAnimations: @"Slide" context: NULL];
+		int newX = x - w/2.0;
+		if (newX > 10 + width/2.0 + (w - 1) * (width - 1) )
+			newX = 10 + width/2.0 + (w - 1) * (width - 1);
+		if (newX < 10 + width/2.0)
+			newX = 10 + width/2.0;
+		[pieceView setFrame: CGRectMake(newX, pieceView.frame.origin.y, w, h)];
+		[UIView commitAnimations];
+	}
 }
 
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
 	if (touchesEnabled) {
 		UITouch *aTouch = [touches anyObject];
-		NSLog(@"%f", [aTouch locationInView: self.view].x);
 		float x = [aTouch locationInView: self.view].x;
 		UIImageView *V = (UIImageView *) [self.view viewWithTag: 1];
 		int col = (int) ((x - 10)/V.frame.size.width);
+		NSString *move = nil;
 		if (0 <= col && col < width) {
-			NSString *move = [NSString stringWithFormat: @"%d", col + 1];
-			
-			if ([[game legalMoves] containsObject: move])
-				[game postHumanMove: move];
+			move = [NSString stringWithFormat: @"%d", col + 1];
+		} else {
+			UIView *pieceView = [self.view viewWithTag: 55555];
+			if (pieceView != nil) {
+				if (col >= width)
+					move = [NSString stringWithFormat: @"%d", width];
+				else if (col < 0)
+					move = @"1";
+			}
 		}
+		[[self.view viewWithTag: 55555] removeFromSuperview];
+		if (move && [[game legalMoves] containsObject: move])
+			[game postHumanMove: move];
+	}
+}
+
+
+- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
+	if (touchesEnabled) {
+		[[self.view viewWithTag: 55555] removeFromSuperview];
 	}
 }
 
@@ -276,15 +327,15 @@
 	// Come back to this bit later after I figure out how tall the top
 	// Row will be to make the move value bigger
 	if ([self interfaceOrientation] == UIInterfaceOrientationPortrait)
-		squareSize = MIN(300.0 / width, 356.0 / height);
+		squareSize = MIN(300.0 / width, 356.0 / (height + 0.5));
 	else
-		squareSize = MIN(236.0 / height, 380.0 / width);
+		squareSize = MIN(236.0 / (height + 0.5), 380.0 / width);
 	
 	UIImage *gridImg = [UIImage imageNamed: @"C4Grid.png"];
 	int tagNum = 1;
 	for (int j = height - 1; j >= 0; j -= 1) {
 		for (int i = 0; i < width; i += 1) {
-			UIImageView *B = [[UIImageView alloc] initWithFrame: CGRectMake((10 + width/2) + i * (squareSize - 1), 10 + j * (squareSize - 1), squareSize, squareSize)];
+			UIImageView *B = [[UIImageView alloc] initWithFrame: CGRectMake((10 + width/2) + i * (squareSize - 1), squareSize / 2.0 + 10 + j * (squareSize - 1), squareSize, squareSize)];
 			[B setImage: gridImg];
 			//[B addTarget: self action: @selector(tapped:) forControlEvents: UIControlEventTouchUpInside];
 			//B.adjustsImageWhenDisabled = NO;
@@ -299,6 +350,13 @@
 	for (int i = lastTag - width + 1; i <= width * height; i += 1) {
 		UIImageView *B = (UIImageView *) [self.view viewWithTag: i];
 		[B setImage: gridTop];
+	}
+	
+	for (int i = 0; i < width; i += 1) {
+		UIView *B = [[UIView alloc] initWithFrame: CGRectMake((10 + width/2) + i * (squareSize - 1), 10, squareSize, squareSize / 2.0)];
+		B.tag = 100 + i;
+		[B setBackgroundColor: [UIColor clearColor]];
+		[self.view insertSubview: B atIndex: 0];
 	}
 	
 	if ([self interfaceOrientation] == UIInterfaceOrientationPortrait)

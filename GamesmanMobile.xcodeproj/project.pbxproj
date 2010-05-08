@@ -19,7 +19,6 @@
 		0A1ABC331135BD3300BA1B81 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A1ABC2D1135BD3300BA1B81 /* SBJsonWriter.m */; };
 		0A22EDD4118F79A0006855AE /* ConOBar.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A22EDD2118F79A0006855AE /* ConOBar.png */; };
 		0A22EDD5118F79A0006855AE /* ConXBar.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A22EDD3118F79A0006855AE /* ConXBar.png */; };
-		0A307FEE1123D4CC00BD4B8E /* C4Grid.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A307FED1123D4CC00BD4B8E /* C4Grid.png */; };
 		0A307FF31123D64000BD4B8E /* C4GridTopClear.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A307FF21123D64000BD4B8E /* C4GridTopClear.png */; };
 		0A307FFD1123D7AB00BD4B8E /* C4O.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A307FFC1123D7AB00BD4B8E /* C4O.png */; };
 		0A307FFF1123D7B000BD4B8E /* C4X.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A307FFE1123D7B000BD4B8E /* C4X.png */; };
@@ -51,6 +50,8 @@
 		0A8756B7111415BE006AB678 /* GCGameMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A8756B6111415BE006AB678 /* GCGameMenuController.m */; };
 		0A87575811142585006AB678 /* GCPlayerChangeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A87575711142585006AB678 /* GCPlayerChangeController.m */; };
 		0A87575C111425A2006AB678 /* PlayerChanger.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A87575B111425A2006AB678 /* PlayerChanger.xib */; };
+		0AD633E611951C7A00526842 /* C4Grid.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AD633E511951C7A00526842 /* C4Grid.png */; };
+		0AD633E811951C8E00526842 /* C4GridTop.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AD633E711951C8E00526842 /* C4GridTop.png */; };
 		0AFC30BF11841E3A005CD671 /* GCJSONService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AFC30BE11841E3A005CD671 /* GCJSONService.m */; };
 		1D3623260D0F684500981E51 /* GamesmanMobileAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* GamesmanMobileAppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
@@ -98,7 +99,6 @@
 		0A1ABC2D1135BD3300BA1B81 /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
 		0A22EDD2118F79A0006855AE /* ConOBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ConOBar.png; sourceTree = "<group>"; };
 		0A22EDD3118F79A0006855AE /* ConXBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ConXBar.png; sourceTree = "<group>"; };
-		0A307FED1123D4CC00BD4B8E /* C4Grid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = C4Grid.png; sourceTree = "<group>"; };
 		0A307FF21123D64000BD4B8E /* C4GridTopClear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = C4GridTopClear.png; sourceTree = "<group>"; };
 		0A307FFC1123D7AB00BD4B8E /* C4O.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = C4O.png; sourceTree = "<group>"; };
 		0A307FFE1123D7B000BD4B8E /* C4X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = C4X.png; sourceTree = "<group>"; };
@@ -143,6 +143,8 @@
 		0A87575611142585006AB678 /* GCPlayerChangeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCPlayerChangeController.h; sourceTree = "<group>"; };
 		0A87575711142585006AB678 /* GCPlayerChangeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCPlayerChangeController.m; sourceTree = "<group>"; };
 		0A87575B111425A2006AB678 /* PlayerChanger.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlayerChanger.xib; sourceTree = "<group>"; };
+		0AD633E511951C7A00526842 /* C4Grid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = C4Grid.png; sourceTree = "<group>"; };
+		0AD633E711951C8E00526842 /* C4GridTop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = C4GridTop.png; sourceTree = "<group>"; };
 		0AFC30BD11841E3A005CD671 /* GCJSONService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCJSONService.h; sourceTree = "<group>"; };
 		0AFC30BE11841E3A005CD671 /* GCJSONService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCJSONService.m; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -282,7 +284,8 @@
 		0A3292BB11323B49006066E5 /* ConnectFour */ = {
 			isa = PBXGroup;
 			children = (
-				0A307FED1123D4CC00BD4B8E /* C4Grid.png */,
+				0AD633E511951C7A00526842 /* C4Grid.png */,
+				0AD633E711951C8E00526842 /* C4GridTop.png */,
 				0A307FF21123D64000BD4B8E /* C4GridTopClear.png */,
 				0A699F42114256DA00ED7B5D /* C4GridTopGreen.png */,
 				0A699F43114256DA00ED7B5D /* C4GridTopRed.png */,
@@ -447,7 +450,6 @@
 			hasScannedForEncodings = 1;
 			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
 			projectDirPath = "";
-			projectRoot = "";
 			targets = (
 				1D6058900D05DD3D006BFB54 /* GamesmanMobile */,
 			);
@@ -467,7 +469,6 @@
 				0A87575C111425A2006AB678 /* PlayerChanger.xib in Resources */,
 				0A65E697111CDF06001400F6 /* GameView.xib in Resources */,
 				0A65E6D7111CE1E7001400F6 /* Back.png in Resources */,
-				0A307FEE1123D4CC00BD4B8E /* C4Grid.png in Resources */,
 				0A307FF31123D64000BD4B8E /* C4GridTopClear.png in Resources */,
 				0A307FFD1123D7AB00BD4B8E /* C4O.png in Resources */,
 				0A307FFF1123D7B000BD4B8E /* C4X.png in Resources */,
@@ -488,6 +489,8 @@
 				E4F6D8CE1171701000BEAB78 /* GCYBoardView2.xib in Resources */,
 				0A22EDD4118F79A0006855AE /* ConOBar.png in Resources */,
 				0A22EDD5118F79A0006855AE /* ConXBar.png in Resources */,
+				0AD633E611951C7A00526842 /* C4Grid.png in Resources */,
+				0AD633E811951C8E00526842 /* C4GridTop.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

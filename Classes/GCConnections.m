@@ -1096,9 +1096,11 @@
 	[service retrieveDataForBoard: boardString URL: boardVal andNextMovesURL: moveVals];
 	
 	if(![service status] || ![service connected]){
+		NSLog(@"Posting...");
 		[[NSNotificationCenter defaultCenter] postNotificationName: @"GameEncounteredProblem" object: self ];
 	}
 	else{
+		NSLog(@"Posting...");
 		[[NSNotificationCenter defaultCenter] postNotificationName: @"GameIsReady" object: self ];
 	}
 	

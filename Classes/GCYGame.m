@@ -165,7 +165,7 @@
 }
 
 /** Returns @"WIN" or @"LOSE" if in a primitive state since Y has no draws/ties.  Returns nil if not in a primitive state **/
-- (NSString *) isPrimitive: (NSArray *) theBoard  { 
+- (NSString *) primitive: (NSArray *) theBoard  { 
 	NSMutableSet *edgesReached = [NSMutableSet set];
 	NSString *currentPlayerPiece;
 	NSNumber *currentPosition;
