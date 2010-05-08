@@ -40,8 +40,6 @@
 		touchesEnabled = NO;
 		
 		self.view.multipleTouchEnabled = NO;
-		
-		spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle: UIActivityIndicatorViewStyleWhiteLarge];
 	}
 	return self;
 }
@@ -59,6 +57,7 @@
 - (void) updateServerDataWithService: (GCJSONService *) _service {
 	service = _service;
 	[spinner startAnimating];
+	[self.view bringSubviewToFront: spinner];
 	waiter = [[NSThread alloc] initWithTarget: self selector: @selector(fetchNewData:) object: [NSNumber numberWithBool:touchesEnabled]];
 	[waiter start];
 	timer = [[NSTimer scheduledTimerWithTimeInterval: 60 target: self selector: @selector(timedOut:) userInfo: nil repeats: NO] retain];
@@ -166,10 +165,12 @@
 	}
 	
 	if (game.gameMode == ONLINE_SOLVED) {
-		if (![service status])
-			[message setText: @"Server error. Please try again later"];
-		if (![service connected])
-			[message setText: @"Server connection failed. Please check your Web connection"];
+		if (service) {
+			if (![service status])
+				[message setText: @"Server error. Please try again later"];
+			if (![service connected])
+				[message setText: @"Server connection failed. Please check your Web connection"];
+		}
 	}
 	
 	if ([game primitive: [game getBoard]])
@@ -241,10 +242,13 @@
 		float tapX = [aTouch locationInView: self.view].x;
 		UIImageView *V = (UIImageView *) [self.view viewWithTag: 1];
 		double w = V.frame.size.width, h = V.frame.size.height;
-		UIImageView *pieceView = [[UIImageView alloc] initWithFrame: CGRectMake(tapX - w/2.0, 10 - h/2.0, w, h)];
-		[pieceView setImage: [UIImage imageNamed: [NSString stringWithFormat: @"C4%@.png", (game.p1Turn ? @"X" : @"O")]]];
-		pieceView.tag = 55555;
-		[self.view insertSubview: pieceView atIndex: width];
+		float newX = tapX - w/2.0;
+		if (newX >= 10 + width/2.0 - w/2.0 && newX <= 10 + width/2.0 + w/2.0 + (w - 1) * (width - 1) ) {
+			UIImageView *pieceView = [[UIImageView alloc] initWithFrame: CGRectMake(newX, 10 - h/2.0, w, h)];
+			[pieceView setImage: [UIImage imageNamed: [NSString stringWithFormat: @"C4%@.png", (game.p1Turn ? @"X" : @"O")]]];
+			pieceView.tag = 55555;
+			[self.view insertSubview: pieceView atIndex: width];
+		}
 	}
 }
 
@@ -254,15 +258,17 @@
 		UITouch *aTouch = [touches anyObject];
 		float x = [aTouch locationInView: self.view].x;
 		UIImageView *pieceView = (UIImageView *) [self.view viewWithTag: 55555];
-		double w = pieceView.frame.size.width, h = pieceView.frame.size.height;
-		[UIView beginAnimations: @"Slide" context: NULL];
-		int newX = x - w/2.0;
-		if (newX > 10 + width/2.0 + (w - 1) * (width - 1) )
-			newX = 10 + width/2.0 + (w - 1) * (width - 1);
-		if (newX < 10 + width/2.0)
-			newX = 10 + width/2.0;
-		[pieceView setFrame: CGRectMake(newX, pieceView.frame.origin.y, w, h)];
-		[UIView commitAnimations];
+		if (pieceView) {
+			double w = pieceView.frame.size.width, h = pieceView.frame.size.height;
+			[UIView beginAnimations: @"Slide" context: NULL];
+			float newX = x - w/2.0;
+			if (newX > 10 + width/2.0 + (w - 1) * (width - 1) )
+				newX = 10 + width/2.0 + (w - 1) * (width - 1);
+			if (newX < 10 + width/2.0)
+				newX = 10 + width/2.0;
+			[pieceView setFrame: CGRectMake(newX, pieceView.frame.origin.y, w, h)];
+			[UIView commitAnimations];
+		}
 	}
 }
 
@@ -274,16 +280,14 @@
 		UIImageView *V = (UIImageView *) [self.view viewWithTag: 1];
 		int col = (int) ((x - 10)/V.frame.size.width);
 		NSString *move = nil;
-		if (0 <= col && col < width) {
-			move = [NSString stringWithFormat: @"%d", col + 1];
-		} else {
-			UIView *pieceView = [self.view viewWithTag: 55555];
-			if (pieceView != nil) {
-				if (col >= width)
-					move = [NSString stringWithFormat: @"%d", width];
-				else if (col < 0)
-					move = @"1";
-			}
+		UIView *pieceView = [self.view viewWithTag: 55555];
+		if (pieceView) {
+			if (0 <= col && col < width) {
+				move = [NSString stringWithFormat: @"%d", col + 1];
+			} else if (col >= width)
+				move = [NSString stringWithFormat: @"%d", width];
+			else
+				move = @"1";
 		}
 		[[self.view viewWithTag: 55555] removeFromSuperview];
 		if (move && [[game legalMoves] containsObject: move])
@@ -294,7 +298,8 @@
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
 	if (touchesEnabled) {
-		[[self.view viewWithTag: 55555] removeFromSuperview];
+		if ([self.view viewWithTag: 55555])
+			[[self.view viewWithTag: 55555] removeFromSuperview];
 	}
 }
 
@@ -371,9 +376,9 @@
 	message.text = @"";
 	[self.view addSubview: message];
 	
-	[spinner setFrame: CGRectMake(width/2.0 * squareSize, height/2.0  * squareSize,  37, 37)];
+	spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle: UIActivityIndicatorViewStyleWhiteLarge];
+	spinner.frame = CGRectMake(width/2.0 * squareSize - 5 - width/2.0, height/2.0  * squareSize + squareSize/2.0 - 10,  37.0, 37.0);
 	[self.view addSubview: spinner];
-	
 	//[self disableButtons];
 	
 	[self updateLabels];
@@ -397,11 +402,13 @@
     [super viewDidUnload];
 	[message release];
 	[spinner release];
+	spinner = nil;
 }
 
 
 - (void) dealloc {
-	[spinner release];
+	if (spinner)
+		[spinner release];
     [super dealloc];
 }
 
