@@ -78,24 +78,26 @@
 
 /** Does all of the initial calculations, then procedes to find centers, connections, and edges **/
 - (void) createBoardView{
-	CGFloat triangleHeight;
-	CGFloat triangleWidth;
-	CGFloat layerWidth;
 	CGFloat bottomLayers;
 	CGFloat boardHeight;
-	CGFloat layerHeight;
-	CGFloat xCoord;
-	CGFloat yCoord;
-	CGPoint currentCenter;
-	CGPoint innerTriangleTop;
-	CGFloat xCoordStart;
-	int currentTag = 1;
 	
-
+	CGFloat triangleHeight;
+	CGFloat triangleWidth;
+	
+	CGFloat layerWidth;
+	CGFloat layerHeight;
+	
 	CGPoint layerUpperCorner;
 	CGPoint layerRightCorner;
 	CGPoint layerLeftCorner;
 	
+	CGFloat xCoord;
+	CGFloat yCoord;
+	
+	CGPoint currentCenter;
+	CGPoint innerTriangleTop;
+	CGFloat xCoordStart;
+	int currentTag = 1;
 	
 	/* Calculate Spacing */
 	//Find vertical distance between spaces for the mini inner triangles and the circles
@@ -124,30 +126,76 @@
 		xCoordStart -= .5 * triangleWidth;
 	}
 	
-//	layerWidth = xCoordStart - boardLeftCorner.x;
-//	layerHeight = boardLeftCorner.y - (innerTriangleTop.y + innerTriangleLength * triangleHeight);
-//	
-//	
-//	/* Calculate layer positions */
-//	boardRightCorner.x = boardRightCorner.x; 
-//	boardRightCorner.y = boardRightCorner.y - .5 * triangleHeight;
-//	
-//	boardLeftCorner.x = boardLeftCorner.x;
-//	boardLeftCorner.y = boardLeftCorner.y - .5 * triangleHeight;
-//	
-//	boardUpperCorner.y = boardUpperCorner.y + .5 * triangleHeight;
-//	
-//	for (int i = layers; i > 0; i--){
-//		layerUpperCorner.x = boardUpperCorner.x;
-//	}
-//	
+	/* Calculate layer positions */
+	if (layers != 0){
+		layerWidth = triangleHeight * cos(M_PI/6);
+		layerHeight = triangleHeight * sin(M_PI/6);
+		
+		//calculate outmost layer's corner positions
+		layerRightCorner.x = rightCorner.x - .5 * layerWidth; 
+		layerRightCorner.y = rightCorner.y - .5 * layerHeight;
+		
+		layerLeftCorner.x = leftCorner.x + .5 * layerWidth;
+		layerLeftCorner.y = leftCorner.y - .5 * layerHeight;
+		
+		layerUpperCorner.y = upperCorner.y + .5 * triangleHeight;
+		
+		for (int i = layers; i > 0; i--){
+			//call draw arc on everything!!!!!!!!!!!!!!!!!!!
+			//arc along upper -> right
+			currentTag = [self centersAlongLayer: i fromPointA: layerUpperCorner toPointB: layerRightCorner 
+									  withCenter: leftCorner startingAtPosition: currentTag];
+						  
+			//arc along right -> left
+			currentTag = [self centersAlongLayer: i fromPointA: layerRightCorner toPointB: layerLeftCorner
+									  withCenter: upperCorner startingAt: currentTag];
+			
+			//arc along left -> upper
+			currentTag = [self centersAlongLayer: i fromPointA: layerLeftCorner toPointB: layerUpperCorner
+									  withCenter: rightCorner startingAt: currentTag];
+			
+			
+			//move down to the next layer
+			layerRightCorner.x = layerRightCorner.x - layerWidth;
+			layerRightCorner.y = layerRightCorner.y - layerHeight;
+			
+			layerLeftCorner.x = layerLeftCorner.x + layerWidth;
+			layerLeftCorner.y = layerLeftCorner.y - layerHeight;
+			
+			layerUpperCorner.y = layerUpperCorner.y + triangleHeight;
+		}
+	}
+	
 }
 
-- (int) centersAlongLayer: (int) layer fromPointA: (CGPoint) pointA toPointB: (CGPoint) pointB withCenter: (CGPoint) arcCenter startingAt: (int) position{
+- (int) centersAlongLayer: (int) layer fromPointA: (CGPoint) pointA toPointB: (CGPoint) pointB withCenter: (CGPoint) arcCenter startingAtPosition: (int) position{
+	CGFloat temp;
+	CGFloat theta;
 	int currentPosition = position;
-	float angleA = atan2(pointA.x - arcCenter.x, pointA.y - arcCenter.y);
-	float angleB = atan2(pointB.x - arcCenter.x, pointB.y - arcCenter.y);
+	int pointsForLayer;
+	int currentPoint;
 	
+	CGFloat angleA = atan2(pointA.x - arcCenter.x, pointA.y - arcCenter.y);
+	CGFloat angleB = atan2(pointB.x - arcCenter.x, pointB.y - arcCenter.y);
+	
+	if (angleB > angleA){
+		temp = angleA;
+		angleA = angleB;
+		angleB = temp;
+	}
+	
+	
+	
+//	while(outsideCounter <= depthOutside) {
+//		var p0 = {x: x + v0.x * rowSpacingCopy * outsideCounter,
+//		y: y + v0.y * rowSpacingCopy * outsideCounter };
+//		var p1 = {x: llCorner.x + v1.x * rowSpacingCopy * outsideCounter, y: llCorner.y - v1.y * rowSpacingCopy * outsideCounter};
+//		var p2 = {x: lrCorner.x + v2.x * rowSpacingCopy * outsideCounter, y: lrCorner.y - v2.y * rowSpacingCopy * outsideCounter};
+//		drawArc(outsideLeftCorner, p2, p0,  outsideCounter+depthInsideCopy, 7 * Math.PI /6, outsideCounter == depthOutside);
+//		drawArc(outsideRightCorner, p1, p0,  outsideCounter+depthInsideCopy, - Math.PI/6, outsideCounter == depthOutside);
+//		drawArc(outsideTopCorner, p2, p1,  outsideCounter+depthInsideCopy, Math.PI/2, outsideCounter == depthOutside);
+//		outsideCounter++;
+//	}
 	return currentPosition;
 }
 

@@ -42,7 +42,7 @@
 
 /** Given two corners, the current layer, the current position number, and a radius, calculates the centers along the arc 
  ** between the two corners and returns the new position.  Assumes it is going clockwise **/
-- (int) centersAlongLayer: (int) layer fromPointA: (CGPoint) pointA toPointB: (CGPoint) pointB withCenter: (CGPoint) arcCenter startingAt: (int) position;
+- (int) centersAlongLayer: (int) layer fromPointA: (CGPoint) pointA toPointB: (CGPoint) pointB withCenter: (CGPoint) arcCenter startingAtPosition: (int) position;
 
 
 /** Draws the connections on the conectionsView when pieces of the same color are placed next to each other **/
