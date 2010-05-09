@@ -26,5 +26,7 @@
 - (void) disableButtons;
 /// Convenience method for enabling all of the board's buttons.
 - (void) enableButtons;
+- (NSArray *) translateToServer: (NSArray *) moveArray;
+- (NSDictionary *) getServerValues: (NSArray *) moves;
 
 @end

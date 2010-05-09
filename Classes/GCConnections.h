@@ -25,7 +25,8 @@
 	BOOL misere;
 	GCJSONService *service;
 	BOOL predictions, moveValues;
-	
+	BOOL circling;
+	NSThread *waiter;
 }
 
 @property (nonatomic, retain) NSString *player1Name, *player2Name;
@@ -36,6 +37,7 @@
 @property (nonatomic, assign) BOOL predictions, moveValues;
 @property (nonatomic, retain) GCJSONService *service;
 @property (nonatomic, assign) PlayMode gameMode;
+@property (nonatomic, assign) BOOL circling;
 
 - (void) resetBoard;
 - (void) postHumanMove: (NSNumber *) num;
@@ -46,7 +48,8 @@
 //- (void) decrementVertices: (NSMutableArray *) vertices 
 //				   inArray: (NSMutableArray *) loop;
 - (NSString *) stringForBoard: (NSArray *) _board;
+- (void) startFetch;
 - (void) fetchNewData;
-
+- (void) fetchFinished;
 
 @end

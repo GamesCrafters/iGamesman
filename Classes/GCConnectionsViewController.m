@@ -34,11 +34,42 @@
 	NSString *player = ([game currentPlayer] == PLAYER1) ? [game player1Name] : [game player2Name];
 	NSString *color = ([game currentPlayer] == PLAYER1) ? @"Red" : @"Blue";
 	if(game.gameMode == ONLINE_SOLVED && game.predictions){
-		
+		message.numberOfLines = 2;
+		[message setText: [NSString stringWithFormat: @"%@ (%@)'s turn\n%@ in %d", player, color, [game.service getValue], [game.service getRemoteness]]];
 	}
 	else{
 		[message setText: [NSString stringWithFormat: @"%@ (%@)'s turn", player, color]];
 	}
+	
+	if (game.gameMode == ONLINE_SOLVED && game.moveValues) {
+		NSLog(@"%@", [game legalMoves]);
+		NSDictionary *movesAndValues = [self getServerValues: [self translateToServer: [game legalMoves]]];
+		NSLog(@"%@", movesAndValues);
+		for (NSNumber *move in [movesAndValues allKeys]) {
+			UIButton *B = (UIButton *) [self.view viewWithTag: [move intValue]];
+			int parity = (([move integerValue] - 1) / size) % 2;
+			NSString *color, *direction;
+			
+			if (game.p1Turn ^ parity)
+				direction = @"H";
+			else
+				direction = @"V";
+			
+			if ([[movesAndValues objectForKey: move] isEqual: @"CLEAR"])
+				color = @"CLEAR";
+			else if ([[movesAndValues objectForKey: move] isEqual: @"win"])
+				color = @"Green";
+			else
+				color = @"Red";
+			
+			if ([color isEqual: @"CLEAR"])
+				[B setBackgroundImage: nil forState: UIControlStateNormal];
+			else
+				[B setBackgroundImage: [UIImage imageNamed: [NSString stringWithFormat: @"Con%@%@.png", color, direction]] forState: UIControlStateNormal];
+
+		}
+	}
+	
 	if([game primitive: [game getBoard]]){
 		[self displayPrimitive];
 	}
@@ -49,6 +80,60 @@
 - (void)loadView {
 }
 */
+
+- (NSArray *) translateToServer: (NSArray *) moveArray{
+	int counter = 0;
+	NSMutableArray * result = [[NSMutableArray alloc] initWithCapacity: [moveArray count]];
+	for(int row = size - 2; row > 0; row -= 2){
+		for(int col = 1; col < size - 1; col += 2){
+			if([moveArray containsObject: [NSNumber numberWithInt: row*size + col + 1]]){
+				[result addObject: [NSNumber numberWithInt: counter]];
+			}
+			counter++;
+		}
+	}
+	
+	for(int row = size - 3; row > 0; row -= 2){
+		for(int col = 2; col < size - 1; col += 2){
+			if([moveArray containsObject: [NSNumber numberWithInt: row*size + col + 1]]){
+				[result addObject: [NSNumber numberWithInt: counter]];
+			}
+			counter++;
+		}
+	}
+	return result;
+}
+- (NSDictionary *) getServerValues: (NSArray *) moves{
+	int counter = 0;
+	NSMutableDictionary *result = [[NSMutableDictionary alloc] initWithCapacity: [moves count]];
+	for(int row = size - 2; row > 0; row -= 2){
+		for(int col = 1; col < size - 1; col += 2){
+			if([moves containsObject: [NSNumber numberWithInt: counter]]){
+				NSString *val = [game.service getValueAfterMove: [NSString stringWithFormat: @"%d", counter]];
+				if (val)
+					[result setObject: val forKey: [NSNumber numberWithInt: row*size + col + 1]];
+				else
+					[result setObject: @"CLEAR" forKey: [NSNumber numberWithInt: row*size + col + 1]];
+			}
+			counter++;
+		}
+	}
+	
+	for(int row = size - 3; row > 0; row -= 2){
+		for(int col = 2; col < size - 1; col += 2){
+			if([moves containsObject: [NSNumber numberWithInt: counter]]){
+				NSString *val = [game.service getValueAfterMove: [NSString stringWithFormat: @"%d", counter]];
+				if (val)
+					[result setObject: val forKey: [NSNumber numberWithInt: row*size + col + 1]];
+				else
+					[result setObject: @"CLEAR" forKey: [NSNumber numberWithInt: row*size + col + 1]];
+			}
+			counter++;
+		}
+	}
+	return result;
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -115,7 +200,8 @@
 	
 	[self disableButtons];
 	
-	[self updateLabels];
+	if (game.gameMode != ONLINE_SOLVED)
+		[self updateLabels];
 }
 
 // don't think this works
@@ -139,6 +225,7 @@
 	
 	UIButton *B = (UIButton *) [self.view viewWithTag: [move integerValue]];
 	float B_width = B.frame.size.width;
+	[B setBackgroundImage: nil forState: UIControlStateNormal];
 	
 
 	UIImageView *img = [[UIImageView alloc] initWithFrame: CGRectMake(B.center.x - 5, B.center.y - 5, 10, 10)];

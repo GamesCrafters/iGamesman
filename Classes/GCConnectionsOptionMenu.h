@@ -19,6 +19,7 @@
 	int size;
 	id <GCRulesDelegate> delegate;
 	BOOL misere;
+	BOOL circling;
 }
 
 @property (nonatomic, retain) id <GCRulesDelegate> delegate;

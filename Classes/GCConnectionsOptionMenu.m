@@ -19,6 +19,7 @@
 		game = _game;
 		size = game.size;
 		misere = game.misere;
+		circling = game.circling;
 	}
 	return self;
 }
@@ -41,14 +42,19 @@
 - (void) done {
 	game.size = size;
 	game.misere = misere;
+	game.circling = circling;
 	[delegate rulesPanelDidFinish];
 }
 
 - (void) update: (UISegmentedControl *) sender{
 	if(sender.tag == 1)
 		size = ([sender selectedSegmentIndex] * 2) + 5;
-	else 
+	else if(sender.tag == 2)
 		misere = [sender selectedSegmentIndex] == 0 ? NO : YES;
+	else{
+		circling = [sender selectedSegmentIndex] == 0 ? NO: YES;
+		[self.tableView reloadData];
+	}
 }
 
 - (void)viewDidLoad {
@@ -108,7 +114,7 @@
 #pragma mark Table view methods
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    return 3;
 }
 
 
@@ -118,9 +124,15 @@
 }
 
 - (NSString *) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-	return (section == 0 ? @"Size" : @"Misère");
+	return (section == 0 ? @"Size" : (section == 1 ? @"Misère" : @"To Win"));
 }
 
+
+- (NSString *) tableView: (UITableView *)tableView titleForFooterInSection:(NSInteger)section {
+	if (section == 2 && circling) return @"Win by going across or forming a loop\nwith your pieces.";
+	else if (section == 2) return @"Win by making a connection between\nopposite sides.";
+	else return @"";
+}
 
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -144,11 +156,17 @@
 		[segment setSelectedSegmentIndex: (size - 5) / 2];
 		segment.tag = 1;
 	}
-	else{
+	else if(indexPath.section == 1) {
 		[segment insertSegmentWithTitle: @"Standard" atIndex: 0 animated: NO];
 		[segment insertSegmentWithTitle: @"Misère" atIndex: 1 animated: NO];
-		[segment setSelectedSegmentIndex: ([game isMisere] ? 1 : 0)];
+		[segment setSelectedSegmentIndex: (misere ? 1 : 0)];
 		segment.tag = 2;
+	}
+	else{
+		[segment insertSegmentWithTitle: @"No Circling" atIndex: 0 animated: NO];
+		[segment insertSegmentWithTitle: @"Circling" atIndex: 1 animated: NO];
+		[segment setSelectedSegmentIndex: (circling ? 1 : 0)];
+		segment.tag = 3;
 	}
 	segment.segmentedControlStyle = UISegmentedControlStyleBar;
 	segment.tintColor = [UIColor colorWithRed: 28.0/255 green: 127.0/255 blue: 189.0/255 alpha: 1.0];
