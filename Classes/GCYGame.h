@@ -17,6 +17,7 @@
 	PlayerType player1Type, player2Type;
 	NSMutableArray *board;
 	int layers;
+	int innerTriangleLength;
 	BOOL p1Turn;
 	GCYGameViewController *yGameView;
 	PlayMode gameMode;
@@ -27,6 +28,7 @@
 	
 }
 
+@property (nonatomic assign) int innerTriangleLength;
 @property (nonatomic, retain) NSDictionary *edgesForPosition;
 @property (nonatomic, retain) NSArray *leftEdges;
 @property (nonatomic, retain) NSDictionary *positionConnections;

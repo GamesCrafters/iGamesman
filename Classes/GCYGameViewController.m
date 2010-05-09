@@ -14,22 +14,24 @@
 - (id) initWithGame: (GCYGame *) _game{
 	if (self = [super init]){
 		game = _game;
-		//boardView = [[GCYBoardView alloc] init];
+		boardView = [[GCYBoardView alloc] initWithFrame: CGRectMake(0, 0, 320, 416) withLayers: game.layers andInnerLength: game.innerTriangleLength];
 		//boardView.game = _game;
-		switch  (game.layers){
-			case 0:
-				self = [super initWithNibName:@"GCYBoardView0" bundle: nil];
-				break;
-			case 1:
-				self = [super initWithNibName:@"GCYBoardView1" bundle: nil];
-				break;
-			case 2:
-				self = [super initWithNibName:@"GCYBoardView2" bundle: nil];
-				break;
-			default:
-				self = nil;
-				break;
-		}
+		self.view = boardView;//[[UIView alloc] initWithFrame: CGRectMake(0, 0, 320, 416)];
+		//[self.view addSubview: boardView];
+//		switch  (game.layers){
+//			case 0:
+//				//self = [super initWithNibName:@"GCYBoardView0" bundle: nil];
+//				break;
+//			case 1:
+//				//self = [super initWithNibName:@"GCYBoardView1" bundle: nil];
+//				break;
+//			case 2:
+//				//self = [super initWithNibName:@"GCYBoardView2" bundle: nil];
+//				break;
+//			default:
+//				self = nil;
+//				break;
+//		}
 	}
 	return self;
 }
@@ -60,6 +62,7 @@
 	
 	[self disableButtons];
 	[self updateLabels];
+
 }
 
 

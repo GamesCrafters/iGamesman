@@ -17,6 +17,10 @@
 	NSMutableDictionary *neighborsForPosition;
 	NSMutableArray *outsideCorners;
 	CGFloat circleRadius;
+	CGFloat padding;
+	CGPoint upperCorner;
+	CGPoint rightCorner;
+	CGPoint leftCorner;
 	
 }
 
@@ -38,15 +42,7 @@
 
 /** Given two corners, the current layer, the current position number, and a radius, calculates the centers along the arc 
  ** between the two corners and returns the new position.  Assumes it is going clockwise **/
-- (int) centersAlongLayer: (int) layer fromPointA: (CGPoint *) pointA toPointB: (CGPoint *) pointB withCenter: (CGPoint *) arcCenter startingAt: (int) position;
-
-
-/** Draws the initial board shape based on the positions of the outsideCorners **/
-- (void) drawBoard;
-
-
-/** Draws the initial lines and positions on the board **/
-- (void) drawDetails;
+- (int) centersAlongLayer: (int) layer fromPointA: (CGPoint) pointA toPointB: (CGPoint) pointB withCenter: (CGPoint) arcCenter startingAt: (int) position;
 
 
 /** Draws the connections on the conectionsView when pieces of the same color are placed next to each other **/

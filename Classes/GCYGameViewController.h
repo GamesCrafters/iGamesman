@@ -8,19 +8,20 @@
 
 #import <UIKit/UIKit.h>
 #import "GCYGame.h"
-//#import "GCYBoardView.h"
+#import "GCYBoardView.h"
 
 
 @interface GCYGameViewController : UIViewController {
 	GCYGame *game;
 	UILabel *message;
-	//GCYBoardView *boardView;
+	GCYBoardView *boardView;
 }
+
+@property (nonatomic, retain) GCYBoardView *boardView;
 
 //- (id) initWithLayers: (int) layers; //can probably delete
 - (id) initWithGame: (GCYGame *) _game;
 - (void) doMove: (NSNumber *) move;
-
 - (void) disableButtons;
 - (void) enableButtons;
 - (void) newBoard;

@@ -25,7 +25,8 @@
 @synthesize positionConnections;
 @synthesize edgesForPosition;
 @synthesize leftEdges;
-@synthesize yGameView;;
+@synthesize yGameView;
+@synthesize innerTriangleLength;
 
 - (id) init {
 	if (self = [super init]) {
@@ -36,6 +37,7 @@
 		player2Type = HUMAN;
 		
 		layers = 0;
+		innerTriangleLength = 2;
 		
 		p1Turn = YES;
 		
@@ -179,7 +181,7 @@
 	
 	//Super Happy Fun Time!!!
 	//Check current player's pieces
-	if (p1Turn)
+	if (!p1Turn)
 		currentPlayerPiece = O;
 	else 
 		currentPlayerPiece = X;
@@ -221,7 +223,7 @@
 	
 	
 	//Check opponent's pieces
-	if (!p1Turn)
+	if (p1Turn)
 		currentPlayerPiece = O;
 	else 
 		currentPlayerPiece = X;

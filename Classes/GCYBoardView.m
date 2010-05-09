@@ -26,31 +26,64 @@
 
 - (id) initWithFrame:(CGRect)frame withLayers: (int) myLayers andInnerLength: (int) innerLength{
 	if (self = [super initWithFrame:frame]) {
+		CGFloat distance, halfPadding;
         layers = myLayers;
+		padding = 20;
 		innerTriangleLength = innerLength;
 		circleRadius = 0;
 		GCYBoardConnectionsView * connectionsView = [[GCYBoardConnectionsView alloc] initWithFrame: frame];
 		centers = [[NSMutableArray alloc] initWithCapacity: [self boardSize]];
 		neighborsForPosition = [[NSMutableDictionary alloc] init];
+		self.backgroundColor = [UIColor colorWithRed: 0 green: 0 blue: 102.0/256.0 alpha: 1];
+		
+		distance = sqrt(pow(self.frame.size.width - padding, 2) - pow((self.frame.size.width - padding)/2, 2));
+		halfPadding = padding/2.;
+		upperCorner = CGPointMake(self.frame.size.width/2, halfPadding);
+		rightCorner = CGPointMake(self.frame.size.width - halfPadding, halfPadding + distance);
+		leftCorner = CGPointMake(halfPadding, halfPadding + distance);
     }
+	NSLog(@"layers and stuff: %d, %d", layers, innerTriangleLength);
+	[self createBoardView];
     return self;
 }
 
 
 - (void)drawRect:(CGRect)rect {
     // Drawing code
+	CGPoint currentCenter; 
+	CGContextRef context = UIGraphicsGetCurrentContext();
 	
 	//draw the board
-	//draw the other stuff
+	CGContextSetRGBFillColor(context, 0.5f, 0.5f, 0.5f, 1.0f);
+	CGContextSetRGBStrokeColor(context, 0.5f, 0.5f, 0.5f, 1.0f);
+	CGContextBeginPath(context);
+	CGContextAddArc(context, leftCorner.x, leftCorner.y, self.frame.size.width - 20, (5*M_PI)/3, 0, 0);
+	CGContextAddArc(context, upperCorner.x, upperCorner.y, self.frame.size.width - 20, M_PI/3, (2*M_PI)/3, 0);
+	CGContextAddArc(context, rightCorner.x, rightCorner.y, self.frame.size.width - 20, M_PI, (4*M_PI)/3, 0);
+	CGContextFillPath(context);
+	
+	
+	CGContextSetRGBFillColor(context, 0.2f, 0.2f, 0.2f, 1.0f);
+	
+	//draw the centers connections
+	for (NSValue *pointValue in centers){
+		//CGContextBeginPath(context);
+		currentCenter = [pointValue CGPointValue];
+		CGContextAddArc(context, currentCenter.x, currentCenter.y, circleRadius, 0, 2*M_PI, 1);
+		CGContextFillPath(context);
+	}
+	
 }
 
 
 /** Does all of the initial calculations, then procedes to find centers, connections, and edges **/
 - (void) createBoardView{
-	double triangleHeight;
-	double triangleWidth;
-	double layerWidth;
-	double layerHeight;
+	CGFloat triangleHeight;
+	CGFloat triangleWidth;
+	CGFloat layerWidth;
+	CGFloat bottomLayers;
+	CGFloat boardHeight;
+	CGFloat layerHeight;
 	CGFloat xCoord;
 	CGFloat yCoord;
 	CGPoint currentCenter;
@@ -58,72 +91,67 @@
 	CGFloat xCoordStart;
 	int currentTag = 1;
 	
-	CGPoint boardCenter = CGPointMake(self.frame.size.width/2, self.frame.size.width/2 + 5);
-	CGPoint rightCorner = CGPointMake(self.frame.size.width - 5, self.frame.size.width + 5);
-	CGPoint leftCorner = CGPointMake(5, self.frame.size.width + 5);
-	CGPoint upperCorner = CGPointMake(self.frame.size.width/2, 5); 
+
+	CGPoint layerUpperCorner;
+	CGPoint layerRightCorner;
+	CGPoint layerLeftCorner;
 	
 	
 	/* Calculate Spacing */
 	//Find vertical distance between spaces for the mini inner triangles and the circles
-	triangleHeight = (self.frame.size.width/2 - 10)/(layers + 1/2 * innerTriangleLength + 1/2);
-	triangleWidth = sqrt(4/5*pow(triangleHeight, 2));
-	circleRadius = 1/5*triangleWidth;
+	boardHeight = rightCorner.y - upperCorner.y; 
+	bottomLayers = (layers + .5) * sin(M_PI/6);
+	triangleHeight = boardHeight/(layers + innerTriangleLength + .5 + bottomLayers);
+	triangleWidth = sqrt(4/3. * pow(triangleHeight, 2));
+	circleRadius = 1/5.*triangleWidth;
+	NSLog(@"%f, %f, %f", boardHeight, triangleHeight, triangleWidth);
 	
 	
 	/* calculate innerTriangle centers and tags */
-	innerTriangleTop = CGPointMake(upperCorner.x, upperCorner.y + layers * triangleHeight);
+	innerTriangleTop = CGPointMake(upperCorner.x, upperCorner.y + (layers + .5)* triangleHeight);
 	xCoordStart = innerTriangleTop.x;
 	for (int i = 0; i <= innerTriangleLength; i++){
-		yCoord = innerTriangleTop.x + i * triangleHeight;
-		
+		yCoord = innerTriangleTop.y + i * triangleHeight;
+
 		//find the centers in each column for the row i
 		for (int j = 0; j <= i; j++){
-			xCoord = xCoordStart + .5 * triangleWidth * j;
+			xCoord = xCoordStart + triangleWidth * j;
+			NSLog(@"%f, %f", xCoord, yCoord);
 			[centers insertObject: [NSValue valueWithCGPoint: CGPointMake(xCoord, yCoord)] atIndex: currentTag - 1];
 			currentTag++;
+
 		}
 		xCoordStart -= .5 * triangleWidth;
 	}
 	
-	layerWidth = xCoordStart - leftCorner.x;
-	layerHeight = leftCorner.y - (innerTriangleTop.y + innerTriangleLength * triangleHeight);
-	
-	
-	/* Calculate layer positions */
-	rightCorner.x = rightCorner.x; 
-	rightCorner.y = rightCorner.y - .5 * triangleHeight;
-	
-	leftCorner.x = leftCorner.x;
-	leftCorner.y = leftCorner.y - .5 * triangleHeight;
-	
-	upperCorner.y = upperCorner.y + .5 * triangleHeight;
-	
-	for (int i = layers; i > 0; i--){
-		
-	}
-	
+//	layerWidth = xCoordStart - boardLeftCorner.x;
+//	layerHeight = boardLeftCorner.y - (innerTriangleTop.y + innerTriangleLength * triangleHeight);
+//	
+//	
+//	/* Calculate layer positions */
+//	boardRightCorner.x = boardRightCorner.x; 
+//	boardRightCorner.y = boardRightCorner.y - .5 * triangleHeight;
+//	
+//	boardLeftCorner.x = boardLeftCorner.x;
+//	boardLeftCorner.y = boardLeftCorner.y - .5 * triangleHeight;
+//	
+//	boardUpperCorner.y = boardUpperCorner.y + .5 * triangleHeight;
+//	
+//	for (int i = layers; i > 0; i--){
+//		layerUpperCorner.x = boardUpperCorner.x;
+//	}
+//	
 }
 
-- (int) centersAlongLayer: (int) layer fromPointA: (CGPoint *) pointA toPointB: (CGPoint *) pointB withCenter: (CGPoint *) arcCenter startingAt: (int) position{
+- (int) centersAlongLayer: (int) layer fromPointA: (CGPoint) pointA toPointB: (CGPoint) pointB withCenter: (CGPoint) arcCenter startingAt: (int) position{
 	int currentPosition = position;
-	
+	float angleA = atan2(pointA.x - arcCenter.x, pointA.y - arcCenter.y);
+	float angleB = atan2(pointB.x - arcCenter.x, pointB.y - arcCenter.y);
 	
 	return currentPosition;
 }
 
 
-/** Draws the initial board shape based on the positions of the outsideCorners **/
-- (void) drawBoard{
-	CGPoint rightCorner = CGPointMake(self.frame.size.width - 5, self.frame.size.width + 5);
-	CGPoint leftCorner = CGPointMake(5, self.frame.size.width + 5);
-	CGPoint upperCorner = CGPointMake(self.frame.size.width/2, 5);
-}
-
-
-/** Draws the initial lines and positions on the board **/
-- (void) drawDetails{
-}
 
 
 /** Draws the connections on the conectionsView when pieces of the same color are placed next to each other **/
