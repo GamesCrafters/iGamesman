@@ -65,6 +65,8 @@
 	return mode == OFFLINE_UNSOLVED || mode == ONLINE_SOLVED;
 }
 
+- (PlayMode) playMode { return gameMode; }
+
 - (UIViewController *) optionMenu {
 	return [[GCConnectionsOptionMenu alloc] initWithGame: self];
 }
@@ -86,6 +88,7 @@
 		service = [[GCJSONService alloc] init];
 		[self startFetch];
 	}
+
 	gameMode = mode;
 }
 
@@ -149,6 +152,24 @@
 	}
 	
 	return moves;
+}
+
+// Return the value of the current board
+- (NSString *) getValue { return [service getValue]; }
+
+// Return the remoteness of the current board (or -1 if not available)
+- (NSInteger) getRemoteness { return [service getRemoteness]; }
+
+// Return the value of MOVE
+- (NSString *) getValueOfMove: (NSNumber *) move {
+	NSString *moveString = [NSString stringWithFormat: @"%d", [[[conView translateToServer: [NSArray arrayWithObject: move]] objectAtIndex: 0] intValue]];
+	return [[service getValueAfterMove: moveString] uppercaseString];
+}
+
+// Return the remoteness of MOVE (or -1 if not available)
+- (NSInteger) getRemotenessOfMove: (NSNumber *) move {
+	NSString *moveString = [NSString stringWithFormat: @"%d", [[[conView translateToServer: [NSArray arrayWithObject: move]] objectAtIndex: 0] intValue]];
+	return [service getRemotenessAfterMove: moveString];
 }
 
 - (void) doMove: (NSNumber *) move {
@@ -682,6 +703,11 @@
 - (void) notifyWhenReady {
 	if (gameMode == OFFLINE_UNSOLVED)
 		[[NSNotificationCenter defaultCenter] postNotificationName: @"GameIsReady" object: self];
+}
+
+- (void) resume {
+	if (gameMode == ONLINE_SOLVED)
+		[self startFetch];
 }
 
 - (void) dealloc {

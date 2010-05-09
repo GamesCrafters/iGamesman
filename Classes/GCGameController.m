@@ -120,6 +120,7 @@
 	
 	PlayerType p = ([game currentPlayer] == PLAYER1) ? [game player1Type] : [game player2Type];
 	if ([game playMode] == OFFLINE_UNSOLVED || p == COMPUTER_RANDOM) {
+		NSLog(@"WTF");
 		NSArray *legals = [game legalMoves];
 		int choice = rand() % [legals count];
 		

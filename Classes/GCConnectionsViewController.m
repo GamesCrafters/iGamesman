@@ -35,16 +35,22 @@
 	NSString *color = ([game currentPlayer] == PLAYER1) ? @"Red" : @"Blue";
 	if(game.gameMode == ONLINE_SOLVED && game.predictions){
 		message.numberOfLines = 2;
-		[message setText: [NSString stringWithFormat: @"%@ (%@)'s turn\n%@ in %d", player, color, [game.service getValue], [game.service getRemoteness]]];
+		NSString *value = [game.service getValue];
+		PlayerType typePlay = ([game currentPlayer] == PLAYER1) ? [game player1Type] : [game player2Type];
+		PlayerType typeOpp  = ([game currentPlayer] == PLAYER1) ? [game player2Type] : [game player1Type];
+		NSString *modifier;
+		if ([game playMode] == COMPUTER_PERFECT && value == @"win") modifier = @"will";
+		else if (typeOpp == COMPUTER_PERFECT && value == @"lose") modifier = @"will";
+		else if (typePlay == COMPUTER_PERFECT && typeOpp == COMPUTER_PERFECT) modifier = @"will";
+		else modifier = @"should";
+		[message setText: [NSString stringWithFormat: @"%@ (%@)'s turn\n%@ %@ in %d", player, color, modifier, [game.service getValue], [game.service getRemoteness]]];
 	}
 	else{
 		[message setText: [NSString stringWithFormat: @"%@ (%@)'s turn", player, color]];
 	}
 	
 	if (game.gameMode == ONLINE_SOLVED && game.moveValues) {
-		NSLog(@"%@", [game legalMoves]);
 		NSDictionary *movesAndValues = [self getServerValues: [self translateToServer: [game legalMoves]]];
-		NSLog(@"%@", movesAndValues);
 		for (NSNumber *move in [movesAndValues allKeys]) {
 			UIButton *B = (UIButton *) [self.view viewWithTag: [move intValue]];
 			int parity = (([move integerValue] - 1) / size) % 2;

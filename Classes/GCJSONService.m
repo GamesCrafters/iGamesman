@@ -140,46 +140,48 @@
  @param nextURL the URL of the server request that gives the values of children positions
  */
 - (void) retrieveDataForBoard: (NSString *) board URL: (NSString *) posURL andNextMovesURL: (NSString *) nextURL {
-	myBoard = [board retain];
-	
-	if (!previous) {
-		NSString *result = [[NSString alloc] initWithContentsOfURL: [NSURL URLWithString: posURL]
+	if (![myBoard isEqual: board]) {
+		myBoard = [board retain];
+		
+		if (!previous) {
+			NSString *result = [[NSString alloc] initWithContentsOfURL: [NSURL URLWithString: posURL]
+															  encoding: NSUTF8StringEncoding
+																 error: NULL];
+			SBJsonParser *parser = [[SBJsonParser alloc] init];
+			id response = [parser objectWithString: result];
+			if (response != nil) {
+				connected = YES;
+				if ([[response objectForKey: @"status"] isEqual: @"ok"]) {
+					status = YES;
+					previous = [[NSArray alloc] initWithObjects: [response objectForKey: @"response"], nil];
+				} else
+					status = NO;
+			} else {
+				connected = NO;
+				previous = nil;
+			}
+			[parser release];
+		} else
+			previous = current;
+		
+		NSString *result = [[NSString alloc] initWithContentsOfURL: [NSURL URLWithString: nextURL]
 														  encoding: NSUTF8StringEncoding
 															 error: NULL];
 		SBJsonParser *parser = [[SBJsonParser alloc] init];
 		id response = [parser objectWithString: result];
 		if (response != nil) {
 			connected = YES;
-			if ([[response objectForKey: @"status"] isEqual: @"ok"]) {
-				status = YES;
-				previous = [[NSArray alloc] initWithObjects: [response objectForKey: @"response"], nil];
-			} else
-				status = NO;
-		} else {
+			if ([response isKindOfClass: [NSDictionary class]]) {
+				if ([[response objectForKey: @"status"] isEqual: @"ok"]) {
+					status = YES;
+					current = [[response objectForKey: @"response"] retain];
+				} else
+					status = NO;
+			}
+		} else
 			connected = NO;
-			previous = nil;
-		}
 		[parser release];
-	} else
-		previous = current;
-	
-	NSString *result = [[NSString alloc] initWithContentsOfURL: [NSURL URLWithString: nextURL]
-													  encoding: NSUTF8StringEncoding
-														 error: NULL];
-	SBJsonParser *parser = [[SBJsonParser alloc] init];
-	id response = [parser objectWithString: result];
-	if (response != nil) {
-		connected = YES;
-		if ([response isKindOfClass: [NSDictionary class]]) {
-			if ([[response objectForKey: @"status"] isEqual: @"ok"]) {
-				status = YES;
-				current = [[response objectForKey: @"response"] retain];
-			} else
-				status = NO;
-		}
-	} else
-		connected = NO;
-	[parser release];
+	}
 }
 
 
