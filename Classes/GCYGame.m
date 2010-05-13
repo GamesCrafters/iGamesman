@@ -36,7 +36,7 @@
 		player1Type = HUMAN;
 		player2Type = HUMAN;
 		
-		layers = 0;
+		layers = 1;
 		innerTriangleLength = 2;
 		
 		p1Turn = YES;

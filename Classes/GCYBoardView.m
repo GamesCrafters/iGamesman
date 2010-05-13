@@ -24,6 +24,8 @@
     return self;
 }
 
+
+
 - (id) initWithFrame:(CGRect)frame withLayers: (int) myLayers andInnerLength: (int) innerLength{
 	if (self = [super initWithFrame:frame]) {
 		CGFloat distance, halfPadding;
@@ -42,11 +44,12 @@
 		rightCorner = CGPointMake(self.frame.size.width - halfPadding, halfPadding + distance);
 		leftCorner = CGPointMake(halfPadding, halfPadding + distance);
     }
-	NSLog(@"layers and stuff: %d, %d", layers, innerTriangleLength);
 	[self createBoardView];
     return self;
 }
 
+
+#pragma mark Drawing_Stuff
 
 - (void)drawRect:(CGRect)rect {
     // Drawing code
@@ -75,6 +78,14 @@
 	
 }
 
+/** Draws the connections on the conectionsView when pieces of the same color are placed next to each other **/
+- (void) drawConnections{
+}
+
+
+
+
+#pragma mark Create_Board
 
 /** Does all of the initial calculations, then procedes to find centers, connections, and edges **/
 - (void) createBoardView{
@@ -97,7 +108,7 @@
 	CGPoint currentCenter;
 	CGPoint innerTriangleTop;
 	CGFloat xCoordStart;
-	int currentTag = 1;
+	int currentPosition = 1;
 	
 	/* Calculate Spacing */
 	//Find vertical distance between spaces for the mini inner triangles and the circles
@@ -106,7 +117,6 @@
 	triangleHeight = boardHeight/(layers + innerTriangleLength + .5 + bottomLayers);
 	triangleWidth = sqrt(4/3. * pow(triangleHeight, 2));
 	circleRadius = 1/5.*triangleWidth;
-	NSLog(@"%f, %f, %f", boardHeight, triangleHeight, triangleWidth);
 	
 	
 	/* calculate innerTriangle centers and tags */
@@ -118,9 +128,8 @@
 		//find the centers in each column for the row i
 		for (int j = 0; j <= i; j++){
 			xCoord = xCoordStart + triangleWidth * j;
-			NSLog(@"%f, %f", xCoord, yCoord);
-			[centers insertObject: [NSValue valueWithCGPoint: CGPointMake(xCoord, yCoord)] atIndex: currentTag - 1];
-			currentTag++;
+			[centers insertObject: [NSValue valueWithCGPoint: CGPointMake(xCoord, yCoord)] atIndex: currentPosition - 1];
+			currentPosition++;
 
 		}
 		xCoordStart -= .5 * triangleWidth;
@@ -138,21 +147,23 @@
 		layerLeftCorner.x = leftCorner.x + .5 * layerWidth;
 		layerLeftCorner.y = leftCorner.y - .5 * layerHeight;
 		
+		layerUpperCorner.x = upperCorner.x;
 		layerUpperCorner.y = upperCorner.y + .5 * triangleHeight;
 		
 		for (int i = layers; i > 0; i--){
 			//call draw arc on everything!!!!!!!!!!!!!!!!!!!
 			//arc along upper -> right
-			currentTag = [self centersAlongLayer: i fromPointA: layerUpperCorner toPointB: layerRightCorner 
-									  withCenter: leftCorner startingAtPosition: currentTag];
+			currentPosition = [self centersAlongLayer: i fromPointA: layerUpperCorner toPointB: layerRightCorner 
+									  withCenter: leftCorner startingAtPosition: currentPosition];
 						  
 			//arc along right -> left
-			currentTag = [self centersAlongLayer: i fromPointA: layerRightCorner toPointB: layerLeftCorner
-									  withCenter: upperCorner startingAt: currentTag];
+			currentPosition = [self centersAlongLayer: i fromPointA: layerRightCorner toPointB: layerLeftCorner
+									  withCenter: upperCorner startingAtPosition: currentPosition];
+
 			
 			//arc along left -> upper
-			currentTag = [self centersAlongLayer: i fromPointA: layerLeftCorner toPointB: layerUpperCorner
-									  withCenter: rightCorner startingAt: currentTag];
+			currentPosition = [self centersAlongLayer: i fromPointA: layerLeftCorner toPointB: layerUpperCorner
+									  withCenter: rightCorner startingAtPosition: currentPosition];
 			
 			
 			//move down to the next layer
@@ -168,15 +179,17 @@
 	
 }
 
-- (int) centersAlongLayer: (int) layer fromPointA: (CGPoint) pointA toPointB: (CGPoint) pointB withCenter: (CGPoint) arcCenter startingAtPosition: (int) position{
+- (int) centersAlongLayer: (int) layer fromPointA: (CGPoint) pointA toPointB: (CGPoint) pointB withCenter: (CGPoint) arcCenter 
+	   startingAtPosition: (int) position{
 	CGFloat temp;
 	CGFloat theta;
+	CGFloat radius;
+	CGFloat xCoord, yCoord;
 	int currentPosition = position;
 	int pointsForLayer;
-	int currentPoint;
 	
-	CGFloat angleA = atan2(pointA.x - arcCenter.x, pointA.y - arcCenter.y);
-	CGFloat angleB = atan2(pointB.x - arcCenter.x, pointB.y - arcCenter.y);
+	CGFloat angleA = atan2(pointA.y - arcCenter.y, pointA.x - arcCenter.x);
+	CGFloat angleB = atan2(pointB.y - arcCenter.y, pointB.x - arcCenter.x);
 	
 	if (angleB > angleA){
 		temp = angleA;
@@ -184,8 +197,22 @@
 		angleB = temp;
 	}
 	
+	//Determine how many points will be in the layer and what the radius of the current arc is
+	pointsForLayer = layer + innerTriangleLength;
+	radius = sqrt(pow((arcCenter.x - pointA.x), 2) + pow((arcCenter.y - pointA.y), 2));
 	
-	
+	for (int currentPoint = 0; currentPoint < pointsForLayer; currentPoint++){
+		theta = angleA + (angleB - angleA)*(((float) currentPoint)/((float) pointsForLayer));
+		xCoord = cos(theta)*radius + arcCenter.x;
+		yCoord = sin(theta)*radius + arcCenter.y;
+		NSLog(@"%f, %f, %d. %f, %f", xCoord, yCoord, currentPosition, arcCenter.x, arcCenter.y);
+		NSLog(@"Radius, Theta, fraction: %f, %f, %f", radius, theta, (angleB - angleA)*((float) pointsForLayer)*((float) currentPoint));
+		NSLog(@"Angles: %f, %f", angleA, angleB);
+		NSLog(@"---------");
+		[centers insertObject: [NSValue valueWithCGPoint: CGPointMake(xCoord, yCoord)] atIndex: currentPosition - 1];
+		currentPosition++;
+	}
+		
 //	while(outsideCounter <= depthOutside) {
 //		var p0 = {x: x + v0.x * rowSpacingCopy * outsideCounter,
 //		y: y + v0.y * rowSpacingCopy * outsideCounter };
@@ -202,9 +229,7 @@
 
 
 
-/** Draws the connections on the conectionsView when pieces of the same color are placed next to each other **/
-- (void) drawConnections{
-}
+
 
 /** Find the neighboring pieces for a position and adds them to neighborsForPosition **/
 - (void) calculateConnectionsForPosition: (int) position inLayerPosition: (int) layerPosition forLayer: (int) layer{
@@ -287,6 +312,10 @@
 //	}
 //	[neighborsForPosition setObject: neighbors forKey: [NSNumber numberWithInt: position]];
 }
+
+
+#pragma mark Class_Callable_Functions
+
 
 /** Utility function that solves for n! aka the positions in a triangle with side length n**/
 - (int) positionsInTriangle: (int) triangleSideLength{

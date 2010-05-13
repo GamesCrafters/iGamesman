@@ -17,6 +17,7 @@
 	if (self = [super initWithStyle: UITableViewStyleGrouped]) {
 		game = _game;
 		layers = game.layers;
+		innerTriangleLength = game.innerTriangleLength;
 	}
 	
 	return self;
@@ -38,11 +39,16 @@
 
 - (void) done {
 	game.layers = layers;
+	game.innerTriangleLength = innerTriangleLength;
 	[delegate rulesPanelDidFinish];
 }
 
-- (void) update: (UISegmentedControl *) sender{
+- (void) updateLayers: (UISegmentedControl *) sender{
 	layers = [sender selectedSegmentIndex];
+}
+
+- (void) updateTriangle: (UISegmentedControl *) sender{
+	innerTriangleLength = [sender selectedSegmentIndex] + 1;
 }
 
 
@@ -86,7 +92,7 @@
 #pragma mark Table view methods
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return 2;
 }
 
 
@@ -96,7 +102,17 @@
 }
 
 - (NSString *) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-	return @"Extra Layers";
+	switch (section){
+		case 0:
+			return @"Extra Layers";
+			break;
+		case 1:
+			return @"Center Height";
+			break;
+		default:
+			return @" ";
+			break;
+	}
 }
 
 
@@ -110,21 +126,40 @@
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
 		cell.backgroundColor = [UIColor colorWithRed: 234.0/255 green: 234.0/255 blue: 255.0/255 alpha: 1];
 	}
-    
-    // Set up the cell...
 	UISegmentedControl *segment = [[UISegmentedControl alloc] initWithFrame: CGRectMake(20, 10, 280, 26)];
-    [segment insertSegmentWithTitle: @"0" atIndex: 0 animated: NO];
-	[segment insertSegmentWithTitle: @"1" atIndex: 1 animated: NO];
-	[segment insertSegmentWithTitle: @"2" atIndex: 2 animated: NO];
-	
-	[segment setSelectedSegmentIndex: layers];
-	
 	segment.segmentedControlStyle = UISegmentedControlStyleBar;
 	segment.tintColor = [UIColor colorWithRed: 28.0/255 green: 127.0/255 blue: 189.0/255 alpha: 1.0];
 	
-	[segment addTarget: self action: @selector(update:) forControlEvents: UIControlEventValueChanged];
+	// Set up the cell...
+	switch (indexPath.section){
+		//for the layers
+		case 0:
+
+			[segment insertSegmentWithTitle: @"0" atIndex: 0 animated: NO];
+			[segment insertSegmentWithTitle: @"1" atIndex: 1 animated: NO];
+			[segment insertSegmentWithTitle: @"2" atIndex: 2 animated: NO];
+			
+			[segment setSelectedSegmentIndex: layers];
+			[segment addTarget: self action: @selector(updateLayers:) forControlEvents: UIControlEventValueChanged];
+			[cell addSubview: segment];
+			break;
+			
+		//for the inner triangle length... 
+		case 1:
+			[segment insertSegmentWithTitle: @"2" atIndex: 0 animated: NO];
+			[segment insertSegmentWithTitle: @"3" atIndex: 1 animated: NO];
+			[segment insertSegmentWithTitle: @"4" atIndex: 2 animated: NO];
+			[segment insertSegmentWithTitle: @"5" atIndex: 3 animated: NO];
+			
+			[segment setSelectedSegmentIndex: innerTriangleLength - 1];
+			[segment addTarget: self action: @selector(updateTriangle:) forControlEvents: UIControlEventValueChanged];
+			[cell addSubview: segment];
+			break;
+			
+		default:
+			break;
 	
-	[cell addSubview: segment];
+	}
     return cell;
 }
 
