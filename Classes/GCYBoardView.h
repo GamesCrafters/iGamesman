@@ -9,6 +9,19 @@
 #import <UIKit/UIKit.h>
 
 @class GCYBoardConnectionsView;
+
+@interface PositionDistance : NSObject {
+	NSNumber * position;
+	CGFloat distance;
+}
+
+@property (nonatomic, retain) NSNumber * position;
+@property (nonatomic, assign) CGFloat distance;
+
+- (id) initWithPosition: (int) pos Distance: (CGFloat) dist;
+@end
+
+
 @interface GCYBoardView : UIView {
 	int layers;
 	int innerTriangleLength;
@@ -51,6 +64,18 @@
 /** Find the neighboring pieces for a position and adds them to neighborsForPosition **/
 - (void) calculateConnectionsForPosition: (int) position inLayerPosition: (int) layerPosition forLayer: (int) layer;
 
+
+/** Finds the connections for pieces in the inner triangle **/
+- (void) calculateConnectionsForInnerPosition: (int) position inRow: (int) row inColumn: (int) column;
+
+- (void) calculateConnectionsForCornerPosition: (int) position forLayer: (int) layer;
+
+- (void) calculateConnectionsForLayerPosition: (int) position forLayer: (int) layer;
+
+
+/** Utility function that finds the distance between two points **/
+- (CGFloat) distanceFrom: (CGPoint) pointA to: (CGPoint) pointB;
+
 /** Utility function that solves for n! **/
 - (int) positionsInTriangle: (int) triangleSideLength;
 
@@ -60,9 +85,11 @@
 /** Returns the edges for a position **/
 - (NSMutableSet *) edgesForPosition: (int) position;
 
-
 /** Returns the starting edges **/
 - (NSMutableArray *) startingEdges;
+
+/** Returns the positions associated with the given edge in the triangle, or the positions along all edges for edge -1 **/
+- (NSMutableSet *) trianglePositionsAtEdge: (int) edge;
 
 
 @end

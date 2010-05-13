@@ -9,6 +9,27 @@
 #import "GCYBoardView.h"
 #import "GCYBoardConnectionsView.h"
 
+
+
+#pragma mark PositionDistance
+
+@implementation PositionDistance
+@synthesize position, distance;
+
+- (id) initWithPosition: (int) pos Distance: (CGFloat) dist{
+	position = [NSNumber numberWithInt: pos];
+	distance = dist;
+	return self;
+}
+
+- (void) dealloc {
+	[super dealloc];
+}
+@end
+
+
+#pragma mark GCYBoardView
+
 @implementation GCYBoardView
 @synthesize layers, innerTriangleLength;
 @synthesize centers;
@@ -105,7 +126,6 @@
 	CGFloat xCoord;
 	CGFloat yCoord;
 	
-	CGPoint currentCenter;
 	CGPoint innerTriangleTop;
 	CGFloat xCoordStart;
 	int currentPosition = 1;
@@ -205,112 +225,133 @@
 		theta = angleA + (angleB - angleA)*(((float) currentPoint)/((float) pointsForLayer));
 		xCoord = cos(theta)*radius + arcCenter.x;
 		yCoord = sin(theta)*radius + arcCenter.y;
-		NSLog(@"%f, %f, %d. %f, %f", xCoord, yCoord, currentPosition, arcCenter.x, arcCenter.y);
-		NSLog(@"Radius, Theta, fraction: %f, %f, %f", radius, theta, (angleB - angleA)*((float) pointsForLayer)*((float) currentPoint));
-		NSLog(@"Angles: %f, %f", angleA, angleB);
-		NSLog(@"---------");
 		[centers insertObject: [NSValue valueWithCGPoint: CGPointMake(xCoord, yCoord)] atIndex: currentPosition - 1];
 		currentPosition++;
 	}
-		
-//	while(outsideCounter <= depthOutside) {
-//		var p0 = {x: x + v0.x * rowSpacingCopy * outsideCounter,
-//		y: y + v0.y * rowSpacingCopy * outsideCounter };
-//		var p1 = {x: llCorner.x + v1.x * rowSpacingCopy * outsideCounter, y: llCorner.y - v1.y * rowSpacingCopy * outsideCounter};
-//		var p2 = {x: lrCorner.x + v2.x * rowSpacingCopy * outsideCounter, y: lrCorner.y - v2.y * rowSpacingCopy * outsideCounter};
-//		drawArc(outsideLeftCorner, p2, p0,  outsideCounter+depthInsideCopy, 7 * Math.PI /6, outsideCounter == depthOutside);
-//		drawArc(outsideRightCorner, p1, p0,  outsideCounter+depthInsideCopy, - Math.PI/6, outsideCounter == depthOutside);
-//		drawArc(outsideTopCorner, p2, p1,  outsideCounter+depthInsideCopy, Math.PI/2, outsideCounter == depthOutside);
-//		outsideCounter++;
-//	}
+
 	return currentPosition;
 }
 
 
 
-
-
-
 /** Find the neighboring pieces for a position and adds them to neighborsForPosition **/
 - (void) calculateConnectionsForPosition: (int) position inLayerPosition: (int) layerPosition forLayer: (int) layer{
-//	int previousLayerPosition;
-//	int nextLayerPosition;
-//	NSMutableSet *neighbors = [NSMutableSet setWithObject: nil];
-//	
-//	//if this is in the inner triangle
-//	if (layer == 0){
-//	}
-//	//if this is a corner position in it's current layer
-//	else if{
-//		//check if this is the first corner
-//		if (layerPosition == 1){
-//			nextLayerPosition = (layer - 1 + innerTriangleLength) * 3
-//			
-//			//add postions from the upper layer if this isn't the last layer
-//			if (layer != layers){
-//				previousFirstPosition = position - (layer + innerTriangleLength) * 3; 
-//				[neighbors addObject: [NSNumber numberWithInt: position - 1]];
-//				[neighbors addObject: [NSNumber numberWithInt: previousLayerPosition]];
-//				[neighbors addObject: [NSNumber numberWithInt:  previousLayerPosition + 1]];
-//			}
-//			
-//			//add positions in same layer
-//			[neighbors addObject: [NSNumber numberWithInt: position + 1]];
-//			[neighbors addObject: [NSNumber numberWithInt: position + nextLayerPosition - 1]];
-//			
-//			//add position in lower layer
-//			if (layer == 0){
-//				[neighbors addObject: [NSNumber numberWithInt: 0]];
-//			}else{
-//				[neighbors addObject: [NSNumber numberWithInt: position + nextLayerPosition]];
-//			}
-//		}
-//		//check if this is the second corner
-//		if (layerPosition == layer + innerTriangleLength){
-//			//add postions from the upper layer if this isn't the last layer
-//			if (layer != layers){
-//				nextLayerPosition = position - (layer + innerTriangleLength);
-//			}
-//			
-//			//add positions in same layer
-//			
-//			//add positions in lower layer
-//		}
-//		//check if this is the third corner
-//		if (layerPosition == 1){
-//			//add postions from the upper layer if this isn't the last layer
-//			if (layer != layers){
-//			}
-//			
-//			//add positions in same layer
-//			
-//			//add positions in lower layer
-//		}
-//	}
-//	//Solve for regular layer pieces
-//	else{
-//		//check if this is the last piece in the layer
-//		else if (layerPosition == (innerTriangleLength + layer - 1) * 3){
-//			//add positions from the upper layer if this isn't the last layer
-//			if (layer != layers){
-//			}
-//			
-//			//add positions in same layer
-//			
-//			//add positions in lower layer
-//		}
-//		else{
-//			//add positions from the upper layer if this isn't the last layer
-//			if (layer != layers){
-//				
-//			}
-//			
-//			//add positions in same layer
-//			
-//			//add positions in lower layer
-//		}
-//	}
-//	[neighborsForPosition setObject: neighbors forKey: [NSNumber numberWithInt: position]];
+	NSMutableSet * neighbors;
+	
+	if (layer == 0)
+		[self calculateConnectionsForInnerPosition: position];
+	else if (layerPosition == 0)
+		[self calculateConnectionsForCornerPosition: position forLayer: layer];
+	else
+		[self calculateConnectionsForLayerPosition: position];
+	
+}
+
+
+- (void) calculateConnectionsForPosition: (int) position{
+	BOOL outsideEdge = NO;
+	BOOL corner = NO;
+	BOOL innerCorner = NO;
+	NSMutableArray * distances;
+	NSMutableSet * neighbors = [NSMutableSet setWithCapacity: 0];
+	
+	/* Figure out what type of position this is */
+	//check if this is a corner of the inner triangle
+	if (position == 1 || position == [self positionsInTriangle: innerTriangleLength - 1] + 1 || position == [self positionsInTriangle: innerTriangleLength])
+		innerCorner == YES;
+	
+	//check if this is in the outer layer
+	if (layers == 0){
+		
+	}else if (position == 0){
+		//check if this is an outer corner
+	}
+	
+	/* Create an array of the other positions and their distance to this one */
+	
+	/* Sort the array of other positions */
+	
+	/* Choose the right ammount of connections based on position type */
+	
+}
+
+- (CGFloat) distanceFrom: (CGPoint) pointA to: (CGPoint) pointB{
+	
+}
+
+- (void) calculateConnectionsForInnerPosition: (int) position inRow: (int) row inColumn: (int) column{
+	NSMutableSet * neighbors = [NSMutableSet setWithCapacity: 0];
+	
+	/* handle corners */
+	if (row == 0){ //upper corner
+		//top neighbors
+		
+		//side neighbors
+		
+		//bottom neighbors
+		
+	} else if (column == innerTriangleLength){ //right corner
+		//top neighbors
+		
+		//side neighbors
+		
+		//bottom neighbors
+		
+	} else if (row == innerTriangleLength && column == 0){ //left corner
+		//top neighbors
+		
+		//side neighbors
+		
+		//bottom neighbors
+	}
+	
+	/* handle sides */
+	else if (column == 0){ //left side
+		//top neighbors
+		
+		//side neighbors
+		
+		//bottom neighbors
+		
+	}else if (column == row){ //right side
+		//top neighbors
+		
+		//side neighbors
+		
+		//bottom neighbors
+		
+	}else if (row == innerTriangleLength){ //bottom
+		//top neighbors
+		
+		//side neighbors
+		
+		//bottom neighbors
+		
+	}
+	
+	/* handle insides */
+	else{
+		//top neighbors
+		[neighbors addObject: [NSNumber numberWithInt: position - row]];
+		[neighbors addObject: [NSNumber numberWithInt: position - (row + 1)]];
+		
+		//side neighbors
+		[neighbors addObject: [NSNumber numberWithInt: position + 1]];
+		[neighbors addObject: [NSNumber numberWithInt: position - 1]];
+		
+		//bottom neighbors
+		[neighbors addObject: [NSNumber numberWithInt: position + row + 1]];
+		[neighbors addObject: [NSNumber numberWithInt: position + row + 2]];
+	}
+	
+	[neighborsForPosition setObject: neighbors forKey: [NSNumber numberWithInt: position]];
+}
+
+
+- (void) calculateConnectionsForCornerPosition: (int) position forLayer: (int) layer{
+}
+
+- (void) calculateConnectionsForLayerPosition: (int) position{
 }
 
 
@@ -350,7 +391,9 @@
 - (NSMutableArray *) startingEdges{
 }
 
-
+/** Returns the positions associated with the given edge in the triangle, or the positions along all edges for edge -1 **/
+- (NSMutableSet *) trianglePositionsAtEdge: (int) edge{
+}
 
 
 - (void)dealloc {
@@ -359,6 +402,5 @@
 	[connectionsView release];
     [super dealloc];
 }
-
 
 @end
