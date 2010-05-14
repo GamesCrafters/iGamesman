@@ -88,19 +88,16 @@
 	switch (layers){
 		case 0:
 			board = [[NSMutableArray alloc] initWithCapacity: 15];
-			[self setGrossDictionaryValues];
 			for (int i = 0; i < 15; i += 1)
 				[board addObject: BLANK];
 			break;
 		case 1:
 			board = [[NSMutableArray alloc] initWithCapacity: 30];
-			[self setGrossDictionaryValues];
 			for (int i = 0; i < 30; i += 1)
 				[board addObject: BLANK];
 			break;
 		case 2:
 			board = [[NSMutableArray alloc] initWithCapacity: 48];
-			[self setGrossDictionaryValues];
 			for (int i = 0; i < 48; i += 1)
 				[board addObject: BLANK];
 			break;
@@ -171,7 +168,7 @@
 	
 	NSDictionary *positionConnections;
 	NSDictionary *edgesForPosition;
-	NSArray *leftEdges;
+	NSArray *leftEdges = [yGameView.boardView positionsAtEdge: 1];
 	
 	
 	//Might need to do away with this... 
@@ -291,9 +288,7 @@
 	[player2Name release];
 	[board release];
 	[humanMove release];
-	[positionConnections release];
-	[leftEdges release];
-	[edgesForPosition release];
+
 	//[service release];
 	[super dealloc];
 }
