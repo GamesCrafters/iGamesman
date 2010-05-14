@@ -15,11 +15,13 @@
 
 - (id)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
-		playerPiece = [[UIImageView alloc] initWithFrame: CGRectMake(0, 0, frame.size.height*7/2., frame.size.height*7/2.)];
-		moveValue = [[UIImageView alloc] initWithFrame: CGRectMake(0, 0, frame.size.height/3, frame.size.height/3)];
-		[self.imageView addSubview: playerPiece];
-		[self.imageView addSubview: moveValue];
+		playerPiece = [[UIImageView alloc] initWithFrame: CGRectMake(frame.size.height/16., frame.size.height/16., frame.size.height*5/6., frame.size.height*5/6.)];
+		moveValue = [[UIImageView alloc] initWithFrame: CGRectMake(frame.size.height/16., frame.size.height/16., frame.size.height/3, frame.size.height/3)];
+		[self addSubview: playerPiece];
+		[self addSubview: moveValue];
 		self.imageView.exclusiveTouch = YES;
+		self.adjustsImageWhenDisabled = NO;
+
     }
     return self;
 }
@@ -27,14 +29,17 @@
 
 
 - (void) makeMove: (BOOL) p1{
-	[playerPiece setImage: [UIImage imageNamed: (p1 ? @"C4X.png" : @"C4O.png")]];
+	//[playerPiece setImage: [UIImage imageNamed: (p1 ? @"C4X.png" : @"C4O.png")]];
+	//[self setImage: [UIImage imageNamed: (p1 ? @"C4X.png" : @"C4O.png")] forState: UIControlStateNormal];
+	[self setBackgroundImage: [UIImage imageNamed: (p1 ? @"C4X.png" : @"C4O.png")] forState:UIControlStateNormal];
 }
 		
 
 - (void) moveCenter: (CGPoint) centerPoint{
 	self.center = centerPoint;
-	playerPiece.center = centerPoint;
-	moveValue.center = centerPoint;
+	//CGFloat centerValue = self.frame.size.height/2.;
+	//playerPiece.center = centerPoint;// CGPointMake(centerValue, centerValue);
+	//moveValue.center = centerPoint;//CGPointMake(centerValue, centerValue);
 }
 
 - (void)dealloc {

@@ -29,6 +29,7 @@
 - (IBAction) tapped: (UIButton *) button;
 - (void) updateLabels;
 - (NSArray *) leftEdges;
+- (NSSet *) positionEdges: (NSNumber *) position;
 - (NSSet *) positionConnections: (NSNumber *) position;
 
 @end

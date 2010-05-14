@@ -105,9 +105,7 @@
 			board = nil;
 			break;
 	}
-	
 
-	//NSLog(@"board count: %d", [board count]);
 }
 	
 
@@ -151,7 +149,6 @@
 	[yGameView doMove: move];
 	
 	int slot = [move integerValue] - 1;
-	//NSLog(@"do move alpha: %d", slot);
 	[board replaceObjectAtIndex: slot withObject: (p1Turn ? X : O)];
 	p1Turn = !p1Turn;
 	
@@ -184,14 +181,13 @@
 		currentPlayerPiece = X;
 	
 	//for each position in left edges
-	NSLog(currentPlayerPiece);
 	for (NSNumber * position in leftEdges){
 		[queue emptyFringe]; //don't empty the blacklist, just the queue
 			
 		//If the current player's piece is in that position, add it to the queue
 		if ([self boardContainsPlayerPiece: currentPlayerPiece forPosition: position]){
 			[queue push: position];
-			[edgesReached setSet: [yGameView.boardView edgesForPosition: position]];
+			[edgesReached setSet: [yGameView positionEdges: position]];
 		}
 		while ([queue notEmpty]){
 			currentPosition = [queue pop];
@@ -202,7 +198,7 @@
 
 				if ([self boardContainsPlayerPiece: currentPlayerPiece forPosition: neighborPosition]){
 					[queue push: neighborPosition];
-					NSSet * neighborEdges = [yGameView.boardView edgesForPosition: neighborPosition];
+					NSSet * neighborEdges = [yGameView positionEdges: neighborPosition];
 					
 					//If neighborPosition touches any edges, add them to edgesReached
 					if (neighborEdges)
@@ -227,14 +223,13 @@
 		currentPlayerPiece = X;
 	
 	//for each position in left edges
-	NSLog(currentPlayerPiece);
 	for (NSNumber * position in leftEdges){
 		[queue emptyFringe]; //don't empty the blacklist, just the queue
 		
 		//If the current player's piece is in that position, add it to the queue
 		if ([self boardContainsPlayerPiece: currentPlayerPiece forPosition: position]){
 			[queue push: position];
-			[edgesReached setSet: [yGameView.boardView edgesForPosition: position]];
+			[edgesReached setSet: [yGameView positionEdges: position]];
 		}
 		while ([queue notEmpty]){
 			currentPosition = [queue pop];
@@ -242,10 +237,9 @@
 			
 			//Add each neighboring position that contains the current player's piece to the queue
 			for (NSNumber * neighborPosition in [yGameView positionConnections: currentPosition]){
-				//NSLog(@"%@, %@", [currentPosition description], [neighborPosition description]);
 				if ([self boardContainsPlayerPiece: currentPlayerPiece forPosition: neighborPosition]){
 					[queue push: neighborPosition];
-					NSSet * neighborEdges = [yGameView.boardView edgesForPosition: neighborPosition];
+					NSSet * neighborEdges = [yGameView positionEdges: neighborPosition];
 					//If neighborPosition touches any edges, add them to edgesReached
 					if (neighborEdges)
 						[edgesReached unionSet: neighborEdges];

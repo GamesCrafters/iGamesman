@@ -16,6 +16,7 @@
 	UIColor *p2Color;
 	int p1Count;
 	int p2Count;
+	CGFloat lineWidth;
 }
 
 @property (nonatomic, retain) NSMutableArray *p1Connections;
@@ -24,22 +25,23 @@
 @property (nonatomic, retain) UIColor *p2Color;
 @property (nonatomic, assign) int p1Count;
 @property (nonatomic, assign) int p2Count;
+@property (nonatomic, assign) CGFloat lineWidth;
 
-- (void) addConnectionFrom: (CGPoint *) point1 To: (CGPoint *) point2 forPlayer: (BOOL) player1;
+- (void) addConnectionFrom: (CGPoint) point1 To: (CGPoint) point2 ForPlayer: (BOOL) player1;
 
 @end
 
 
 /** Used to store two CGPoints **/
 @interface YConnection: NSObject{
-	CGPoint *pointA;
-	CGPoint *pointB;
+	CGPoint pointA;
+	CGPoint pointB;
 }
 
-@property (nonatomic, assign) CGPoint *pointA;
-@property (nonatomic, assign) CGPoint *pointB;
+@property (nonatomic, assign) CGPoint pointA;
+@property (nonatomic, assign) CGPoint pointB;
 
-- (id) initWithPointA: (CGPoint *) pA andPointB: (CGPoint *) pB;
+- (id) initWithPointA: (CGPoint) pA andPointB: (CGPoint) pB;
 
 @end
 

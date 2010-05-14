@@ -33,7 +33,6 @@
 		CGFloat frameSize = [boardView circleRadius] * 3;
 		//Create buttons! yay!
 		for (int i = 1; i <= [boardView boardSize]; i++){
-			NSLog(@"button");
 			currentCenter = [[[boardView centers] objectAtIndex: i-1] CGPointValue];
 			GCYGamePiece *button = [[GCYGamePiece alloc] initWithFrame:CGRectMake(0, 0, frameSize, frameSize)];
 			button.tag = i;
@@ -41,8 +40,10 @@
 			//button.center = currentCenter;
 			[button setTitle: [NSString stringWithFormat: @"%d", i] forState: UIControlStateNormal];
 			[button setTitleColor: [UIColor whiteColor] forState: UIControlStateNormal];
-			[button setBackgroundColor: [UIColor blackColor]];
+			[button setBackgroundColor: [UIColor clearColor]];
+			[button addTarget: self	action: @selector(tapped:) forControlEvents: UIControlEventTouchUpInside];
 			[boardView addSubview: button];
+			
 			[button release];
 		}
 	}
@@ -83,14 +84,17 @@
 }
 
 
+- (NSSet *) positionEdges: (NSNumber *) position{
+	return [boardView edgesForPosition: position];
+}
+
 - (void) doMove: (NSNumber *) move {
 	NSInteger tag;
 
 	NSInteger neighborInt;
 	NSInteger moveInt = [move integerValue];
 	
-	//NSLog(@"do move: %d", [move integerValue]);
-	GCYGamePiece *B = (UIButton *) [self.view viewWithTag: moveInt];
+	GCYGamePiece *B = (GCYGamePiece *) [self.view viewWithTag: moveInt];
 	//[B retain];
 	//[B removeFromSuperview];
 	//[self.view insertSubview: B atIndex: 0];
@@ -98,7 +102,8 @@
 	//float B_width = B.frame.size.width;
 	//B.frame = CGRectMake(B.center.x - B_width / 4, B.center.y - B_width / 4, B_width / 2, B_width / 2);
 	//NSLog([move description]);
-	//[B setBackgroundImage: [UIImage imageNamed: (game.p1Turn ? @"C4X.png" : @"C4O.png")] forState: UIControlStateNormal];
+	[B makeMove: [game p1Turn]];
+	//[B setBackgroundColor: ([game p1Turn] ? [UIColor redColor] : [UIColor blueColor])];
 	
 	// do the board animations here (ie piece and connection animations)
 	for (NSNumber *neighborPosition in [[boardView neighborsForPosition] objectForKey: move]){
@@ -106,20 +111,15 @@
 		
 		if (game.p1Turn){
 			if ([game boardContainsPlayerPiece: @"X" forPosition: neighborPosition]){
-				if (moveInt > neighborInt)
-					tag = (neighborInt*100) + moveInt;
-				else tag = (moveInt*100) + neighborInt;
-				NSLog(@" %d, %d, %d", moveInt, neighborInt, tag);
-				
+				NSLog(@" %d, %d", moveInt, neighborInt);
+				[boardView addConnectionFrom: moveInt - 1 to: neighborInt - 1 forPlayer: YES];
 
 			}
 		}
 		else{
 			if ([game boardContainsPlayerPiece: @"O" forPosition: neighborPosition]){
-				if (moveInt > neighborInt)
-					tag = (neighborInt*100) + moveInt;
-				else tag = (moveInt*100) + neighborInt;
-				NSLog(@" %d, %d, %d", moveInt, neighborInt, tag);
+				NSLog(@" %d, %d", moveInt, neighborInt);
+				[boardView addConnectionFrom: moveInt - 1 to: neighborInt - 1 forPlayer: NO];
 				
 
 			}

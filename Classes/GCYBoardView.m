@@ -155,6 +155,7 @@
 	triangleHeight = boardHeight/(layers + innerTriangleLength + .5 + bottomLayers);
 	triangleWidth = sqrt(4/3. * pow(triangleHeight, 2));
 	circleRadius = 1/5.*triangleWidth;
+	connectionsView.lineWidth =  circleRadius*1/2.;
 	
 	
 	/* calculate innerTriangle centers and tags */
@@ -226,7 +227,6 @@
  ** between the two corners and returns the new position.  Assumes it is going clockwise **/
 - (int) centersAlongLayer: (int) layer fromPointA: (CGPoint) pointA toPointB: (CGPoint) pointB withCenter: (CGPoint) arcCenter 
 	   startingAtPosition: (int) position{
-	CGFloat temp;
 	CGFloat theta;
 	CGFloat radius;
 	CGFloat xCoord, yCoord;
@@ -236,11 +236,6 @@
 	CGFloat angleA = atan2(pointA.y - arcCenter.y, pointA.x - arcCenter.x);
 	CGFloat angleB = atan2(pointB.y - arcCenter.y, pointB.x - arcCenter.x);
 	
-	if (angleB > angleA){
-		temp = angleA;
-		angleA = angleB;
-		angleB = temp;
-	}
 	
 	//Determine how many points will be in the layer and what the radius of the current arc is
 	pointsForLayer = layer + innerTriangleLength;
@@ -314,13 +309,15 @@
 		[myNeighbors addObject: [[sortedDistances objectAtIndex: i] myPosition]];
 	}
 	
+
 	[neighborsForPosition setObject: myNeighbors forKey: numberValue];
 }
 
 
 #pragma mark Callables
-/** Draws the connections on the conectionsView when pieces of the same color are placed next to each other **/
-- (void) drawConnections{
+- (void) addConnectionFrom: (int) posA to: (int) posB forPlayer: (BOOL) p1{
+	[connectionsView addConnectionFrom: [[centers objectAtIndex: posA] CGPointValue] To: [[centers objectAtIndex: posB] CGPointValue] ForPlayer: p1];
+	[connectionsView setNeedsDisplay];
 }
 
 /** Utility function that returns the board size **/
@@ -473,9 +470,9 @@
 
 
 - (void)dealloc {
-	[centers release];
-	[neighborsForPosition release];
-	[connectionsView release];
+	//[centers release];
+	//[neighborsForPosition release];
+	//[connectionsView release];
     [super dealloc];
 }
 
