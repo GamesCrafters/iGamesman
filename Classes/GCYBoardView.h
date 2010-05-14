@@ -11,12 +11,12 @@
 @class GCYBoardConnectionsView;
 
 @interface PositionDistance : NSObject {
-	NSNumber * position;
-	CGFloat distance;
+	NSNumber * myPosition;
+	CGFloat myDistance;
 }
 
-@property (nonatomic, retain) NSNumber * position;
-@property (nonatomic, assign) CGFloat distance;
+@property (nonatomic, retain) NSNumber * myPosition;
+@property (nonatomic, assign) CGFloat myDistance;
 
 - (id) initWithPosition: (int) pos Distance: (CGFloat) dist;
 @end
