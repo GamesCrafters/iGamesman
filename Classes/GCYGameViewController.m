@@ -7,6 +7,7 @@
 //
 
 #import "GCYGameViewController.h"
+#import "GCYGamePiece.h"
 
 
 @implementation GCYGameViewController
@@ -17,14 +18,33 @@
 		boardView = [[GCYBoardView alloc] initWithFrame: CGRectMake(0, 0, 320, 416) withLayers: game.layers andInnerLength: game.innerTriangleLength];
 		self.view = boardView;
 		
-		message = [[UILabel alloc] initWithFrame: CGRectMake(20, 25 + 320, 
+		message = [[UILabel alloc] initWithFrame: CGRectMake(20, 15 + 320, 
 															 280, 416 - (35 + 320))];
 		message.backgroundColor = [UIColor clearColor];
 		message.textColor = [UIColor whiteColor];
 		message.textAlignment = UITextAlignmentCenter;
 		message.text = @" ";
 		[boardView addSubview: message];
-		//[self updateLabels];
+		[self updateLabels];
+		boardView.multipleTouchEnabled = NO;
+		
+		CGPoint currentCenter;
+		
+		CGFloat frameSize = [boardView circleRadius] * 3;
+		//Create buttons! yay!
+		for (int i = 1; i <= [boardView boardSize]; i++){
+			NSLog(@"button");
+			currentCenter = [[[boardView centers] objectAtIndex: i-1] CGPointValue];
+			GCYGamePiece *button = [[GCYGamePiece alloc] initWithFrame:CGRectMake(0, 0, frameSize, frameSize)];
+			button.tag = i;
+			[button setCenter: currentCenter];
+			//button.center = currentCenter;
+			[button setTitle: [NSString stringWithFormat: @"%d", i] forState: UIControlStateNormal];
+			[button setTitleColor: [UIColor whiteColor] forState: UIControlStateNormal];
+			[button setBackgroundColor: [UIColor blackColor]];
+			[boardView addSubview: button];
+			[button release];
+		}
 	}
 	return self;
 }
@@ -52,26 +72,36 @@
 
 }
 
+- (NSSet *) positionConnections: (NSNumber *) position{
+	if ([boardView neighborsForPosition])
+		return [[boardView neighborsForPosition] objectForKey: position];
+	else return nil;
+}
+
+- (NSArray *) leftEdges{
+	return [boardView positionsAtEdge: 1];
+}
+
 
 - (void) doMove: (NSNumber *) move {
 	NSInteger tag;
-	UIView *connectionView;
+
 	NSInteger neighborInt;
 	NSInteger moveInt = [move integerValue];
 	
 	//NSLog(@"do move: %d", [move integerValue]);
-	UIButton *B = (UIButton *) [self.view viewWithTag: moveInt];
+	GCYGamePiece *B = (UIButton *) [self.view viewWithTag: moveInt];
 	//[B retain];
 	//[B removeFromSuperview];
 	//[self.view insertSubview: B atIndex: 0];
 	//[B release];
 	//float B_width = B.frame.size.width;
 	//B.frame = CGRectMake(B.center.x - B_width / 4, B.center.y - B_width / 4, B_width / 2, B_width / 2);
-	NSLog([move description]);
-	[B setBackgroundImage: [UIImage imageNamed: (game.p1Turn ? @"C4X.png" : @"C4O.png")] forState: UIControlStateNormal];
+	//NSLog([move description]);
+	//[B setBackgroundImage: [UIImage imageNamed: (game.p1Turn ? @"C4X.png" : @"C4O.png")] forState: UIControlStateNormal];
 	
 	// do the board animations here (ie piece and connection animations)
-	for (NSNumber *neighborPosition in [[game positionConnections] objectForKey: move]){
+	for (NSNumber *neighborPosition in [[boardView neighborsForPosition] objectForKey: move]){
 		neighborInt = [neighborPosition integerValue];
 		
 		if (game.p1Turn){
@@ -81,9 +111,7 @@
 				else tag = (moveInt*100) + neighborInt;
 				NSLog(@" %d, %d, %d", moveInt, neighborInt, tag);
 				
-				connectionView = [self.view viewWithTag: tag];
-				connectionView.hidden = NO;
-				[connectionView setBackgroundColor: [UIColor redColor]];
+
 			}
 		}
 		else{
@@ -93,9 +121,7 @@
 				else tag = (moveInt*100) + neighborInt;
 				NSLog(@" %d, %d, %d", moveInt, neighborInt, tag);
 				
-				connectionView = [self.view viewWithTag: tag];
-				connectionView.hidden = NO;
-				[connectionView setBackgroundColor: [UIColor blueColor]];
+
 			}
 		}
 	}
@@ -139,59 +165,19 @@
 
 /** Convenience method for disabling all of the board's buttons. */
 - (void) disableButtons {
-	switch (game.layers){
-		case 0:
-			for (int i = 1; i < 16; i++){
-				UIView *button = (UIButton *) [self.view viewWithTag: i];
-				if ([button isKindOfClass: [UIButton class]])
-					[(UIButton *) button setEnabled: NO];
-			} 
-			break;
-		case 1:
-			for (int i = 1; i < 31; i++){
-				UIView *button = (UIButton *) [self.view viewWithTag: i];
-				if ([button isKindOfClass: [UIButton class]])
-					[(UIButton *) button setEnabled: NO];
-			} 
-			break;
-		case 2:
-			for (int i = 1; i < 49; i++){
-				UIView *button = (UIButton *) [self.view viewWithTag: i];
-				if ([button isKindOfClass: [UIButton class]])
-					[(UIButton *) button setEnabled: NO];
-			} 
-			break;
-		default:
-			break;
+	for (int i = 1; i <= [boardView boardSize]; i++){
+		UIView *button = (UIButton *) [self.view viewWithTag: i];
+		if ([button isKindOfClass: [UIButton class]])
+			[(UIButton *) button setEnabled: NO];
 	}
 }
 
 
 - (void) enableButtons {
-	switch (game.layers){
-		case 0:
-			for (int i = 1; i < 16; i++){
-				UIView *button = (UIButton *) [self.view viewWithTag: i];
-				if ([button isKindOfClass: [UIButton class]])
-					[(UIButton *) button setEnabled: YES];
-			} 
-			break;
-		case 1:
-			for (int i = 1; i < 31; i++){
-				UIView *button = (UIButton *) [self.view viewWithTag: i];
-				if ([button isKindOfClass: [UIButton class]])
-					[(UIButton *) button setEnabled: YES];
-			} 
-			break;
-		case 2:
-			for (int i = 1; i < 49; i++){
-				UIView *button = (UIButton *) [self.view viewWithTag: i];
-				if ([button isKindOfClass: [UIButton class]])
-					[(UIButton *) button setEnabled: YES];
-			} 
-			break;
-		default:
-			break;
+	for (int i = 1; i <= [boardView boardSize]; i++){
+		UIView *button = (UIButton *) [self.view viewWithTag: i];
+		if ([button isKindOfClass: [UIButton class]])
+			[(UIButton *) button setEnabled: YES];
 	}
 }
 
@@ -209,7 +195,7 @@
 
 
 - (void)dealloc {
-	///[GCYBoardView release];
+	[boardView release];
     [super dealloc];
 }
 

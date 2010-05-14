@@ -271,14 +271,12 @@
 	/* Figure out how many neighbors the position has */
 	//check if this is a corner of the inner triangle
 	if (position == 1 || position == [self positionsInTriangle: innerTriangleLength - 1] + 1 || position == [self positionsInTriangle: innerTriangleLength]){
-		NSLog(@"Inner Corner: %d", position);
 		neighborCount -= 1;
 	}
 	
 	//check if this is in the outer layer
 	NSMutableArray * edges = [self positionsAtEdge: 0];
 	if ([edges containsObject: numberValue]){
-		NSLog(@"Outer Layer: %d", position);
 		neighborCount -= 2;
 		
 		//check if this is a corner
@@ -290,7 +288,6 @@
 			int topPosition = [self positionsInTriangle: innerTriangleLength] + 1;
 			int layerSize = layers + innerTriangleLength;
 			if (position == topPosition || position == topPosition + layerSize || position == topPosition + 2 * layerSize){
-				NSLog(@"Outer Corner: %d", position);
 				neighborCount -= 1;
 			}
 		}
@@ -343,24 +340,22 @@
 
 
 /** Returns the edges for a position **/
-- (NSMutableSet *) edgesForPosition: (int) position{
+- (NSMutableSet *) edgesForPosition: (NSNumber *) position{
 	NSMutableSet *positionEdges = [NSMutableSet setWithCapacity: 0];
 	//This is SOOOO cheap and inefficient, but I don't care. 
-	if ([[self positionsAtEdge: 1] containsObject: [NSNumber numberWithInt: position + 1]])
+	if ([[self positionsAtEdge: 1] containsObject: position])
 		[positionEdges addObject: [NSNumber numberWithInt: 1]];
-	if ([[self positionsAtEdge: 2] containsObject: [NSNumber numberWithInt: position + 1]])
+	
+	if ([[self positionsAtEdge: 2] containsObject: position])
 		[positionEdges addObject: [NSNumber numberWithInt: 2]];
-	if ([[self positionsAtEdge: 3] containsObject: [NSNumber numberWithInt: position + 1]])
+	
+	if ([[self positionsAtEdge: 3] containsObject: position])
 		[positionEdges addObject: [NSNumber numberWithInt: 3]];
 	
 	return positionEdges;
 }
 
 
-/** Returns the starting positions along edge 1 **/
-- (NSMutableArray *) startingEdges{
-	return [self positionsAtEdge: 1];
-}
 
 
 - (NSMutableArray *) positionsAtEdge: (int) edge{

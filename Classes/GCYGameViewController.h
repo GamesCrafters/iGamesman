@@ -28,5 +28,7 @@
 - (void) displayPrimitive;
 - (IBAction) tapped: (UIButton *) button;
 - (void) updateLabels;
+- (NSArray *) leftEdges;
+- (NSSet *) positionConnections: (NSNumber *) position;
 
 @end

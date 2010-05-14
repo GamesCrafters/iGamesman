@@ -55,8 +55,8 @@
 //Stuff that GCYGameVC will need
 - (int) boardSize;
 - (void) drawConnections;
-- (NSMutableSet *) edgesForPosition: (int) position;
-- (NSMutableArray *) startingEdges;
+- (NSMutableSet *) edgesForPosition: (NSNumber *) position;
+
 
 //Helpers
 - (CGFloat) distanceFrom: (CGPoint) pointA to: (CGPoint) pointB;
