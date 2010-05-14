@@ -22,16 +22,9 @@
 	GCYGameViewController *yGameView;
 	PlayMode gameMode;
 	NSNumber *humanMove;
-	NSDictionary *positionConnections;
-	NSDictionary *edgesForPosition;
-	NSArray *leftEdges;
-	
 }
 
 @property (nonatomic assign) int innerTriangleLength;
-@property (nonatomic, retain) NSDictionary *edgesForPosition;
-@property (nonatomic, retain) NSArray *leftEdges;
-@property (nonatomic, retain) NSDictionary *positionConnections;
 @property (nonatomic, retain) NSString *player1Name, *player2Name;
 @property (nonatomic, assign) PlayerType player1Type, player2Type;
 @property (nonatomic, assign) int layers;
@@ -41,6 +34,5 @@
 - (void) resetBoard;
 - (void) postHumanMove: (NSNumber *) num;
 - (BOOL) boardContainsPlayerPiece: (NSString *) piece forPosition: (NSNumber *) position;
-- (void) setGrossDictionaryValues;
 
 @end

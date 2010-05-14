@@ -54,7 +54,8 @@
 		padding = 20;
 		innerTriangleLength = innerLength;
 		circleRadius = 0;
-		GCYBoardConnectionsView * connectionsView = [[GCYBoardConnectionsView alloc] initWithFrame: frame];
+		connectionsView = [[GCYBoardConnectionsView alloc] initWithFrame: frame];
+		[self addSubview: connectionsView];
 		centers = [[NSMutableArray alloc] initWithCapacity: [self boardSize]];
 		neighborsForPosition = [[NSMutableDictionary alloc] init];
 		self.backgroundColor = [UIColor colorWithRed: 0 green: 0 blue: 102.0/256.0 alpha: 1];
@@ -343,11 +344,22 @@
 
 /** Returns the edges for a position **/
 - (NSMutableSet *) edgesForPosition: (int) position{
+	NSMutableSet *positionEdges = [NSMutableSet setWithCapacity: 0];
+	//This is SOOOO cheap and inefficient, but I don't care. 
+	if ([[self positionsAtEdge: 1] containsObject: [NSNumber numberWithInt: position + 1]])
+		[positionEdges addObject: [NSNumber numberWithInt: 1]];
+	if ([[self positionsAtEdge: 2] containsObject: [NSNumber numberWithInt: position + 1]])
+		[positionEdges addObject: [NSNumber numberWithInt: 2]];
+	if ([[self positionsAtEdge: 3] containsObject: [NSNumber numberWithInt: position + 1]])
+		[positionEdges addObject: [NSNumber numberWithInt: 3]];
+	
+	return positionEdges;
 }
 
 
 /** Returns the starting positions along edge 1 **/
 - (NSMutableArray *) startingEdges{
+	return [self positionsAtEdge: 1];
 }
 
 

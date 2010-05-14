@@ -15,23 +15,16 @@
 	if (self = [super init]){
 		game = _game;
 		boardView = [[GCYBoardView alloc] initWithFrame: CGRectMake(0, 0, 320, 416) withLayers: game.layers andInnerLength: game.innerTriangleLength];
-		//boardView.game = _game;
-		self.view = boardView;//[[UIView alloc] initWithFrame: CGRectMake(0, 0, 320, 416)];
-		//[self.view addSubview: boardView];
-//		switch  (game.layers){
-//			case 0:
-//				//self = [super initWithNibName:@"GCYBoardView0" bundle: nil];
-//				break;
-//			case 1:
-//				//self = [super initWithNibName:@"GCYBoardView1" bundle: nil];
-//				break;
-//			case 2:
-//				//self = [super initWithNibName:@"GCYBoardView2" bundle: nil];
-//				break;
-//			default:
-//				self = nil;
-//				break;
-//		}
+		self.view = boardView;
+		
+		message = [[UILabel alloc] initWithFrame: CGRectMake(20, 25 + 320, 
+															 280, 416 - (35 + 320))];
+		message.backgroundColor = [UIColor clearColor];
+		message.textColor = [UIColor whiteColor];
+		message.textAlignment = UITextAlignmentCenter;
+		message.text = @" ";
+		[boardView addSubview: message];
+		//[self updateLabels];
 	}
 	return self;
 }
@@ -52,13 +45,7 @@
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
-	message = [[UILabel alloc] initWithFrame: CGRectMake(20, 25 + 320, 
-														 280, 416 - (35 + 320))];
-	message.backgroundColor = [UIColor clearColor];
-	message.textColor = [UIColor whiteColor];
-	message.textAlignment = UITextAlignmentCenter;
-	message.text = @"";
-	[self.view addSubview: message];
+
 	
 	[self disableButtons];
 	[self updateLabels];

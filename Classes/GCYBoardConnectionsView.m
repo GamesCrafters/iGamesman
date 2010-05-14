@@ -60,6 +60,7 @@
 		p2Color = [UIColor blueColor];
 		p1Count = 0;
 		p2Count = 0;
+		self.backgroundColor = [UIColor clearColor];
     }
     return self;
 }
