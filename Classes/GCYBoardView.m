@@ -16,8 +16,8 @@
 @implementation PositionDistance
 @synthesize myPosition, myDistance;
 
-- (id) initWithPosition: (int) pos Distance: (CGFloat) dist{
-	myPosition = [NSNumber numberWithInt: pos];
+- (id) initWithPosition: (NSNumber *) pos Distance: (CGFloat) dist{
+	myPosition = pos;
 	myDistance = dist;
 	return self;
 }
@@ -258,9 +258,10 @@
 - (void) calculateConnectionsForPosition: (int) position{
 	int neighborCount = 6;
 	int positionInArray = position - 1;
-	NSMutableArray * distances = [NSMutableArray arrayWithCapacity: 0];
-	NSMutableSet * myNeighbors = [NSMutableSet setWithCapacity: 0];
-	NSNumber * numberValue = [NSNumber numberWithInt: position];
+	NSMutableArray *distances = [NSMutableArray arrayWithCapacity: 0];
+	NSArray *potentialNeighbors;
+	NSMutableSet *myNeighbors = [NSMutableSet setWithCapacity: 0];
+	NSNumber *numberValue = [NSNumber numberWithInt: position];
 	CGPoint center = [[centers objectAtIndex: positionInArray] CGPointValue];
 	
 	/* Figure out how many neighbors the position has */
@@ -288,12 +289,15 @@
 		}
 	}
 
-	
+	potentialNeighbors = [self potentialNeighborsForPosition: position];
 	/* Create an array of the other positions and their distance to this one */
-	for (int i = 0; i < [self boardSize]; i++){
-		if (i != positionInArray){
-			PositionDistance * pd = [[PositionDistance alloc] initWithPosition: i + 1 
-																	  Distance: [self distanceFrom: center to: [[centers objectAtIndex: i] CGPointValue]]];
+	for (NSNumber *potentialNeighbor in potentialNeighbors){
+		
+		if (position != [potentialNeighbor intValue]){
+			NSLog(@"%d, %d, %d", position, [potentialNeighbor intValue], neighborCount);
+			PositionDistance * pd = [[PositionDistance alloc] initWithPosition: potentialNeighbor
+																	  Distance: [self distanceFrom: center 
+																								to: [[centers objectAtIndex: ([potentialNeighbor intValue] - 1)] CGPointValue]]];
 			[distances addObject: pd];
 			[pd release];
 		}
@@ -364,6 +368,71 @@
 
 
 #pragma mark Helpers
+/** Checks if numB is a legit neighbor for numA **/
+- (NSMutableArray *) potentialNeighborsForPosition: (int) pos{
+	//figure out what layer this is
+	int myLayer = [self layerForPos: pos];
+	NSLog(@"Layer: %d", myLayer);
+	NSMutableArray *potentialNeighbors = [self positionsInLayer: myLayer];
+	
+	if (myLayer == 0){
+		NSLog(@"%d", layers);
+		if (layers > 0)
+			[potentialNeighbors addObjectsFromArray: [self positionsInLayer: myLayer + 1]];
+	}else if (myLayer == layers){
+		[potentialNeighbors addObjectsFromArray: [self positionsInLayer: myLayer - 1]];
+	}else {
+		[potentialNeighbors addObjectsFromArray: [self positionsInLayer: myLayer - 1]];
+		[potentialNeighbors addObjectsFromArray: [self positionsInLayer: myLayer + 1]];
+	}
+	return potentialNeighbors;
+}
+
+/** returns the layer for a number **/
+- (int) layerForPos: (int) pos{
+	int lastPositionInLayer = [self positionsInTriangle: innerTriangleLength];
+	
+	if (layers == 0 || pos <= lastPositionInLayer)
+		return 0;
+	
+	for (int i = layers; i > 0; i--){
+		lastPositionInLayer += (i + innerTriangleLength) * 3;
+		if (pos <= lastPositionInLayer)
+			return i;
+	}
+	return 1;
+}
+
+/** Returns the positions along a given layer **/
+- (NSMutableArray *) positionsInLayer: (int) layer{
+	int start, end;
+	NSMutableArray *positions = [NSMutableArray arrayWithCapacity: 0];
+	
+	//find the start point
+	if (layer == 0)
+		start = 1;
+	else {
+		start = [self positionsInTriangle: innerTriangleLength];
+		for (int i = layers; i > layer; i--){
+			start += (i + innerTriangleLength) * 3;
+		}
+		//makes up for the fact that we are starting on the next layer
+		start += 1;
+	}
+	
+	//find the end point
+	if (layer == 0)
+		end = [self positionsInTriangle: innerTriangleLength];
+	else end = start + 3 * (layer + innerTriangleLength) - 1;
+	
+	//add all of the pieces
+	for (int i = start; i <= end; i++)
+		[positions addObject: [NSNumber numberWithInt: i]];
+	
+	return positions;
+}
+
+
 /** Utility function that solves for n! aka the positions in a triangle with side length n**/
 - (int) positionsInTriangle: (int) triangleSideLength{
 	int size = 0;
@@ -456,11 +525,15 @@
 		default:
 			[edgePositions addObject: [NSNumber numberWithInt: 1]];
 			currentPosition = 2;
-			for (int i = 1; i <= innerTriangleLength; i++){
+			for (int i = 1; i < innerTriangleLength; i++){
 				[edgePositions addObject: [NSNumber numberWithInt: currentPosition]];
 				currentPosition += i;
 				[edgePositions addObject: [NSNumber numberWithInt: currentPosition]];
 				currentPosition++;
+			}
+			for (int i = 0; i <= innerTriangleLength; i++){
+				[edgePositions addObject: [NSNumber numberWithInt: currentPosition]];
+				currentPosition ++;
 			}
 			break;
 	}

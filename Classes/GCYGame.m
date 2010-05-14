@@ -84,27 +84,9 @@
 	if (board)
 		[board release];
 	
-	
-	switch (layers){
-		case 0:
-			board = [[NSMutableArray alloc] initWithCapacity: 15];
-			for (int i = 0; i < 15; i += 1)
-				[board addObject: BLANK];
-			break;
-		case 1:
-			board = [[NSMutableArray alloc] initWithCapacity: 30];
-			for (int i = 0; i < 30; i += 1)
-				[board addObject: BLANK];
-			break;
-		case 2:
-			board = [[NSMutableArray alloc] initWithCapacity: 48];
-			for (int i = 0; i < 48; i += 1)
-				[board addObject: BLANK];
-			break;
-		default: 
-			board = nil;
-			break;
-	}
+	board = [[NSMutableArray alloc] initWithCapacity: [yGameView boardSize]];
+	for (int i = 0; i < [yGameView boardSize]; i++)
+		[board addObject: BLANK];
 
 }
 	

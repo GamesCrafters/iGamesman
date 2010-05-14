@@ -31,5 +31,6 @@
 - (NSArray *) leftEdges;
 - (NSSet *) positionEdges: (NSNumber *) position;
 - (NSSet *) positionConnections: (NSNumber *) position;
+- (int) boardSize;
 
 @end

@@ -30,16 +30,15 @@
 		
 		CGPoint currentCenter;
 		
-		CGFloat frameSize = [boardView circleRadius] * 3;
+		CGFloat frameSize = [boardView circleRadius] * 5;
 		//Create buttons! yay!
 		for (int i = 1; i <= [boardView boardSize]; i++){
 			currentCenter = [[[boardView centers] objectAtIndex: i-1] CGPointValue];
 			GCYGamePiece *button = [[GCYGamePiece alloc] initWithFrame:CGRectMake(0, 0, frameSize, frameSize)];
 			button.tag = i;
-			[button setCenter: currentCenter];
-			//button.center = currentCenter;
-			[button setTitle: [NSString stringWithFormat: @"%d", i] forState: UIControlStateNormal];
-			[button setTitleColor: [UIColor whiteColor] forState: UIControlStateNormal];
+			[button moveCenter: currentCenter];
+//			[button setTitle: [NSString stringWithFormat: @"%d", i] forState: UIControlStateNormal];
+//			[button setTitleColor: [UIColor whiteColor] forState: UIControlStateNormal];
 			[button setBackgroundColor: [UIColor clearColor]];
 			[button addTarget: self	action: @selector(tapped:) forControlEvents: UIControlEventTouchUpInside];
 			[boardView addSubview: button];
@@ -51,6 +50,9 @@
 }
 
 
+- (int) boardSize{
+	return [boardView boardSize];
+}
 
 //added this method to label whose turn it is! 
 - (void) updateLabels{

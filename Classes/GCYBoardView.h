@@ -18,7 +18,7 @@
 @property (nonatomic, retain) NSNumber * myPosition;
 @property (nonatomic, assign) CGFloat myDistance;
 
-- (id) initWithPosition: (int) pos Distance: (CGFloat) dist;
+- (id) initWithPosition: (NSNumber *) pos Distance: (CGFloat) dist;
 @end
 
 
@@ -64,6 +64,8 @@
 - (NSMutableArray *) positionsAtEdge: (int) edge;
 - (NSMutableArray *) layerPositionsAtEdge: (int) edge;
 - (NSMutableSet *) trianglePositionsAtEdge: (int) edge;
-
+- (NSMutableArray *) potentialNeighborsForPosition: (int) pos;
+- (int) layerForPos: (int) pos;
+- (NSMutableArray *) positionsInLayer: (int) layer;
 
 @end
