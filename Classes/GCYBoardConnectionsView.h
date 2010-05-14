@@ -42,3 +42,13 @@
 - (id) initWithPointA: (CGPoint *) pA andPointB: (CGPoint *) pB;
 
 @end
+
+
+@interface YNeighbors : NSObject{
+	NSNumber *positionA;
+	NSNumber *positionB;
+}
+
+- (id) newNeighborsA: (NSNumber *) posA neighborB: (NSNumber *) posB;
+
+@end

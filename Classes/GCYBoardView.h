@@ -46,49 +46,23 @@
 
 
 
-/** Inits the boardview **/
+//Stuff ran at initiallization
 - (id) initWithFrame:(CGRect)frame withLayers: (int) myLayers andInnerLength: (int) innerLength;
-
-/** Does all of the initial calculations, then procedes to find centers, connections, and edges **/
 - (void) createBoardView;
+- (int) centersAlongLayer: (int) layer fromPointA: (CGPoint) pointA toPointB: (CGPoint) pointB withCenter: (CGPoint) arcCenter startingAtPosition: (int) position;
+- (void) calculateConnectionsForPosition: (int) position;
 
-
-/** Given two corners, the current layer, the current position number, and a radius, calculates the centers along the arc 
- ** between the two corners and returns the new position.  Assumes it is going clockwise **/
-- (int) centersAlongLayer: (int) layer fromPointA: (CGPoint) pointA toPointB: (CGPoint) pointB 
-			   withCenter: (CGPoint) arcCenter startingAtPosition: (int) position;
-
-/** Draws the connections on the conectionsView when pieces of the same color are placed next to each other **/
-- (void) drawConnections;
-
-/** Find the neighboring pieces for a position and adds them to neighborsForPosition **/
-- (void) calculateConnectionsForPosition: (int) position inLayerPosition: (int) layerPosition forLayer: (int) layer;
-
-
-/** Finds the connections for pieces in the inner triangle **/
-- (void) calculateConnectionsForInnerPosition: (int) position inRow: (int) row inColumn: (int) column;
-
-- (void) calculateConnectionsForCornerPosition: (int) position forLayer: (int) layer;
-
-- (void) calculateConnectionsForLayerPosition: (int) position forLayer: (int) layer;
-
-
-/** Utility function that finds the distance between two points **/
-- (CGFloat) distanceFrom: (CGPoint) pointA to: (CGPoint) pointB;
-
-/** Utility function that solves for n! **/
-- (int) positionsInTriangle: (int) triangleSideLength;
-
-/** Utility function that returns the board size **/
+//Stuff that GCYGameVC will need
 - (int) boardSize;
-
-/** Returns the edges for a position **/
+- (void) drawConnections;
 - (NSMutableSet *) edgesForPosition: (int) position;
-
-/** Returns the starting edges **/
 - (NSMutableArray *) startingEdges;
 
-/** Returns the positions associated with the given edge in the triangle, or the positions along all edges for edge -1 **/
+//Helpers
+- (CGFloat) distanceFrom: (CGPoint) pointA to: (CGPoint) pointB;
+- (int) positionsInTriangle: (int) triangleSideLength;
+- (NSMutableArray *) positionsAtEdge: (int) edge;
+- (NSMutableArray *) layerPositionsAtEdge: (int) edge;
 - (NSMutableSet *) trianglePositionsAtEdge: (int) edge;
 
 

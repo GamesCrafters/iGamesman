@@ -46,7 +46,7 @@
 }
 
 
-
+/** Inits the boardview **/
 - (id) initWithFrame:(CGRect)frame withLayers: (int) myLayers andInnerLength: (int) innerLength{
 	if (self = [super initWithFrame:frame]) {
 		CGFloat distance, halfPadding;
@@ -89,7 +89,7 @@
 	
 	CGContextSetRGBFillColor(context, 0.2f, 0.2f, 0.2f, 1.0f);
 	
-	//draw the centers connections
+	//draw the centers 
 	for (NSValue *pointValue in centers){
 		//CGContextBeginPath(context);
 		currentCenter = [pointValue CGPointValue];
@@ -97,14 +97,12 @@
 		CGContextFillPath(context);
 	}
 	
+	//draw the connections between neighboring centers
+	for (NSNumber *position in [neighborsForPosition allKeys]){
+		
+	}
+	
 }
-
-/** Draws the connections on the conectionsView when pieces of the same color are placed next to each other **/
-- (void) drawConnections{
-}
-
-
-
 
 #pragma mark Create_Board
 
@@ -199,6 +197,9 @@
 	
 }
 
+
+/** Given two corners, the current layer, the current position number, and a radius, calculates the centers along the arc 
+ ** between the two corners and returns the new position.  Assumes it is going clockwise **/
 - (int) centersAlongLayer: (int) layer fromPointA: (CGPoint) pointA toPointB: (CGPoint) pointB withCenter: (CGPoint) arcCenter 
 	   startingAtPosition: (int) position{
 	CGFloat temp;
@@ -233,137 +234,66 @@
 }
 
 
-
+#pragma mark Finding_Neighbors 
 /** Find the neighboring pieces for a position and adds them to neighborsForPosition **/
-- (void) calculateConnectionsForPosition: (int) position inLayerPosition: (int) layerPosition forLayer: (int) layer{
-	NSMutableSet * neighbors;
-	
-	if (layer == 0)
-		[self calculateConnectionsForInnerPosition: position];
-	else if (layerPosition == 0)
-		[self calculateConnectionsForCornerPosition: position forLayer: layer];
-	else
-		[self calculateConnectionsForLayerPosition: position];
-	
-}
-
-
 - (void) calculateConnectionsForPosition: (int) position{
-	BOOL outsideEdge = NO;
-	BOOL corner = NO;
-	BOOL innerCorner = NO;
+	int neighborCount = 6;
+	int positionInArray = position - 1;
 	NSMutableArray * distances;
-	NSMutableSet * neighbors = [NSMutableSet setWithCapacity: 0];
+	NSMutableSet * myNeighbors = [NSMutableSet setWithCapacity: 0];
+	NSNumber * numberValue = [NSNumber numberWithInt: position];
+	CGPoint center = [[centers objectAtIndex: positionInArray] CGPointValue];
 	
-	/* Figure out what type of position this is */
+	/* Figure out how many neighbors the position has */
 	//check if this is a corner of the inner triangle
 	if (position == 1 || position == [self positionsInTriangle: innerTriangleLength - 1] + 1 || position == [self positionsInTriangle: innerTriangleLength])
-		innerCorner == YES;
+		neighborCount -= 1;
 	
 	//check if this is in the outer layer
-	if (layers == 0){
+	NSMutableArray * edges = [self positionsAtEdge: 0];
+	if ([edges containsObject: numberValue]){
+		neighborCount -= 2;
 		
-	}else if (position == 0){
-		//check if this is an outer corner
+		//check if this is a corner
+		if (layers == 0){
+			if (neighborCount == 3)
+				neighborCount = 2;
+		}else {
+			int topPosition = [self positionsInTriangle: innerTriangleLength] + 1;
+			int layerSize = layers + innerTriangleLength;
+			if (position == topPosition || position == topPosition + layerSize || position == 2 * topPosition)
+				neighborCount -= 1;
+		}
 	}
+
 	
 	/* Create an array of the other positions and their distance to this one */
+	for (int i = 0; i < [self boardSize]; i++){
+		if (i != positionInArray){
+			PositionDistance * pd = [[PositionDistance alloc] initWithPosition: i + 1 
+																	  Distance: [self distanceFrom: center to: [[centers objectAtIndex: i] CGPointValue]]];
+			[distances addObject: pd];
+			[pd release];
+		}
+	}
 	
-	/* Sort the array of other positions */
+	/* Sort the array of other position distances */
+	NSSortDescriptor *sortDescriptor = [[[NSSortDescriptor alloc] initWithKey: @"distance" ascending: YES] autorelease];
+	NSArray *sortDescriptors = [NSArray arrayWithObject: sortDescriptor];
+	NSArray  *sortedDistances = [distances sortedArrayUsingDescriptors: sortDescriptors];
 	
 	/* Choose the right ammount of connections based on position type */
-	
-}
-
-- (CGFloat) distanceFrom: (CGPoint) pointA to: (CGPoint) pointB{
-	
-}
-
-- (void) calculateConnectionsForInnerPosition: (int) position inRow: (int) row inColumn: (int) column{
-	NSMutableSet * neighbors = [NSMutableSet setWithCapacity: 0];
-	
-	/* handle corners */
-	if (row == 0){ //upper corner
-		//top neighbors
-		
-		//side neighbors
-		
-		//bottom neighbors
-		
-	} else if (column == innerTriangleLength){ //right corner
-		//top neighbors
-		
-		//side neighbors
-		
-		//bottom neighbors
-		
-	} else if (row == innerTriangleLength && column == 0){ //left corner
-		//top neighbors
-		
-		//side neighbors
-		
-		//bottom neighbors
+	for (int i = 0; i < neighborCount; i++){
+		[myNeighbors addObject: [sortedDistances objectAtIndex: i]];
 	}
 	
-	/* handle sides */
-	else if (column == 0){ //left side
-		//top neighbors
-		
-		//side neighbors
-		
-		//bottom neighbors
-		
-	}else if (column == row){ //right side
-		//top neighbors
-		
-		//side neighbors
-		
-		//bottom neighbors
-		
-	}else if (row == innerTriangleLength){ //bottom
-		//top neighbors
-		
-		//side neighbors
-		
-		//bottom neighbors
-		
-	}
-	
-	/* handle insides */
-	else{
-		//top neighbors
-		[neighbors addObject: [NSNumber numberWithInt: position - row]];
-		[neighbors addObject: [NSNumber numberWithInt: position - (row + 1)]];
-		
-		//side neighbors
-		[neighbors addObject: [NSNumber numberWithInt: position + 1]];
-		[neighbors addObject: [NSNumber numberWithInt: position - 1]];
-		
-		//bottom neighbors
-		[neighbors addObject: [NSNumber numberWithInt: position + row + 1]];
-		[neighbors addObject: [NSNumber numberWithInt: position + row + 2]];
-	}
-	
-	[neighborsForPosition setObject: neighbors forKey: [NSNumber numberWithInt: position]];
+	[neighborsForPosition setObject: myNeighbors forKey: numberValue];
 }
 
 
-- (void) calculateConnectionsForCornerPosition: (int) position forLayer: (int) layer{
-}
-
-- (void) calculateConnectionsForLayerPosition: (int) position{
-}
-
-
-#pragma mark Class_Callable_Functions
-
-
-/** Utility function that solves for n! aka the positions in a triangle with side length n**/
-- (int) positionsInTriangle: (int) triangleSideLength{
-	int size = 0;
-	for (int i = 1; i <= triangleSideLength; i++)
-		size += i;
-	return size;
+#pragma mark Callables
+/** Draws the connections on the conectionsView when pieces of the same color are placed next to each other **/
+- (void) drawConnections{
 }
 
 /** Utility function that returns the board size **/
@@ -387,12 +317,122 @@
 }
 
 
-/** Returns the starting edges **/
+/** Returns the starting positions along edge 1 **/
 - (NSMutableArray *) startingEdges{
 }
 
-/** Returns the positions associated with the given edge in the triangle, or the positions along all edges for edge -1 **/
-- (NSMutableSet *) trianglePositionsAtEdge: (int) edge{
+
+- (NSMutableArray *) positionsAtEdge: (int) edge{
+	if (layers == 0)
+		return [self trianglePositionsAtEdge: edge];
+	else return [self layerPositionsAtEdge: edge];
+}
+
+
+
+#pragma mark Helpers
+/** Utility function that solves for n! aka the positions in a triangle with side length n**/
+- (int) positionsInTriangle: (int) triangleSideLength{
+	int size = 0;
+	for (int i = 1; i <= triangleSideLength; i++)
+		size += i;
+	return size;
+}
+
+
+/** Utility function that finds the distance between two points **/
+- (CGFloat) distanceFrom: (CGPoint) pointA to: (CGPoint) pointB{
+	return sqrt(pow(pointA.x - pointB.x, 2) + pow(pointA.y - pointB.y, 2));
+}
+
+
+/** Returns positoins associated with the given edge in the outer layters, or the positions along all edges if edge != 1, 2, or 3 **/
+- (NSMutableArray *) layerPositionsAtEdge: (int) edge{
+	NSMutableArray * edgePositions = [NSMutableArray arrayWithCapacity: 0];
+	int currentPosition;
+	int firstPosition = [self positionsInTriangle: innerTriangleLength] + 1;
+	
+	switch (edge){
+			//Add in positions along edge 1
+		case 1:
+			currentPosition = firstPosition + 2 * (innerTriangleLength + layers);
+			[edgePositions addObject: [NSNumber numberWithInt: firstPosition]];
+			for (int i = 0; i < (innerTriangleLength + layers); i++){
+				[edgePositions addObject: [NSNumber numberWithInt: currentPosition]];
+				currentPosition++;
+			}
+			break;
+			//Add in positions along edge 2
+		case 2:
+			currentPosition = firstPosition + innerTriangleLength + layers;
+			for (int i = 0; i <= (innerTriangleLength + layers); i++){
+				[edgePositions addObject: [NSNumber numberWithInt: currentPosition]];
+				currentPosition++;
+			}
+			break;
+			//Add in positions along edge 3
+		case 3:
+			currentPosition = firstPosition;
+			for (int i = 0; i <= (innerTriangleLength + layers); i++){
+				[edgePositions addObject: [NSNumber numberWithInt: currentPosition]];
+				currentPosition++;
+			}
+			break;
+			//Add in positions along all edges
+		default:
+			currentPosition = firstPosition;
+			for (int i = 0; i < 3*(innerTriangleLength + layers + 1); i++){
+				[edgePositions addObject: [NSNumber numberWithInt: currentPosition]];
+				currentPosition++;
+			}
+			break;
+	}
+	return edgePositions;
+}
+
+/** Returns the positions associated with the given edge in the triangle, or the positions along all edges if edge != 1, 2, or 3 **/
+- (NSMutableArray *) trianglePositionsAtEdge: (int) edge{
+	NSMutableArray * edgePositions = [NSMutableArray arrayWithCapacity: 0];
+	int currentPosition; 
+	
+	switch (edge){
+			//Add in positions along edge 1
+		case 1:
+			currentPosition = 1;
+			for (int i = 0; i <= innerTriangleLength; i++){
+				currentPosition += i;
+				[edgePositions addObject: [NSNumber numberWithInt: currentPosition]];
+			}
+			break;
+			//Add in positions along edge 2
+		case 2:
+			currentPosition = [self boardSize] - innerTriangleLength;
+			for (int i = 0; i <= innerTriangleLength; i++){
+				currentPosition += i;
+				[edgePositions addObject: [NSNumber numberWithInt: currentPosition]];
+			}
+			break;
+			//Add in positions along edge 3
+		case 3:
+			currentPosition = 0;
+			for (int i = 1; i <= innerTriangleLength + 1; i++){
+				currentPosition += i;
+				[edgePositions addObject: [NSNumber numberWithInt: currentPosition]];
+			}
+			break;
+		default:
+			[edgePositions addObject: [NSNumber numberWithInt: 1]];
+			currentPosition = 2;
+			for (int i = 1; i <= innerTriangleLength; i++){
+				[edgePositions addObject: [NSNumber numberWithInt: currentPosition]];
+				currentPosition += i;
+				[edgePositions addObject: [NSNumber numberWithInt: currentPosition]];
+				currentPosition++;
+			}
+			break;
+	}
+	
+	return edgePositions;
 }
 
 

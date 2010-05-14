@@ -10,6 +10,26 @@
 
 
 #pragma mark YConnection Class
+@implementation YNeighbors
+
+- (id) newNeighborsA: (NSNumber *) posA neighborB: (NSNumber *) posB{
+	if (posA < posB){
+		positionA = posA;
+		positionB = posB;
+	}else{
+		positionA = posB;
+		positionB = posA;
+	}
+	return self;
+}
+
+- (void) dealloc {
+	[super dealloc];
+}
+
+@end
+
+
 @implementation YConnection
 @synthesize pointA, pointB;
 

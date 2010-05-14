@@ -8,7 +8,6 @@
 
 #import "YGameQueue.h"
 
-
 @implementation YGameQueue
 
 /** Returns and empty YGameQueue**/
