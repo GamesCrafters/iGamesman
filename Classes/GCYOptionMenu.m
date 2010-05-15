@@ -18,6 +18,7 @@
 		game = _game;
 		layers = game.layers;
 		innerTriangleLength = game.innerTriangleLength;
+		misere = game.misere;
 	}
 	
 	return self;
@@ -40,13 +41,14 @@
 - (void) done {
 	game.layers = layers;
 	game.innerTriangleLength = innerTriangleLength;
+	game.misere = misere;
 	[delegate rulesPanelDidFinish];
 }
 
 - (void) updateLayers: (UISegmentedControl *) sender{
 	layers = [sender selectedSegmentIndex];
 	
-	UISegmentedControl *otherControl = [self.view viewWithTag: 200];
+	UISegmentedControl *otherControl = [self.view viewWithTag: 2];
 	switch ([sender selectedSegmentIndex]) {
 		case 2:
 			[otherControl setEnabled: NO forSegmentAtIndex: 3];
@@ -65,10 +67,15 @@
 	}
 }
 
+
+- (void) updateMisere: (UISegmentedControl *) sender{
+	misere = [sender selectedSegmentIndex] == 0 ? NO : YES;
+}
+
 - (void) updateTriangle: (UISegmentedControl *) sender{
 	innerTriangleLength = [sender selectedSegmentIndex] + 1;
 	
-	UISegmentedControl *otherControl = [self.view viewWithTag: 100];
+	UISegmentedControl *otherControl = [self.view viewWithTag: 1];
 	switch ([sender selectedSegmentIndex]){
 		case 2:
 			[otherControl setEnabled: NO forSegmentAtIndex: 2];
@@ -93,6 +100,7 @@
 	
 	self.title = @"Y Rules";
 
+	self.tableView.allowsSelection = NO;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemCancel
 																						  target: self
 																						  action: @selector(cancel)];
@@ -128,7 +136,7 @@
 #pragma mark Table view methods
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    return 3;
 }
 
 
@@ -144,6 +152,9 @@
 			break;
 		case 1:
 			return @"Center Height";
+			break;
+		case 2:
+			return @"Misère";
 			break;
 		default:
 			return @" ";
@@ -177,7 +188,7 @@
 			
 			[segment setSelectedSegmentIndex: layers];
 			[segment addTarget: self action: @selector(updateLayers:) forControlEvents: UIControlEventValueChanged];
-			segment.tag = 100;
+			segment.tag = 1;
 			[cell addSubview: segment];
 			break;
 			
@@ -189,10 +200,19 @@
 			[segment insertSegmentWithTitle: @"5" atIndex: 3 animated: NO];
 			
 			[segment setSelectedSegmentIndex: innerTriangleLength - 1];
-			segment.tag = 200;
+			segment.tag = 2;
 			[segment addTarget: self action: @selector(updateTriangle:) forControlEvents: UIControlEventValueChanged];
 			[cell addSubview: segment];
 			break;
+			
+		case 2:
+			[segment insertSegmentWithTitle: @"Standard" atIndex: 0 animated: NO];
+			[segment insertSegmentWithTitle: @"Misère" atIndex: 1 animated: NO];
+			[segment setSelectedSegmentIndex: (misere ? 1 : 0)];
+			segment.tag = 3;
+			
+			[segment addTarget: self action: @selector(updateMisere:) forControlEvents: UIControlEventValueChanged];
+			[cell addSubview: segment];
 			
 		default:
 			break;

@@ -23,6 +23,7 @@
 @synthesize layers;
 @synthesize p1Turn;
 @synthesize yGameView;
+@synthesize misere;
 @synthesize innerTriangleLength;
 
 - (id) init {
@@ -37,6 +38,7 @@
 		innerTriangleLength = 2;
 		
 		p1Turn = YES;
+		misere = NO;
 		
 		board = [[NSMutableArray alloc] initWithCapacity: 15];
 		for (int i = 0; i < 15; i += 1)
@@ -152,7 +154,7 @@
 	//Might need to do away with this... 
 	if ([[self legalMoves] count] == 0){
 		[queue release];
-		return @"WIN";
+		return misere ? @"LOSE" : @"WIN";
 	}
 	
 	//Super Happy Fun Time!!!
@@ -191,7 +193,7 @@
 			if ([edgesReached count] == 3){
 				[queue release];
 				NSLog(@"Game Over");
-				return @"WIN";
+				return misere ? @"LOSE" : @"WIN";
 			}
 			
 		}
@@ -231,7 +233,7 @@
 			if ([edgesReached count] == 3){
 				[queue release];
 				NSLog(@"Game Over");
-				return @"LOSE";
+				return misere ? @"WIN" : @"LOSE";
 			}
 			
 		}

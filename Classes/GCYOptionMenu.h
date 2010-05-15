@@ -19,6 +19,7 @@
 	GCYGame *game;
 	int layers;
 	int innerTriangleLength;
+	BOOL misere;
 }
 
 @property (nonatomic, retain) id <GCRulesDelegate> delegate;
@@ -28,5 +29,6 @@
 - (void) done;
 - (void) updateLayers: (UISegmentedControl *) sender;
 - (void) updateTriangle: (UISegmentedControl *) sender;
+- (void) updateMisere: (UISegmentedControl *) sender;
 
 @end

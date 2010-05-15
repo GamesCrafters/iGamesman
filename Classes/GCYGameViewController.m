@@ -25,6 +25,15 @@
 		message.textAlignment = UITextAlignmentCenter;
 		message.text = @" ";
 		[boardView addSubview: message];
+		
+		
+		UILabel *version = [[UILabel alloc] initWithFrame: CGRectMake(200, 0, 120, 20)];
+		version.backgroundColor = [UIColor blackColor];
+		version.adjustsFontSizeToFitWidth = YES;
+		version.textColor = [UIColor whiteColor];//[UIColor colorWithRed: 0 green: 0 blue: 102.0/256.0 alpha: 1];
+		version.textAlignment = UITextAlignmentCenter;
+		version.text = game.misere ? @"Play Mode: Misere" : @"Play Mode: Standard";
+		[boardView addSubview: version];
 		[self updateLabels];
 		boardView.multipleTouchEnabled = NO;
 		
