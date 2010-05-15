@@ -51,11 +51,15 @@
 	UISegmentedControl *otherControl = [self.view viewWithTag: 2];
 	switch ([sender selectedSegmentIndex]) {
 		case 2:
+			if ([otherControl selectedSegmentIndex] == 3 || [otherControl selectedSegmentIndex] == 2)
+				[otherControl setSelectedSegmentIndex: 1];
 			[otherControl setEnabled: NO forSegmentAtIndex: 3];
 			[otherControl setEnabled: NO forSegmentAtIndex: 2];
 			break;
 			
 		case 1:
+			if ([otherControl selectedSegmentIndex] == 3)
+				[otherControl setSelectedSegmentIndex: 2];
 			[otherControl setEnabled: NO forSegmentAtIndex: 3];
 			[otherControl setEnabled: YES forSegmentAtIndex: 2];
 			break;
@@ -78,11 +82,15 @@
 	UISegmentedControl *otherControl = [self.view viewWithTag: 1];
 	switch ([sender selectedSegmentIndex]){
 		case 2:
+			if ([otherControl selectedSegmentIndex] == 2)
+				[otherControl setSelectedSegmentIndex: 1];
 			[otherControl setEnabled: NO forSegmentAtIndex: 2];
 			[otherControl setEnabled: YES forSegmentAtIndex: 1];
 			break;
 			
 		case 3:
+			if ([otherControl selectedSegmentIndex] == 1 || [otherControl selectedSegmentIndex] == 2)
+				[otherControl setSelectedSegmentIndex: 0];
 			[otherControl setEnabled: NO forSegmentAtIndex: 2];
 			[otherControl setEnabled: NO forSegmentAtIndex: 1];
 			break;
@@ -200,6 +208,7 @@
 			[segment insertSegmentWithTitle: @"5" atIndex: 3 animated: NO];
 			
 			[segment setSelectedSegmentIndex: innerTriangleLength - 1];
+			
 			segment.tag = 2;
 			[segment addTarget: self action: @selector(updateTriangle:) forControlEvents: UIControlEventValueChanged];
 			[cell addSubview: segment];

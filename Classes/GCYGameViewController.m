@@ -67,12 +67,68 @@
 - (void) updateLabels{
 	NSString *player = ([game currentPlayer] == PLAYER1) ? [game player1Name] : [game player2Name];
 	NSString *color = ([game currentPlayer] == PLAYER1) ? @"Red" : @"Blue";
+	//remove this later
 	[message setText: [NSString stringWithFormat: @"%@ (%@)'s turn", player, color]];
+	
+	
+	if(game.gameMode == ONLINE_SOLVED && game.predictions){
+		message.numberOfLines = 2;
+		NSString *value = [game.service getValue];
+		PlayerType typePlay = ([game currentPlayer] == PLAYER1) ? [game player1Type] : [game player2Type];
+		PlayerType typeOpp  = ([game currentPlayer] == PLAYER1) ? [game player2Type] : [game player1Type];
+		NSString *modifier;
+		if ([game playMode] == COMPUTER_PERFECT && value == @"win") modifier = @"will";
+		else if (typeOpp == COMPUTER_PERFECT && value == @"lose") modifier = @"will";
+		else if (typePlay == COMPUTER_PERFECT && typeOpp == COMPUTER_PERFECT) modifier = @"will";
+		else modifier = @"should";
+		[message setText: [NSString stringWithFormat: @"%@ (%@)'s turn\n%@ %@ in %d", player, color, modifier, [game.service getValue], [game.service getRemoteness]]];
+	}
+	else{
+		[message setText: [NSString stringWithFormat: @"%@ (%@)'s turn", player, color]];
+	}
+	
+	if (game.gameMode == ONLINE_SOLVED && game.moveValues) {
+		NSDictionary *movesAndValues = [self getServerValues: [self translateToServer: [game legalMoves]]];
+		for (NSNumber *move in [movesAndValues allKeys]) {
+			GCYGamePiece *B = (GCYGamePiece *) [self.view viewWithTag: [move intValue] + 1];
+			NSString *color, *direction;
+			
+			//eventually change these to circular backgrounds
+			if ([[movesAndValues objectForKey: move] isEqual: @"CLEAR"])
+				[B.moveValue setBackgroundColor: [UIColor clearColor]];
+			else if ([[movesAndValues objectForKey: move] isEqual: @"win"])
+				[B.moveValue setBackgroundColor: [UIColor greenColor]];
+			else
+				[B.moveValue setBackgroundColor: [UIColor brownColor]];
+			
+
+		}
+	}
 	
 	if([game primitive: [game getBoard]]){
 		[self displayPrimitive];
 	}
 }
+
+
+- (NSArray *) translateToServer: (NSArray *) moveArray{
+	int serverValue;
+	NSMutableArray * result = [[NSMutableArray alloc] initWithCapacity: [moveArray count]];
+	for(int i = 0; i < [moveArray count]; i++){
+		serverValue = [[moveArray objectAtIndex: i] intValue] - 1;
+		[result addObject: [NSNumber numberWithInt: serverValue]];
+	}
+	return result;
+}
+- (NSDictionary *) getServerValues: (NSArray *) moves{
+	int realValue = 0;
+	NSMutableDictionary *result = [[NSMutableDictionary alloc] initWithCapacity: [moves count]];
+
+	//no idea what I'm doing here
+	
+	return result;
+}
+
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {

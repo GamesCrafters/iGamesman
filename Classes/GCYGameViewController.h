@@ -33,4 +33,7 @@
 - (NSSet *) positionConnections: (NSNumber *) position;
 - (int) boardSize;
 
+- (NSArray *) translateToServer: (NSArray *) moveArray;
+- (NSDictionary *) getServerValues: (NSArray *) moves;
+
 @end

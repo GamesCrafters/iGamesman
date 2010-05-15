@@ -25,6 +25,8 @@
 @synthesize yGameView;
 @synthesize misere;
 @synthesize innerTriangleLength;
+@synthesize service;
+@synthesize gameMode;
 
 - (id) init {
 	if (self = [super init]) {
@@ -57,6 +59,11 @@
 	return mode == OFFLINE_UNSOLVED;
 }
 
+- (PlayMode) playMode { 
+	return gameMode; 
+}
+
+
 - (UIViewController *) optionMenu {
 	return [[GCYOptionMenu alloc] initWithGame: self];
 }
@@ -73,6 +80,12 @@
 	p1Turn = YES;
 	
 	[self resetBoard];
+	
+	if(mode == ONLINE_SOLVED){
+		service = [[GCJSONService alloc] init];
+		[self startFetch];
+	}
+	
 	gameMode = mode;
 }
 
@@ -128,6 +141,28 @@
 }
 
 
+// Return the value of the current board
+- (NSString *) getValue { 
+	return [service getValue]; 
+}
+
+// Return the remoteness of the current board (or -1 if not available)
+- (NSInteger) getRemoteness { 
+	return [service getRemoteness]; 
+}
+
+// Return the value of MOVE
+- (NSString *) getValueOfMove: (NSNumber *) move {
+	NSString *moveString = [NSString stringWithFormat: @"%d", [[[yGameView translateToServer: [NSArray arrayWithObject: move]] objectAtIndex: 0] intValue]];
+	return [[service getValueAfterMove: moveString] uppercaseString];
+}
+
+// Return the remoteness of MOVE (or -1 if not available)
+- (NSInteger) getRemotenessOfMove: (NSNumber *) move {
+	NSString *moveString = [NSString stringWithFormat: @"%d", [[[yGameView translateToServer: [NSArray arrayWithObject: move]] objectAtIndex: 0] intValue]];
+	return [service getRemotenessAfterMove: moveString];
+}
+
 - (void) doMove: (NSNumber *) move {
 	
 	[yGameView doMove: move];
@@ -136,9 +171,22 @@
 	[board replaceObjectAtIndex: slot withObject: (p1Turn ? X : O)];
 	p1Turn = !p1Turn;
 	
-	[yGameView updateLabels];
-	//printing this out would be disgusting.	
+	if (gameMode != ONLINE_SOLVED)
+		[yGameView updateLabels];
+	
+	if(gameMode == ONLINE_SOLVED){
+		[self startFetch];
+	}	
 }
+
+
+
+
+
+
+
+
+
 
 /** Returns @"WIN" or @"LOSE" if in a primitive state since Y has no draws/ties.  Returns nil if not in a primitive state **/
 - (NSString *) primitive: (NSArray *) theBoard  { 
@@ -242,6 +290,38 @@
 	[queue release];
 	return nil;
 }
+
+
+
+- (void) startFetch{
+	waiter = [[NSThread alloc] initWithTarget: self selector: @selector (fetchNewData) object: nil];
+	[waiter start];
+}
+
+- (void) fetchNewData{
+	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+	NSString *boardString = [self stringForBoard: board];
+	//NSString *boardURL = [boardString stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
+	//NSString *boardVal = [[NSString stringWithFormat: @"http://nyc.cs.berkeley.edu:8080/gcweb/service/gamesman/puzzles/y/getMoveValue;side=%d;board=%@", (size - 5)/2 +2, boardURL] retain];
+	//NSString *moveVals = [[NSString stringWithFormat: @"http://nyc.cs.berkeley.edu:8080/gcweb/service/gamesman/puzzles/y/getNextMoveValues;side=%d;board=%@", (size - 5)/2 +2, boardURL] retain];
+	//[service retrieveDataForBoard: boardString URL: boardVal andNextMovesURL: moveVals];
+	//[self performSelectorOnMainThread: @selector (fetchFinished) withObject: nil waitUntilDone: NO];
+	[pool release];
+	
+}
+
+- (void) fetchFinished{
+	if(waiter)	[waiter release];
+	if(![service status] || ![service connected]){
+		[[NSNotificationCenter defaultCenter] postNotificationName: @"GameEncounteredProblem" object: self ];
+	}
+	else{
+		[yGameView updateLabels];
+		[[NSNotificationCenter defaultCenter] postNotificationName: @"GameIsReady" object: self ];
+	}
+}
+
+
 
 - (void) notifyWhenReady {
 	if (gameMode == OFFLINE_UNSOLVED)
