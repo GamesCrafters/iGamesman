@@ -91,8 +91,6 @@
 }
 
 - (void) doMove: (NSNumber *) move {
-	NSInteger tag;
-
 	NSInteger neighborInt;
 	NSInteger moveInt = [move integerValue];
 	

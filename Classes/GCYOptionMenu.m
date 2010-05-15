@@ -45,10 +45,46 @@
 
 - (void) updateLayers: (UISegmentedControl *) sender{
 	layers = [sender selectedSegmentIndex];
+	
+	UISegmentedControl *otherControl = [self.view viewWithTag: 200];
+	switch ([sender selectedSegmentIndex]) {
+		case 2:
+			[otherControl setEnabled: NO forSegmentAtIndex: 3];
+			[otherControl setEnabled: NO forSegmentAtIndex: 2];
+			break;
+			
+		case 1:
+			[otherControl setEnabled: NO forSegmentAtIndex: 3];
+			[otherControl setEnabled: YES forSegmentAtIndex: 2];
+			break;
+			
+		default:
+			[otherControl setEnabled: YES forSegmentAtIndex: 3];
+			[otherControl setEnabled: YES forSegmentAtIndex: 2];
+			break;
+	}
 }
 
 - (void) updateTriangle: (UISegmentedControl *) sender{
 	innerTriangleLength = [sender selectedSegmentIndex] + 1;
+	
+	UISegmentedControl *otherControl = [self.view viewWithTag: 100];
+	switch ([sender selectedSegmentIndex]){
+		case 2:
+			[otherControl setEnabled: NO forSegmentAtIndex: 2];
+			[otherControl setEnabled: YES forSegmentAtIndex: 1];
+			break;
+			
+		case 3:
+			[otherControl setEnabled: NO forSegmentAtIndex: 2];
+			[otherControl setEnabled: NO forSegmentAtIndex: 1];
+			break;
+			
+		default:
+			[otherControl setEnabled: YES forSegmentAtIndex: 2];
+			[otherControl setEnabled: YES forSegmentAtIndex: 1];
+			break;
+	}
 }
 
 
@@ -141,6 +177,7 @@
 			
 			[segment setSelectedSegmentIndex: layers];
 			[segment addTarget: self action: @selector(updateLayers:) forControlEvents: UIControlEventValueChanged];
+			segment.tag = 100;
 			[cell addSubview: segment];
 			break;
 			
@@ -152,6 +189,7 @@
 			[segment insertSegmentWithTitle: @"5" atIndex: 3 animated: NO];
 			
 			[segment setSelectedSegmentIndex: innerTriangleLength - 1];
+			segment.tag = 200;
 			[segment addTarget: self action: @selector(updateTriangle:) forControlEvents: UIControlEventValueChanged];
 			[cell addSubview: segment];
 			break;
