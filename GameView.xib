@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="7.10">
 	<data>
-		<int key="IBDocument.SystemTarget">768</int>
+		<int key="IBDocument.SystemTarget">784</int>
 		<string key="IBDocument.SystemVersion">10D573</string>
-		<string key="IBDocument.InterfaceBuilderVersion">783</string>
+		<string key="IBDocument.InterfaceBuilderVersion">785</string>
 		<string key="IBDocument.AppKitVersion">1038.29</string>
 		<string key="IBDocument.HIToolboxVersion">460.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-			<string key="NS.object.0">107</string>
+			<string key="NS.object.0">110</string>
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -49,8 +49,8 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="IBUISlider" id="666977964">
 								<reference key="NSNextResponder" ref="858300214"/>
-								<int key="NSvFlags">-2147483356</int>
-								<string key="NSFrame">{{68, 11}, {154, 23}}</string>
+								<int key="NSvFlags">292</int>
+								<string key="NSFrame">{{81, 11}, {129, 23}}</string>
 								<reference key="NSSuperview" ref="858300214"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -81,9 +81,19 @@
 								<reference key="IBUIToolbar" ref="858300214"/>
 								<int key="IBUISystemItemIdentifier">5</int>
 							</object>
+							<object class="IBUIBarButtonItem" id="364583364">
+								<string key="IBUITitle">&lt;</string>
+								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<reference key="IBUIToolbar" ref="858300214"/>
+							</object>
 							<object class="IBUIBarButtonItem" id="504112825">
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<reference key="IBUICustomView" ref="666977964"/>
+								<reference key="IBUIToolbar" ref="858300214"/>
+							</object>
+							<object class="IBUIBarButtonItem" id="21607197">
+								<string key="IBUITitle">&gt;</string>
+								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<reference key="IBUIToolbar" ref="858300214"/>
 							</object>
 							<object class="IBUIBarButtonItem" id="488733298">
@@ -178,12 +188,28 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">sliderTest:</string>
+						<string key="label">stepBackward</string>
+						<reference key="source" ref="364583364"/>
+						<reference key="destination" ref="372490531"/>
+					</object>
+					<int key="connectionID">34</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">stepForward</string>
+						<reference key="source" ref="21607197"/>
+						<reference key="destination" ref="372490531"/>
+					</object>
+					<int key="connectionID">35</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">undoRedoSliderChanged:</string>
 						<reference key="source" ref="666977964"/>
 						<reference key="destination" ref="372490531"/>
 						<int key="IBEventType">13</int>
 					</object>
-					<int key="connectionID">28</int>
+					<int key="connectionID">36</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -226,6 +252,8 @@
 							<reference ref="70074878"/>
 							<reference ref="488733298"/>
 							<reference ref="504112825"/>
+							<reference ref="364583364"/>
+							<reference ref="21607197"/>
 						</object>
 						<reference key="parent" ref="191373211"/>
 					</object>
@@ -268,6 +296,16 @@
 						<reference key="object" ref="666977964"/>
 						<reference key="parent" ref="504112825"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">32</int>
+						<reference key="object" ref="364583364"/>
+						<reference key="parent" ref="858300214"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">33</int>
+						<reference key="object" ref="21607197"/>
+						<reference key="parent" ref="858300214"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -282,6 +320,8 @@
 					<string>19.IBPluginDependency</string>
 					<string>25.IBPluginDependency</string>
 					<string>3.IBPluginDependency</string>
+					<string>32.IBPluginDependency</string>
+					<string>33.IBPluginDependency</string>
 					<string>4.IBPluginDependency</string>
 					<string>7.IBPluginDependency</string>
 					<string>8.IBPluginDependency</string>
@@ -290,7 +330,9 @@
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<string>GCGameViewController</string>
 					<string>UIResponder</string>
-					<string>{{364, 374}, {320, 480}}</string>
+					<string>{{408, 338}, {320, 480}}</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -317,7 +359,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">31</int>
+			<int key="maxID">36</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -332,10 +374,14 @@
 							<string>changeOptions</string>
 							<string>done</string>
 							<string>playPause</string>
-							<string>sliderTest:</string>
+							<string>stepBackward</string>
+							<string>stepForward</string>
+							<string>undoRedoSliderChanged:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -349,7 +395,9 @@
 							<string>changeOptions</string>
 							<string>done</string>
 							<string>playPause</string>
-							<string>sliderTest:</string>
+							<string>stepBackward</string>
+							<string>stepForward</string>
+							<string>undoRedoSliderChanged:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -366,7 +414,15 @@
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
-								<string key="name">sliderTest:</string>
+								<string key="name">stepBackward</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">stepForward</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">undoRedoSliderChanged:</string>
 								<string key="candidateClassName">UISlider</string>
 							</object>
 						</object>
@@ -655,7 +711,7 @@
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaTouchFramework</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencyDefaults">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaTouchPlugin.iPhoneOS</string>
-			<integer value="768" key="NS.object.0"/>
+			<integer value="784" key="NS.object.0"/>
 		</object>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDevelopmentDependencies">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaTouchPlugin.InterfaceBuilder3</string>
@@ -679,6 +735,6 @@
 				<string>{25, 25}</string>
 			</object>
 		</object>
-		<string key="IBCocoaTouchPluginVersion">107</string>
+		<string key="IBCocoaTouchPluginVersion">110</string>
 	</data>
 </archive>

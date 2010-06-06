@@ -277,6 +277,25 @@
 		[c4view updateLabels];
 }
 
+- (void) undoMove: (NSString *) move {
+	[c4view undoMove: move];
+	
+	int slot = [move integerValue] - 1 + width * (height - 1);
+	while (slot > 0) {
+		if (![[board objectAtIndex: slot] isEqual: BLANK]) {
+			[board replaceObjectAtIndex: slot withObject: BLANK];
+			break;
+		}
+		slot -= width;
+	}
+	p1Turn = !p1Turn;
+	
+	if (gameMode == ONLINE_SOLVED)
+		[c4view updateServerDataWithService: service];
+	else
+		[c4view updateLabels];
+}
+
 - (void) resetBoard {
 	if (board != nil) {
 		[board release];

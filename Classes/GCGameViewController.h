@@ -43,13 +43,16 @@
 
 - (id)initWithGame: (GCGame *) _game andPlayMode: (PlayMode) mode;
 
-- (IBAction) sliderTest: (UISlider *) sender;
+- (IBAction) undoRedoSliderChanged: (UISlider *) sender;
 
 /// Called when the user taps the back button in the toolbar
 - (IBAction) done;
 
 /// Called when the user taps the play/pause button in the toolbar
 - (IBAction) playPause;
+
+- (IBAction) stepForward;
+- (IBAction) stepBackward;
 
 /// Called when the user taps the options button in the toolbar
 - (IBAction) changeOptions;

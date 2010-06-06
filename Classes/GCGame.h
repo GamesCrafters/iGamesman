@@ -129,4 +129,7 @@ typedef enum { PLAYER1, PLAYER2, NONE } Player;
 /// Perform MOVE and update the view accordingly (MOVE is assumed to be legal)
 - (void) doMove: (id) move;
 
+/// Undo MOVE and update the view accordingly
+- (void) undoMove: (id) move;
+
 @end

@@ -30,7 +30,7 @@
 
 @property (nonatomic, retain) GCJSONService *service;
 @property (nonatomic, assign) BOOL misere;
-@property (nonatomic assign) int innerTriangleLength;
+@property (nonatomic, assign) int innerTriangleLength;
 @property (nonatomic, retain) NSString *player1Name, *player2Name;
 @property (nonatomic, assign) PlayerType player1Type, player2Type;
 @property (nonatomic, assign) int layers;

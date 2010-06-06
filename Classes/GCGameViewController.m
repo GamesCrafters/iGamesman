@@ -35,12 +35,6 @@
     return self;
 }
 
-- (void) sliderTest: (UISlider *) sender {
-	[slider setValue: round([slider value])];
-	NSLog(@"%f", round([slider value]));
-}
-
-
 /*
 - (void)loadView {	
 }
@@ -86,6 +80,25 @@
 			[playPauseButton setImage: [UIImage imageNamed: @"Resume.png"]];
 		}
 	}
+}
+
+
+- (void) stepForward {
+	[gameControl redo];
+}
+
+
+- (void) stepBackward {
+	[gameControl undo];
+}
+
+
+- (void) undoRedoSliderChanged: (UISlider *) sender {
+	[slider setValue: round([slider value])];
+	if (slider.value < gameControl.position)
+		[gameControl undo];
+	else if (slider.value > gameControl.position)
+		[gameControl redo];
 }
 
 

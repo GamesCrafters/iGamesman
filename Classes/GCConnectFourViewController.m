@@ -221,7 +221,7 @@
 		double h = [B frame].size.height;
 		UIImageView *imgView = [[UIImageView alloc] initWithFrame: CGRectMake(x, 10 - h/2.0, w, h)];
 		[imgView setImage: img];
-		imgView.tag = 1234;
+		imgView.tag = 1000 + tag;
 		[self.view insertSubview: imgView atIndex: 0];
 		
 		for (int i = 0; i < width; i += 1)
@@ -232,6 +232,26 @@
 		[imgView setFrame: CGRectMake(x, y, w, h)];
 		[UIView commitAnimations];
 	}
+}
+
+
+- (void) undoMove: (NSString *) move {
+	int tag = [move integerValue];
+	if (tag == 0) tag = width;
+	tag += width * (height - 1);
+	while (tag > 0) {
+		if (![[[game board] objectAtIndex: tag - 1] isEqual: @"+"])
+			break;
+		tag -= width;
+	}
+	UIImageView *imgView = (UIImageView *) [self.view viewWithTag: 1000 + tag];
+	
+	// Animate the piece out
+	[UIView beginAnimations: @"Rise" context: NULL];
+	[imgView setFrame: CGRectMake(imgView.frame.origin.x, -50, imgView.frame.size.width, imgView.frame.size.height)];
+	[UIView commitAnimations];
+	
+	[imgView release];
 }
 
 

@@ -18,18 +18,23 @@
 @interface GCGameController : NSObject {
 	GCGame *game;
 	GCGameViewController *viewController;
+	NSMutableArray *moveStack;
+	NSMutableArray *undoStack;
 	NSThread *runner;
 	BOOL turn;
 	BOOL stopped;
 	id computerMove;
-	int position;
+	int position, maxPosition;
 	float DELAY;
 }
 
 @property (nonatomic, assign, readonly) BOOL stopped;
 @property (nonatomic, assign) float DELAY;
+@property (nonatomic, assign) int position, maxPosition;
 
 - (id) initWithGame: (GCGame *) _game andViewController: (GCGameViewController *) viewControl;
+- (void) undo;
+- (void) redo;
 - (void) go;
 - (void) goGameReady;
 - (void) end;

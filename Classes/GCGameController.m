@@ -12,6 +12,7 @@
 @implementation GCGameController
 
 @synthesize stopped, DELAY;
+@synthesize position, maxPosition;
 
 - (id) initWithGame: (GCGame *) _game andViewController: (GCGameViewController *) viewControl {
 	if (self = [super init]) {
@@ -20,6 +21,9 @@
 		turn = NO;
 		stopped = NO;
 		computerMove = nil;
+		
+		moveStack = [[NSMutableArray alloc] init];
+		undoStack = [[NSMutableArray alloc] init];
 		
 		DELAY = 1.0;
 		
@@ -31,8 +35,46 @@
 		srand(time(NULL));
 		
 		position = 0;
+		maxPosition = 0;
 	}
 	return self;
+}
+
+
+- (void) undo {
+	if (position > 0) {
+		position -= 1;
+		
+		// Pop the move off the move stack
+		id move = [[moveStack lastObject] retain];
+		[moveStack removeLastObject];
+		
+		// Push the move onto the undo stack
+		[undoStack addObject: move];
+		
+		[game undoMove: move];
+		[move release];
+		
+		[viewController.slider setValue: position];
+	}
+}
+
+- (void) redo {
+	if (position < maxPosition) {
+		position += 1;
+		
+		// Pop the move off the undo stack
+		id move = [[undoStack lastObject] retain];
+		[undoStack removeLastObject];
+		
+		// Push the move onto the move stack
+		[moveStack addObject: move];
+		
+		[game doMove: move];
+		[move release];
+		
+		[viewController.slider setValue: position];
+	}
 }
 
 - (void) go {
@@ -107,9 +149,14 @@
 	[[NSNotificationCenter defaultCenter] removeObserver: self];
 	
 	[game doMove: [game getHumanMove]];
+	[moveStack addObject: [game getHumanMove]];
+	
+	[undoStack release];
+	undoStack = [[NSMutableArray alloc] init];
 	
 	[game stopUserInput];
 	position += 1;
+	maxPosition = position;
 	[viewController.slider setMaximumValue: position];
 	[viewController.slider setValue: position];
 	[self go];
@@ -127,6 +174,10 @@
 		[NSThread sleepForTimeInterval: DELAY];
 		
 		[game doMove: [legals objectAtIndex: choice]];
+		[moveStack addObject: [legals objectAtIndex: choice]];
+		
+		[undoStack release];
+		undoStack = [[NSMutableArray alloc] init];
 	} else {
 		NSArray *legals = [game legalMoves];
 		NSMutableArray *vals = [[NSMutableArray alloc] init];
@@ -203,6 +254,10 @@
 		
 		int choice = rand() % [moveChoices count];
 		[game doMove: [moveChoices objectAtIndex: choice]];
+		[moveStack addObject: [moveChoices objectAtIndex: choice]];
+		
+		[undoStack release];
+		undoStack = [[NSMutableArray alloc] init];
 		
 		[wins release];  [winRemotes release];
 		[loses release]; [loseRemotes release];
@@ -219,6 +274,7 @@
 	runner = nil;
 	
 	position += 1;
+	maxPosition = position;
 	[viewController.slider setMaximumValue: position];
 	[viewController.slider setValue: position];
 	[pool drain];
@@ -227,6 +283,7 @@
 
 - (void) dealloc {
 	[[NSNotificationCenter defaultCenter] removeObserver: self];
+	[moveStack release];
 	[super dealloc];
 }
 

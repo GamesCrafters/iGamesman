@@ -110,4 +110,7 @@
 // Perform MOVE and update the view accordingly
 - (void) doMove: (id) move { }
 
+// Undo MOVE and update the view accordingly
+- (void) undoMove: (id) move { }
+
 @end

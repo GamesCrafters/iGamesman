@@ -256,6 +256,7 @@
 		[game setPlayer2Name: name];
 		[game setPlayer2Type: type];
 	}
+	[self.tableView reloadData];
 }
 
 - (void) rulesPanelDidFinish {

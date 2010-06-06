@@ -9,8 +9,8 @@
 #import <Foundation/Foundation.h>
 
 /**
- Handles nyc.cs server requests for games in which the server
- response is a JSON object.
+ Handles nyc.cs server requests for games that support the
+ Gamesman Web REST API.
  */
 @interface GCJSONService : NSObject {
 	@private

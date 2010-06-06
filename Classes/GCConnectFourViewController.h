@@ -40,6 +40,7 @@
 - (void) updateLabels;
 - (void) displayPrimitive;
 - (void) doMove: (NSString *) move;
+- (void) undoMove: (NSString *) move;
 //- (void) disableButtons;
 //- (void) enableButtons;
 - (void) stop;
