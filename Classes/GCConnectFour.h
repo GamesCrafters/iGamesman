@@ -27,6 +27,8 @@
 	PlayMode					gameMode;
 	NSMutableArray				*board;
 	NSString					*humanMove;
+	NSMutableArray				*serverHistoryStack;
+	NSMutableArray				*serverUndoStack;
 }
 
 @property (nonatomic, retain) NSString *player1Name, *player2Name;
@@ -37,6 +39,7 @@
 @property (nonatomic, assign) BOOL predictions, moveValues;
 @property (nonatomic, assign, getter=isMisere) BOOL misere;
 @property (nonatomic, assign) PlayMode gameMode;
+@property (nonatomic, retain) NSMutableArray *serverHistoryStack;
 
 + (NSString *) stringForBoard: (NSArray *) _board;
 - (void) resetBoard;

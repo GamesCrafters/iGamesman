@@ -23,6 +23,7 @@
 @synthesize predictions, moveValues;
 @synthesize misere;
 @synthesize gameMode;
+@synthesize serverHistoryStack;
 
 - (id) init {
 	if (self = [super init]) {
@@ -99,12 +100,12 @@
 	
 	PlayerType current = [self currentPlayer] == PLAYER1 ? player1Type : player2Type;
 	if (current == HUMAN)
-		c4view.touchesEnabled = YES;
-	
-	if (mode == ONLINE_SOLVED)
-		service = [[GCJSONService alloc] init];
+		c4view.touchesEnabled = YES;		
 	
 	if (mode == ONLINE_SOLVED) {
+		service = [[GCJSONService alloc] init];
+		serverHistoryStack = [[NSMutableArray alloc] init];
+		serverUndoStack    = [[NSMutableArray alloc] init];
 		[c4view updateServerDataWithService: service];
 	}
 }
@@ -135,21 +136,29 @@
 }
 
 - (NSString *) getValue {
-	return [[service getValue] uppercaseString];
+	NSDictionary *entry = (NSDictionary *) [serverHistoryStack lastObject];
+	return [[entry objectForKey: @"value"] uppercaseString];
 }
 
 - (NSInteger) getRemoteness {
-	return [service getRemoteness];
+	NSDictionary *entry = (NSDictionary *) [serverHistoryStack lastObject];
+	return [[entry objectForKey: @"remoteness"] integerValue];
 }
 
 - (NSString *) getValueOfMove: (NSString *) move {
 	NSString *s = [[NSString alloc] initWithFormat: @"%d", [move intValue] - 1];
-	return [[service getValueAfterMove: s] uppercaseString];
+	NSDictionary *entry = (NSDictionary *) [serverHistoryStack lastObject];
+	NSDictionary *children = (NSDictionary *) [entry objectForKey: @"children"];
+	NSDictionary *moveEntry = (NSDictionary *) [children objectForKey: s];
+	return [[moveEntry objectForKey: @"value"] uppercaseString];
 }
 
 - (NSInteger) getRemotenessOfMove: (NSString *) move {
 	NSString *s = [[NSString alloc] initWithFormat: @"%d", [move intValue] - 1];
-	return [service getRemotenessAfterMove: s];
+	NSDictionary *entry = (NSDictionary *) [serverHistoryStack lastObject];
+	NSDictionary *children = (NSDictionary *) [entry objectForKey: @"children"];
+	NSDictionary *moveEntry = (NSDictionary *) [children objectForKey: s];
+	return [[moveEntry objectForKey: @"remoteness"] integerValue];
 }
 
 - (NSArray *) legalMoves {
@@ -270,7 +279,29 @@
 	p1Turn = !p1Turn;
 	
 	if (gameMode == ONLINE_SOLVED) {
-		[c4view updateServerDataWithService: service];
+		// Peek at the top of the undo stack
+		NSDictionary *undoEntry = [serverUndoStack lastObject];
+		if ([[undoEntry objectForKey: @"board"] isEqual: board]) {
+			// Pop it off the undo stack
+			[undoEntry retain];
+			[serverUndoStack removeLastObject];
+			
+			// Push it onto the history stack
+			[serverHistoryStack addObject: undoEntry];
+			[undoEntry release];
+			[c4view updateLabels];
+			[self postReady];
+		} else {
+			// Wipe the undo stack
+			[serverUndoStack release];
+			serverUndoStack = [[NSMutableArray alloc] init];
+			
+			// Wipe the service object
+			[service release];
+			service = [[GCJSONService alloc] init];
+			
+			[c4view updateServerDataWithService: service];
+		}
 	}
 	
 	if (gameMode != ONLINE_SOLVED)
@@ -290,10 +321,16 @@
 	}
 	p1Turn = !p1Turn;
 	
-	if (gameMode == ONLINE_SOLVED)
-		[c4view updateServerDataWithService: service];
-	else
-		[c4view updateLabels];
+	if (gameMode == ONLINE_SOLVED) {
+		// Pop the entry off the history stack
+		NSDictionary *entry = [[serverHistoryStack lastObject] retain];
+		[serverHistoryStack removeLastObject];
+		
+		// Push the entry onto the undo stack
+		[serverUndoStack addObject: entry];
+		[entry release];
+	}
+	[c4view updateLabels];
 }
 
 - (void) resetBoard {

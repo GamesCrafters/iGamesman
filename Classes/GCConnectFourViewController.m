@@ -83,12 +83,32 @@
 		[spinner stopAnimating];
 		[timer invalidate];
 	}
-	[self updateLabels];
 	if (![service connected] || ![service status])
 		[game postProblem];
 	else {
 		[game postReady];
+		// Create the new data entry
+		NSArray *keys = [[NSArray alloc] initWithObjects: @"board", @"value", @"remoteness", @"children", nil];
+		NSMutableDictionary *children = [[NSMutableDictionary alloc] init];
+		for (NSString *move in [game legalMoves]) {
+			move = [NSString stringWithFormat: @"%d", [move integerValue] - 1];
+			NSDictionary *moveDict = [[NSDictionary alloc] initWithObjectsAndKeys: [[service getValueAfterMove: move] lowercaseString], @"value",
+									  [NSNumber numberWithInteger: [service getRemotenessAfterMove: move]], @"remoteness", nil];
+			[children setObject: moveDict forKey: move];
+		}
+		NSArray *values = [[NSArray alloc] initWithObjects: [[game getBoard] copy], [service getValue], [NSNumber numberWithInteger: [service getRemoteness]], children, nil];
+		[children release];
+		NSDictionary *entry = [[NSDictionary alloc] initWithObjects: values forKeys: keys];
+		[values release];
+		[keys release];
+		
+		// Push the new entry onto the history stack
+		NSDictionary *last = [game.serverHistoryStack lastObject];
+		if ([[last objectForKey: @"board"] isEqual: [entry objectForKey: @"board"]])
+			[game.serverHistoryStack removeLastObject];
+		[game.serverHistoryStack addObject: entry];
 	}
+	[self updateLabels];
 }
 
 
@@ -112,8 +132,8 @@
 	message.numberOfLines = 4;
 	message.lineBreakMode = UILineBreakModeWordWrap;
 	if ([game predictions]) {
-		NSString *value = [service getValue];
-		int remoteness  = [service getRemoteness];
+		NSString *value = [game getValue];
+		int remoteness  = [game getRemoteness];
 		if (value != nil && remoteness != -1) {
 			NSString *modifier;
 			if (typePlay == COMPUTER_PERFECT && value == @"win") modifier = @"will";
@@ -137,7 +157,7 @@
 		UIImage *gridTop = [UIImage imageNamed: @"C4GridTopClear.png"];
 		int lastTag = width * height;
 		for (int i = 0; i < width; i += 1) {
-			NSString *currentValue = [service getValueAfterMove: [NSString stringWithFormat: @"%d", i]];
+			NSString *currentValue = [[game getValueOfMove: [NSString stringWithFormat: @"%d", i + 1]] lowercaseString];
 			UIImageView *B = (UIImageView *) [self.view viewWithTag: i + lastTag - width + 1];
 			UIView *colorRect = [self.view viewWithTag: 100 + i];
 			if ([currentValue isEqualToString: @"win"]) {
