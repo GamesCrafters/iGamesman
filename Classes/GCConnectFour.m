@@ -281,6 +281,8 @@
 	if (gameMode == ONLINE_SOLVED) {
 		// Peek at the top of the undo stack
 		NSDictionary *undoEntry = [serverUndoStack lastObject];
+		NSLog(@"board: %@", board);
+		NSLog(@"undo: %@", [undoEntry objectForKey: @"board"]);
 		if ([[undoEntry objectForKey: @"board"] isEqual: board]) {
 			// Pop it off the undo stack
 			[undoEntry retain];
@@ -312,8 +314,8 @@
 	[c4view undoMove: move];
 	
 	int slot = [move integerValue] - 1 + width * (height - 1);
-	while (slot > 0) {
-		if (![[board objectAtIndex: slot] isEqual: BLANK]) {
+	while (slot >= 0) {
+		if (![[board objectAtIndex: slot] isEqualToString: BLANK]) {
 			[board replaceObjectAtIndex: slot withObject: BLANK];
 			break;
 		}

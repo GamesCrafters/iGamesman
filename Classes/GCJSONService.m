@@ -143,7 +143,16 @@
 	if (![myBoard isEqual: board]) {
 		myBoard = [board retain];
 		
-		if (!previous) {
+		BOOL found = NO;
+		for (NSDictionary *position in previous) {
+			NSString *aBoard = [position objectForKey: @"board"];
+			if ([aBoard isEqual: myBoard]) {
+				found = YES;
+				break;
+			}
+		}
+		
+		if (!previous || !found) {
 			NSString *result = [[NSString alloc] initWithContentsOfURL: [NSURL URLWithString: posURL]
 															  encoding: NSUTF8StringEncoding
 																 error: NULL];

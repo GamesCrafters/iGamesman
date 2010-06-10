@@ -96,6 +96,7 @@
 									  [NSNumber numberWithInteger: [service getRemotenessAfterMove: move]], @"remoteness", nil];
 			[children setObject: moveDict forKey: move];
 		}
+		NSLog(@"%@", [service getValue]);
 		NSArray *values = [[NSArray alloc] initWithObjects: [[game getBoard] copy], [service getValue], [NSNumber numberWithInteger: [service getRemoteness]], children, nil];
 		[children release];
 		NSDictionary *entry = [[NSDictionary alloc] initWithObjects: values forKeys: keys];
@@ -132,7 +133,7 @@
 	message.numberOfLines = 4;
 	message.lineBreakMode = UILineBreakModeWordWrap;
 	if ([game predictions]) {
-		NSString *value = [game getValue];
+		NSString *value = [[game getValue] lowercaseString];
 		int remoteness  = [game getRemoteness];
 		if (value != nil && remoteness != -1) {
 			NSString *modifier;
@@ -285,9 +286,8 @@
 		if (col >= width) col = width - 1;
 		if (col < 0) col = 0;
 		float newX = 10 + width/2.0 + col * (w - 1);
-		/*float newX = tapX - w/2.0;*/
 		if (newX >= 10 + width/2.0 - w/2.0 && newX <= 10 + width/2.0 + w/2.0 + (w - 1) * (width - 1) ) {
-			UIImageView *pieceView = [[UIImageView alloc] initWithFrame: CGRectMake(newX, 10 - h/2.0, w, h)];
+			UIImageView *pieceView = [[UIImageView alloc] initWithFrame: CGRectMake(newX, 10, w, h)];
 			[pieceView setImage: [UIImage imageNamed: [NSString stringWithFormat: @"C4%@.png", (game.p1Turn ? @"X" : @"O")]]];
 			pieceView.tag = 55555;
 			[self.view insertSubview: pieceView atIndex: width];
@@ -314,11 +314,6 @@
 				else
 					newX -= (w - 1);
 			}
-			/*float newX = x - w/2.0;
-			if (newX > 10 + width/2.0 + (w - 1) * (width - 1) )
-				newX = 10 + width/2.0 + (w - 1) * (width - 1);
-			if (newX < 10 + width/2.0)
-				newX = 10 + width/2.0;*/
 			[UIView beginAnimations: @"Slide" context: NULL];
 			[pieceView setFrame: CGRectMake(newX, pieceView.frame.origin.y, w, h)];
 			[UIView commitAnimations];
@@ -383,21 +378,17 @@
 	self.view.backgroundColor = [UIColor colorWithRed: 0 green: 0 blue: 102.0/256.0 alpha: 1];
 	
 	float squareSize;
-	// Come back to this bit later after I figure out how tall the top
-	// Row will be to make the move value bigger
 	if ([self interfaceOrientation] == UIInterfaceOrientationPortrait)
-		squareSize = MIN(300.0 / width, 356.0 / (height + 0.5));
+		squareSize = MIN(300.0 / width, 356.0 / (height + 1));
 	else
-		squareSize = MIN(236.0 / (height + 0.5), 380.0 / width);
+		squareSize = MIN(236.0 / (height + 1), 380.0 / width);
 	
 	UIImage *gridImg = [UIImage imageNamed: @"C4Grid.png"];
 	int tagNum = 1;
 	for (int j = height - 1; j >= 0; j -= 1) {
 		for (int i = 0; i < width; i += 1) {
-			UIImageView *B = [[UIImageView alloc] initWithFrame: CGRectMake((10 + width/2) + i * (squareSize - 1), squareSize / 2.0 + 10 + j * (squareSize - 1), squareSize, squareSize)];
+			UIImageView *B = [[UIImageView alloc] initWithFrame: CGRectMake((10 + width/2) + i * (squareSize - 1), 10 + (j + 1) * (squareSize - 1), squareSize, squareSize)];
 			[B setImage: gridImg];
-			//[B addTarget: self action: @selector(tapped:) forControlEvents: UIControlEventTouchUpInside];
-			//B.adjustsImageWhenDisabled = NO;
 			B.tag = tagNum;
 			tagNum += 1;
 			[self.view addSubview: B];
@@ -412,15 +403,15 @@
 	}
 	
 	for (int i = 0; i < width; i += 1) {
-		UIView *B = [[UIView alloc] initWithFrame: CGRectMake((10 + width/2) + i * (squareSize - 1), 10, squareSize, squareSize / 2.0)];
+		UIView *B = [[UIView alloc] initWithFrame: CGRectMake((10 + width/2) + i * (squareSize - 1), 10 + squareSize / 2.0, squareSize, squareSize / 2.0)];
 		B.tag = 100 + i;
 		[B setBackgroundColor: [UIColor clearColor]];
 		[self.view insertSubview: B atIndex: 0];
 	}
 	
 	if ([self interfaceOrientation] == UIInterfaceOrientationPortrait)
-		message = [[UILabel alloc] initWithFrame: CGRectMake(20, 25 + height * squareSize, 
-															   280, 416 - (35 + height * squareSize))];
+		message = [[UILabel alloc] initWithFrame: CGRectMake(20, 25 + (height + 0.5) * squareSize, 
+															   280, 416 - (45 + height * squareSize))];
 	else
 		message = [[UILabel alloc] initWithFrame: CGRectMake(10 + width * squareSize, 3, 
 															   480 - (10 + width * squareSize), 250)];
