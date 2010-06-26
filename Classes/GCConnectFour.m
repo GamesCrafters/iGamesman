@@ -91,8 +91,10 @@
 	
 	p1Turn = YES;
 	
-	//predictions = NO;
-	//moveValues = NO;
+	if (mode == OFFLINE_UNSOLVED) {
+		predictions = NO;
+		moveValues = NO;
+	}
 	
 	if (!c4view)
 		[c4view release];
