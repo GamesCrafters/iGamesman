@@ -24,6 +24,8 @@
 		
 		moveStack = [[NSMutableArray alloc] init];
 		undoStack = [[NSMutableArray alloc] init];
+		dataHistoryStack = [[NSMutableArray alloc] init];
+		dataUndoStack    = [[NSMutableArray alloc] init];
 		
 		DELAY = 1.0;
 		
@@ -45,6 +47,16 @@
 	if (position > 0) {
 		position -= 1;
 		
+		if ([game playMode] == ONLINE_SOLVED) {
+			// Pop the top entry off the data history stack
+			NSDictionary *entry = [[dataHistoryStack lastObject] retain];
+			[dataHistoryStack removeLastObject];
+			
+			// Push the entry onto the data undo stack
+			[dataUndoStack addObject: entry];
+			[entry release];
+		}
+		
 		// Pop the move off the move stack
 		id move = [[moveStack lastObject] retain];
 		[moveStack removeLastObject];
@@ -62,6 +74,16 @@
 - (void) redo {
 	if (position < maxPosition) {
 		position += 1;
+		
+		if ([game playMode] == ONLINE_SOLVED) {
+			// Pop the top entry off the data undo stack
+			NSDictionary *entry = [[dataUndoStack lastObject] retain];
+			[dataUndoStack removeLastObject];
+			
+			// Push the entry onto the data history stack
+			[dataHistoryStack addObject: entry];
+			[entry release];
+		}
 		
 		// Pop the move off the undo stack
 		id move = [[undoStack lastObject] retain];
@@ -91,6 +113,30 @@
 
 - (void) goGameReady {
 	[[NSNotificationCenter defaultCenter] removeObserver: self];
+	
+	if ([game playMode] == ONLINE_SOLVED) {
+		[dataUndoStack release];
+		dataUndoStack = [[NSMutableArray alloc] init];
+		
+		NSArray *keys = [[NSArray alloc] initWithObjects: @"board", @"player", @"value", @"remoteness", nil];
+		NSArray *values = [[NSArray alloc] initWithObjects: [[game getBoard] copy],
+						   ([game currentPlayer] == PLAYER1 ? @"1" : @"2"), [game getValue], 
+						   [NSNumber numberWithInteger: [game getRemoteness]], nil];
+		NSDictionary *entry = [[NSDictionary alloc] initWithObjects: values forKeys: keys];
+		[keys autorelease]; [values autorelease];
+		
+		// Remove the last entry if it's a duplicate (same board and player)
+		NSDictionary *lastEntry = [dataHistoryStack lastObject];
+		if ([[lastEntry objectForKey: @"board"] isEqual: [game getBoard]] && 
+			[[lastEntry objectForKey: @"player"] isEqual: [game currentPlayer] == PLAYER1 ? @"1" : @"2"]) {
+			[dataHistoryStack removeLastObject];
+		}
+		
+		// Push the entry onto the data history stack
+		[dataHistoryStack addObject: entry];
+		[entry release];
+	}
+	
 	if ([game player1Type] == HUMAN || [game player2Type] == HUMAN)
 		[viewController.slider setEnabled: YES];
 	if (![game primitive: [game getBoard]]) {
@@ -167,7 +213,6 @@
 	
 	PlayerType p = ([game currentPlayer] == PLAYER1) ? [game player1Type] : [game player2Type];
 	if ([game playMode] == OFFLINE_UNSOLVED || p == COMPUTER_RANDOM) {
-		NSLog(@"WTF");
 		NSArray *legals = [game legalMoves];
 		int choice = rand() % [legals count];
 		

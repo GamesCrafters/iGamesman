@@ -139,7 +139,9 @@
 
 - (NSString *) getValue {
 	NSDictionary *entry = (NSDictionary *) [serverHistoryStack lastObject];
-	return [[entry objectForKey: @"value"] uppercaseString];
+	NSString *value = [[entry objectForKey: @"value"] uppercaseString];
+	if ([value isEqual: @"UNAVAILABLE"]) value = nil;
+	return value;
 }
 
 - (NSInteger) getRemoteness {
@@ -152,7 +154,9 @@
 	NSDictionary *entry = (NSDictionary *) [serverHistoryStack lastObject];
 	NSDictionary *children = (NSDictionary *) [entry objectForKey: @"children"];
 	NSDictionary *moveEntry = (NSDictionary *) [children objectForKey: s];
-	return [[moveEntry objectForKey: @"value"] uppercaseString];
+	NSString *value = [[moveEntry objectForKey: @"value"] uppercaseString];
+	if ([value isEqual: @"UNAVAILABLE"]) value = nil;
+	return value;
 }
 
 - (NSInteger) getRemotenessOfMove: (NSString *) move {
@@ -283,8 +287,6 @@
 	if (gameMode == ONLINE_SOLVED) {
 		// Peek at the top of the undo stack
 		NSDictionary *undoEntry = [serverUndoStack lastObject];
-		NSLog(@"board: %@", board);
-		NSLog(@"undo: %@", [undoEntry objectForKey: @"board"]);
 		if ([[undoEntry objectForKey: @"board"] isEqual: board]) {
 			// Pop it off the undo stack
 			[undoEntry retain];

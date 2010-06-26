@@ -18,8 +18,8 @@
 @interface GCGameController : NSObject {
 	GCGame *game;
 	GCGameViewController *viewController;
-	NSMutableArray *moveStack;
-	NSMutableArray *undoStack;
+	NSMutableArray *moveStack, *undoStack;
+	NSMutableArray *dataHistoryStack, *dataUndoStack;
 	NSThread *runner;
 	BOOL turn;
 	BOOL stopped;

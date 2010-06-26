@@ -86,7 +86,6 @@
 	if (![service connected] || ![service status])
 		[game postProblem];
 	else {
-		[game postReady];
 		// Create the new data entry
 		NSArray *keys = [[NSArray alloc] initWithObjects: @"board", @"value", @"remoteness", @"children", nil];
 		NSMutableDictionary *children = [[NSMutableDictionary alloc] init];
@@ -96,8 +95,9 @@
 									  [NSNumber numberWithInteger: [service getRemotenessAfterMove: move]], @"remoteness", nil];
 			[children setObject: moveDict forKey: move];
 		}
-		NSLog(@"%@", [service getValue]);
-		NSArray *values = [[NSArray alloc] initWithObjects: [[game getBoard] copy], [service getValue], [NSNumber numberWithInteger: [service getRemoteness]], children, nil];
+		NSString *val = [service getValue];
+		if (!val) val = @"UNAVAILABLE";
+		NSArray *values = [[NSArray alloc] initWithObjects: [[game getBoard] copy], val, [NSNumber numberWithInteger: [service getRemoteness]], children, nil];
 		[children release];
 		NSDictionary *entry = [[NSDictionary alloc] initWithObjects: values forKeys: keys];
 		[values release];
@@ -108,6 +108,8 @@
 		if ([[last objectForKey: @"board"] isEqual: [entry objectForKey: @"board"]])
 			[game.serverHistoryStack removeLastObject];
 		[game.serverHistoryStack addObject: entry];
+		
+		[game postReady];
 	}
 	[self updateLabels];
 }
@@ -181,6 +183,10 @@
 		for (int i = lastTag - width + 1; i <= width * height; i += 1) {
 			UIImageView *B = (UIImageView *) [self.view viewWithTag: i];
 			[B setImage: gridTop];
+		}
+		for (int i = 0; i < width; i += 1) {
+			UIView *colorRect = [self.view viewWithTag: 100 + i];
+			[colorRect setBackgroundColor: [UIColor clearColor]];
 		}
 	}
 	

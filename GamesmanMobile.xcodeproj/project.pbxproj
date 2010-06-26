@@ -592,7 +592,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
-				SDKROOT = iphoneos4.0;
+				SDKROOT = iphoneos3.2;
 			};
 			name = Distribution;
 		};
@@ -650,7 +650,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "3D4CD1F4-F578-4C6C-926B-637E491D5B32";
-				SDKROOT = iphoneos4.0;
+				SDKROOT = iphoneos3.2;
 			};
 			name = Debug;
 		};
@@ -663,7 +663,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
-				SDKROOT = iphoneos4.0;
+				SDKROOT = iphoneos3.2;
 			};
 			name = Release;
 		};
