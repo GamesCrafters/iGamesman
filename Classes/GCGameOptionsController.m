@@ -107,7 +107,7 @@
 
 // Customize the number of rows in the table view.
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 3;
+    return 4;
 }
 
 
@@ -159,7 +159,7 @@
 	
 		[cell addSubview: pSwitch];
 		[pSwitch release];
-	} else {
+	} else if (indexPath.row == 2) {
 		CGRect labelFrame;
 		CGRect slideFrame;
 		CGRect slideValFrame;
@@ -193,14 +193,30 @@
 		valLabel.textAlignment = UITextAlignmentCenter;
 		valLabel.tag = 1234;
 		[cell addSubview: valLabel];
+	} else {
+		cell.textLabel.text = @"Show Visual Value History";
+		if (mode == ONLINE_SOLVED) {
+			cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+			cell.textLabel.textColor = [UIColor blackColor];
+		} else {
+			cell.accessoryType = UITableViewCellAccessoryNone;
+			cell.textLabel.textColor = [UIColor grayColor];
+		}
 	}
 	
     return cell;
 }
 
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void) tableView: (UITableView *) tableView didSelectRowAtIndexPath: (NSIndexPath *) indexPath {
 	[tableView deselectRowAtIndexPath: indexPath animated: NO];
+}
+
+
+- (void) tableView: (UITableView *) tableView accessoryButtonTappedForRowWithIndexPath: (NSIndexPath *) indexPath {
+	if (indexPath.row == 3) {
+		NSLog(@"Whee!");
+	}
 }
 
 
