@@ -31,6 +31,7 @@
 @property (nonatomic, assign, readonly) BOOL stopped;
 @property (nonatomic, assign) float DELAY;
 @property (nonatomic, assign) int position, maxPosition;
+@property (nonatomic, readonly) GCGame *game;
 
 - (id) initWithGame: (GCGame *) _game andViewController: (GCGameViewController *) viewControl;
 - (void) undo;

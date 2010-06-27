@@ -13,6 +13,7 @@
 
 @synthesize stopped, DELAY;
 @synthesize position, maxPosition;
+@synthesize game;
 
 - (id) initWithGame: (GCGame *) _game andViewController: (GCGameViewController *) viewControl {
 	if (self = [super init]) {

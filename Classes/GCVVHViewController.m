@@ -12,6 +12,8 @@
 
 @implementation GCVVHViewController
 
+@synthesize game;
+
 
 - (id) initWithVVHData: (NSArray *) _data andOrientation: (UIInterfaceOrientation) orient {
 	if (self = [super init]) {
@@ -31,16 +33,27 @@
 	
 	self.title = @"Visual Value History";
 	
-	CGRect rect;
+	CGRect rect, vvhRect;
 	if (orientation == UIInterfaceOrientationPortrait) {
 		rect = CGRectMake(0, 0, 320, 416);
+		vvhRect = CGRectMake(0, 0, 320, MAX(416, 25 * [data count]));
 	} else {
 		rect = CGRectMake(0, 0, 480, 268);
+		vvhRect = CGRectMake(0, 0, 480, MAX(268, 25 * [data count]));
 	}
-	GCVVHView *vvhView = [[GCVVHView alloc] initWithFrame: rect];
+	
+	UIScrollView *scroll = [[UIScrollView alloc] initWithFrame: rect];
+	
+	GCVVHView *vvhView = [[GCVVHView alloc] initWithFrame: vvhRect];
 	vvhView.data = data;
-	[self.view addSubview: vvhView];
+	vvhView.p1Name = [game player1Name];
+	vvhView.p2Name = [game player2Name];
+	[scroll addSubview: vvhView];
+	[scroll setContentSize: CGSizeMake(vvhRect.size.width, vvhRect.size.height)];
 	[vvhView release];
+	
+	[self.view addSubview: scroll];
+	//[scroll release];
 }
 
 - (void)didReceiveMemoryWarning {

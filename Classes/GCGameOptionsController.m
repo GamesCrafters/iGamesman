@@ -219,6 +219,7 @@
 	if (indexPath.row == 3) {
 		GCVVHViewController *vvh = [[GCVVHViewController alloc] initWithVVHData: [[delegate gameController] getVVHData]
 																 andOrientation: orientation];
+		vvh.game = [delegate gameController].game;
 		[self.navigationController pushViewController: vvh animated: YES];
 		[vvh release];
 	}
