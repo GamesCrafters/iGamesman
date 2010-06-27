@@ -42,5 +42,6 @@
 - (void) restart;
 - (void) takeHumanTurn;
 - (void) takeComputerTurn;
+- (NSArray *) getVVHData;
 
 @end

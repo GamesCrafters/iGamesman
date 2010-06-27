@@ -57,6 +57,7 @@
 		0A87575C111425A2006AB678 /* PlayerChanger.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A87575B111425A2006AB678 /* PlayerChanger.xib */; };
 		0A98CC0C11C0AC34008D01AE /* C4O.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A98CC0B11C0AC34008D01AE /* C4O.png */; };
 		0A98CC1611C0ADB4008D01AE /* C4X.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A98CC1511C0ADB4008D01AE /* C4X.png */; };
+		0AB775A211D7103C00B04135 /* GCVVHView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AB775A111D7103C00B04135 /* GCVVHView.m */; };
 		0AD633E611951C7A00526842 /* C4Grid.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AD633E511951C7A00526842 /* C4Grid.png */; };
 		0AFC30BF11841E3A005CD671 /* GCJSONService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AFC30BE11841E3A005CD671 /* GCJSONService.m */; };
 		1D3623260D0F684500981E51 /* GamesmanMobileAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* GamesmanMobileAppDelegate.m */; };
@@ -159,6 +160,8 @@
 		0A87575B111425A2006AB678 /* PlayerChanger.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlayerChanger.xib; sourceTree = "<group>"; };
 		0A98CC0B11C0AC34008D01AE /* C4O.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = C4O.png; sourceTree = "<group>"; };
 		0A98CC1511C0ADB4008D01AE /* C4X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = C4X.png; sourceTree = "<group>"; };
+		0AB775A011D7103C00B04135 /* GCVVHView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCVVHView.h; sourceTree = "<group>"; };
+		0AB775A111D7103C00B04135 /* GCVVHView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCVVHView.m; sourceTree = "<group>"; };
 		0AD633E511951C7A00526842 /* C4Grid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = C4Grid.png; sourceTree = "<group>"; };
 		0AFC30BD11841E3A005CD671 /* GCJSONService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCJSONService.h; sourceTree = "<group>"; };
 		0AFC30BE11841E3A005CD671 /* GCJSONService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCJSONService.m; sourceTree = "<group>"; };
@@ -237,6 +240,8 @@
 				0A87575711142585006AB678 /* GCPlayerChangeController.m */,
 				0AFC30BD11841E3A005CD671 /* GCJSONService.h */,
 				0AFC30BE11841E3A005CD671 /* GCJSONService.m */,
+				0AB775A011D7103C00B04135 /* GCVVHView.h */,
+				0AB775A111D7103C00B04135 /* GCVVHView.m */,
 				0A700AA611D6D965003007A0 /* GCVVHViewController.h */,
 				0A700AA711D6D965003007A0 /* GCVVHViewController.m */,
 			);
@@ -583,6 +588,7 @@
 				E423EBEC118A15EC00360BDF /* GCYBoardConnectionsView.m in Sources */,
 				E49B7265119DD1CE002D72FE /* GCYGamePiece.m in Sources */,
 				0A700AA811D6D965003007A0 /* GCVVHViewController.m in Sources */,
+				0AB775A211D7103C00B04135 /* GCVVHView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

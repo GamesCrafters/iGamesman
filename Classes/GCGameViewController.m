@@ -26,10 +26,7 @@
 		gameView = [game gameViewController];
 		[self.view addSubview: gameView.view];
 		
-		/* Tell the game about the mode */
-		
 		gameControl = [[GCGameController alloc] initWithGame: game andViewController: self];
-		//while (![game gameReady]);
 		[gameControl go];
     }
     return self;
@@ -155,6 +152,11 @@
 /* Returns YES if showing move values, NO if not */
 - (BOOL) showingMoveValues {
 	return [game moveValues];
+}
+
+
+- (GCGameController *) gameController {
+	return gameControl;
 }
 
 

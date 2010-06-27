@@ -10,6 +10,7 @@
 #import "GCGame.h"
 
 @protocol OptionPanelDelegate;
+@class GCGameController;
 
 /**
  The in-game option panel for adjusting gameplay settings,
@@ -69,5 +70,7 @@
 
 /// Return the current "move values" setting
 - (BOOL) showingMoveValues;
+
+- (GCGameController *) gameController;
 
 @end

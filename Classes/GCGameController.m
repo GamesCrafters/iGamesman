@@ -326,6 +326,10 @@
 	[self performSelectorOnMainThread: @selector(go) withObject: nil waitUntilDone: NO];
 }
 
+- (NSArray *) getVVHData {
+	return dataHistoryStack;
+}
+
 - (void) dealloc {
 	[[NSNotificationCenter defaultCenter] removeObserver: self];
 	[moveStack release];

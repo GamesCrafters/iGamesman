@@ -7,6 +7,8 @@
 //
 
 #import "GCGameOptionsController.h"
+#import "GCVVHViewController.h"
+#import "GCGameController.h"
 
 
 @implementation GCGameOptionsController
@@ -215,7 +217,10 @@
 
 - (void) tableView: (UITableView *) tableView accessoryButtonTappedForRowWithIndexPath: (NSIndexPath *) indexPath {
 	if (indexPath.row == 3) {
-		NSLog(@"Whee!");
+		GCVVHViewController *vvh = [[GCVVHViewController alloc] initWithVVHData: [[delegate gameController] getVVHData]
+																 andOrientation: orientation];
+		[self.navigationController pushViewController: vvh animated: YES];
+		[vvh release];
 	}
 }
 

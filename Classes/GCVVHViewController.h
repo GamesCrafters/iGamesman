@@ -10,7 +10,10 @@
 
 
 @interface GCVVHViewController : UIViewController {
-
+	UIInterfaceOrientation orientation;
+	NSArray *data;
 }
+
+- (id) initWithVVHData: (NSArray *) _data andOrientation: (UIInterfaceOrientation) orient;
 
 @end
