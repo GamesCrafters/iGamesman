@@ -36,10 +36,10 @@
 	CGRect rect, vvhRect;
 	if (orientation == UIInterfaceOrientationPortrait) {
 		rect = CGRectMake(0, 0, 320, 416);
-		vvhRect = CGRectMake(0, 0, 320, MAX(416, 25 * [data count]));
+		vvhRect = CGRectMake(0, 0, 320, MAX(416, 50 + 20 * [data count]));
 	} else {
 		rect = CGRectMake(0, 0, 480, 268);
-		vvhRect = CGRectMake(0, 0, 480, MAX(268, 25 * [data count]));
+		vvhRect = CGRectMake(0, 0, 480, MAX(268, 50 + 20 * [data count]));
 	}
 	
 	UIScrollView *scroll = [[UIScrollView alloc] initWithFrame: rect];

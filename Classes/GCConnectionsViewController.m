@@ -168,10 +168,8 @@
 			
 			if (i % 2 == j % 2) {		// It's a slot (except the corners)
 				if ( (i != 0 || j != 0) && (i != 0 || j != size-1) && (i != size-1 || j != 0) && (i != size-1 || j != size-1) ) {
-					UIButton *button = [[UIButton buttonWithType: UIButtonTypeCustom]
-										initWithFrame: CGRectMake(10 + x, 
-																  10 + y, 
-																  squareSize,  squareSize)];
+					UIButton *button = [UIButton buttonWithType: UIButtonTypeCustom];
+					[button setFrame:	CGRectMake(10 + x, 10 + y, squareSize,  squareSize)];
 					button.tag = tag;
 					[button addTarget: self	action: @selector(tapped:) forControlEvents: UIControlEventTouchUpInside];
 					button.adjustsImageWhenDisabled = NO;

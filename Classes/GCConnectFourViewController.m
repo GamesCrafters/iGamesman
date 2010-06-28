@@ -275,7 +275,7 @@
 	
 	// Animate the piece out
 	[UIView beginAnimations: @"Rise" context: NULL];
-	[imgView setFrame: CGRectMake(imgView.frame.origin.x, -50, imgView.frame.size.width, imgView.frame.size.height)];
+	[imgView setFrame: CGRectMake(imgView.frame.origin.x, -150, imgView.frame.size.width, imgView.frame.size.height)];
 	[UIView commitAnimations];
 	
 	[imgView release];
@@ -436,10 +436,8 @@
 }
 
 - (BOOL) shouldAutorotateToInterfaceOrientation: (UIInterfaceOrientation) interfaceOrientation {
-	if (width > 5)
-		return (interfaceOrientation == UIInterfaceOrientationLandscapeLeft ||
+	return (interfaceOrientation == UIInterfaceOrientationLandscapeLeft ||
 				interfaceOrientation == UIInterfaceOrientationLandscapeRight);
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 - (void) didReceiveMemoryWarning {
