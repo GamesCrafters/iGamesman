@@ -69,6 +69,13 @@
 		[move release];
 		
 		[viewController.slider setValue: position];
+		
+		viewController.playPauseButton.enabled = YES;
+		[viewController.playPauseButton setImage: [UIImage imageNamed: @"Resume.png"]];
+		stopped = YES;
+		
+		if ([game player1Type] == HUMAN && [game player2Type] == HUMAN && stopped)
+			[self restart];
 	}
 }
 
@@ -97,6 +104,10 @@
 		[move release];
 		
 		[viewController.slider setValue: position];
+		
+		viewController.playPauseButton.enabled = YES;
+		[viewController.playPauseButton setImage: [UIImage imageNamed: @"Resume.png"]];
+		stopped = YES;
 	}
 }
 
@@ -138,8 +149,10 @@
 		[entry release];
 	}
 	
-	if ([game player1Type] == HUMAN || [game player2Type] == HUMAN)
+	if ([game player1Type] == HUMAN || [game player2Type] == HUMAN) {
 		[viewController.slider setEnabled: YES];
+		[viewController.playPauseButton setEnabled: NO];
+	}
 	if (![game primitive: [game getBoard]]) {
 		PlayerType p = ([game currentPlayer] == PLAYER1) ? [game player1Type] : [game player2Type];
 		if (p == HUMAN)
@@ -206,6 +219,7 @@
 	maxPosition = position;
 	[viewController.slider setMaximumValue: position];
 	[viewController.slider setValue: position];
+	if (stopped) stopped = NO;
 	[self go];
 }
 
