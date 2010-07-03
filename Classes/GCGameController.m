@@ -239,6 +239,7 @@
 		[undoStack release];
 		undoStack = [[NSMutableArray alloc] init];
 	} else {
+		NSLog(@"======================================================================");
 		NSArray *legals = [game legalMoves];
 		NSMutableArray *vals = [[NSMutableArray alloc] init];
 		NSMutableArray *remotes = [[NSMutableArray alloc] init];
@@ -246,6 +247,9 @@
 			[vals addObject: [[game getValueOfMove: move] uppercaseString]];
 			[remotes addObject: [NSNumber numberWithInteger: [game getRemotenessOfMove: move]]];
 		}
+		NSLog(@"legals: %@", legals);
+		NSLog(@"vals: %@", vals);
+		NSLog(@"remotes: %@", remotes);
 		
 		NSMutableArray *wins = [[NSMutableArray alloc] init];
 		NSMutableArray *loses = [[NSMutableArray alloc] init];
@@ -269,6 +273,10 @@
 			if ([val isEqual: @"TIE"]) [tieRemotes addObject: R];
 			if ([val isEqual: @"DRAW"]) [drawRemotes addObject: R];
 		}
+		NSLog(@"wins: %@", wins);
+		NSLog(@"loses: %@", loses);
+		NSLog(@"winRemotes: %@", winRemotes);
+		NSLog(@"loseRemotes: %@", loseRemotes);
 		NSMutableArray *moveChoices = [[NSMutableArray alloc] initWithCapacity: [legals count]];
 		if ([wins count] != 0) {
 			int minRemote = 10000;
@@ -297,16 +305,18 @@
 		} else if ([draws count] != 0) {
 			NSLog(@"Some draw");
 		} else {
+			NSLog(@"Lose case");
 			int maxRemote = -1;
 			for (id a_move in loses) {
 				int index = [legals indexOfObject: a_move];
 				maxRemote = MIN(maxRemote, [[remotes objectAtIndex: index] integerValue]);
 			}
+			NSLog(@"%d", maxRemote);
 			NSNumber *R = [NSNumber numberWithInt: maxRemote];
-			int moveIndex = [tieRemotes indexOfObject: R];
+			int moveIndex = [loseRemotes indexOfObject: R];
 			while (moveIndex != NSNotFound) {
-				[moveChoices addObject: [ties objectAtIndex: moveIndex]];
-				moveIndex = [tieRemotes indexOfObject: R inRange: NSMakeRange(moveIndex + 1, [tieRemotes count] - moveIndex - 1)];
+				[moveChoices addObject: [loses objectAtIndex: moveIndex]];
+				moveIndex = [loseRemotes indexOfObject: R inRange: NSMakeRange(moveIndex + 1, [loseRemotes count] - moveIndex - 1)];
 			}
 		}
 		

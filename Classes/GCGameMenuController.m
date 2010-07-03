@@ -154,11 +154,11 @@
 			UILabel *name = (UILabel *) [cell viewWithTag: 222];
 			if (indexPath.row == 1) {
 				PlayerType p1 = [game player1Type];
-				NSString *type = (p1 == HUMAN) ? @"Human" : ( (p1 == COMPUTER_RANDOM) ? @"Computer (random)" : @"Computer (perfect");
+				NSString *type = (p1 == HUMAN) ? @"Human" : ( (p1 == COMPUTER_RANDOM) ? @"Computer (random)" : @"Computer (perfect)");
 				name.text = [NSString stringWithFormat: @"%@\n%@", [game player1Name], type];
 			} else {
 				PlayerType p2 = [game player2Type];
-				NSString *type = (p2 == HUMAN) ? @"Human" : ( (p2 == COMPUTER_RANDOM) ? @"Computer (random)" : @"Computer (perfect");
+				NSString *type = (p2 == HUMAN) ? @"Human" : ( (p2 == COMPUTER_RANDOM) ? @"Computer (random)" : @"Computer (perfect)");
 				name.text = [NSString stringWithFormat: @"%@\n%@", [game player2Name], type];
 			}
 		}

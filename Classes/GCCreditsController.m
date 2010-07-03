@@ -18,15 +18,17 @@
 		self.tableView.allowsSelection = NO;
 		
 		headers = [[NSArray alloc] initWithObjects: @"GamesmanMobile", @"Project Lead", @"Team Lead",
-				   @"Connect-4", @"GamesmanJava Team\n(Connect-4 Databases)", 
-				   @"Connections", @"Y", nil];
+				   @"Connect-4", @"Connections", @"Y", @"GamesmanJava Team\n(Connect-4 Databases)", 
+				   @"Connections & Y Databases", nil];
+		NSArray *connections = [NSArray arrayWithObjects: @"Arturo Wu Zhou", @"Kevin Jorgensen", nil];
+		NSArray *y = [NSArray arrayWithObjects: @"Linsey Hansen", @"Kevin Jorgensen", nil];
 		NSArray *java = [NSArray arrayWithObjects: @"Alex Trofimov", @"David Spies", 
 						 @"James Yeh", @"Jason Davidson", @"Jeremy Fleischman", @"Jin-Su Oh", 
 						 @"Patrick Horn", @"Steven Schlansker", @"Wesley Hart", nil];
-		NSArray *connections = [NSArray arrayWithObjects: @"Arturo Wu Zhou", @"Kevin Jorgensen", nil];
-		NSArray *y = [NSArray arrayWithObjects: @"Kevin Jorgensen", @"Linsey Hansen", nil];
+		NSArray *sp10solvers = [NSArray arrayWithObjects: @"David Spies", @"Rohit Poddar", 
+								@"Sri Thatipamala", @"Thomas Lam", @"Yang Wen", @"Yian Shang", nil];
 		info    = [[NSArray alloc] initWithObjects: @"Version 0.7.6", @"Dan Garcia", @"Kevin Jorgensen", 
-				   @"Kevin Jorgensen", java, connections, y, nil];
+				   @"Kevin Jorgensen", connections, y, java, sp10solvers, nil];
     }
     return self;
 }

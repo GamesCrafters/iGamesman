@@ -50,6 +50,22 @@
 	return YES;
 }
 
+- (void) applicationDidEnterBackground: (UIApplication *) application {
+	// Choose the leftmost nav controller
+	UINavigationController *nav = [[tBarControl viewControllers] objectAtIndex: 0];
+	// Choose the nav's root VC
+	GCGameListController *listController = (GCGameListController *) [[nav viewControllers] objectAtIndex: 0];
+	[listController saveNames];
+}
+
+- (void) applicationWillTerminate: (UIApplication *) application {
+	// Choose the leftmost nav controller
+	UINavigationController *nav = [[tBarControl viewControllers] objectAtIndex: 0];
+	// Choose the nav's root VC
+	GCGameListController *listController = (GCGameListController *) [[nav viewControllers] objectAtIndex: 0];
+	[listController saveNames];
+}
+
 
 - (void)dealloc {
 	[tBarControl release];

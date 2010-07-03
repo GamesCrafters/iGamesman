@@ -18,4 +18,6 @@
 	NSDictionary *games; ///< A dictionary of game objects, keyed on the game names
 }
 
+- (void) saveNames;
+
 @end

@@ -26,6 +26,19 @@
 		GCConnections *con = [[GCConnections alloc] init];
 		GCYGame *y = [[GCYGame alloc] init];
 		NSArray *objs = [[[NSArray alloc] initWithObjects: c4, con, y, nil] autorelease];
+		
+		NSUserDefaults *stdDefaults = [NSUserDefaults standardUserDefaults];
+		if (stdDefaults) {
+			for (GCGame *game in objs) {
+				NSString *gameName = [game gameName];
+				NSString *p1Name = [stdDefaults objectForKey: [NSString stringWithFormat: @"Player 1 %@", gameName]];
+				NSString *p2Name = [stdDefaults objectForKey: [NSString stringWithFormat: @"Player 2 %@", gameName]];
+				NSLog(@"%@ %@", p1Name, p2Name);
+				if (p1Name) [game setPlayer1Name: p1Name];
+				if (p2Name) [game setPlayer2Name: p2Name];
+			}
+		}
+		
 		[c4 release];
 		[con release];
 		[y release];
@@ -41,6 +54,21 @@
 		self.tableView.separatorColor = [UIColor lightGrayColor];
 	}
     return self;
+}
+
+
+- (void) saveNames {
+	NSUserDefaults *stdDefaults = [NSUserDefaults standardUserDefaults];
+	if (stdDefaults) {
+		for (NSString *name in games) {
+			GCGame *game = [games objectForKey: name];
+			NSString *p1Name = [game player1Name];
+			NSString *p2Name = [game player2Name];
+			[stdDefaults setObject: p1Name forKey: [NSString stringWithFormat: @"Player 1 %@", name]];
+			[stdDefaults setObject: p2Name forKey: [NSString stringWithFormat: @"Player 2 %@", name]];
+		}
+		[stdDefaults synchronize];
+	}
 }
 
 
