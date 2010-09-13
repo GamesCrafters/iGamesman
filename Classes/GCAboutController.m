@@ -64,6 +64,10 @@
 	// e.g. self.myOutlet = nil;
 }
 
+- (BOOL) shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
+	return toInterfaceOrientation != UIInterfaceOrientationPortraitUpsideDown;
+}
+
 
 - (void)dealloc {
     [super dealloc];

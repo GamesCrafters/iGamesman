@@ -291,6 +291,13 @@
 		int col = (int) (tapX - (10 + width/2.0) ) / w;
 		if (col >= width) col = width - 1;
 		if (col < 0) col = 0;
+		if (![[game legalMoves] containsObject: [NSString stringWithFormat: @"%d", col + 1]]) {
+			int minOffset = width + 1;
+			for (NSString *move in [game legalMoves]) {
+				minOffset = abs(minOffset) < abs([move intValue] - 1 - col) ? minOffset : [move intValue] - 1 - col;
+			}
+			col += minOffset;
+		}
 		float newX = 10 + width/2.0 + col * (w - 1);
 		if (newX >= 10 + width/2.0 - w/2.0 && newX <= 10 + width/2.0 + w/2.0 + (w - 1) * (width - 1) ) {
 			UIImageView *pieceView = [[UIImageView alloc] initWithFrame: CGRectMake(newX, 10, w, h)];
@@ -313,16 +320,11 @@
 			if (col >= width) col = width - 1;
 			if (col < 0) col = 0;
 			float newX = 10 + width/2.0 + col * (w - 1);
-			if (![[game legalMoves] containsObject: [NSString stringWithFormat: @"%d", col + 1]]) {
-				float middle = newX + w/2.0;
-				if (x - middle > 0)
-					newX += (w - 1);
-				else
-					newX -= (w - 1);
+			if ([[game legalMoves] containsObject: [NSString stringWithFormat: @"%d", col + 1]]) {
+				[UIView beginAnimations: @"Slide" context: NULL];
+				[pieceView setFrame: CGRectMake(newX, pieceView.frame.origin.y, w, h)];
+				[UIView commitAnimations];
 			}
-			[UIView beginAnimations: @"Slide" context: NULL];
-			[pieceView setFrame: CGRectMake(newX, pieceView.frame.origin.y, w, h)];
-			[UIView commitAnimations];
 		}
 	}
 }
@@ -330,13 +332,12 @@
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
 	if (touchesEnabled) {
-		UITouch *aTouch = [touches anyObject];
-		float x = [aTouch locationInView: self.view].x;
 		UIImageView *V = (UIImageView *) [self.view viewWithTag: 1];
-		int col = (int) ((x - 10)/V.frame.size.width);
 		NSString *move = nil;
 		UIView *pieceView = [self.view viewWithTag: 55555];
 		if (pieceView) {
+			float x = pieceView.frame.origin.x + pieceView.frame.size.width/2.0;
+			int col = (int) ((x - 10)/V.frame.size.width);
 			if (0 <= col && col < width) {
 				move = [NSString stringWithFormat: @"%d", col + 1];
 			} else if (col >= width)

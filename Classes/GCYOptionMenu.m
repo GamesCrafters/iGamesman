@@ -48,7 +48,7 @@
 - (void) updateLayers: (UISegmentedControl *) sender{
 	layers = [sender selectedSegmentIndex];
 	
-	UISegmentedControl *otherControl = [self.view viewWithTag: 2];
+	UISegmentedControl *otherControl = (UISegmentedControl *) [self.view viewWithTag: 2];
 	switch ([sender selectedSegmentIndex]) {
 		case 2:
 			if ([otherControl selectedSegmentIndex] == 3 || [otherControl selectedSegmentIndex] == 2)
@@ -79,7 +79,7 @@
 - (void) updateTriangle: (UISegmentedControl *) sender{
 	innerTriangleLength = [sender selectedSegmentIndex] + 1;
 	
-	UISegmentedControl *otherControl = [self.view viewWithTag: 1];
+	UISegmentedControl *otherControl = (UISegmentedControl *) [self.view viewWithTag: 1];
 	switch ([sender selectedSegmentIndex]){
 		case 2:
 			if ([otherControl selectedSegmentIndex] == 2)
@@ -138,6 +138,10 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+}
+
+- (BOOL) shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
+	return toInterfaceOrientation != UIInterfaceOrientationPortraitUpsideDown;
 }
 
 

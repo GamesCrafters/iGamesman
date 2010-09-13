@@ -33,7 +33,6 @@
 				NSString *gameName = [game gameName];
 				NSString *p1Name = [stdDefaults objectForKey: [NSString stringWithFormat: @"Player 1 %@", gameName]];
 				NSString *p2Name = [stdDefaults objectForKey: [NSString stringWithFormat: @"Player 2 %@", gameName]];
-				NSLog(@"%@ %@", p1Name, p2Name);
 				if (p1Name) [game setPlayer1Name: p1Name];
 				if (p2Name) [game setPlayer2Name: p2Name];
 			}
@@ -92,6 +91,10 @@
 - (void)viewDidUnload {
 	// Release any retained subviews of the main view.
 	// e.g. self.myOutlet = nil;
+}
+
+- (BOOL) shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
+	return toInterfaceOrientation != UIInterfaceOrientationPortraitUpsideDown;
 }
 
 

@@ -43,8 +43,11 @@
 	
 	CGContextSetLineWidth(context, 2.0);
 	
-	for (int i = 0 ; i <= maxRemote + 5; i += 1) {
-		float x0 = ((w/2.0 - 20) / (maxRemote + 5)) * i;
+	int slots = (int) ceil(maxRemote / 5.0) * 5;
+	float step = (w/2.0 - 20) / (slots + 1); // Number of points (x) per one step in remoteness
+	
+	for (int i = 0 ; i <= slots; i += 1) {
+		float x0 = step * i;
 		
 		float dash[] = {5.0, 5.0};
 		if (i % 5 == 0) {
@@ -54,7 +57,7 @@
 		} else {
 			// Minor tick line
 			CGContextSetLineDash(context, 0, dash, 2);
-			CGContextSetRGBStrokeColor(context, 0.5, 0.5, 0.5, 1);
+			CGContextSetRGBStrokeColor(context, 0.3, 0.3, 0.3, 1);
 		}
 		
 		// Left side line
@@ -67,7 +70,8 @@
 		CGContextAddLineToPoint(context, w - 20 - x0, y + h);
 		CGContextStrokePath(context);
 		
-		if (x0 != w/2.0 - 20 && i % 5 == 0) { // Only label major tick lines (and not the center)
+		// Only label major tick lines (and not the center or centermost major tick lines)
+		if (x0 != w/2.0 - 20 && i % 5 == 0 && i != slots) {
 			CGContextSetTextDrawingMode(context, kCGTextFill);
 			const char *str = [[NSString stringWithFormat: @"%d", i] UTF8String];
 			
@@ -92,7 +96,6 @@
 	CGContextShowTextAtPoint(context, 10, y + 15, leftStr, strlen(leftStr));
 	CGContextShowTextAtPoint(context, w - 10 - 5 * strlen(rightStr), y + 15, rightStr, strlen(rightStr));
 	
-	float step = (w/2.0 - 20) / (maxRemote + 5); // Number of points (x) per one step in remoteness
 	int y1 = 60;
 	
 	CGPoint previous[2] = {};
