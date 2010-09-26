@@ -57,8 +57,10 @@
 		0A87575C111425A2006AB678 /* PlayerChanger.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A87575B111425A2006AB678 /* PlayerChanger.xib */; };
 		0A98CC0C11C0AC34008D01AE /* C4O.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A98CC0B11C0AC34008D01AE /* C4O.png */; };
 		0A98CC1611C0ADB4008D01AE /* C4X.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A98CC1511C0ADB4008D01AE /* C4X.png */; };
+		0AB20CC8124405B400C91DB0 /* GCTicTacToe.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AB20CC7124405B400C91DB0 /* GCTicTacToe.m */; };
 		0AB775A211D7103C00B04135 /* GCVVHView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AB775A111D7103C00B04135 /* GCVVHView.m */; };
 		0AD633E611951C7A00526842 /* C4Grid.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AD633E511951C7A00526842 /* C4Grid.png */; };
+		0AF8E94D124AA2EF008CDADC /* GCTicTacToeOptionMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AF8E94C124AA2EF008CDADC /* GCTicTacToeOptionMenu.m */; };
 		0AFC30BF11841E3A005CD671 /* GCJSONService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AFC30BE11841E3A005CD671 /* GCJSONService.m */; };
 		1D3623260D0F684500981E51 /* GamesmanMobileAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* GamesmanMobileAppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
@@ -160,9 +162,13 @@
 		0A98CC0B11C0AC34008D01AE /* C4O.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = C4O.png; sourceTree = "<group>"; };
 		0A98CC1511C0ADB4008D01AE /* C4X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = C4X.png; sourceTree = "<group>"; };
 		0AAEC23611D7F9F800962EEA /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
+		0AB20CC6124405B400C91DB0 /* GCTicTacToe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCTicTacToe.h; sourceTree = "<group>"; };
+		0AB20CC7124405B400C91DB0 /* GCTicTacToe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCTicTacToe.m; sourceTree = "<group>"; };
 		0AB775A011D7103C00B04135 /* GCVVHView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCVVHView.h; sourceTree = "<group>"; };
 		0AB775A111D7103C00B04135 /* GCVVHView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCVVHView.m; sourceTree = "<group>"; };
 		0AD633E511951C7A00526842 /* C4Grid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = C4Grid.png; sourceTree = "<group>"; };
+		0AF8E94B124AA2EF008CDADC /* GCTicTacToeOptionMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCTicTacToeOptionMenu.h; sourceTree = "<group>"; };
+		0AF8E94C124AA2EF008CDADC /* GCTicTacToeOptionMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCTicTacToeOptionMenu.m; sourceTree = "<group>"; };
 		0AFC30BD11841E3A005CD671 /* GCJSONService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCJSONService.h; sourceTree = "<group>"; };
 		0AFC30BE11841E3A005CD671 /* GCJSONService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCJSONService.m; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -217,6 +223,7 @@
 				0A1ABC201135BD3300BA1B81 /* JSON */,
 				0A12AB8C1115771600297EB8 /* ConnectFour */,
 				0A19F18C11260A4F0003F8C7 /* Connections */,
+				0AB20CC51244057600C91DB0 /* Tic-Tac-Toe */,
 				0A65E635111CCFD6001400F6 /* Y */,
 				0A87563511140191006AB678 /* GCGame.h */,
 				0A87563611140191006AB678 /* GCGame.m */,
@@ -366,6 +373,17 @@
 				0A85D288112E7561007D2C3C /* Settings.png */,
 			);
 			name = Images;
+			sourceTree = "<group>";
+		};
+		0AB20CC51244057600C91DB0 /* Tic-Tac-Toe */ = {
+			isa = PBXGroup;
+			children = (
+				0AB20CC6124405B400C91DB0 /* GCTicTacToe.h */,
+				0AB20CC7124405B400C91DB0 /* GCTicTacToe.m */,
+				0AF8E94B124AA2EF008CDADC /* GCTicTacToeOptionMenu.h */,
+				0AF8E94C124AA2EF008CDADC /* GCTicTacToeOptionMenu.m */,
+			);
+			name = "Tic-Tac-Toe";
 			sourceTree = "<group>";
 		};
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
@@ -596,6 +614,8 @@
 				E49B7265119DD1CE002D72FE /* GCYGamePiece.m in Sources */,
 				0A700AA811D6D965003007A0 /* GCVVHViewController.m in Sources */,
 				0AB775A211D7103C00B04135 /* GCVVHView.m in Sources */,
+				0AB20CC8124405B400C91DB0 /* GCTicTacToe.m in Sources */,
+				0AF8E94D124AA2EF008CDADC /* GCTicTacToeOptionMenu.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

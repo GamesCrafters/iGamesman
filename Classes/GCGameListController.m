@@ -12,6 +12,7 @@
 #import "GCGame.h"
 #import "GCConnectFour.h"
 #import "GCConnections.h"
+#import "GCTicTacToe.h"
 #import "GCYGame.h"
 
 
@@ -24,8 +25,9 @@
 		
 		GCConnectFour *c4 = [[GCConnectFour alloc] init];
 		GCConnections *con = [[GCConnections alloc] init];
+		GCTicTacToe *ttt = [[GCTicTacToe alloc] init];
 		GCYGame *y = [[GCYGame alloc] init];
-		NSArray *objs = [[[NSArray alloc] initWithObjects: c4, con, y, nil] autorelease];
+		NSArray *objs = [[[NSArray alloc] initWithObjects: c4, con, ttt, y, nil] autorelease];
 		
 		NSUserDefaults *stdDefaults = [NSUserDefaults standardUserDefaults];
 		if (stdDefaults) {
@@ -40,6 +42,7 @@
 		
 		[c4 release];
 		[con release];
+		[ttt release];
 		[y release];
 		
 		NSMutableArray *temp = [[NSMutableArray alloc] init];

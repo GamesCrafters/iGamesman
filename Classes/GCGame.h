@@ -30,7 +30,7 @@ typedef enum { PLAYER1, PLAYER2, NONE } Player;
 
 /// Getter for Player 1's name
 - (NSString *) player1Name;
-/// Getter for Player 1's name
+/// Getter for Player 2's name
 - (NSString *) player2Name;
 
 /// Setter for the Player 1's name
