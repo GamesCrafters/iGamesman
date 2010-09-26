@@ -9,15 +9,22 @@
 #import <UIKit/UIKit.h>
 #import "GCYGame.h"
 #import "GCYBoardView.h"
+#import "GCJSONService.h"
 
 
 @interface GCYGameViewController : UIViewController {
+	UIActivityIndicatorView *spinner;
 	GCYGame *game;
 	UILabel *message;
 	GCYBoardView *boardView;
+	NSTimer *timer;
+	
+	NSThread *waiter;
+	GCJSONService *service;
 }
 
 @property (nonatomic, retain) GCYBoardView *boardView;
+@property (nonatomic, retain) GCJSONService *service;
 
 //- (id) initWithLayers: (int) layers; //can probably delete
 - (id) initWithGame: (GCYGame *) _game;
@@ -35,5 +42,9 @@
 
 - (NSArray *) translateToServer: (NSArray *) moveArray;
 - (NSDictionary *) getServerValues: (NSArray *) moves;
+
+- (void) updateServerDataWithService: (GCJSONService *) service;
+- (void) fetchNewData: (BOOL) buttonsOn;
+- (void) fetchFinished: (BOOL) buttonsOn;
 
 @end

@@ -25,7 +25,6 @@
 @synthesize yGameView;
 @synthesize misere;
 @synthesize innerTriangleLength;
-@synthesize service;
 @synthesize gameMode;
 
 - (id) init {
@@ -292,45 +291,16 @@
 }
 
 
-
-- (void) startFetch{
-	waiter = [[NSThread alloc] initWithTarget: self selector: @selector (fetchNewData) object: nil];
-	[waiter start];
-}
-
-- (void) fetchNewData{
-	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-	NSString *boardString = [self stringForBoard: board];
-	//NSString *boardURL = [boardString stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
-	//NSString *boardVal = [[NSString stringWithFormat: @"http://nyc.cs.berkeley.edu:8080/gcweb/service/gamesman/puzzles/y/getMoveValue;side=%d;board=%@", (size - 5)/2 +2, boardURL] retain];
-	//NSString *moveVals = [[NSString stringWithFormat: @"http://nyc.cs.berkeley.edu:8080/gcweb/service/gamesman/puzzles/y/getNextMoveValues;side=%d;board=%@", (size - 5)/2 +2, boardURL] retain];
-	//[service retrieveDataForBoard: boardString URL: boardVal andNextMovesURL: moveVals];
-	//[self performSelectorOnMainThread: @selector (fetchFinished) withObject: nil waitUntilDone: NO];
-	[pool release];
-	
-}
-
-- (void) fetchFinished{
-	if(waiter)	[waiter release];
-	if(![service status] || ![service connected]){
-		[[NSNotificationCenter defaultCenter] postNotificationName: @"GameEncounteredProblem" object: self ];
-	}
-	else{
-		[yGameView updateLabels];
-		[[NSNotificationCenter defaultCenter] postNotificationName: @"GameIsReady" object: self ];
-	}
-}
-
-
-
 - (void) notifyWhenReady {
 	if (gameMode == OFFLINE_UNSOLVED)
 		[[NSNotificationCenter defaultCenter] postNotificationName: @"GameIsReady" object: self];
 }
 
 
-/** A really simple utility function that deals with the whole 'convert an NSNumber to an int and check for a player's piece in that
- ** position' thing **/
+/** 
+ A really simple utility function that deals with the whole 'convert an NSNumber to an int and check for a player's piece in that
+ position' thing 
+ */
 - (BOOL) boardContainsPlayerPiece: (NSString *) piece forPosition: (NSNumber *) position{
 
 	if ([[board objectAtIndex: [position intValue] - 1] isEqual: piece]){
@@ -339,6 +309,23 @@
 	else return NO;
 }
 
+/** 
+ Convert the NSArray representation of a board to an NSString.
+ A convenience method for making server requests.
+ 
+ @param board a Y board, represented as an NSArray
+ @return the same board, represented as an NSString
+ */
++ (NSString *) stringForBoard: (NSArray *) _board {
+	NSString *boardString = @"";
+	for (NSString *piece in _board) {
+		if ([piece isEqualToString: @"+"])
+			piece = @" ";
+		boardString = [boardString stringByAppendingString: piece];
+		
+	}
+	return boardString;
+}
 
 
 - (void) dealloc {
