@@ -13,6 +13,7 @@
 #import "GCConnectFour.h"
 #import "GCConnections.h"
 #import "GCTicTacToe.h"
+#import "GCQuickCross.h"
 #import "GCYGame.h"
 #import "GCOthello.h"
 
@@ -27,9 +28,9 @@
 		GCConnectFour *c4 = [[GCConnectFour alloc] init];
 		GCConnections *con = [[GCConnections alloc] init];
 		GCTicTacToe *ttt = [[GCTicTacToe alloc] init];
+		GCQuickCross *qc = [[GCQuickCross alloc] init];
 		GCYGame *y = [[GCYGame alloc] init];
-		GCOthello *o = [[GCOthello alloc] init];
-		NSArray *objs = [[[NSArray alloc] initWithObjects: c4, con, o, ttt, y, nil] autorelease];
+		NSArray *objs = [[[NSArray alloc] initWithObjects: c4, con, ttt, qc, y, nil] autorelease];
 		
 		NSUserDefaults *stdDefaults = [NSUserDefaults standardUserDefaults];
 		if (stdDefaults) {
@@ -45,6 +46,7 @@
 		[c4 release];
 		[con release];
 		[ttt release];
+		[qc release];
 		[y release];
 		[o release];
 		
