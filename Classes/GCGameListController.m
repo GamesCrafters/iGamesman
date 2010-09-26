@@ -14,6 +14,7 @@
 #import "GCConnections.h"
 #import "GCTicTacToe.h"
 #import "GCYGame.h"
+#import "GCOthello.h"
 
 
 @implementation GCGameListController
@@ -27,7 +28,8 @@
 		GCConnections *con = [[GCConnections alloc] init];
 		GCTicTacToe *ttt = [[GCTicTacToe alloc] init];
 		GCYGame *y = [[GCYGame alloc] init];
-		NSArray *objs = [[[NSArray alloc] initWithObjects: c4, con, ttt, y, nil] autorelease];
+		GCOthello *o = [[GCOthello alloc] init];
+		NSArray *objs = [[[NSArray alloc] initWithObjects: c4, con, o, ttt, y, nil] autorelease];
 		
 		NSUserDefaults *stdDefaults = [NSUserDefaults standardUserDefaults];
 		if (stdDefaults) {
@@ -44,6 +46,7 @@
 		[con release];
 		[ttt release];
 		[y release];
+		[o release];
 		
 		NSMutableArray *temp = [[NSMutableArray alloc] init];
 		for (GCGame *G in objs)
