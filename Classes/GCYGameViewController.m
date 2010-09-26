@@ -73,7 +73,7 @@
 	
 	if(game.gameMode == ONLINE_SOLVED && game.predictions){
 		message.numberOfLines = 2;
-		NSString *value = [game.service getValue];
+		NSString *value = [service getValue];
 		PlayerType typePlay = ([game currentPlayer] == PLAYER1) ? [game player1Type] : [game player2Type];
 		PlayerType typeOpp  = ([game currentPlayer] == PLAYER1) ? [game player2Type] : [game player1Type];
 		NSString *modifier;
@@ -81,7 +81,7 @@
 		else if (typeOpp == COMPUTER_PERFECT && value == @"lose") modifier = @"will";
 		else if (typePlay == COMPUTER_PERFECT && typeOpp == COMPUTER_PERFECT) modifier = @"will";
 		else modifier = @"should";
-		[message setText: [NSString stringWithFormat: @"%@ (%@)'s turn\n%@ %@ in %d", player, color, modifier, [game.service getValue], [game.service getRemoteness]]];
+		[message setText: [NSString stringWithFormat: @"%@ (%@)'s turn\n%@ %@ in %d", player, color, modifier, [service getValue], [service getRemoteness]]];
 	}
 	else{
 		[message setText: [NSString stringWithFormat: @"%@ (%@)'s turn", player, color]];
@@ -243,6 +243,39 @@
 		UIView *button = (UIButton *) [self.view viewWithTag: i];
 		if ([button isKindOfClass: [UIButton class]])
 			[(UIButton *) button setEnabled: YES];
+	}
+}
+
+
+- (void) updateServerDataWithService: (GCJSONService *) _service { 
+	service = _service;
+	[spinner startAnimating];
+	[self.view bringSubviewToFront: spinner];
+	waiter = [[NSThread alloc] initWithTarget: self selector: @selector(fetchNewData:) object: nil];
+	[waiter start];
+	timer = [[NSTimer scheduledTimerWithTimeInterval: 60 target: self selector: @selector(timedOut:) userInfo: nil repeats: NO] retain];
+}
+
+- (void) fetchNewData{
+	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+	NSString *boardString = [GCYGame stringForBoard: game.board];
+	NSString *boardURL = [boardString stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
+	NSString *boardVal = [[NSString stringWithFormat: @"http://nyc.cs.berkeley.edu:8080/gcweb/service/gamesman/puzzles/y/getMoveValue;side=%d;board=%@", [game.board count], boardURL] retain];
+	NSString *moveVals = [[NSString stringWithFormat: @"http://nyc.cs.berkeley.edu:8080/gcweb/service/gamesman/puzzles/y/getNextMoveValues;side=%d;board=%@", [game.board count], boardURL] retain];
+	[service retrieveDataForBoard: boardString URL: boardVal andNextMovesURL: moveVals];
+	[self performSelectorOnMainThread: @selector (fetchFinished) withObject: nil waitUntilDone: NO];
+	[pool release];
+	
+}
+
+- (void) fetchFinished{
+	if(waiter)	[waiter release];
+	if(![service status] || ![service connected]){
+		[[NSNotificationCenter defaultCenter] postNotificationName: @"GameEncounteredProblem" object: self ];
+	}
+	else{
+		[self updateLabels];
+		[[NSNotificationCenter defaultCenter] postNotificationName: @"GameIsReady" object: self ];
 	}
 }
 
