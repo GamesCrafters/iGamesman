@@ -23,4 +23,6 @@
 @property (nonatomic, assign, getter=isMisere) BOOL misere;
 @property (nonatomic, assign) int rows, cols, inarow;
 
+- (void) resetBoard;
+
 @end

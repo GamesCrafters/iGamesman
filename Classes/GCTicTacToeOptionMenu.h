@@ -15,6 +15,8 @@
 @interface GCTicTacToeOptionMenu : UITableViewController <GCOptionMenu> {
 	id <GCRulesDelegate> delegate;
 	GCTicTacToe *game;
+	int rows, cols, inarow;
+	BOOL misere;
 }
 
 @property (nonatomic, assign) id <GCRulesDelegate> delegate;

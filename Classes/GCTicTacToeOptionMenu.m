@@ -20,8 +20,26 @@
 - (id) initWithGame: (GCTicTacToe *) _game {
 	if (self = [super initWithStyle: UITableViewStyleGrouped]) {
 		game = _game;
+		
+		rows = game.rows;
+		cols = game.cols;
+		inarow = game.inarow;
+		misere = game.misere;
+		
+		self.tableView.allowsSelection = NO;
 	}
 	return self;
+}
+
+- (void) update: (UISegmentedControl *) sender {
+	if (sender.tag == 100)
+		cols = sender.selectedSegmentIndex + 3;
+	if (sender.tag == 101)
+		rows = sender.selectedSegmentIndex + 3;
+	if (sender.tag == 102)
+		inarow = sender.selectedSegmentIndex + 3;
+	if (sender.tag == 103)
+		misere = (sender.selectedSegmentIndex == 1);
 }
 
 - (void) cancel {
@@ -30,7 +48,12 @@
 
 
 - (void) done {
+	game.rows = rows;
+	game.cols = cols;
+	game.inarow = inarow;
+	game.misere = misere;
 	
+	[game resetBoard];
 	
 	[delegate rulesPanelDidFinish];
 }
@@ -82,6 +105,8 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+		
+		cell.backgroundColor = [UIColor colorWithRed: 234.0/255 green: 234.0/255 blue: 255.0/255 alpha: 1];
     }
 
     // Configure the cell...
@@ -104,6 +129,8 @@
 	
 	segment.segmentedControlStyle = UISegmentedControlStyleBar;
 	segment.tintColor = [UIColor colorWithRed: 28.0/255 green: 127.0/255 blue: 189.0/255 alpha: 1.0];
+	segment.tag = 100 + indexPath.section;
+	[segment addTarget: self action: @selector(update:) forControlEvents: UIControlEventValueChanged];
 	[cell addSubview: segment];
 	[segment release];
     
@@ -116,14 +143,7 @@
 #pragma mark Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Navigation logic may go here. Create and push another view controller.
-	/*
-	 <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-	 [self.navigationController pushViewController:detailViewController animated:YES];
-	 [detailViewController release];
-	 */
+   
 }
 
 

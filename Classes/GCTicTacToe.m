@@ -51,4 +51,15 @@
 	return [[GCTicTacToeOptionMenu alloc] initWithGame: self];
 }
 
+- (void) resetBoard {
+	if (board != nil) {
+		[board release];
+		board = nil;
+	}
+	
+	board = [[NSMutableArray alloc] initWithCapacity: rows * cols];
+	for (int i = 0; i < rows * cols; i += 1)
+		[board addObject: BLANK];
+}
+
 @end
