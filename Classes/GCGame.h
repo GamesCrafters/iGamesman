@@ -87,9 +87,6 @@ typedef enum { PLAYER1, PLAYER2, NONE } Player;
 /// Return the current board
 - (id) getBoard;
 
-/// Return the name of the player whose turn it is
-- (Player) getPlayer;
-
 /// Return the value of the current board
 - (NSString *) getValue;
 
@@ -105,7 +102,7 @@ typedef enum { PLAYER1, PLAYER2, NONE } Player;
 /// Return an array of legal moves using the current board
 - (NSArray *) legalMoves;
 
-/// Return @"WIN", @"LOSE", @"TIE", or @"DRAW", as appropriate, if theBoard is primitive; return nil if not
+/// Return @"WIN", @"LOSE", or @"TIE", as appropriate, if theBoard is primitive; return nil if not
 - (NSString *) primitive: (id) theBoard;
 
 /// Ask the user for input

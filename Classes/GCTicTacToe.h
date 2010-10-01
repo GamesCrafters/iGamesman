@@ -13,6 +13,8 @@
 	NSString *player1Name, *player2Name;
 	PlayerType player1Type, player2Type;
 	
+	BOOL p1Turn;
+	
 	int rows, cols, inarow;
 	BOOL misere;
 	NSMutableArray *board;
