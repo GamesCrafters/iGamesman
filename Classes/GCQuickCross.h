@@ -12,7 +12,9 @@
 @interface GCQuickCross : GCGame {
 	NSString *player1Name, *player2Name;
 	PlayerType player1Type, player2Type;
-		
+	
+	BOOL p1Turn;
+	
 	int rows, cols, inalign;
 	BOOL misere;
 	NSMutableArray *board;
