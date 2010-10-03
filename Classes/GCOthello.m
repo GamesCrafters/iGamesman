@@ -21,19 +21,18 @@
 @synthesize player1Type, player2Type;
 @synthesize rows, cols;
 @synthesize misere;
-@synthesize p1Turn;
 
 - (id) init {
 	if (self = [super init]) {
 		player1Name = @"Player 1";
 		player2Name = @"Player 2";
-		NSMutableArray *myOldMoves = [[NSMutableArray alloc] initWithCapacity:rows*cols*2];
+		myOldMoves = [[NSMutableArray alloc] initWithCapacity:rows*cols*2];
 		rows = 8;
 		cols = 8;
 		misere = NO;
 		p1Turn = YES;
-		int p1pieces = 2;
-		int p2pieces = 2;
+		p1pieces = 2;
+		p2pieces = 2;
 		
 		board = [[NSMutableArray alloc] initWithCapacity: rows * cols];
 		for (int i = 0; i < rows * cols; i += 1) {
@@ -77,7 +76,7 @@
 	return moves;
 }
 
--(NSArray *) getFlips: (int) loc {
+- (NSArray *) getFlips: (int) loc {
 	NSMutableArray *flips = [[NSMutableArray alloc] initWithCapacity:rows*cols];
 	NSString *myPiece = p1Turn ? P1PIECE : P2PIECE;
 	NSString *oppPiece = p1Turn ? P2PIECE : P1PIECE;
@@ -100,7 +99,7 @@
 	return flips;
 }
 
--(BOOL) isOutOfBounds: (int) loc offset: (int) offset {
+- (BOOL) isOutOfBounds: (int) loc offset: (int) offset {
 	if (loc < 0 || loc >= rows*cols) {
 		return YES;
 	}
@@ -112,11 +111,11 @@
 		&& (loc % cols == 0)) {
 		return YES;
 	}
-	return NO:
+	return NO;
 }
 
 - (void) doMove:(NSNumber *)move {
-	NSMutableArray *oldBoard = [[NSArray alloc] initWithCapacity: 3]
+	NSMutableArray *oldBoard = [[NSArray alloc] initWithCapacity: 3];
 	[oldBoard addObject:[board copy]];
 	[oldBoard addObject:[NSNumber numberWithInt:p1pieces]];
 	[oldBoard addObject:[NSNumber numberWithInt:p2pieces]];
@@ -127,7 +126,7 @@
 		[board replaceObjectAtIndex:[x intValue] withObject:myPiece];
 	}
 	[board replaceObjectAtIndex:[move intValue] withObject:myPiece];
-	int changedPieces = [flips count]
+	int changedPieces = [flips count];
 	if (p1Turn) {
 		p1pieces += changedPieces + 1;
 		p2pieces -= changedPieces;
@@ -142,14 +141,14 @@
 	NSArray *b = [[myOldMoves lastObject] retain];
 	[myOldMoves removeLastObject];
 	board = [b objectAtIndex:0];
-	p1pieces = [b objectAtIndex:1];
-	p2pieces = [b objectAtIndex:2];
+	p1pieces = [[b objectAtIndex:1] intValue];
+	p2pieces = [[b objectAtIndex:2] intValue];
 }
 
 - (NSString *) primitive {
-	if ([[legalMoves objectAtIndex:0] isEqual:PASS]) {
+	if ([[[self legalMoves] objectAtIndex:0] isEqual:PASS]) {
 		p1Turn = !p1Turn;
-		if ([[legalMoves objectAtIndex:0] isEqual:PASS]) {
+		if ([[[self legalMoves] objectAtIndex:0] isEqual:PASS]) {
 			p1Turn = !p1Turn;
 			if (p1pieces > p2pieces) return  p1Turn ? @"WIN" : @"LOSE";
 			else if (p2pieces > p1pieces) return p1Turn ? @"LOSE" : @"WIN";
@@ -157,6 +156,7 @@
 		}
 		p1Turn = !p1Turn;
 	}
+	return nil;
 }
 
 

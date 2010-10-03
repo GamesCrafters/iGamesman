@@ -16,7 +16,9 @@
 	int rows, cols;
 	BOOL misere;
 	NSMutableArray *board;
-
+	BOOL p1Turn;
+	int p1pieces, p2pieces;
+	NSMutableArray *myOldMoves;
 }
 
 @property(nonatomic, retain) NSString *player1Name, *player2Name;
@@ -25,5 +27,7 @@
 @property (nonatomic, assign) int rows, cols;
 
 - (void) resetBoard;
+- (NSArray *) getFlips: (int) loc;
+- (BOOL) isOutOfBounds: (int) loc offset: (int) offset;
 
 @end

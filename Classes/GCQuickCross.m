@@ -109,28 +109,28 @@
 
 - (void) undoMove: (NSArray*) move {
 	if ([[move objectAtIndex: 2] isEqual: PLACE]) {
-		[board replaceObjectAtIndex: [move intValue] withObject: BLANK];
+		[board replaceObjectAtIndex: [[move objectAtIndex: 0] intValue] withObject: BLANK];
 	}
 	else if (!p1Turn)
 	{
 		if ([[move objectAtIndex: 1] isEqual: XHORIZ])
 		{
-			[board replaceObjectAtIndex: [move intValue] withObject: XVERT];
+			[board replaceObjectAtIndex: [[move objectAtIndex: 0] intValue] withObject: XVERT];
 		}
 		else 
 		{
-			[board replaceObjectAtIndex: [move intValue] withObject: XHORIZ];
+			[board replaceObjectAtIndex: [[move objectAtIndex: 0] intValue] withObject: XHORIZ];
 		}
 	}
 	else
 	{
 		if ([[move objectAtIndex: 1] isEqual: YHORIZ])
 		{
-			[board replaceObjectAtIndex: [move intValue] withObject: YVERT];
+			[board replaceObjectAtIndex: [[move objectAtIndex: 0] intValue] withObject: YVERT];
 		}
 		else 
 		{
-			[board replaceObjectAtIndex: [move intValue] withObject: YHORIZ];
+			[board replaceObjectAtIndex: [[move objectAtIndex: 0] intValue] withObject: YHORIZ];
 		}
 	}
 	p1Turn = !p1Turn;

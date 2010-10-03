@@ -149,7 +149,7 @@
 		[viewController.slider setEnabled: YES];
 		[viewController.playPauseButton setEnabled: NO];
 	}
-	if (![game primitive: [game getBoard]]) {
+	if (![game primitive]) {
 		PlayerType p = ([game currentPlayer] == PLAYER1) ? [game player1Type] : [game player2Type];
 		if (p == HUMAN)
 			[self takeHumanTurn];

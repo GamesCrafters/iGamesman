@@ -199,13 +199,13 @@
 		}
 	}
 	
-	if ([game primitive: [game getBoard]])
+	if ([game primitive])
 		[self displayPrimitive];
 }
 
 
 - (void) displayPrimitive {
-	NSString *value = [game primitive: game.board];
+	NSString *value = [game primitive];
 	NSString *winner;
 	NSString *color;
 	if ([value isEqualToString: @"TIE"])

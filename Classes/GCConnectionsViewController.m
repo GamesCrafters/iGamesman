@@ -76,7 +76,7 @@
 		}
 	}
 	
-	if([game primitive: [game getBoard]]){
+	if([game primitive]){
 		[self displayPrimitive];
 	}
 }
@@ -210,7 +210,7 @@
 
 // don't think this works
 - (void) displayPrimitive{
-	NSString *value = [game primitive: [game getBoard]];
+	NSString *value = [game primitive];
 	NSString *winner;
 	NSString *color;
 	if ([value isEqualToString: @"WIN"]) {
