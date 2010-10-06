@@ -140,6 +140,7 @@
 		0A65E6E2111CE375001400F6 /* GCGameOptionsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCGameOptionsController.m; sourceTree = "<group>"; };
 		0A65E713111CE538001400F6 /* GCConnectFourViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCConnectFourViewController.h; sourceTree = "<group>"; };
 		0A65E714111CE538001400F6 /* GCConnectFourViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCConnectFourViewController.m; sourceTree = "<group>"; };
+		0A668B74125D15200099C707 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
 		0A699F42114256DA00ED7B5D /* C4GridTopGreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = C4GridTopGreen.png; sourceTree = "<group>"; };
 		0A699F43114256DA00ED7B5D /* C4GridTopRed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = C4GridTopRed.png; sourceTree = "<group>"; };
 		0A699F44114256DA00ED7B5D /* C4GridTopYellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = C4GridTopYellow.png; sourceTree = "<group>"; };
@@ -169,7 +170,6 @@
 		0A87575B111425A2006AB678 /* PlayerChanger.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlayerChanger.xib; sourceTree = "<group>"; };
 		0A98CC0B11C0AC34008D01AE /* C4O.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = C4O.png; sourceTree = "<group>"; };
 		0A98CC1511C0ADB4008D01AE /* C4X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = C4X.png; sourceTree = "<group>"; };
-		0AAEC23611D7F9F800962EEA /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
 		0AB20CC6124405B400C91DB0 /* GCTicTacToe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCTicTacToe.h; sourceTree = "<group>"; };
 		0AB20CC7124405B400C91DB0 /* GCTicTacToe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCTicTacToe.m; sourceTree = "<group>"; };
 		0AB775A011D7103C00B04135 /* GCVVHView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCVVHView.h; sourceTree = "<group>"; };
@@ -450,7 +450,7 @@
 				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
 				0A87575B111425A2006AB678 /* PlayerChanger.xib */,
 				8D1107310486CEB800E47090 /* GamesmanMobile-Info.plist */,
-				0AAEC23611D7F9F800962EEA /* Entitlements.plist */,
+				0A668B74125D15200099C707 /* Entitlements.plist */,
 			);
 			name = "Resources-iPhone";
 			sourceTree = "<group>";

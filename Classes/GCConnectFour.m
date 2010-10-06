@@ -33,8 +33,8 @@
 		player1Type = HUMAN;
 		player2Type = HUMAN;
 		
-		width = 6;
-		height = 5;
+		width = 7;
+		height = 6;
 		pieces = 4;
 		
 		p1Turn = YES;
