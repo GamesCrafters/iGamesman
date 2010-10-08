@@ -9,11 +9,17 @@
 #import <Foundation/Foundation.h>
 #import "GCGame.h"
 
+@class GCTicTacToeViewController;
+
 @interface GCTicTacToe : GCGame {
+	GCTicTacToeViewController *tttView;
+	
 	NSString *player1Name, *player2Name;
 	PlayerType player1Type, player2Type;
 	
 	BOOL p1Turn;
+	
+	PlayMode gameMode;
 	
 	int rows, cols, inarow;
 	BOOL misere;

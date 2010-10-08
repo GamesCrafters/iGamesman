@@ -8,6 +8,7 @@
 
 #import "GCTicTacToe.h"
 #import "GCTicTacToeOptionMenu.h"
+#import "GCTicTacToeViewController.h"
 
 #define BLANK @"+"
 #define X @"X"
@@ -51,6 +52,22 @@
 
 - (UIViewController *) optionMenu {
 	return [[GCTicTacToeOptionMenu alloc] initWithGame: self];
+}
+
+- (UIViewController *) gameViewController {
+	return tttView;
+}
+
+- (void) startGameInMode:(PlayMode)mode {
+	[self resetBoard];
+	
+	gameMode = mode;
+	
+	p1Turn = YES;
+	
+	if (!tttView)
+		[tttView release];
+	tttView = [[GCTicTacToeViewController alloc] initWithGame: self];
 }
 
 - (void) resetBoard {
