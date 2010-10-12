@@ -29,6 +29,16 @@
 		0A33F7C8119629F00062B418 /* ConGreenV.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A33F7C5119629F00062B418 /* ConGreenV.png */; };
 		0A33F7C9119629F00062B418 /* ConRedV.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A33F7C6119629F00062B418 /* ConRedV.png */; };
 		0A33F7CA119629F00062B418 /* ConYellowV.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A33F7C7119629F00062B418 /* ConYellowV.png */; };
+		0A359C7F12650611003F5EAA /* About@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A359C7E12650611003F5EAA /* About@2x.png */; };
+		0A359C811265064B003F5EAA /* Play@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A359C801265064B003F5EAA /* Play@2x.png */; };
+		0A359C85126506AA003F5EAA /* Back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A359C84126506AA003F5EAA /* Back@2x.png */; };
+		0A359C87126506EF003F5EAA /* Pause@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A359C86126506EF003F5EAA /* Pause@2x.png */; };
+		0A359C8912650719003F5EAA /* Resume@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A359C8812650719003F5EAA /* Resume@2x.png */; };
+		0A359C8B12650739003F5EAA /* Settings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A359C8A12650739003F5EAA /* Settings@2x.png */; };
+		0A359CB5126509EB003F5EAA /* StepForward.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A359CB1126509EB003F5EAA /* StepForward.png */; };
+		0A359CB6126509EB003F5EAA /* StepForward@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A359CB2126509EB003F5EAA /* StepForward@2x.png */; };
+		0A359CB7126509EB003F5EAA /* StepReverse.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A359CB3126509EB003F5EAA /* StepReverse.png */; };
+		0A359CB8126509EB003F5EAA /* StepReverse@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A359CB4126509EB003F5EAA /* StepReverse@2x.png */; };
 		0A4DBD79124FF21400FA71C5 /* GCOthello.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A4DBD77124FF21400FA71C5 /* GCOthello.m */; };
 		0A4DBD7A124FF21400FA71C5 /* GCOthelloOptionMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A4DBD78124FF21400FA71C5 /* GCOthelloOptionMenu.m */; };
 		0A65E638111CCFFC001400F6 /* GCYGame.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A65E637111CCFFC001400F6 /* GCYGame.m */; };
@@ -126,6 +136,16 @@
 		0A33F7C5119629F00062B418 /* ConGreenV.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ConGreenV.png; sourceTree = "<group>"; };
 		0A33F7C6119629F00062B418 /* ConRedV.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ConRedV.png; sourceTree = "<group>"; };
 		0A33F7C7119629F00062B418 /* ConYellowV.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ConYellowV.png; sourceTree = "<group>"; };
+		0A359C7E12650611003F5EAA /* About@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "About@2x.png"; sourceTree = "<group>"; };
+		0A359C801265064B003F5EAA /* Play@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Play@2x.png"; sourceTree = "<group>"; };
+		0A359C84126506AA003F5EAA /* Back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Back@2x.png"; sourceTree = "<group>"; };
+		0A359C86126506EF003F5EAA /* Pause@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Pause@2x.png"; sourceTree = "<group>"; };
+		0A359C8812650719003F5EAA /* Resume@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Resume@2x.png"; sourceTree = "<group>"; };
+		0A359C8A12650739003F5EAA /* Settings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Settings@2x.png"; sourceTree = "<group>"; };
+		0A359CB1126509EB003F5EAA /* StepForward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = StepForward.png; sourceTree = "<group>"; };
+		0A359CB2126509EB003F5EAA /* StepForward@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "StepForward@2x.png"; sourceTree = "<group>"; };
+		0A359CB3126509EB003F5EAA /* StepReverse.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = StepReverse.png; sourceTree = "<group>"; };
+		0A359CB4126509EB003F5EAA /* StepReverse@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "StepReverse@2x.png"; sourceTree = "<group>"; };
 		0A4DBD75124FF21400FA71C5 /* GCOthello.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCOthello.h; sourceTree = "<group>"; };
 		0A4DBD76124FF21400FA71C5 /* GCOthelloOptionMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCOthelloOptionMenu.h; sourceTree = "<group>"; };
 		0A4DBD77124FF21400FA71C5 /* GCOthello.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCOthello.m; sourceTree = "<group>"; };
@@ -396,12 +416,22 @@
 				0A3292D111323D64006066E5 /* Connections */,
 				C58F0D7D1144840D0058D6CE /* YGame */,
 				0A87561E1113FA9D006AB678 /* About.png */,
+				0A359C7E12650611003F5EAA /* About@2x.png */,
 				0A65E6D6111CE1E7001400F6 /* Back.png */,
+				0A359C84126506AA003F5EAA /* Back@2x.png */,
 				0A8756261113FACE006AB678 /* oxy.png */,
 				0A85D25B112E6E58007D2C3C /* Pause.png */,
+				0A359C86126506EF003F5EAA /* Pause@2x.png */,
 				0A8756031113F9C6006AB678 /* Play.png */,
+				0A359C801265064B003F5EAA /* Play@2x.png */,
 				0A85D25F112E6E86007D2C3C /* Resume.png */,
+				0A359C8812650719003F5EAA /* Resume@2x.png */,
 				0A85D288112E7561007D2C3C /* Settings.png */,
+				0A359C8A12650739003F5EAA /* Settings@2x.png */,
+				0A359CB1126509EB003F5EAA /* StepForward.png */,
+				0A359CB2126509EB003F5EAA /* StepForward@2x.png */,
+				0A359CB3126509EB003F5EAA /* StepReverse.png */,
+				0A359CB4126509EB003F5EAA /* StepReverse@2x.png */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -559,6 +589,7 @@
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "GamesmanMobile" */;
 			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				English,
@@ -615,6 +646,16 @@
 				0A33F7CA119629F00062B418 /* ConYellowV.png in Resources */,
 				0A98CC0C11C0AC34008D01AE /* C4O.png in Resources */,
 				0A98CC1611C0ADB4008D01AE /* C4X.png in Resources */,
+				0A359C7F12650611003F5EAA /* About@2x.png in Resources */,
+				0A359C811265064B003F5EAA /* Play@2x.png in Resources */,
+				0A359C85126506AA003F5EAA /* Back@2x.png in Resources */,
+				0A359C87126506EF003F5EAA /* Pause@2x.png in Resources */,
+				0A359C8912650719003F5EAA /* Resume@2x.png in Resources */,
+				0A359C8B12650739003F5EAA /* Settings@2x.png in Resources */,
+				0A359CB5126509EB003F5EAA /* StepForward.png in Resources */,
+				0A359CB6126509EB003F5EAA /* StepForward@2x.png in Resources */,
+				0A359CB7126509EB003F5EAA /* StepReverse.png in Resources */,
+				0A359CB8126509EB003F5EAA /* StepReverse@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -683,7 +724,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "55008DCE-7D1C-48E3-86F7-FCE55FE42205";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9504B0D9-9206-4161-B5A6-AB16AEE1CEBD";
 				SDKROOT = iphoneos4.1;
 			};
 			name = Distribution;
@@ -698,6 +739,7 @@
 				GCC_PREFIX_HEADER = GamesmanMobile_Prefix.pch;
 				INFOPLIST_FILE = "GamesmanMobile-Info.plist";
 				PRODUCT_NAME = GamesmanMobile;
+				SDKROOT = iphoneos4.1;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Distribution;
@@ -714,6 +756,7 @@
 				GCC_PREFIX_HEADER = GamesmanMobile_Prefix.pch;
 				INFOPLIST_FILE = "GamesmanMobile-Info.plist";
 				PRODUCT_NAME = GamesmanMobile;
+				SDKROOT = iphoneos4.1;
 			};
 			name = Debug;
 		};
@@ -727,6 +770,7 @@
 				GCC_PREFIX_HEADER = GamesmanMobile_Prefix.pch;
 				INFOPLIST_FILE = "GamesmanMobile-Info.plist";
 				PRODUCT_NAME = GamesmanMobile;
+				SDKROOT = iphoneos4.1;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -742,7 +786,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				SDKROOT = iphoneos4.0;
+				SDKROOT = iphoneos4.1;
 			};
 			name = Debug;
 		};
