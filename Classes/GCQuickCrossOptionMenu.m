@@ -31,13 +31,13 @@
 }
 
 - (void) cancel {
-	[delegate rulesPanelDidFinish];
+	[delegate rulesPanelDidCancel];
 }
 
 
 - (void) done {
-	game.rows = width;
-	game.cols = height;
+	game.cols = width;
+	game.rows = height;
 	game.inalign = pieces;
 	game.misere = misere;
 	
@@ -53,6 +53,11 @@
 	else if (tag == 101) height = [sender selectedSegmentIndex] + 3;
 	else if (tag == 102)  pieces = [sender selectedSegmentIndex] + 3;
 	else misere = [sender selectedSegmentIndex] == 0 ? NO : YES;
+	
+	if (width == game.cols && height == game.rows && pieces == game.inalign && misere == game.misere)
+		self.navigationItem.rightBarButtonItem.enabled = NO;
+	else
+		self.navigationItem.rightBarButtonItem.enabled = YES;
 }
 
 #pragma mark -
@@ -71,6 +76,7 @@
 	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemDone
 																						   target: self 
 																						   action: @selector(done)];
+	self.navigationItem.rightBarButtonItem.enabled = NO;
 }
 
 

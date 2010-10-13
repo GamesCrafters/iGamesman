@@ -35,7 +35,7 @@
 
 
 - (void) cancel {
-	[delegate rulesPanelDidFinish];
+	[delegate rulesPanelDidCancel];
 }
 
 
@@ -55,6 +55,11 @@
 		circling = [sender selectedSegmentIndex] == 0 ? NO: YES;
 		[self.tableView reloadData];
 	}
+	
+	if (size == game.size && misere == game.misere && circling == game.circling)
+		self.navigationItem.rightBarButtonItem.enabled = NO;
+	else
+		self.navigationItem.rightBarButtonItem.enabled = YES;
 }
 
 - (void)viewDidLoad {
@@ -66,6 +71,7 @@
 	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemDone
 																						   target: self
 																						   action: @selector(done)];
+	self.navigationItem.rightBarButtonItem.enabled = NO;
 }
 
 /*

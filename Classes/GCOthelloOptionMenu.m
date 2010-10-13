@@ -23,7 +23,7 @@
 }
 
 - (void) cancel {
-	[delegate rulesPanelDidFinish];
+	[delegate rulesPanelDidCancel];
 }
 
 
@@ -40,6 +40,11 @@
 	if (tag == 2) cols = [sender selectedSegmentIndex] + 4;
 	else if (tag == 1) rows = [sender selectedSegmentIndex] + 4;
 	else misere = [sender selectedSegmentIndex] == 0 ? NO : YES;
+	
+	if (cols == game.cols && rows == game.rows && misere == game.misere)
+		self.navigationItem.rightBarButtonItem.enabled = NO;
+	else
+		self.navigationItem.rightBarButtonItem.enabled = YES;
 }
 
 /*
@@ -67,6 +72,7 @@
 	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemDone
 																						   target: self 
 																						   action: @selector(done)];
+	self.navigationItem.rightBarButtonItem.enabled = NO;
 }
 
 /*

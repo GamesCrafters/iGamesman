@@ -13,4 +13,6 @@
 	int rows, cols;
 }
 
+- (id)initWithFrame:(CGRect)frame andRows: (int) r andCols: (int) c;
+
 @end

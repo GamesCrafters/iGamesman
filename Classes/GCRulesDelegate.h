@@ -11,6 +11,7 @@
 
 @protocol GCRulesDelegate
 
+- (void) rulesPanelDidCancel;
 - (void) rulesPanelDidFinish;
 
 @end

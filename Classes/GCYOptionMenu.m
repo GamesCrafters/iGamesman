@@ -34,7 +34,7 @@
 */
 
 - (void) cancel {
-	[delegate rulesPanelDidFinish];
+	[delegate rulesPanelDidCancel];
 }
 
 
@@ -69,11 +69,21 @@
 			[otherControl setEnabled: YES forSegmentAtIndex: 2];
 			break;
 	}
+	
+	if (layers == game.layers && innerTriangleLength == game.innerTriangleLength && misere == game.misere)
+		self.navigationItem.rightBarButtonItem.enabled = NO;
+	else
+		self.navigationItem.rightBarButtonItem.enabled = YES;
 }
 
 
 - (void) updateMisere: (UISegmentedControl *) sender{
 	misere = [sender selectedSegmentIndex] == 0 ? NO : YES;
+	
+	if (layers == game.layers && innerTriangleLength == game.innerTriangleLength && misere == game.misere)
+		self.navigationItem.rightBarButtonItem.enabled = NO;
+	else
+		self.navigationItem.rightBarButtonItem.enabled = YES;
 }
 
 - (void) updateTriangle: (UISegmentedControl *) sender{
@@ -100,6 +110,11 @@
 			[otherControl setEnabled: YES forSegmentAtIndex: 1];
 			break;
 	}
+	
+	if (layers == game.layers && innerTriangleLength == game.innerTriangleLength && misere == game.misere)
+		self.navigationItem.rightBarButtonItem.enabled = NO;
+	else
+		self.navigationItem.rightBarButtonItem.enabled = YES;
 }
 
 
@@ -116,6 +131,7 @@
 	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemDone
 																						   target: self 
 																						   action: @selector(done)];
+	self.navigationItem.rightBarButtonItem.enabled = NO;
 }
 
 

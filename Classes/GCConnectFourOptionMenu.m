@@ -39,7 +39,7 @@
 
 
 - (void) cancel {
-	[delegate rulesPanelDidFinish];
+	[delegate rulesPanelDidCancel];
 }
 
 
@@ -61,6 +61,11 @@
 	else if (tag == 2) height = [sender selectedSegmentIndex] + 4;
 	else if (tag == 3) pieces = [sender selectedSegmentIndex] + 3;
 	else misere = [sender selectedSegmentIndex] == 0 ? NO : YES;
+	
+	if (width == game.width && height == game.height && pieces == game.pieces && misere == game.misere)
+		self.navigationItem.rightBarButtonItem.enabled = NO;
+	else
+		self.navigationItem.rightBarButtonItem.enabled = YES;
 }
 
 
@@ -76,6 +81,7 @@
 	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemDone
 																						   target: self 
 																						   action: @selector(done)];
+	self.navigationItem.rightBarButtonItem.enabled = NO;
 }
 
 

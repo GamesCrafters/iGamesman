@@ -7,6 +7,7 @@
 //
 
 #import "GCTicTacToeViewController.h"
+#import "GCTicTacToeView.h"
 
 
 @implementation GCTicTacToeViewController
@@ -18,23 +19,18 @@
 	return self;
 }
 
-/*
-// Implement loadView to create a view hierarchy programmatically, without using a nib.
 - (void)loadView {
+	self.view = [[GCTicTacToeView alloc] initWithFrame: CGRectMake(0, 0, 480, 256) andRows: game.rows andCols: game.cols];
 }
-*/
 
 - (void)viewDidLoad {
     [super viewDidLoad];
 }
 
-/*
-// Override to allow orientations other than the default portrait orientation.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    return (interfaceOrientation == UIInterfaceOrientationLandscapeLeft) || (interfaceOrientation == UIInterfaceOrientationLandscapeRight);
 }
-*/
 
 - (void)didReceiveMemoryWarning {
     // Releases the view if it doesn't have a superview.

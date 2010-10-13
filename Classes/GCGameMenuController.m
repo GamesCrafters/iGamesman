@@ -12,6 +12,17 @@
 
 @implementation GCGameMenuController
 
+
+- (void) resume {
+	GCGameViewController *gameView = [[GCGameViewController alloc] initWithGame: game andPlayMode: [game playMode]];	
+	gameView.delegate = self;
+	gameView.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+	[self presentModalViewController: gameView animated: YES];
+	inProgress = YES;
+	[gameView release];
+	[[gameView gameController] go];
+}
+
 /*
 - (id)initWithStyle:(UITableViewStyle)style {
     // Override initWithStyle: if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
@@ -32,22 +43,31 @@
 
 		section1 = [[NSArray alloc] initWithObjects: @"Change Rules", @"Player 1 Name\nPlayer Type", 
 					@"Player 2 Name\nPlayer Type", nil];
+		
+		inProgress = NO;
 	}
 	return self;
 }
 
+/*
 - (void)viewDidLoad {
     [super viewDidLoad];
+}*/
 
-    /*UIBarButtonItem *resumeButton = [[UIBarButtonItem alloc] initWithTitle: @"Resume"
-																	 style: UIBarButtonItemStyleDone
-																	target: self
-																	action: nil];
-	self.navigationItem.rightBarButtonItem = resumeButton;*/
+
+- (void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
+	
+	UIBarButtonItem *resumeButton = [[UIBarButtonItem alloc] initWithTitle: @"Resume"
+																	  style: UIBarButtonItemStyleDone
+																	 target: self
+																	 action: @selector(resume)];
+	if (inProgress)
+		self.navigationItem.rightBarButtonItem = resumeButton;
+	else
+		self.navigationItem.rightBarButtonItem = nil;
 }
-
 /*
-- (void)viewWillAppear:(BOOL)animated { [super viewWillAppear:animated]; }
 - (void)viewDidAppear:(BOOL)animated { [super viewDidAppear:animated]; }
 - (void)viewWillDisappear:(BOOL)animated { [super viewWillDisappear:animated]; }
 - (void)viewDidDisappear:(BOOL)animated { [super viewDidDisappear:animated]; }
@@ -186,6 +206,7 @@
 		GCGameViewController *gameView = [[GCGameViewController alloc] initWithGame: game andPlayMode: M];
 		gameView.delegate = self;
 		gameView.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+		inProgress = YES;
 		[self presentModalViewController: gameView animated: YES];
 		[gameView release];
 	}
@@ -206,11 +227,13 @@
 												  otherButtonTitles: @"Okay", nil];
 			[alert show];
 			[tableView deselectRowAtIndexPath: indexPath animated: YES];
-		} else {		
+		} else {
+			[game startGameInMode: M];
 			GCGameViewController *gameView = [[GCGameViewController alloc] initWithGame: game andPlayMode: M];	
 			gameView.delegate = self;
 			gameView.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
 			[self presentModalViewController: gameView animated: YES];
+			inProgress = YES;
 			[gameView release];
 		}
 	} else if (indexPath.section == 1 && indexPath.row == 0) {
@@ -264,11 +287,17 @@
 	[self.tableView reloadData];
 }
 
-- (void) rulesPanelDidFinish {
+- (void) rulesPanelDidCancel {
 	[self dismissModalViewControllerAnimated: YES];
 }
 
-- (void) flipsideViewControllerDidFinish: (GCGameViewController *) controller {
+- (void) rulesPanelDidFinish {
+	inProgress = NO;
+	
+	[self dismissModalViewControllerAnimated: YES];
+}
+
+- (void) flipsideViewControllerDidFinish: (GCGameViewController *) controller {	
 	[self dismissModalViewControllerAnimated: YES];
 }
 

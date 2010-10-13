@@ -57,6 +57,8 @@
 /// Called when the user taps the options button in the toolbar
 - (IBAction) changeOptions;
 
+- (GCGameController *) gameController;
+
 @end
 
 

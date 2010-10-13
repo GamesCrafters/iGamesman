@@ -40,10 +40,15 @@
 		inarow = sender.selectedSegmentIndex + 3;
 	if (sender.tag == 103)
 		misere = (sender.selectedSegmentIndex == 1);
+	
+	if (cols == game.cols && rows == game.rows && inarow == game.inarow && misere == game.misere)
+		self.navigationItem.rightBarButtonItem.enabled = NO;
+	else
+		self.navigationItem.rightBarButtonItem.enabled = YES;
 }
 
 - (void) cancel {
-	[delegate rulesPanelDidFinish];
+	[delegate rulesPanelDidCancel];
 }
 
 
@@ -75,6 +80,7 @@
 	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemDone
 																						   target: self 
 																						   action: @selector(done)];
+	self.navigationItem.rightBarButtonItem.enabled = NO;
 }
 
 
@@ -121,8 +127,8 @@
 	}
 	
 	int selected;
-	if (indexPath.section == 0) selected = game.rows - 3;
-	if (indexPath.section == 1) selected = game.cols - 3;
+	if (indexPath.section == 0) selected = game.cols - 3;
+	if (indexPath.section == 1) selected = game.rows - 3;
 	if (indexPath.section == 2) selected = game.inarow - 3;
 	if (indexPath.section == 3) selected = game.misere ? 1 : 0;
 	[segment setSelectedSegmentIndex: selected];

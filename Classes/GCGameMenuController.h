@@ -16,6 +16,8 @@
 @interface GCGameMenuController : UITableViewController <PlayerChangeDelegate, GCRulesDelegate, FlipsideViewControllerDelegate, UIAlertViewDelegate> {
 	GCGame *game;
 	NSArray *section0, *section1;
+	
+	BOOL inProgress;
 }
 
 - (id)initWithGame: (GCGame *) _game andName: (NSString *) gameName;
