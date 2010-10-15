@@ -589,7 +589,6 @@
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "GamesmanMobile" */;
 			compatibilityVersion = "Xcode 3.1";
-			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				English,
@@ -725,7 +724,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9504B0D9-9206-4161-B5A6-AB16AEE1CEBD";
-				SDKROOT = iphoneos4.1;
+				SDKROOT = iphoneos4.0;
 			};
 			name = Distribution;
 		};
@@ -739,7 +738,7 @@
 				GCC_PREFIX_HEADER = GamesmanMobile_Prefix.pch;
 				INFOPLIST_FILE = "GamesmanMobile-Info.plist";
 				PRODUCT_NAME = GamesmanMobile;
-				SDKROOT = iphoneos4.1;
+				SDKROOT = iphoneos4.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Distribution;
@@ -756,7 +755,7 @@
 				GCC_PREFIX_HEADER = GamesmanMobile_Prefix.pch;
 				INFOPLIST_FILE = "GamesmanMobile-Info.plist";
 				PRODUCT_NAME = GamesmanMobile;
-				SDKROOT = iphoneos4.1;
+				SDKROOT = iphoneos4.0;
 			};
 			name = Debug;
 		};
@@ -770,7 +769,7 @@
 				GCC_PREFIX_HEADER = GamesmanMobile_Prefix.pch;
 				INFOPLIST_FILE = "GamesmanMobile-Info.plist";
 				PRODUCT_NAME = GamesmanMobile;
-				SDKROOT = iphoneos4.1;
+				SDKROOT = iphoneos4.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -786,7 +785,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				SDKROOT = iphoneos4.1;
+				SDKROOT = iphoneos4.0;
 			};
 			name = Debug;
 		};
@@ -799,7 +798,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
-				SDKROOT = iphoneos4.1;
+				SDKROOT = iphoneos4.0;
 			};
 			name = Release;
 		};

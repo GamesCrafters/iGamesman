@@ -30,6 +30,7 @@
 @property (nonatomic, assign) PlayerType player1Type, player2Type;
 @property (nonatomic, assign, getter=isMisere) BOOL misere;
 @property (nonatomic, assign) int rows, cols, inarow;
+@property (nonatomic, assign) BOOL p1Turn;
 
 - (void) resetBoard;
 

@@ -15,5 +15,6 @@
 }
 
 - (id) initWithGame: (GCTicTacToe *) _game;
+- (void) doMove: (NSNumber *) move;
 
 @end

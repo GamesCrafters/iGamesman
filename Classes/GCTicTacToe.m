@@ -21,6 +21,7 @@
 @synthesize player1Type, player2Type;
 @synthesize misere;
 @synthesize rows, cols, inarow;
+@synthesize p1Turn;
 
 - (id) init {
 	if (self = [super init]) {
@@ -99,6 +100,8 @@
 }
 
 - (void) doMove: (NSNumber *) move {
+	[tttView doMove: move];
+	
 	NSString *piece = p1Turn ? X : O;
 	[board replaceObjectAtIndex: [move intValue] withObject: piece];
 	p1Turn = !p1Turn;
@@ -109,16 +112,21 @@
 	p1Turn = !p1Turn;
 }
 
-- (NSString *) primitive: (NSArray *) theBoard {
+- (void) notifyWhenReady {
+	if (gameMode == OFFLINE_UNSOLVED)
+		[[NSNotificationCenter defaultCenter] postNotificationName: @"GameIsReady" object: self];
+}
+
+- (NSString *) primitive {
 	for (int i = 0; i < rows * cols; i += 1) {
-		NSString *piece = [theBoard objectAtIndex: i];
+		NSString *piece = [board objectAtIndex: i];
 		if ([piece isEqual: BLANK])
 			continue;
 		
 		// Check the horizontal case
 		BOOL case1 = YES;
 		for (int j = i; j < i + inarow; j += 1) {
-			if (j >= cols * rows || i % cols > j % cols || ![[theBoard objectAtIndex: j] isEqual: piece]) {
+			if (j >= cols * rows || i % cols > j % cols || ![[board objectAtIndex: j] isEqual: piece]) {
 				case1 = NO;
 				break;
 			}
@@ -127,7 +135,7 @@
 		// Check the vertical case
 		BOOL case2 = YES;
 		for (int j = i; j < i + cols * inarow; j += cols) {
-			if ( j >= cols * rows || ![[theBoard objectAtIndex: j] isEqual: piece] ) {
+			if ( j >= cols * rows || ![[board objectAtIndex: j] isEqual: piece] ) {
 				case2 = NO;
 				break;
 			}
@@ -136,7 +144,7 @@
 		// Check the diagonal case (positive slope)
 		BOOL case3 = YES;
 		for (int j = i; j < i + inarow + cols * inarow; j += (cols + 1) ) {
-			if ( j >= cols * rows || (i % cols > j % cols) || ![[theBoard objectAtIndex: j] isEqual: piece] ) {
+			if ( j >= cols * rows || (i % cols > j % cols) || ![[board objectAtIndex: j] isEqual: piece] ) {
 				case3 = NO;
 				break;
 			}
@@ -145,7 +153,7 @@
 		// Check the diagonal case (negative slope)
 		BOOL case4 = YES;
 		for (int j = i; j < i + cols * inarow - inarow; j += (cols - 1) ) {
-			if ( j >= cols * rows || (i % cols < j % cols) || ![[theBoard objectAtIndex: j] isEqual: piece] ) {
+			if ( j >= cols * rows || (i % cols < j % cols) || ![[board objectAtIndex: j] isEqual: piece] ) {
 				case4 = NO;
 				break;
 			}
@@ -157,7 +165,7 @@
 	// Finally, check if the board is full
 	BOOL full = YES;
 	for (int i = 0; i < cols * rows; i += 1) {
-		if ([[theBoard objectAtIndex: i] isEqual: BLANK]) {
+		if ([[board objectAtIndex: i] isEqual: BLANK]) {
 			full = NO;
 			break;
 		}
