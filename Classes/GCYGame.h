@@ -25,6 +25,8 @@
 	GCYGameViewController		*yGameView;
 	PlayMode					gameMode;
 	NSNumber					*humanMove;
+	NSMutableArray				*serverHistoryStack;
+	NSMutableArray				*serverUndoStack;
 	
 }
 

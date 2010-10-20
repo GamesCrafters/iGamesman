@@ -40,6 +40,7 @@
 		CGPoint currentCenter;
 		
 		CGFloat frameSize = [boardView circleRadius] * 5;
+		
 		//Create buttons! yay!
 		for (int i = 1; i <= [boardView boardSize]; i++){
 			currentCenter = [[[boardView centers] objectAtIndex: i-1] CGPointValue];
@@ -84,6 +85,7 @@
 		[message setText: [NSString stringWithFormat: @"%@ (%@)'s turn\n%@ %@ in %d", player, color, modifier, [service getValue], [service getRemoteness]]];
 	}
 	else{
+		//TODO: update to show an image
 		[message setText: [NSString stringWithFormat: @"%@ (%@)'s turn", player, color]];
 	}
 	
@@ -260,8 +262,8 @@
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	NSString *boardString = [GCYGame stringForBoard: game.board];
 	NSString *boardURL = [boardString stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
-	NSString *boardVal = [[NSString stringWithFormat: @"http://nyc.cs.berkeley.edu:8080/gcweb/service/gamesman/puzzles/y/getMoveValue;side=%d;board=%@", [game.board count], boardURL] retain];
-	NSString *moveVals = [[NSString stringWithFormat: @"http://nyc.cs.berkeley.edu:8080/gcweb/service/gamesman/puzzles/y/getNextMoveValues;side=%d;board=%@", [game.board count], boardURL] retain];
+	NSString *boardVal = [[NSString stringWithFormat: @"http://nyc.cs.berkeley.edu:8080/gcweb/service/gamesman/puzzles/y/getMoveValue;centerRows=%d;outerRows=%d;board=%@", game.innerTriangleLength, game.layers, boardURL] retain];
+	NSString *moveVals = [[NSString stringWithFormat: @"http://nyc.cs.berkeley.edu:8080/gcweb/service/gamesman/puzzles/y/getNextMoveValues;centerRows=%d;outerRows=%d;board=%@", game.innerTriangleLength, game.layers, boardURL] retain];
 	[service retrieveDataForBoard: boardString URL: boardVal andNextMovesURL: moveVals];
 	[self performSelectorOnMainThread: @selector (fetchFinished) withObject: nil waitUntilDone: NO];
 	[pool release];

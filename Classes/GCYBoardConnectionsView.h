@@ -10,13 +10,13 @@
 
 
 @interface GCYBoardConnectionsView : UIView {
-	NSMutableArray *p1Connections;
-	NSMutableArray *p2Connections;
-	UIColor *p1Color;
-	UIColor *p2Color;
-	int p1Count;
-	int p2Count;
-	CGFloat lineWidth;
+	NSMutableArray		*p1Connections;
+	NSMutableArray		*p2Connections;
+	UIColor				*p1Color;
+	UIColor				*p2Color;
+	int					p1Count;
+	int					p2Count;
+	CGFloat				lineWidth;
 }
 
 @property (nonatomic, retain) NSMutableArray *p1Connections;

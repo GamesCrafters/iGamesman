@@ -13,14 +13,14 @@
 
 
 @interface GCYGameViewController : UIViewController {
-	UIActivityIndicatorView *spinner;
-	GCYGame *game;
-	UILabel *message;
-	GCYBoardView *boardView;
-	NSTimer *timer;
+	UIActivityIndicatorView			*spinner;
+	GCYGame							*game;
+	UILabel							*message;
+	GCYBoardView					*boardView;
+	NSTimer							*timer;
 	
-	NSThread *waiter;
-	GCJSONService *service;
+	NSThread						*waiter;
+	GCJSONService					*service;
 }
 
 @property (nonatomic, retain) GCYBoardView *boardView;

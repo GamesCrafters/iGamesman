@@ -3,7 +3,7 @@
 //  GamesmanMobile
 //
 //  Created by Class Account on 4/29/10.
-//  Copyright 2010 __MyCompanyName__. All rights reserved.
+//  Copyright 2010 GamesCrafters. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
@@ -23,17 +23,17 @@
 
 
 @interface GCYBoardView : UIView {
-	int layers;
-	int innerTriangleLength;
-	NSMutableArray *centers;
-	GCYBoardConnectionsView *connectionsView;
-	NSMutableDictionary *neighborsForPosition;
-	NSMutableArray *outsideCorners;
-	CGFloat circleRadius;
-	CGFloat padding;
-	CGPoint upperCorner;
-	CGPoint rightCorner;
-	CGPoint leftCorner;
+	int							layers;
+	int							innerTriangleLength;
+	NSMutableArray				*centers;
+	GCYBoardConnectionsView		*connectionsView;
+	NSMutableDictionary			*neighborsForPosition;
+	NSMutableArray				*outsideCorners;
+	CGFloat						circleRadius;
+	CGFloat						padding;
+	CGPoint						upperCorner;
+	CGPoint						rightCorner;
+	CGPoint						leftCorner;
 	
 }
 

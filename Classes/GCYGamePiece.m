@@ -35,6 +35,9 @@
 }
 		
 
+/**
+ When the center of this is changed, use this to change the centers of the two inner images as well
+ **/
 - (void) moveCenter: (CGPoint) centerPoint{
 	self.center = centerPoint;
 	CGFloat centerValue = self.frame.size.height/2.;

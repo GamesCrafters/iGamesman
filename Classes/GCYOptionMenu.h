@@ -15,11 +15,11 @@
 
 
 @interface GCYOptionMenu : UITableViewController <GCOptionMenu> {
-	id <GCRulesDelegate> delegate;
-	GCYGame *game;
-	int layers;
-	int innerTriangleLength;
-	BOOL misere;
+	id <GCRulesDelegate>		delegate;
+	GCYGame						*game;
+	int							layers;
+	int							innerTriangleLength;
+	BOOL						misere;
 }
 
 @property (nonatomic, retain) id <GCRulesDelegate> delegate;

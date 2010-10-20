@@ -10,8 +10,8 @@
 
 
 @interface GCYGamePiece : UIButton{
-	UIImageView *playerPiece;
-	UIImageView *moveValue;
+	UIImageView		*playerPiece;
+	UIImageView		*moveValue;
 }
 
 @property (nonatomic, retain) UIImageView *playerPiece;

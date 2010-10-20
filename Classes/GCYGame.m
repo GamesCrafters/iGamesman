@@ -27,6 +27,7 @@
 @synthesize innerTriangleLength;
 @synthesize gameMode;
 
+//
 - (id) init {
 	if (self = [super init]) {
 		player1Name = @"Player 1";
@@ -74,6 +75,7 @@
 - (void) startGameInMode: (PlayMode) mode {
 	if (!yGameView)  
 		[yGameView release];
+	
 	yGameView = [[GCYGameViewController alloc] initWithGame: self];
 	
 	p1Turn = YES;
@@ -83,6 +85,13 @@
 	if(mode == ONLINE_SOLVED){
 		service = [[GCJSONService alloc] init];
 		[self startFetch];
+	}
+	
+	if (mode == ONLINE_SOLVED) {
+		service = [[GCJSONService alloc] init];
+		serverHistoryStack = [[NSMutableArray alloc] init];
+		serverUndoStack    = [[NSMutableArray alloc] init];
+		[yGameView updateServerDataWithService: service];
 	}
 	
 	gameMode = mode;
@@ -188,7 +197,7 @@
 
 
 /** Returns @"WIN" or @"LOSE" if in a primitive state since Y has no draws/ties.  Returns nil if not in a primitive state **/
-- (NSString *) primitive: (NSArray *) theBoard  { 
+- (NSString *) primitive { 
 	NSMutableSet *edgesReached = [NSMutableSet set];
 	NSString *currentPlayerPiece;
 	NSNumber *currentPosition;
