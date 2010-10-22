@@ -58,10 +58,15 @@
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
 	
-	UIBarButtonItem *resumeButton = [[UIBarButtonItem alloc] initWithTitle: @"Resume"
-																	  style: UIBarButtonItemStyleDone
-																	 target: self
-																	 action: @selector(resume)];
+	UIImage *image = [UIImage imageNamed: @"NowPlayingButton.png"];
+	UIButton *resume = [UIButton buttonWithType: UIButtonTypeCustom];
+	[resume setBackgroundImage: image forState: UIControlStateNormal];
+	[resume setTitle: @"Resume " forState: UIControlStateNormal];
+	[resume addTarget: self action: @selector(resume) forControlEvents: UIControlEventTouchUpInside];
+	resume.frame = CGRectMake(0, 0, image.size.width, image.size.height);
+	resume.titleLabel.font = [UIFont boldSystemFontOfSize: 12.0];
+	UIBarButtonItem *resumeButton = [[UIBarButtonItem alloc] initWithCustomView: resume];
+	
 	if (inProgress)
 		self.navigationItem.rightBarButtonItem = resumeButton;
 	else
@@ -85,10 +90,6 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
-}
-
-- (BOOL) shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
-	return toInterfaceOrientation != UIInterfaceOrientationPortraitUpsideDown;
 }
 
 

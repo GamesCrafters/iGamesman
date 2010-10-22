@@ -71,6 +71,8 @@
 		0A98CC1611C0ADB4008D01AE /* C4X.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A98CC1511C0ADB4008D01AE /* C4X.png */; };
 		0AB20CC8124405B400C91DB0 /* GCTicTacToe.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AB20CC7124405B400C91DB0 /* GCTicTacToe.m */; };
 		0AB775A211D7103C00B04135 /* GCVVHView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AB775A111D7103C00B04135 /* GCVVHView.m */; };
+		0AC8EAE8126E458100C46CFD /* NowPlayingButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AC8EAE7126E458100C46CFD /* NowPlayingButton.png */; };
+		0AC8EB02126E481000C46CFD /* NowPlayingButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AC8EB01126E481000C46CFD /* NowPlayingButton@2x.png */; };
 		0AD633E611951C7A00526842 /* C4Grid.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AD633E511951C7A00526842 /* C4Grid.png */; };
 		0AF8E94D124AA2EF008CDADC /* GCTicTacToeOptionMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AF8E94C124AA2EF008CDADC /* GCTicTacToeOptionMenu.m */; };
 		0AFC30BF11841E3A005CD671 /* GCJSONService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AFC30BE11841E3A005CD671 /* GCJSONService.m */; };
@@ -196,6 +198,8 @@
 		0AB20CC7124405B400C91DB0 /* GCTicTacToe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCTicTacToe.m; sourceTree = "<group>"; };
 		0AB775A011D7103C00B04135 /* GCVVHView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCVVHView.h; sourceTree = "<group>"; };
 		0AB775A111D7103C00B04135 /* GCVVHView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCVVHView.m; sourceTree = "<group>"; };
+		0AC8EAE7126E458100C46CFD /* NowPlayingButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NowPlayingButton.png; sourceTree = "<group>"; };
+		0AC8EB01126E481000C46CFD /* NowPlayingButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NowPlayingButton@2x.png"; sourceTree = "<group>"; };
 		0AD633E511951C7A00526842 /* C4Grid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = C4Grid.png; sourceTree = "<group>"; };
 		0AF8E94B124AA2EF008CDADC /* GCTicTacToeOptionMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCTicTacToeOptionMenu.h; sourceTree = "<group>"; };
 		0AF8E94C124AA2EF008CDADC /* GCTicTacToeOptionMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCTicTacToeOptionMenu.m; sourceTree = "<group>"; };
@@ -419,6 +423,8 @@
 				0A359C7E12650611003F5EAA /* About@2x.png */,
 				0A65E6D6111CE1E7001400F6 /* Back.png */,
 				0A359C84126506AA003F5EAA /* Back@2x.png */,
+				0AC8EAE7126E458100C46CFD /* NowPlayingButton.png */,
+				0AC8EB01126E481000C46CFD /* NowPlayingButton@2x.png */,
 				0A8756261113FACE006AB678 /* oxy.png */,
 				0A85D25B112E6E58007D2C3C /* Pause.png */,
 				0A359C86126506EF003F5EAA /* Pause@2x.png */,
@@ -589,6 +595,7 @@
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "GamesmanMobile" */;
 			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				English,
@@ -655,6 +662,8 @@
 				0A359CB6126509EB003F5EAA /* StepForward@2x.png in Resources */,
 				0A359CB7126509EB003F5EAA /* StepReverse.png in Resources */,
 				0A359CB8126509EB003F5EAA /* StepReverse@2x.png in Resources */,
+				0AC8EAE8126E458100C46CFD /* NowPlayingButton.png in Resources */,
+				0AC8EB02126E481000C46CFD /* NowPlayingButton@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

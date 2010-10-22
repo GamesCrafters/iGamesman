@@ -18,7 +18,7 @@
 		self.tableView.allowsSelection = NO;
 		
 		headers = [[NSArray alloc] initWithObjects: @"GamesmanMobile", @"Project Lead", @"Team Lead",
-				   @"Connect-4", @"Connections", @"Y", @"GamesmanJava Team\n(Connect-4 Databases)", 
+				   @"Connect-4", @"Connections", @"Y", @"Connect-4 Databases", 
 				   @"Connections & Y Databases", nil];
 		NSArray *connections = [NSArray arrayWithObjects: @"Arturo Wu Zhou", @"Kevin Jorgensen", nil];
 		NSArray *y = [NSArray arrayWithObjects: @"Linsey Hansen", @"Kevin Jorgensen", nil];
@@ -60,10 +60,6 @@
 - (void)viewDidUnload {
 	// Release any retained subviews of the main view.
 	// e.g. self.myOutlet = nil;
-}
-
-- (BOOL) shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
-	return toInterfaceOrientation != UIInterfaceOrientationPortraitUpsideDown;
 }
 
 
