@@ -39,9 +39,12 @@
 @property (nonatomic, assign) BOOL p1Turn;
 @property (readonly) GCYGameViewController *yGameView;
 @property (nonatomic, assign) PlayMode gameMode;
+@property (nonatomic, retain) NSMutableArray *serverHistoryStack;
 
 - (void) resetBoard;
 - (void) postHumanMove: (NSNumber *) num;
+- (void) postReady;
+- (void) postProblem;
 - (BOOL) boardContainsPlayerPiece: (NSString *) piece forPosition: (NSNumber *) position;
 + (NSString *) stringForBoard: (NSArray *) _board;
 

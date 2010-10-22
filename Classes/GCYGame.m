@@ -22,10 +22,12 @@
 @synthesize player1Type, player2Type;
 @synthesize layers;
 @synthesize p1Turn;
+@synthesize board;
 @synthesize yGameView;
 @synthesize misere;
 @synthesize innerTriangleLength;
 @synthesize gameMode;
+@synthesize serverHistoryStack;
 
 //
 - (id) init {
@@ -120,11 +122,13 @@
 
 
 - (void) askUserForInput {
-	[yGameView enableButtons];
+	//[yGameView enableButtons];
+	yGameView.touchesEnabled = YES;
 }
 
 - (void) stopUserInput {
-	[yGameView disableButtons];
+	//[yGameView disableButtons];
+	yGameView.touchesEnabled = NO;
 }
 
 - (void) postHumanMove: (NSNumber *) num{
@@ -183,18 +187,31 @@
 		[yGameView updateLabels];
 	
 	if(gameMode == ONLINE_SOLVED){
-		[self startFetch];
+		// Peek at the top of the undo stack
+		NSDictionary *undoEntry = [serverUndoStack lastObject];
+		if ([[undoEntry objectForKey: @"board"] isEqual: board]) {
+			// Pop it off the undo stack
+			[undoEntry retain];
+			[serverUndoStack removeLastObject];
+			
+			// Push it onto the history stack
+			[serverHistoryStack addObject: undoEntry];
+			[undoEntry release];
+			[yGameView updateLabels];
+			[self postReady];
+		} else {
+			// Wipe the undo stack
+			[serverUndoStack release];
+			serverUndoStack = [[NSMutableArray alloc] init];
+			
+			// Wipe the service object
+			[service release];
+			service = [[GCJSONService alloc] init];
+			
+			[yGameView updateServerDataWithService: service];
+		}
 	}	
 }
-
-
-
-
-
-
-
-
-
 
 /** Returns @"WIN" or @"LOSE" if in a primitive state since Y has no draws/ties.  Returns nil if not in a primitive state **/
 - (NSString *) primitive { 
@@ -213,7 +230,6 @@
 		return misere ? @"LOSE" : @"WIN";
 	}
 	
-	//Super Happy Fun Time!!!
 	//Check current player's pieces
 	if (!p1Turn)
 		currentPlayerPiece = O;
@@ -303,6 +319,14 @@
 - (void) notifyWhenReady {
 	if (gameMode == OFFLINE_UNSOLVED)
 		[[NSNotificationCenter defaultCenter] postNotificationName: @"GameIsReady" object: self];
+}
+
+- (void) postReady {
+	[[NSNotificationCenter defaultCenter] postNotificationName: @"GameIsReady" object: self];
+}
+
+- (void) postProblem {
+	[[NSNotificationCenter defaultCenter] postNotificationName: @"GameEncounteredProblem" object: self];
 }
 
 

@@ -12,12 +12,15 @@
 
 @implementation GCYGameViewController
 
+@synthesize touchesEnabled;
+
 - (id) initWithGame: (GCYGame *) _game{
 	if (self = [super init]){
 		game = _game;
 		boardView = [[GCYBoardView alloc] initWithFrame: CGRectMake(0, 0, 320, 416) withLayers: game.layers andInnerLength: game.innerTriangleLength];
 		self.view = boardView;
 		
+		// Message Stuff
 		message = [[UILabel alloc] initWithFrame: CGRectMake(20, 15 + 320, 
 															 280, 416 - (35 + 320))];
 		message.backgroundColor = [UIColor clearColor];
@@ -36,9 +39,9 @@
 		[boardView addSubview: version];
 		[self updateLabels];
 		boardView.multipleTouchEnabled = NO;
+		touchesEnabled = NO;
 		
 		CGPoint currentCenter;
-		
 		CGFloat frameSize = [boardView circleRadius] * 5;
 		
 		//Create buttons! yay!
@@ -207,12 +210,17 @@
 }
 
 
+/** 
+ Makes a move corresponding to the given button's position if it is a human player's turn.  
+ **/
 - (IBAction) tapped: (UIButton *) button{
 	NSLog(@"tapped");
-	NSNumber * num = [NSNumber numberWithInt: button.tag];
-	if([[game legalMoves] containsObject: num]){
-		NSLog(@"posting human move");
-		[game postHumanMove: num];
+	if (touchesEnabled) {
+		NSNumber * num = [NSNumber numberWithInt: button.tag];
+		if([[game legalMoves] containsObject: num]){
+			NSLog(@"posting human move");
+			[game postHumanMove: num];
+		}
 	}
 }
 
@@ -272,13 +280,50 @@
 
 - (void) fetchFinished{
 	if(waiter)	[waiter release];
-	if(![service status] || ![service connected]){
-		[[NSNotificationCenter defaultCenter] postNotificationName: @"GameEncounteredProblem" object: self ];
+	if (waiter != nil) {
+		[spinner stopAnimating];
+		[timer invalidate];
 	}
-	else{
-		[self updateLabels];
-		[[NSNotificationCenter defaultCenter] postNotificationName: @"GameIsReady" object: self ];
+	if (![service connected] || ![service status])
+		[game postProblem];
+	else {
+		// Create the new data entry
+		NSArray *keys = [[NSArray alloc] initWithObjects: @"board", @"value", @"remoteness", @"children", nil];
+		NSMutableDictionary *children = [[NSMutableDictionary alloc] init];
+		for (NSString *move in [game legalMoves]) {
+			move = [NSString stringWithFormat: @"%d", [move integerValue] - 1];
+			NSDictionary *moveDict = [[NSDictionary alloc] initWithObjectsAndKeys: [[service getValueAfterMove: move] lowercaseString], @"value",
+									  [NSNumber numberWithInteger: [service getRemotenessAfterMove: move]], @"remoteness", nil];
+			[children setObject: moveDict forKey: move];
+		}
+		NSString *val = [service getValue];
+		if (!val) val = @"UNAVAILABLE";
+		NSArray *values = [[NSArray alloc] initWithObjects: [[game getBoard] copy], val, [NSNumber numberWithInteger: [service getRemoteness]], children, nil];
+		[children release];
+		NSDictionary *entry = [[NSDictionary alloc] initWithObjects: values forKeys: keys];
+		[values release];
+		[keys release];
+		
+		// Push the new entry onto the history stack
+		NSDictionary *last = [game.serverHistoryStack lastObject];
+		if ([[last objectForKey: @"board"] isEqual: [entry objectForKey: @"board"]])
+			[game.serverHistoryStack removeLastObject];
+		[game.serverHistoryStack addObject: entry];
+		
+		[game postReady];
 	}
+	[self updateLabels];
+}
+
+- (void) timedOut: (NSTimer *) theTimer {
+	message.numberOfLines = 4;
+	message.lineBreakMode = UILineBreakModeWordWrap;
+	[message setText: @"Server request timed out. Check the strength of your Internet connection."];
+	
+	[waiter cancel];
+	[waiter release];
+	waiter = nil;
+	[spinner stopAnimating];
 }
 
 - (void)didReceiveMemoryWarning {

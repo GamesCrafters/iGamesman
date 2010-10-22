@@ -125,6 +125,9 @@
 }
 
 #pragma mark Create_Board
+// I hate my life so much...
+// TODO:  Change EVERYTHING!!!!
+
 
 /** Does all of the initial calculations, then procedes to find centers, connections, and edges **/
 - (void) createBoardView{
