@@ -8,6 +8,7 @@
 
 #import "GCOthello.h"
 #import "GCOthelloOptionMenu.h"
+#import "GCOthelloViewController.h"
 
 #define BLANK @"+"
 #define P1PIECE @"X"
@@ -21,6 +22,7 @@
 @synthesize player1Type, player2Type;
 @synthesize rows, cols;
 @synthesize misere;
+@synthesize p1Turn;
 
 - (id) init {
 	if (self = [super init]) {
@@ -38,8 +40,8 @@
 		for (int i = 0; i < rows * cols; i += 1) {
 			[board addObject: BLANK];
 		}
-		int x = rows/2;
-		int y = cols/2;
+		int x = rows/2 -1;
+		int y = cols/2 -1;
 		[board replaceObjectAtIndex:x+y*cols withObject:P1PIECE];
 		[board replaceObjectAtIndex:x+y*cols+1 withObject:P2PIECE];
 		[board replaceObjectAtIndex:x+(y+1)*cols withObject:P2PIECE];
@@ -47,6 +49,23 @@
 	}
 	return self;
 }
+
+- (UIViewController *) gameViewController {
+	return othView;
+}
+
+- (void) startGameInMode:(PlayMode)mode {
+	[self resetBoard];
+	
+	gameMode = mode;
+	
+	p1Turn = YES;
+	
+	if (!othView)
+		[othView release];
+	othView = [[GCOthelloViewController alloc] initWithGame: self];
+}
+
 
 - (NSString *) gameName {
 	return @"Othello";
@@ -64,7 +83,8 @@
 -(NSArray *) legalMoves {
 	NSMutableArray *moves = [[NSMutableArray alloc] initWithCapacity:rows*cols];
 	for (int i=0; i< rows*cols; i+=1) {
-		if ([[board objectAtIndex:i] isEqual:BLANK]) {
+		if ([[board objectAtIndex:i] isEqualToString:BLANK]) {
+		//	NSLog(@"%d", i);
 			if([[self getFlips: i] count] > 0) {
 				[moves addObject: [NSNumber numberWithInt: i]];
 			}
@@ -79,7 +99,6 @@
 - (NSArray *) getFlips: (int) loc {
 	NSMutableArray *flips = [[NSMutableArray alloc] initWithCapacity:rows*cols];
 	NSString *myPiece = p1Turn ? P1PIECE : P2PIECE;
-	NSString *oppPiece = p1Turn ? P2PIECE : P1PIECE;
 	int offsets[8] = {1,-1,cols,-cols,cols+1,cols-1,-cols+1,-cols-1};
 	for (int i=0; i<9; i+=1) {
 		int offset = offsets[i];
@@ -87,7 +106,7 @@
 		int tempLoc = loc;
 		while (YES) {
 			tempLoc += offset;
-			if ([self isOutOfBounds: loc offset:offset]) break;
+			if ([self isOutOfBounds: tempLoc offset:offset]) break;
 			if ([[board objectAtIndex:tempLoc] isEqual: BLANK]) break; 
 			if ([[board objectAtIndex:tempLoc] isEqual: myPiece]) {
 				[flips addObjectsFromArray: tempFlips];
@@ -115,7 +134,7 @@
 }
 
 - (void) doMove:(NSNumber *)move {
-	NSMutableArray *oldBoard = [[NSArray alloc] initWithCapacity: 3];
+	NSMutableArray *oldBoard = [[NSMutableArray alloc] initWithCapacity: 3];
 	[oldBoard addObject:[board copy]];
 	[oldBoard addObject:[NSNumber numberWithInt:p1pieces]];
 	[oldBoard addObject:[NSNumber numberWithInt:p2pieces]];
@@ -134,7 +153,7 @@
 		p2pieces += changedPieces + 1;
 		p1pieces -= changedPieces;
 	}
-	
+	p1Turn = !p1Turn;
 }
 
 - (void) undoMove:(id)move {
@@ -159,6 +178,29 @@
 	return nil;
 }
 
+- (void) notifyWhenReady {
+	if (gameMode == OFFLINE_UNSOLVED) {
+		[[NSNotificationCenter defaultCenter] postNotificationName:@"GameIsReady" object:self];
+	}
+}
+
+- (void) askUserForInput {
+	othView.touchesEnabled = YES;
+}
+
+- (void) stopUserInput {
+	othView.touchesEnabled = NO;
+}
+
+- (NSNumber *) getHumanMove {
+	return humanMove;
+}
+
+- (void) postHumanMove: (NSNumber *) move {
+	humanMove = move;
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"HumanChoseMove" object:self];
+}
+
 
 - (BOOL) supportsPlayMode: (PlayMode) mode {
 	return mode == OFFLINE_UNSOLVED;
@@ -176,6 +218,13 @@
 	board = [[NSMutableArray alloc] initWithCapacity: cols * rows];
 	for (int i = 0; i < cols * rows; i += 1)
 		[board addObject: BLANK];
+	
+	int x = rows/2 -1;
+	int y = cols/2 -1;
+	[board replaceObjectAtIndex:x+y*cols withObject:P1PIECE];
+	[board replaceObjectAtIndex:x+y*cols+1 withObject:P2PIECE];
+	[board replaceObjectAtIndex:x+(y+1)*cols withObject:P2PIECE];
+	[board replaceObjectAtIndex:x+(y+1)*cols+1 withObject:P1PIECE];
 }
 
 

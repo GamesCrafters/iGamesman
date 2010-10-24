@@ -18,6 +18,11 @@
 -(id) initWithGame: (GCOthello *) _game {
 	if (self = [super initWithStyle: UITableViewStyleGrouped]) {
 		game = _game;
+		rows = game.rows;
+		cols = game.cols;
+		misere = game.misere;
+		
+		self.tableView.allowsSelection = NO;
 	}
 	return self;
 }
@@ -37,9 +42,12 @@
 
 - (void) update: (UISegmentedControl *) sender {
 	int tag = sender.tag;
-	if (tag == 2) cols = [sender selectedSegmentIndex] + 4;
-	else if (tag == 1) rows = [sender selectedSegmentIndex] + 4;
-	else misere = [sender selectedSegmentIndex] == 0 ? NO : YES;
+	if (tag == 2)
+		cols = [sender selectedSegmentIndex] + 4;
+	else if (tag == 1)
+		rows = [sender selectedSegmentIndex] + 4;
+	else
+		misere = [sender selectedSegmentIndex] == 0 ? NO : YES;
 	
 	if (cols == game.cols && rows == game.rows && misere == game.misere)
 		self.navigationItem.rightBarButtonItem.enabled = NO;
@@ -108,7 +116,7 @@
 #pragma mark Table view data source
 
 - (NSString *) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-	return [[NSArray arrayWithObjects: @"Width", @"Height", @"Misère", nil] objectAtIndex: section];
+	return [[NSArray arrayWithObjects: @"Height", @"Width", @"Misère", nil] objectAtIndex: section];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -209,14 +217,7 @@
 #pragma mark Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Navigation logic may go here. Create and push another view controller.
-	/*
-	 <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-	 [self.navigationController pushViewController:detailViewController animated:YES];
-	 [detailViewController release];
-	 */
+
 }
 
 

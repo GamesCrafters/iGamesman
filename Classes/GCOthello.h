@@ -9,9 +9,13 @@
 #import <Foundation/Foundation.h>
 #import "GCGame.h"
 
+@class GCOthelloViewController;
+
 
 @interface GCOthello : GCGame {
+	GCOthelloViewController *othView;
 	NSString *player1Name, *player2Name;
+	PlayMode gameMode;
 	PlayerType player1Type, player2Type;
 	int rows, cols;
 	BOOL misere;
@@ -19,15 +23,18 @@
 	BOOL p1Turn;
 	int p1pieces, p2pieces;
 	NSMutableArray *myOldMoves;
+	NSNumber *humanMove;
 }
 
 @property(nonatomic, retain) NSString *player1Name, *player2Name;
 @property(nonatomic, assign) PlayerType player1Type, player2Type;
 @property (nonatomic, assign, getter=isMisere) BOOL misere;
 @property (nonatomic, assign) int rows, cols;
+@property (nonatomic, assign) BOOL p1Turn;
 
 - (void) resetBoard;
 - (NSArray *) getFlips: (int) loc;
 - (BOOL) isOutOfBounds: (int) loc offset: (int) offset;
+- (void) postHumanMove: (NSNumber *) move;
 
 @end
