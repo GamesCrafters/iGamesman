@@ -8,6 +8,7 @@
 
 #import "GCQuickCross.h"
 #import "GCQuickCrossOptionMenu.h"
+#import "GCQuickCrossViewController.h"
 
 #define BLANK @"+"
 #define XVERT @"X"
@@ -22,6 +23,7 @@
 @synthesize player1Name, player2Name;
 @synthesize player1Type, player2Type;
 @synthesize rows, cols, inalign, misere;
+@synthesize p1Turn;
 
 - (id) init {
 	if (self = [super init]) {
@@ -31,6 +33,8 @@
 		rows = 4;
 		cols = 4;
 		inalign = 4;
+		
+		p1Turn = YES;
  		
 		misere = NO;
 		
@@ -51,6 +55,11 @@
 - (UIViewController *) optionMenu {
 	return [[GCQuickCrossOptionMenu alloc] initWithGame: self];
 }
+
+- (UIViewController *) gameViewController {
+	return qcView;
+}
+
 - (void) resetBoard {
 	if (board != nil) {
 		[board release];
@@ -102,6 +111,8 @@
 }			
 
 - (void) doMove: (NSArray *) move {
+	[qcView doMove: move];
+	
 	NSString *piece = [move objectAtIndex: 1]; 
 	[board replaceObjectAtIndex: [[move objectAtIndex: 0] intValue] withObject: piece];
 	p1Turn = !p1Turn;
@@ -182,8 +193,38 @@
 	
 }
 
-				 
+- (void) startGameInMode:(PlayMode)mode {
+	[self resetBoard];
+	
+	gameMode = mode;
+	
+	p1Turn = YES;
+	
+	if (!qcView)
+		[qcView release];
+	qcView = [[GCQuickCrossViewController alloc] initWithGame: self];
+}
 
+- (void) notifyWhenReady {
+	if (gameMode == OFFLINE_UNSOLVED)
+		[[NSNotificationCenter defaultCenter] postNotificationName: @"GameIsReady" object: self];
+}				 
 
+- (void) askUserForInput {
+	qcView.touchesEnabled = YES;
+}
+
+- (void) stopUserInput {
+	qcView.touchesEnabled = NO;
+}
+
+- (NSArray *) getHumanMove {
+	return humanMove;
+}
+
+- (void) postHumanMove: (NSArray *) move {
+	humanMove = move;
+	[[NSNotificationCenter defaultCenter] postNotificationName: @"HumanChoseMove" object: self];
+}
 				 
 @end

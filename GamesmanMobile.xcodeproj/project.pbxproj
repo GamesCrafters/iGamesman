@@ -87,6 +87,8 @@
 		6024C8C3125FB6E00028BFA4 /* GCTicTacToeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6024C8C2125FB6E00028BFA4 /* GCTicTacToeViewController.m */; };
 		6024C8FF125FBB6A0028BFA4 /* GCTicTacToeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6024C8FE125FBB6A0028BFA4 /* GCTicTacToeView.m */; };
 		9C692486115017B800E0EC4B /* IntegerQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C692485115017B800E0EC4B /* IntegerQueue.m */; };
+		B522AD0F1274C27700E91865 /* GCQuickCrossViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B522AD0E1274C27700E91865 /* GCQuickCrossViewController.m */; };
+		B522AD141274C29100E91865 /* GCQuickCrossView.m in Sources */ = {isa = PBXBuildFile; fileRef = B522AD131274C29100E91865 /* GCQuickCrossView.m */; };
 		C58F0D7511447A2A0058D6CE /* GCYBoardView0.xib in Resources */ = {isa = PBXBuildFile; fileRef = C58F0D7411447A2A0058D6CE /* GCYBoardView0.xib */; };
 		C58F0D7B114482CB0058D6CE /* GCYBoardView1.xib in Resources */ = {isa = PBXBuildFile; fileRef = C58F0D7A114482CB0058D6CE /* GCYBoardView1.xib */; };
 		C58F0D7F114484290058D6CE /* yboard.gif in Resources */ = {isa = PBXBuildFile; fileRef = C58F0D7E114484290058D6CE /* yboard.gif */; };
@@ -225,6 +227,10 @@
 		8D1107310486CEB800E47090 /* GamesmanMobile-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GamesmanMobile-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		9C692484115017B800E0EC4B /* IntegerQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntegerQueue.h; sourceTree = "<group>"; };
 		9C692485115017B800E0EC4B /* IntegerQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntegerQueue.m; sourceTree = "<group>"; };
+		B522AD0D1274C27700E91865 /* GCQuickCrossViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCQuickCrossViewController.h; sourceTree = "<group>"; };
+		B522AD0E1274C27700E91865 /* GCQuickCrossViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCQuickCrossViewController.m; sourceTree = "<group>"; };
+		B522AD121274C29100E91865 /* GCQuickCrossView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCQuickCrossView.h; sourceTree = "<group>"; };
+		B522AD131274C29100E91865 /* GCQuickCrossView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCQuickCrossView.m; sourceTree = "<group>"; };
 		C58F0D7411447A2A0058D6CE /* GCYBoardView0.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GCYBoardView0.xib; sourceTree = "<group>"; };
 		C58F0D7A114482CB0058D6CE /* GCYBoardView1.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GCYBoardView1.xib; sourceTree = "<group>"; };
 		C58F0D7E114484290058D6CE /* yboard.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = yboard.gif; sourceTree = "<group>"; };
@@ -450,8 +456,8 @@
 				0AF8E94B124AA2EF008CDADC /* GCTicTacToeOptionMenu.h */,
 				0AF8E94C124AA2EF008CDADC /* GCTicTacToeOptionMenu.m */,
 				6024C8C1125FB6E00028BFA4 /* GCTicTacToeViewController.h */,
-				6024C8C2125FB6E00028BFA4 /* GCTicTacToeViewController.m */,
 				6024C8FD125FBB6A0028BFA4 /* GCTicTacToeView.h */,
+				6024C8C2125FB6E00028BFA4 /* GCTicTacToeViewController.m */,
 				6024C8FE125FBB6A0028BFA4 /* GCTicTacToeView.m */,
 			);
 			name = "Tic-Tac-Toe";
@@ -514,10 +520,14 @@
 		36F98910124FDC7B000568F3 /* QuickCross */ = {
 			isa = PBXGroup;
 			children = (
+				B522AD121274C29100E91865 /* GCQuickCrossView.h */,
+				B522AD131274C29100E91865 /* GCQuickCrossView.m */,
 				36F98911124FDD66000568F3 /* GCQuickCross.h */,
 				36F98912124FDD66000568F3 /* GCQuickCross.m */,
 				36F98967124FE58B000568F3 /* GCQuickCrossOptionMenu.h */,
 				36F98968124FE58B000568F3 /* GCQuickCrossOptionMenu.m */,
+				B522AD0D1274C27700E91865 /* GCQuickCrossViewController.h */,
+				B522AD0E1274C27700E91865 /* GCQuickCrossViewController.m */,
 			);
 			name = QuickCross;
 			sourceTree = "<group>";
@@ -595,7 +605,6 @@
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "GamesmanMobile" */;
 			compatibilityVersion = "Xcode 3.1";
-			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				English,
@@ -716,6 +725,8 @@
 				0A4DBD7A124FF21400FA71C5 /* GCOthelloOptionMenu.m in Sources */,
 				6024C8C3125FB6E00028BFA4 /* GCTicTacToeViewController.m in Sources */,
 				6024C8FF125FBB6A0028BFA4 /* GCTicTacToeView.m in Sources */,
+				B522AD0F1274C27700E91865 /* GCQuickCrossViewController.m in Sources */,
+				B522AD141274C29100E91865 /* GCQuickCrossView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

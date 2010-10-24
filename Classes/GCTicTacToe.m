@@ -167,7 +167,7 @@
 				break;
 			}
 		}
-		
+		//file://localhost/home/cc/cs198/fa10/class/cs198-hx/iGamesman2/Classes/GCTicTacToeView.m
 		// Check the diagonal case (negative slope)
 		BOOL case4 = YES;
 		for (int j = i; j < i + cols * inarow - inarow; j += (cols - 1) ) {
