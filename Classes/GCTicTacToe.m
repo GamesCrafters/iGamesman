@@ -117,6 +117,24 @@
 		[[NSNotificationCenter defaultCenter] postNotificationName: @"GameIsReady" object: self];
 }
 
+- (void) askUserForInput {
+	tttView.touchesEnabled = YES;
+}
+
+- (void) stopUserInput {
+	tttView.touchesEnabled = NO;
+}
+
+- (NSNumber *) getHumanMove {
+	return humanMove;
+}
+
+- (void) postHumanMove: (NSNumber *) move {
+	humanMove = move;
+	[[NSNotificationCenter defaultCenter] postNotificationName: @"HumanChoseMove" object: self];
+}
+	
+
 - (NSString *) primitive {
 	for (int i = 0; i < rows * cols; i += 1) {
 		NSString *piece = [board objectAtIndex: i];

@@ -24,6 +24,8 @@
 	int rows, cols, inarow;
 	BOOL misere;
 	NSMutableArray *board;
+	
+	NSNumber *humanMove;
 }
 
 @property (nonatomic, retain) NSString *player1Name, *player2Name;
@@ -33,5 +35,6 @@
 @property (nonatomic, assign) BOOL p1Turn;
 
 - (void) resetBoard;
+- (void) postHumanMove: (NSNumber *) move;
 
 @end

@@ -12,7 +12,11 @@
 
 @interface GCTicTacToeViewController : UIViewController {
 	GCTicTacToe *game;
+	
+	BOOL touchesEnabled;
 }
+
+@property (nonatomic, assign) BOOL touchesEnabled;
 
 - (id) initWithGame: (GCTicTacToe *) _game;
 - (void) doMove: (NSNumber *) move;

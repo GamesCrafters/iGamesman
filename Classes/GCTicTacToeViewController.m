@@ -12,6 +12,8 @@
 
 @implementation GCTicTacToeViewController
 
+@synthesize touchesEnabled;
+
 - (id) initWithGame: (GCTicTacToe *) _game {
 	if (self = [super init]) {
 		game = _game;
@@ -20,27 +22,43 @@
 }
 
 - (void) doMove: (NSNumber *) move {	
-	//CGRect rect = CGRectMake(10 + col * size, 10 + row * size, size, size);	
+	if ((game.p1Turn) ? ([game player1Type] != HUMAN) : ([game player2Type] != HUMAN)) {
+		UIImageView *piece = [[UIImageView alloc] initWithImage: [UIImage imageNamed: game.p1Turn ? @"C4X.png" : @"C4O.png"]];
+		int col = [move intValue] % game.cols;
+		int row = [move intValue] / game.cols;
+		CGFloat w = self.view.bounds.size.width;
+		CGFloat h = self.view.bounds.size.height;
+		CGFloat size = MIN((w - 180)/game.cols, (h - 20)/game.rows);
+		
+		[piece setFrame: CGRectMake(10 + col * size, 10 + row * size, size, size)];
+		piece.tag = 1000 + [move intValue];
+		[self.view addSubview: piece];
+	}
 }
 
 - (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-	CGFloat w = self.view.bounds.size.width;
-	CGFloat h = self.view.bounds.size.height;
-	
-	CGFloat size = MIN((w - 180)/game.cols, (h - 20)/game.rows);
-	
-	UITouch *theTouch = [touches anyObject];
-	CGPoint loc = [theTouch locationInView: self.view];
-	
-	if (CGRectContainsPoint(CGRectMake(10, 10, size * game.cols, size * game.rows), loc)) {
-		int col = (loc.x - 10) / size;
-		int row = (loc.y - 10) / size;
+	if (touchesEnabled) {
+		CGFloat w = self.view.bounds.size.width;
+		CGFloat h = self.view.bounds.size.height;
 		
-		CGRect rect = CGRectMake(10 + col * size, 10 + row * size, size, size);
-		UIImageView *piece = [[UIImageView alloc] initWithImage: [UIImage imageNamed: game.p1Turn ? @"C4X.png" : @"C4O.png"]];
-		[piece setFrame: rect];
-		piece.tag = 55555;
-		[self.view addSubview: piece];
+		CGFloat size = MIN((w - 180)/game.cols, (h - 20)/game.rows);
+		
+		UITouch *theTouch = [touches anyObject];
+		CGPoint loc = [theTouch locationInView: self.view];
+		
+		if (CGRectContainsPoint(CGRectMake(10, 10, size * game.cols, size * game.rows), loc)) {
+			int col = (loc.x - 10) / size;
+			int row = (loc.y - 10) / size;
+			int slot = col + game.cols * row;
+			
+			CGRect rect = CGRectMake(10 + col * size, 10 + row * size, size, size);
+			UIImageView *piece = [[UIImageView alloc] initWithImage: [UIImage imageNamed: game.p1Turn ? @"C4X.png" : @"C4O.png"]];
+			[piece setFrame: rect];
+			piece.tag = 1000 + slot;
+			[self.view addSubview: piece];
+			
+			[game postHumanMove: [NSNumber numberWithInt: slot]];
+		}
 	}
 }
 
