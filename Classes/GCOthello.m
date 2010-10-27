@@ -98,23 +98,26 @@
 
 - (NSArray *) getFlips: (int) loc {
 	NSMutableArray *flips = [[NSMutableArray alloc] initWithCapacity:rows*cols];
-	NSString *myPiece = p1Turn ? P1PIECE : P2PIECE;
-	int offsets[8] = {1,-1,cols,-cols,cols+1,cols-1,-cols+1,-cols-1};
-	for (int i=0; i<9; i+=1) {
-		int offset = offsets[i];
-		NSMutableArray *tempFlips = [[NSMutableArray alloc] initWithCapacity:rows*cols];
-		int tempLoc = loc;
-		while (YES) {
-			tempLoc += offset;
-			if ([self isOutOfBounds: tempLoc offset:offset]) break;
-			if ([[board objectAtIndex:tempLoc] isEqual: BLANK]) break; 
-			if ([[board objectAtIndex:tempLoc] isEqual: myPiece]) {
-				[flips addObjectsFromArray: tempFlips];
-				break;
+	if ([[board objectAtIndex:loc] isEqualToString:BLANK]) {			
+		NSString *myPiece = p1Turn ? P1PIECE : P2PIECE;
+		int offsets[8] = {1,-1,cols,-cols,cols+1,cols-1,-cols+1,-cols-1};
+		for (int i=0; i<9; i+=1) {
+			int offset = offsets[i];
+			NSMutableArray *tempFlips = [[NSMutableArray alloc] initWithCapacity:rows*cols];
+			int tempLoc = loc;
+			while (YES) {
+				tempLoc += offset;
+				if ([self isOutOfBounds: tempLoc offset:offset]) break;
+				if ([[board objectAtIndex:tempLoc] isEqual: BLANK]) break; 
+				if ([[board objectAtIndex:tempLoc] isEqual: myPiece]) {
+					[flips addObjectsFromArray: tempFlips];
+					break;
+				}
+				[tempFlips addObject: [NSNumber numberWithInt: tempLoc]];
 			}
-			[tempFlips addObject: [NSNumber numberWithInt: tempLoc]];
 		}
 	}
+	
 	return flips;
 }
 
@@ -134,6 +137,8 @@
 }
 
 - (void) doMove:(NSNumber *)move {
+	
+	[othView doMove:move];
 	NSMutableArray *oldBoard = [[NSMutableArray alloc] initWithCapacity: 3];
 	[oldBoard addObject:[board copy]];
 	[oldBoard addObject:[NSNumber numberWithInt:p1pieces]];
@@ -154,6 +159,7 @@
 		p1pieces -= changedPieces;
 	}
 	p1Turn = !p1Turn;
+	
 }
 
 - (void) undoMove:(id)move {

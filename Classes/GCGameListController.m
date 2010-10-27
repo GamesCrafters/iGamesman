@@ -14,8 +14,9 @@
 #import "GCConnections.h"
 #import "GCTicTacToe.h"
 #import "GCOthello.h"
-#import "GCQuickCross.h"
 #import "GCYGame.h"
+#import "GCQuickCross.h"
+
 
 
 @implementation GCGameListController
@@ -31,7 +32,7 @@
 		GCOthello *othello = [[GCOthello alloc] init];
 		GCQuickCross *qc = [[GCQuickCross alloc] init];
 		GCYGame *y = [[GCYGame alloc] init];
-		NSArray *objs = [[[NSArray alloc] initWithObjects: c4, con, othello, qc, ttt, y, nil] autorelease];
+		NSArray *objs = [[[NSArray alloc] initWithObjects: c4, con, othello, ttt, y, nil] autorelease];
 		
 		NSUserDefaults *stdDefaults = [NSUserDefaults standardUserDefaults];
 		if (stdDefaults) {
@@ -47,8 +48,8 @@
 		[c4 release];
 		[con release];
 		[othello release];
-		[qc release];
 		[ttt release];
+		[qc release];
 		[y release];
 		
 		NSMutableArray *temp = [[NSMutableArray alloc] init];

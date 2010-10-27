@@ -10,6 +10,7 @@
 #import "GCOthelloView.h"
 
 #define PADDING 5
+#define BLANK "+"
 
 
 
@@ -47,17 +48,24 @@
 		if (CGRectContainsPoint(CGRectMake(PADDING, PADDING, size * game.cols, size * game.rows), loc)) {
 			int col = (loc.x - PADDING) / size;
 			int row = (loc.y - PADDING) / size;
+			int pos = col + row*game.cols;
 			
 			CGRect rect = CGRectMake(PADDING + col * size, PADDING + row * size, size, size);
-			NSArray *myFlips = [game getFlips:(col + row*game.cols)];
-			if ([myFlips count] > 0){
-				UIImageView *piece = [[UIImageView alloc] initWithImage: [UIImage imageNamed: game.p1Turn ? @"C4X.png" : @"C4O.png"]];
+			NSArray *myFlips = [game getFlips:(pos)];
+			if ([myFlips count] > 0 ){
+				UIImageView *piece = [[UIImageView alloc] initWithImage: [UIImage imageNamed: game.p1Turn ? @"simpleblack.png" : @"simplewhite.png"]];
 				[piece setFrame: rect];
-				piece.tag = 55555;
+				piece.tag = 1000 + col + row*game.cols;
 				[self.view addSubview: piece];
 				for (NSNumber *flip in myFlips) {
+					NSLog(@"%d", [flip intValue]);
 					UIImageView *image = [self.view viewWithTag:1000 + [flip intValue]];
-					[image setImage:[UIImage imageNamed: game.p1Turn ? @"C4X.png" : @"C4O.png"]];
+					[UIView beginAnimations:nil context:NULL];
+					[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+					[UIView setAnimationDuration:1.0];
+					[UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:image cache:YES];
+					[image setImage:[UIImage imageNamed: game.p1Turn ? @"simpleblack.png" : @"simplewhite.png"]];
+					[UIView commitAnimations];
 				}
 				[game postHumanMove: [NSNumber numberWithInt: col + row*game.cols]];
 			}
@@ -67,16 +75,27 @@
 
 - (void) doMove:(NSNumber *)move {
 	if ((game.p1Turn) ? ([game player1Type] != HUMAN) : ([game player2Type] != HUMAN)) {
-		UIImageView *piece = [[UIImageView alloc] initWithImage: [UIImage imageNamed: game.p1Turn ? @"C4X.png" : @"C4O.png"]];
 		int col = [move intValue] % game.cols;
 		int row = [move intValue] / game.cols;
 		CGFloat w = self.view.bounds.size.width;
 		CGFloat h = self.view.bounds.size.height;
-		CGFloat size = MIN((w - PADDING)/game.cols, (h - (80+ PADDING))/game.rows);
-		
-		[piece setFrame: CGRectMake(PADDING	+ col * size, PADDING + row * size, size, size)];
-		piece.tag = 1000 + [move intValue];
+		CGFloat size = MIN((w - 2*PADDING)/game.cols, (h - 80+PADDING)/game.rows);
+		CGRect rect = CGRectMake( PADDING + col * size,  PADDING + row * size, size, size);
+		NSArray *myFlips = [game getFlips:(col + row*game.cols)];
+		UIImageView *piece = [[UIImageView alloc] initWithImage: [UIImage imageNamed: game.p1Turn ? @"simpleblack.png" : @"simplewhite.png"]];
+		[piece setFrame: rect];
+		piece.tag = 1000 + col + row*game.cols;
 		[self.view addSubview: piece];
+		for (NSNumber *flip in myFlips) {
+			UIImageView *image = [self.view viewWithTag:1000 + [flip intValue]];
+			[UIView beginAnimations:nil context:NULL];
+			[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+			[UIView setAnimationDuration:1.0];
+			[UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:image cache:YES];
+			[image setImage:[UIImage imageNamed: game.p1Turn ? @"simpleblack.png" : @"simplewhite.png"]];
+			[UIView commitAnimations];
+		}
+		
 	}
 }
 
@@ -92,11 +111,11 @@
 	int row = game.rows/2 -1;
 	
 	
-	UIImageView *piece1 = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"C4X.png"]];
-	UIImageView *piece2 = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"C4O.png"]];
+	UIImageView *piece1 = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"simpleblack.png"]];
+	UIImageView *piece2 = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"simplewhite.png"]];
 	
-	UIImageView *piece3 = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"C4O.png"]];
-	UIImageView *piece4 = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"C4X.png"]];
+	UIImageView *piece3 = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"simplewhite.png"]];
+	UIImageView *piece4 = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"simpleblack.png"]];
 	[piece1 setFrame: CGRectMake(PADDING + col * size, PADDING + row * size, size, size)];
 	piece1.tag = 1000 + row*game.cols + col;
 	[self.view addSubview: piece1];

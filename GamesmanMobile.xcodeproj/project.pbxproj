@@ -84,10 +84,11 @@
 		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
 		2EAB56911274BD2A0006CEA6 /* GCOthelloViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EAB56901274BD2A0006CEA6 /* GCOthelloViewController.m */; };
 		2EAB56991274C05E0006CEA6 /* GCOthelloView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EAB56981274C05E0006CEA6 /* GCOthelloView.m */; };
-		36F98913124FDD66000568F3 /* GCQuickCross.m in Sources */ = {isa = PBXBuildFile; fileRef = 36F98912124FDD66000568F3 /* GCQuickCross.m */; };
-		36F98969124FE58B000568F3 /* GCQuickCrossOptionMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 36F98968124FE58B000568F3 /* GCQuickCrossOptionMenu.m */; };
 		6024C8C3125FB6E00028BFA4 /* GCTicTacToeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6024C8C2125FB6E00028BFA4 /* GCTicTacToeViewController.m */; };
 		6024C8FF125FBB6A0028BFA4 /* GCTicTacToeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6024C8FE125FBB6A0028BFA4 /* GCTicTacToeView.m */; };
+		82A09011127519DA000548A7 /* othelloblackpiece.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 82A09010127519DA000548A7 /* othelloblackpiece.jpg */; };
+		82AA5D0A1278DF4A00E904B1 /* simplewhite.png in Resources */ = {isa = PBXBuildFile; fileRef = 82AA5D091278DF4A00E904B1 /* simplewhite.png */; };
+		82AA5D0C1278DF5700E904B1 /* simpleblack.png in Resources */ = {isa = PBXBuildFile; fileRef = 82AA5D0B1278DF5700E904B1 /* simpleblack.png */; };
 		9C692486115017B800E0EC4B /* IntegerQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C692485115017B800E0EC4B /* IntegerQueue.m */; };
 		C58F0D7511447A2A0058D6CE /* GCYBoardView0.xib in Resources */ = {isa = PBXBuildFile; fileRef = C58F0D7411447A2A0058D6CE /* GCYBoardView0.xib */; };
 		C58F0D7B114482CB0058D6CE /* GCYBoardView1.xib in Resources */ = {isa = PBXBuildFile; fileRef = C58F0D7A114482CB0058D6CE /* GCYBoardView1.xib */; };
@@ -220,14 +221,13 @@
 		2EAB56971274C05E0006CEA6 /* GCOthelloView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCOthelloView.h; sourceTree = "<group>"; };
 		2EAB56981274C05E0006CEA6 /* GCOthelloView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCOthelloView.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* GamesmanMobile_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GamesmanMobile_Prefix.pch; sourceTree = "<group>"; };
-		36F98911124FDD66000568F3 /* GCQuickCross.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCQuickCross.h; sourceTree = "<group>"; };
-		36F98912124FDD66000568F3 /* GCQuickCross.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCQuickCross.m; sourceTree = "<group>"; };
-		36F98967124FE58B000568F3 /* GCQuickCrossOptionMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCQuickCrossOptionMenu.h; sourceTree = "<group>"; };
-		36F98968124FE58B000568F3 /* GCQuickCrossOptionMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCQuickCrossOptionMenu.m; sourceTree = "<group>"; };
 		6024C8C1125FB6E00028BFA4 /* GCTicTacToeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCTicTacToeViewController.h; sourceTree = "<group>"; };
 		6024C8C2125FB6E00028BFA4 /* GCTicTacToeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCTicTacToeViewController.m; sourceTree = "<group>"; };
 		6024C8FD125FBB6A0028BFA4 /* GCTicTacToeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCTicTacToeView.h; sourceTree = "<group>"; };
 		6024C8FE125FBB6A0028BFA4 /* GCTicTacToeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCTicTacToeView.m; sourceTree = "<group>"; };
+		82A09010127519DA000548A7 /* othelloblackpiece.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = othelloblackpiece.jpg; path = ../Dropbox/Othello/othelloblackpiece.jpg; sourceTree = SOURCE_ROOT; };
+		82AA5D091278DF4A00E904B1 /* simplewhite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = simplewhite.png; sourceTree = SOURCE_ROOT; };
+		82AA5D0B1278DF5700E904B1 /* simpleblack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = simpleblack.png; sourceTree = SOURCE_ROOT; };
 		8D1107310486CEB800E47090 /* GamesmanMobile-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GamesmanMobile-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		9C692484115017B800E0EC4B /* IntegerQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntegerQueue.h; sourceTree = "<group>"; };
 		9C692485115017B800E0EC4B /* IntegerQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntegerQueue.m; sourceTree = "<group>"; };
@@ -272,7 +272,6 @@
 				0A12AB8C1115771600297EB8 /* ConnectFour */,
 				0A19F18C11260A4F0003F8C7 /* Connections */,
 				0A4DBD70124FF17C00FA71C5 /* Othello */,
-				36F98910124FDC7B000568F3 /* QuickCross */,
 				0AB20CC51244057600C91DB0 /* Tic-Tac-Toe */,
 				0A65E635111CCFD6001400F6 /* Y */,
 				0A87563511140191006AB678 /* GCGame.h */,
@@ -396,6 +395,8 @@
 		0A4DBD70124FF17C00FA71C5 /* Othello */ = {
 			isa = PBXGroup;
 			children = (
+				82AA5D0B1278DF5700E904B1 /* simpleblack.png */,
+				82AA5D091278DF4A00E904B1 /* simplewhite.png */,
 				0A4DBD75124FF21400FA71C5 /* GCOthello.h */,
 				0A4DBD77124FF21400FA71C5 /* GCOthello.m */,
 				0A4DBD76124FF21400FA71C5 /* GCOthelloOptionMenu.h */,
@@ -426,6 +427,7 @@
 		0A8756021113F9B7006AB678 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				82A09010127519DA000548A7 /* othelloblackpiece.jpg */,
 				0A3292BB11323B49006066E5 /* ConnectFour */,
 				0A3292D111323D64006066E5 /* Connections */,
 				C58F0D7D1144840D0058D6CE /* YGame */,
@@ -519,17 +521,6 @@
 				288765FC0DF74451002DB57D /* CoreGraphics.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		36F98910124FDC7B000568F3 /* QuickCross */ = {
-			isa = PBXGroup;
-			children = (
-				36F98911124FDD66000568F3 /* GCQuickCross.h */,
-				36F98912124FDD66000568F3 /* GCQuickCross.m */,
-				36F98967124FE58B000568F3 /* GCQuickCrossOptionMenu.h */,
-				36F98968124FE58B000568F3 /* GCQuickCrossOptionMenu.m */,
-			);
-			name = QuickCross;
 			sourceTree = "<group>";
 		};
 		C58F0D77114481FB0058D6CE /* YBoards */ = {
@@ -673,6 +664,9 @@
 				0A359CB8126509EB003F5EAA /* StepReverse@2x.png in Resources */,
 				0AC8EAE8126E458100C46CFD /* NowPlayingButton.png in Resources */,
 				0AC8EB02126E481000C46CFD /* NowPlayingButton@2x.png in Resources */,
+				82A09011127519DA000548A7 /* othelloblackpiece.jpg in Resources */,
+				82AA5D0A1278DF4A00E904B1 /* simplewhite.png in Resources */,
+				82AA5D0C1278DF5700E904B1 /* simpleblack.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -719,8 +713,6 @@
 				0AB775A211D7103C00B04135 /* GCVVHView.m in Sources */,
 				0AB20CC8124405B400C91DB0 /* GCTicTacToe.m in Sources */,
 				0AF8E94D124AA2EF008CDADC /* GCTicTacToeOptionMenu.m in Sources */,
-				36F98913124FDD66000568F3 /* GCQuickCross.m in Sources */,
-				36F98969124FE58B000568F3 /* GCQuickCrossOptionMenu.m in Sources */,
 				0A4DBD79124FF21400FA71C5 /* GCOthello.m in Sources */,
 				0A4DBD7A124FF21400FA71C5 /* GCOthelloOptionMenu.m in Sources */,
 				6024C8C3125FB6E00028BFA4 /* GCTicTacToeViewController.m in Sources */,
