@@ -86,7 +86,7 @@
 	//----to do------
 	
 	//display turn
-	//----to do------
+	//----to do-------
 }
 
 - (void) undoMove:(NSNumber *)move {
