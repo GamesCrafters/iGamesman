@@ -10,7 +10,7 @@
 #import "GCOthelloView.h"
 
 #define PADDING 5
-#define BLANK "+"
+#define BLANK @"+"
 
 
 
@@ -53,20 +53,6 @@
 			CGRect rect = CGRectMake(PADDING + col * size, PADDING + row * size, size, size);
 			NSArray *myFlips = [game getFlips:(pos)];
 			if ([myFlips count] > 0 ){
-				UIImageView *piece = [[UIImageView alloc] initWithImage: [UIImage imageNamed: game.p1Turn ? @"simpleblack.png" : @"simplewhite.png"]];
-				[piece setFrame: rect];
-				piece.tag = 1000 + col + row*game.cols;
-				[self.view addSubview: piece];
-				for (NSNumber *flip in myFlips) {
-					NSLog(@"%d", [flip intValue]);
-					UIImageView *image = [self.view viewWithTag:1000 + [flip intValue]];
-					[UIView beginAnimations:nil context:NULL];
-					[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-					[UIView setAnimationDuration:1.0];
-					[UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:image cache:YES];
-					[image setImage:[UIImage imageNamed: game.p1Turn ? @"simpleblack.png" : @"simplewhite.png"]];
-					[UIView commitAnimations];
-				}
 				[game postHumanMove: [NSNumber numberWithInt: col + row*game.cols]];
 			}
 		}
@@ -74,7 +60,6 @@
 }
 
 - (void) doMove:(NSNumber *)move {
-	if ((game.p1Turn) ? ([game player1Type] != HUMAN) : ([game player2Type] != HUMAN)) {
 		int col = [move intValue] % game.cols;
 		int row = [move intValue] / game.cols;
 		CGFloat w = self.view.bounds.size.width;
@@ -94,8 +79,35 @@
 			[UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:image cache:YES];
 			[image setImage:[UIImage imageNamed: game.p1Turn ? @"simpleblack.png" : @"simplewhite.png"]];
 			[UIView commitAnimations];
+	}
+	
+	//display the number of pieces each player has
+	//and winning status bar
+	//----to do------
+	
+	//display turn
+	//----to do------
+}
+
+- (void) undoMove:(NSNumber *)move {
+	NSArray *myOldMoves = game.myOldMoves;
+	NSArray *myLastBoard = [[myOldMoves lastObject] objectAtIndex:0];
+	for (int i = 0; i< game.rows*game.cols; i++) {
+		if ([myLastBoard objectAtIndex: i] != [game.board objectAtIndex:i]) {
+			if ([[myLastBoard objectAtIndex:i] isEqualToString:BLANK]) {
+				UIImageView *image = [self.view viewWithTag:1000 + i];
+				[image removeFromSuperview];
+			} else {
+					
+				UIImageView *image = [self.view viewWithTag:1000 + i];
+				[UIView beginAnimations:nil context:NULL];
+				[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+				[UIView setAnimationDuration:1.0];
+				[UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:image cache:YES];
+				[image setImage:[UIImage imageNamed: game.p1Turn ? @"simpleblack.png" : @"simplewhite.png"]];
+				[UIView commitAnimations];
+			}
 		}
-		
 	}
 }
 

@@ -23,6 +23,7 @@
 @synthesize rows, cols;
 @synthesize misere;
 @synthesize p1Turn;
+@synthesize board, myOldMoves;
 
 - (id) init {
 	if (self = [super init]) {
@@ -163,11 +164,13 @@
 }
 
 - (void) undoMove:(id)move {
+	[othView undoMove:move];
 	NSArray *b = [[myOldMoves lastObject] retain];
 	[myOldMoves removeLastObject];
-	board = [b objectAtIndex:0];
+	board = [[b objectAtIndex:0] mutableCopy];
 	p1pieces = [[b objectAtIndex:1] intValue];
 	p2pieces = [[b objectAtIndex:2] intValue];
+	p1Turn = !p1Turn;
 }
 
 - (NSString *) primitive {

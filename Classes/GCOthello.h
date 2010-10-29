@@ -31,6 +31,7 @@
 @property (nonatomic, assign, getter=isMisere) BOOL misere;
 @property (nonatomic, assign) int rows, cols;
 @property (nonatomic, assign) BOOL p1Turn;
+@property (nonatomic, retain) NSMutableArray *myOldMoves, *board;
 
 - (void) resetBoard;
 - (NSArray *) getFlips: (int) loc;

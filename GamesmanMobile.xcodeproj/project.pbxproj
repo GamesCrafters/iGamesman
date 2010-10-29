@@ -86,7 +86,6 @@
 		2EAB56991274C05E0006CEA6 /* GCOthelloView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EAB56981274C05E0006CEA6 /* GCOthelloView.m */; };
 		6024C8C3125FB6E00028BFA4 /* GCTicTacToeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6024C8C2125FB6E00028BFA4 /* GCTicTacToeViewController.m */; };
 		6024C8FF125FBB6A0028BFA4 /* GCTicTacToeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6024C8FE125FBB6A0028BFA4 /* GCTicTacToeView.m */; };
-		82A09011127519DA000548A7 /* othelloblackpiece.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 82A09010127519DA000548A7 /* othelloblackpiece.jpg */; };
 		82AA5D0A1278DF4A00E904B1 /* simplewhite.png in Resources */ = {isa = PBXBuildFile; fileRef = 82AA5D091278DF4A00E904B1 /* simplewhite.png */; };
 		82AA5D0C1278DF5700E904B1 /* simpleblack.png in Resources */ = {isa = PBXBuildFile; fileRef = 82AA5D0B1278DF5700E904B1 /* simpleblack.png */; };
 		9C692486115017B800E0EC4B /* IntegerQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C692485115017B800E0EC4B /* IntegerQueue.m */; };
@@ -225,7 +224,6 @@
 		6024C8C2125FB6E00028BFA4 /* GCTicTacToeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCTicTacToeViewController.m; sourceTree = "<group>"; };
 		6024C8FD125FBB6A0028BFA4 /* GCTicTacToeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCTicTacToeView.h; sourceTree = "<group>"; };
 		6024C8FE125FBB6A0028BFA4 /* GCTicTacToeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCTicTacToeView.m; sourceTree = "<group>"; };
-		82A09010127519DA000548A7 /* othelloblackpiece.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = othelloblackpiece.jpg; path = ../Dropbox/Othello/othelloblackpiece.jpg; sourceTree = SOURCE_ROOT; };
 		82AA5D091278DF4A00E904B1 /* simplewhite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = simplewhite.png; sourceTree = SOURCE_ROOT; };
 		82AA5D0B1278DF5700E904B1 /* simpleblack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = simpleblack.png; sourceTree = SOURCE_ROOT; };
 		8D1107310486CEB800E47090 /* GamesmanMobile-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GamesmanMobile-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
@@ -427,7 +425,6 @@
 		0A8756021113F9B7006AB678 /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				82A09010127519DA000548A7 /* othelloblackpiece.jpg */,
 				0A3292BB11323B49006066E5 /* ConnectFour */,
 				0A3292D111323D64006066E5 /* Connections */,
 				C58F0D7D1144840D0058D6CE /* YGame */,
@@ -664,7 +661,6 @@
 				0A359CB8126509EB003F5EAA /* StepReverse@2x.png in Resources */,
 				0AC8EAE8126E458100C46CFD /* NowPlayingButton.png in Resources */,
 				0AC8EB02126E481000C46CFD /* NowPlayingButton@2x.png in Resources */,
-				82A09011127519DA000548A7 /* othelloblackpiece.jpg in Resources */,
 				82AA5D0A1278DF4A00E904B1 /* simplewhite.png in Resources */,
 				82AA5D0C1278DF5700E904B1 /* simpleblack.png in Resources */,
 			);
