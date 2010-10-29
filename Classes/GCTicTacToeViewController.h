@@ -20,5 +20,6 @@
 
 - (id) initWithGame: (GCTicTacToe *) _game;
 - (void) doMove: (NSNumber *) move;
+- (void) undoMove: (NSNumber *) move;
 
 @end

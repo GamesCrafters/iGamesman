@@ -108,6 +108,8 @@
 }
 
 - (void) undoMove: (NSNumber *) move {
+	[tttView undoMove: move];
+	
 	[board replaceObjectAtIndex: [move intValue] withObject: BLANK];
 	p1Turn = !p1Turn;
 }
