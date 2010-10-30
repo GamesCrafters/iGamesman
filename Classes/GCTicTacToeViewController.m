@@ -9,6 +9,8 @@
 #import "GCTicTacToeViewController.h"
 #import "GCTicTacToeView.h"
 
+#define BLANK @"+"
+
 
 @implementation GCTicTacToeViewController
 
@@ -55,7 +57,8 @@
 			int row = (loc.y - 10) / size;
 			int slot = col + game.cols * row;
 			
-			[game postHumanMove: [NSNumber numberWithInt: slot]];
+			if ([[[game getBoard] objectAtIndex: slot] isEqual: BLANK])
+				[game postHumanMove: [NSNumber numberWithInt: slot]];
 		}
 	}
 }
