@@ -60,25 +60,25 @@
 }
 
 - (void) doMove:(NSNumber *)move {
-		int col = [move intValue] % game.cols;
-		int row = [move intValue] / game.cols;
-		CGFloat w = self.view.bounds.size.width;
-		CGFloat h = self.view.bounds.size.height;
-		CGFloat size = MIN((w - 2*PADDING)/game.cols, (h - 80+PADDING)/game.rows);
-		CGRect rect = CGRectMake( PADDING + col * size,  PADDING + row * size, size, size);
-		NSArray *myFlips = [game getFlips:(col + row*game.cols)];
-		UIImageView *piece = [[UIImageView alloc] initWithImage: [UIImage imageNamed: game.p1Turn ? @"simpleblack.png" : @"simplewhite.png"]];
-		[piece setFrame: rect];
-		piece.tag = 1000 + col + row*game.cols;
-		[self.view addSubview: piece];
-		for (NSNumber *flip in myFlips) {
-			UIImageView *image = [self.view viewWithTag:1000 + [flip intValue]];
-			[UIView beginAnimations:nil context:NULL];
-			[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-			[UIView setAnimationDuration:1.0];
-			[UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:image cache:YES];
-			[image setImage:[UIImage imageNamed: game.p1Turn ? @"simpleblack.png" : @"simplewhite.png"]];
-			[UIView commitAnimations];
+	int col = [move intValue] % game.cols;
+	int row = [move intValue] / game.cols;
+	CGFloat w = self.view.bounds.size.width;
+	CGFloat h = self.view.bounds.size.height;
+	CGFloat size = MIN((w - 2*PADDING)/game.cols, (h - 80+PADDING)/game.rows);
+	CGRect rect = CGRectMake( PADDING + col * size,  PADDING + row * size, size, size);
+	NSArray *myFlips = [game getFlips:(col + row*game.cols)];
+	UIImageView *piece = [[UIImageView alloc] initWithImage: [UIImage imageNamed: game.p1Turn ? @"simpleblack.png" : @"simplewhite.png"]];
+	[piece setFrame: rect];
+	piece.tag = 1000 + col + row*game.cols;
+	[self.view addSubview: piece];
+	for (NSNumber *flip in myFlips) {
+		UIImageView *image = [self.view viewWithTag:1000 + [flip intValue]];
+		[UIView beginAnimations:nil context:NULL];
+		[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+		[UIView setAnimationDuration:1.0];
+		[UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:image cache:YES];
+		[image setImage:[UIImage imageNamed: game.p1Turn ? @"simpleblack.png" : @"simplewhite.png"]];
+		[UIView commitAnimations];
 	}
 	
 	//display the number of pieces each player has
@@ -86,7 +86,29 @@
 	//----to do------
 	
 	//display turn
-	//----to do-------
+	UIImageView *image = [self.view viewWithTag:999];
+	[UIView beginAnimations:nil context:NULL];
+	[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+	[UIView setAnimationDuration:1.0];
+	[UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:image cache:YES];
+	[image setImage:[UIImage imageNamed: game.p1Turn ? @"simplewhite.png" : @"simpleblack.png"]];
+	[UIView commitAnimations];
+	
+	//mode to display all legal moves
+	if(TRUE) {
+		NSArray *legalMoves = [game legalMoves];
+		NSLog(@"%@\n", legalMoves);
+	/*	for (int move in legalMoves) {
+			UIImageView *pieceg = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"C4O.png"]];
+			rect = CGRectMake((move % game.cols) * size + PADDING + size / 3,
+							  (move / game.cols) * size + PADDING + size / 3,
+							  size / 3, size / 3);
+			[pieceg setFrame: rect];
+			pieceg.tag = 2000 + move;
+			[self.view addSubview: pieceg];
+		}
+	 */
+	}
 }
 
 - (void) undoMove:(NSNumber *)move {
@@ -109,6 +131,13 @@
 			}
 		}
 	}
+	UIImageView *image = [self.view viewWithTag:999];
+	[UIView beginAnimations:nil context:NULL];
+	[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+	[UIView setAnimationDuration:1.0];
+	[UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:image cache:YES];
+	[image setImage:[UIImage imageNamed: game.p1Turn ? @"simplewhite.png" : @"simpleblack.png"]];
+	[UIView commitAnimations];
 }
 
 // Implement loadView to create a view hierarchy programmatically, without using a nib.
@@ -141,6 +170,11 @@
 	piece4.tag = 1000 + (row+1)*game.cols + col+1;
 	[self.view addSubview: piece4];
 	
+	
+	UIImageView *piecet = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"simpleblack.png"]];
+	[piecet setFrame: CGRectMake((w- size)/ 2.0, h - 20.0 - (60.0 / 2.0) - (size / 2.0), size, size)];
+	piecet.tag = 999;
+	[self.view addSubview: piecet];
 }
 
 

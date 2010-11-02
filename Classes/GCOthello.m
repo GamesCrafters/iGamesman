@@ -109,8 +109,8 @@
 			while (YES) {
 				tempLoc += offset;
 				if ([self isOutOfBounds: tempLoc offset:offset]) break;
-				if ([[board objectAtIndex:tempLoc] isEqual: BLANK]) break; 
-				if ([[board objectAtIndex:tempLoc] isEqual: myPiece]) {
+				if ([[board objectAtIndex:tempLoc] isEqualToString: BLANK]) break; 
+				if ([[board objectAtIndex:tempLoc] isEqualToString: myPiece]) {
 					[flips addObjectsFromArray: tempFlips];
 					break;
 				}
