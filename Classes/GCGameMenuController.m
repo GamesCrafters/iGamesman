@@ -19,8 +19,8 @@
 	gameView.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
 	[self presentModalViewController: gameView animated: YES];
 	inProgress = YES;
-	[gameView release];
 	[[gameView gameController] go];
+	[gameView release];
 }
 
 /*

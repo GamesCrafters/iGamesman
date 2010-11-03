@@ -105,6 +105,8 @@
 	NSString *piece = p1Turn ? X : O;
 	[board replaceObjectAtIndex: [move intValue] withObject: piece];
 	p1Turn = !p1Turn;
+	
+	[tttView updateDisplay];
 }
 
 - (void) undoMove: (NSNumber *) move {
@@ -112,6 +114,8 @@
 	
 	[board replaceObjectAtIndex: [move intValue] withObject: BLANK];
 	p1Turn = !p1Turn;
+	
+	[tttView updateDisplay];
 }
 
 - (void) notifyWhenReady {

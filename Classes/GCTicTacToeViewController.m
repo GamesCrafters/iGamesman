@@ -23,6 +23,22 @@
 	return self;
 }
 
+- (void) updateDisplay {
+	NSString *player = game.p1Turn ? [game player1Name] : [game player2Name];
+	NSString *oppPlayer = game.p1Turn ? [game player2Name] : [game player1Name];
+	NSString *color = game.p1Turn ? @"X" : @"O";
+	NSString *primitive = [game primitive];
+	
+	if (primitive) {
+		if ([primitive isEqualToString: @"TIE"])
+			messageLabel.text = @"It's a tie!";
+		else {
+			messageLabel.text = [NSString stringWithFormat: @"%@ wins!", [primitive isEqualToString: @"WIN"] ? player : oppPlayer];
+		}
+	} else
+		messageLabel.text = [NSString stringWithFormat: @"%@ (%@)'s turn", player, color];	
+}
+
 - (void) doMove: (NSNumber *) move {	
 	UIImageView *piece = [[UIImageView alloc] initWithImage: [UIImage imageNamed: game.p1Turn ? @"TTTX.png" : @"TTTO.png"]];
 	int col = [move intValue] % game.cols;
@@ -65,6 +81,15 @@
 
 - (void)loadView {
 	self.view = [[GCTicTacToeView alloc] initWithFrame: CGRectMake(0, 0, 480, 256) andRows: game.rows andCols: game.cols];
+	
+	messageLabel = [[UILabel alloc] initWithFrame: CGRectMake(320, 50, 140, 156)];
+	messageLabel.text = @"Player 1 (X)'s turn";
+	messageLabel.backgroundColor = [UIColor clearColor];
+	messageLabel.textColor = [UIColor whiteColor];
+	messageLabel.textAlignment = UITextAlignmentCenter;
+	messageLabel.numberOfLines = 4;
+	messageLabel.lineBreakMode = UILineBreakModeWordWrap;
+	[self.view addSubview: messageLabel];
 }
 
 - (void)viewDidLoad {
@@ -87,6 +112,7 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+	[messageLabel release];
 }
 
 
