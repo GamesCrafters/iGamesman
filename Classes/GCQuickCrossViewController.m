@@ -29,9 +29,40 @@
 	return self;
 }
 
+
 - (void) doMove: (NSArray *) move {
-	if ((game.p1Turn) ? ([game player1Type] != HUMAN) : ([game player2Type] != HUMAN)) {
-		UIImageView *piece = [[UIImageView alloc] initWithImage: [UIImage imageNamed: game.p1Turn ? @"ConGreenV.png" : @"ConRedV.png"]];
+	if ([[move objectAtIndex: 2] isEqual: SPIN])
+	{
+		UIImageView *image = [self.view viewWithTag:1000 + [[move objectAtIndex: 0] intValue]];
+		[UIView beginAnimations:nil context:NULL];
+		[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+		[UIView setAnimationDuration:1.0];
+		[UIView setAnimationTransition:UIViewAnimationTransitionNone forView:image cache:YES];
+		if (game.p1Turn)
+			if ([[move objectAtIndex: 1] isEqual: XHORIZ])
+			{
+				[image setImage:[UIImage imageNamed: @"ConGreenH.png"]];
+			}
+			else 
+			{
+				[image setImage:[UIImage imageNamed: @"ConGreenV.png"]];
+			}
+		else
+		{
+			if ([[move objectAtIndex: 1] isEqual: YHORIZ])
+			{
+				[image setImage:[UIImage imageNamed: @"ConRedH.png"]];
+			}
+			else 
+			{
+				[image setImage:[UIImage imageNamed: @"ConRedV.png"]];
+			}
+		}
+		[UIView commitAnimations];
+	}
+	else
+	{
+		UIImageView *piece = [[UIImageView alloc] initWithImage: [UIImage imageNamed: game.p1Turn ? @"ConGreenH.png" : @"ConRedH.png"]];
 		int col = [[move objectAtIndex: 0] intValue] % game.cols;
 		int row = [[move objectAtIndex: 0] intValue] / game.cols;
 		CGFloat w = self.view.bounds.size.width;
@@ -42,7 +73,37 @@
 		piece.tag = 1000 + [[move objectAtIndex: 0] intValue];
 		[self.view addSubview: piece];
 	}
+	
 }
+
+- (void) undoMove: (NSArray *) move {
+	UIImageView *piece = (UIImageView *) [self.view viewWithTag: 1000 + [[move objectAtIndex: 0] intValue]];
+	if ([[move objectAtIndex: 2] isEqual: SPIN])
+	{
+		if ([[move objectAtIndex: 1] isEqual: XHORIZ])
+		{
+			[piece setImage:[UIImage imageNamed: @"ConGreenV.png"]];
+		}
+		else if ([[move objectAtIndex: 1] isEqual: XVERT])
+		{
+			[piece setImage:[UIImage imageNamed: @"ConGreenH.png"]];
+		}
+		else if ([[move objectAtIndex: 1] isEqual: YHORIZ])
+		{
+			[piece setImage:[UIImage imageNamed: @"ConRedV.png"]];
+		}
+		else if ([[move objectAtIndex: 1] isEqual: YVERT])
+		{
+			[piece setImage:[UIImage imageNamed: @"ConRedH.png"]];
+		}
+	}
+	else
+	{
+		[piece removeFromSuperview];
+		[piece release];
+	}
+}
+	
 
 - (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
 	if(touchesEnabled) {
@@ -58,10 +119,7 @@
 			int col = (loc.x - 10) / size;
 			int row = (loc.y - 10) / size;
 			int slot = col + game.cols * row;
-			
-			
-			
-			CGRect rect = CGRectMake(10 + col * size, 10 + row * size, size, size);
+		
 			
 			if (game.p1Turn)
 			{
@@ -89,12 +147,6 @@
 					[game postHumanMove: [NSArray arrayWithObjects: [NSNumber numberWithInt: slot], YHORIZ, PLACE, nil]];
 				}
 			}
-			
-			UIImageView *piece = [[UIImageView alloc] initWithImage: [UIImage imageNamed: game.p1Turn ? @"ConGreenV.png" : @"ConRedV.png"]];
-			[piece setFrame: rect];
-			piece.tag = 55556;
-			[self.view addSubview: piece];
-			
 			
 		}
 	}

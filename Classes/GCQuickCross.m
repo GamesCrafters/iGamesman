@@ -119,6 +119,7 @@
 }
 
 - (void) undoMove: (NSArray*) move {
+	[qcView undoMove: move];
 	if ([[move objectAtIndex: 2] isEqual: PLACE]) {
 		[board replaceObjectAtIndex: [[move objectAtIndex: 0] intValue] withObject: BLANK];
 	}
@@ -152,45 +153,45 @@
 		NSString *piece = [board objectAtIndex: i];
 		if ([piece isEqual: BLANK])
 			continue;
-		
-		// Check the horizontal case
 		BOOL case1 = YES;
-		for (int j = i; j < i + inalign; j += 1) {
-			if (j >= cols * rows || i % cols > j % cols || ![[board objectAtIndex: j] isEqual: piece]) {
-				case1 = NO;
-				break;
+		if ([piece isEqual: XHORIZ] || [piece isEqual: YHORIZ])
+		{
+		// Check the horizontal case
+			
+			for (int j = i; j < i + inalign; j += 1) {
+				if (j >= cols * rows || i % cols > j % cols || ![[board objectAtIndex: j] isEqual: piece]) {
+					case1 = NO;
+					break;
+				}
+			}
+			if (case1)
+			{
+				if (p1Turn)
+					return (misere ? @"LOSE" : @"WIN");
+					return (misere ? @"WIN" : @"LOSE");
 			}
 		}
 		
 		// Check the vertical case
 		BOOL case2 = YES;
-		for (int j = i; j < i + cols * inalign; j += cols) {
-			if ( j >= cols * rows || ![[board objectAtIndex: j] isEqual: piece] ) {
-				case2 = NO;
-				break;
+		if ([piece isEqual: XVERT] || [piece isEqual: YVERT])
+        {
+			for (int j = i; j < i + cols * inalign; j += cols) {
+				if ( j >= cols * rows || ![[board objectAtIndex: j] isEqual: piece] ) {
+					case2 = NO;
+					break;
+				}
 			}
-		}
-		
-		if (case1 || case2) {
-			if (p1Turn)
+			if (case2)
 			{
-				if ([piece isEqual: XHORIZ] || [piece isEqual: XVERT])
+				if (p1Turn)
 					return (misere ? @"LOSE" : @"WIN");
-				else
 					return (misere ? @"WIN" : @"LOSE");
-			}
-			else 
-			{
-				if ([piece isEqual: YHORIZ] || [piece isEqual: YVERT])
-					return (misere ? @"LOSE" : @"WIN");
-				else
-					return (misere ? @"WIN" : @"LOSE");				
 			}
 		}
 	}
-		
+
 	return nil;
-	
 }
 
 - (void) startGameInMode:(PlayMode)mode {

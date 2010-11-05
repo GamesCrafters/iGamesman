@@ -49,7 +49,7 @@
 		[con release];
 		[othello release];
 		[ttt release];
-	//	[qc release];
+		[qc release];
 		[y release];
 		
 		NSMutableArray *temp = [[NSMutableArray alloc] init];
