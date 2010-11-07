@@ -835,7 +835,7 @@
 				GCC_PREFIX_HEADER = GamesmanMobile_Prefix.pch;
 				INFOPLIST_FILE = "GamesmanMobile-Info.plist";
 				PRODUCT_NAME = GamesmanMobile;
-				SDKROOT = iphoneos4.1;
+				SDKROOT = iphoneos4.0;
 			};
 			name = Debug;
 		};
@@ -865,7 +865,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				SDKROOT = iphoneos4.1;
+				SDKROOT = iphoneos4.0;
 			};
 			name = Debug;
 		};

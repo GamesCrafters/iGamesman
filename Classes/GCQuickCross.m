@@ -190,6 +190,84 @@
 			}
 		}
 	}
+		
+	// Finally, check if the board is full	
+	BOOL full = YES;
+	for (int i = 0; i < cols * rows; i += 1) {
+		if ([[board objectAtIndex: i] isEqual: BLANK]) {
+			full = NO;
+			break;
+		}
+	}
+	if (full)
+	{
+		BOOL tie = YES;
+		for (int i = 0; i < cols * rows; i += 1) { 
+			NSString *piece = [board objectAtIndex: i];
+			if([piece isEqual: XVERT] || [piece isEqual: XHORIZ])
+			{
+				//vertical case
+				BOOL pass = YES;
+				for (int j = i; j < i + cols * inalign; j += cols) {
+					if ( j >= cols * rows || !([[board objectAtIndex: j] isEqual: XVERT] || [[board objectAtIndex: j] isEqual: XHORIZ])) {
+						pass = NO;
+					}
+				}
+				if (pass)
+				{
+					tie = NO;
+					break;
+				}
+				pass = YES;
+				//horizontal case
+				for (int j = i; j < i + inalign; j += 1) {
+					if (j >= cols * rows || i % cols > j % cols || !([[board objectAtIndex: j] isEqual: XVERT] || [[board objectAtIndex: j] isEqual: XHORIZ])) 
+					{
+						pass = NO;
+						
+					}
+				}
+				if (pass)
+				{
+					tie = NO;
+					break;
+				}
+			}
+			else 
+			{
+				//vertical case
+				BOOL pass = YES;
+				for (int j = i; j < i + cols * inalign; j += cols) {
+					if ( j >= cols * rows || !([[board objectAtIndex: j] isEqual: YVERT] || [[board objectAtIndex: j] isEqual: YHORIZ])) {
+						pass = NO;
+					}
+				}
+				if (pass)
+				{
+					tie = NO;
+					break;
+				}
+				pass = YES;
+				//horizontal case
+				for (int j = i; j < i + inalign; j += 1) {
+					if (j >= cols * rows || i % cols > j % cols || !([[board objectAtIndex: j] isEqual: YVERT] || [[board objectAtIndex: j] isEqual: YHORIZ])) 
+					{
+						pass = NO;
+						
+					}
+				}
+				if (pass)
+				{
+					tie = NO;
+					break;
+				}
+				
+			}
+		}
+		if (tie){
+			return @"TIE";
+		}
+	}
 
 	return nil;
 }
