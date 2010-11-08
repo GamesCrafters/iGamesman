@@ -85,7 +85,6 @@
 	NSMutableArray *moves = [[NSMutableArray alloc] initWithCapacity:rows*cols];
 	for (int i=0; i< rows*cols; i+=1) {
 		if ([[board objectAtIndex:i] isEqualToString:BLANK]) {
-		//	NSLog(@"%d", i);
 			if([[self getFlips: i] count] > 0) {
 				[moves addObject: [NSNumber numberWithInt: i]];
 			}
@@ -102,7 +101,7 @@
 	if ([[board objectAtIndex:loc] isEqualToString:BLANK]) {			
 		NSString *myPiece = p1Turn ? P1PIECE : P2PIECE;
 		int offsets[8] = {1,-1,cols,-cols,cols+1,cols-1,-cols+1,-cols-1};
-		for (int i=0; i<9; i+=1) {
+		for (int i=0; i<8; i+=1) {
 			int offset = offsets[i];
 			NSMutableArray *tempFlips = [[NSMutableArray alloc] initWithCapacity:rows*cols];
 			int tempLoc = loc;

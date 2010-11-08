@@ -95,7 +95,7 @@
 	[UIView commitAnimations];
 	
 	//mode to display all legal moves
-	if(TRUE) {
+	if(FALSE) {
 		NSArray *legalMoves = [game legalMoves];
 		NSLog(@"%@\n", legalMoves);
 	/*	for (int move in legalMoves) {
