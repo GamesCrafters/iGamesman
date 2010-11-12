@@ -13,6 +13,8 @@
 @interface GCQuickCrossViewController : UIViewController {
 	GCQuickCross *game;
 	
+	UILabel *messageLabel;
+	
 	BOOL touchesEnabled;
 }
 

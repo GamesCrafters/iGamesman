@@ -116,6 +116,8 @@
 	NSString *piece = [move objectAtIndex: 1]; 
 	[board replaceObjectAtIndex: [[move objectAtIndex: 0] intValue] withObject: piece];
 	p1Turn = !p1Turn;
+	
+	[qcView updateDisplay];
 }
 
 - (void) undoMove: (NSArray*) move {

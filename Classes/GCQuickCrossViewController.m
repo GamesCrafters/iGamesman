@@ -29,6 +29,21 @@
 	return self;
 }
 
+- (void) updateDisplay {
+	NSString *player = game.p1Turn ? [game player1Name] : [game player2Name];
+	NSString *oppPlayer = game.p1Turn ? [game player2Name] : [game player1Name];
+	NSString *color = game.p1Turn ? @"Green" : @"Red";
+	NSString *primitive = [game primitive];
+	
+	if (primitive) {
+		if ([primitive isEqualToString: @"TIE"])
+			messageLabel.text = @"It's a tie!";
+		else {
+			messageLabel.text = [NSString stringWithFormat: @"%@ wins!", [primitive isEqualToString: @"WIN"] ? player : oppPlayer];
+		}
+	} else
+		messageLabel.text = [NSString stringWithFormat: @"%@ %@'s turn", player, color];	
+}
 
 - (void) doMove: (NSArray *) move {
 	if ([[move objectAtIndex: 2] isEqual: SPIN])
@@ -62,7 +77,24 @@
 	}
 	else
 	{
-		UIImageView *piece = [[UIImageView alloc] initWithImage: [UIImage imageNamed: game.p1Turn ? @"ConGreenH.png" : @"ConRedH.png"]];
+		UIImageView *piece = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"ConGreenH.png"]];
+		if (game.p1Turn)
+		{
+			if ([[move objectAtIndex: 1] isEqual: XHORIZ]) {
+				piece = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"ConGreenH.png"]];
+			}
+			else {
+				piece = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"ConGreenV.png"]];
+			}
+		}
+		else {
+			if ([[move objectAtIndex: 1] isEqual: YHORIZ]) {
+				piece = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"ConRedH.png"]];
+			}
+			else {
+				piece = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"ConRedV.png"]];
+			}
+		}
 		int col = [[move objectAtIndex: 0] intValue] % game.cols;
 		int row = [[move objectAtIndex: 0] intValue] / game.cols;
 		CGFloat w = self.view.bounds.size.width;
@@ -154,6 +186,15 @@
 
 - (void)loadView {
 	self.view = [[GCQuickCrossView alloc] initWithFrame: CGRectMake(0, 0, 480, 256) andRows: game.rows andCols: game.cols];
+	
+	messageLabel = [[UILabel alloc] initWithFrame: CGRectMake(320, 50, 140, 156)];
+	messageLabel.text = [NSString stringWithFormat: @"%@ Green's turn", [game player1Name]];
+	messageLabel.backgroundColor = [UIColor clearColor];
+	messageLabel.textColor = [UIColor whiteColor];
+	messageLabel.textAlignment = UITextAlignmentCenter;
+	messageLabel.numberOfLines = 4;
+	messageLabel.lineBreakMode = UILineBreakModeWordWrap;
+	[self.view addSubview: messageLabel];
 }
 
 - (void)viewDidLoad {
