@@ -24,6 +24,7 @@
 @synthesize misere;
 @synthesize p1Turn;
 @synthesize board, myOldMoves;
+@synthesize p1pieces, p2pieces;
 
 - (id) init {
 	if (self = [super init]) {
@@ -158,6 +159,7 @@
 		p2pieces += changedPieces + 1;
 		p1pieces -= changedPieces;
 	}
+	NSLog(@"changed: %d p1: %d p2: %d",changedPieces,p1pieces,p2pieces);
 	p1Turn = !p1Turn;
 	
 }
@@ -219,6 +221,9 @@
 }
 
 - (void) resetBoard {
+	myOldMoves = [[NSMutableArray alloc] initWithCapacity:rows*cols*2];
+	p1pieces = 2;
+	p2pieces = 2;
 	if (board != nil) {
 		[board release];
 		board = nil;

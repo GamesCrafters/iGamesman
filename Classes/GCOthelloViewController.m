@@ -94,6 +94,14 @@
 	[image setImage:[UIImage imageNamed: game.p1Turn ? @"simplewhite.png" : @"simpleblack.png"]];
 	[UIView commitAnimations];
 	
+	//display # of pieces for each player
+	UILabel *p1score = [self.view viewWithTag:899];
+	UILabel *p2score = [self.view viewWithTag:799];
+	[UIView beginAnimations:nil context:NULL];
+	p1score.text = [NSString stringWithFormat:@"%@", [[game.myOldMoves lastObject] objectAtIndex: 1]] ;
+	p2score.text = [NSString stringWithFormat:@"%@", [[game.myOldMoves lastObject] objectAtIndex: 2]];
+	[UIView commitAnimations];
+	
 	//mode to display all legal moves
 	if(FALSE) {
 		NSArray *legalMoves = [game legalMoves];
@@ -138,6 +146,15 @@
 	[UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:image cache:YES];
 	[image setImage:[UIImage imageNamed: game.p1Turn ? @"simplewhite.png" : @"simpleblack.png"]];
 	[UIView commitAnimations];
+	
+	//display # of pieces for each player
+	UILabel *p1score = [self.view viewWithTag:899];
+	UILabel *p2score = [self.view viewWithTag:799];
+	[UIView beginAnimations:nil context:NULL];
+	
+	p1score.text = [NSString stringWithFormat:@"%d", p1pieces] ;
+	p2score.text = [NSString stringWithFormat:@"%d", p2pieces];
+	[UIView commitAnimations];
 }
 
 // Implement loadView to create a view hierarchy programmatically, without using a nib.
@@ -175,6 +192,21 @@
 	[piecet setFrame: CGRectMake((w- size)/ 2.0, h - 20.0 - (60.0 / 2.0) - (size / 2.0), size, size)];
 	piecet.tag = 999;
 	[self.view addSubview: piecet];
+	
+	UILabel *p1score = [[UILabel alloc] initWithFrame:CGRectMake(20, h-20.0-(60.0/2.0) - (size/2.0), size, size)];
+	p1score.tag = 899;
+	p1score.backgroundColor = [UIColor clearColor];
+	p1score.textColor = [UIColor whiteColor];
+	p1score.text = [NSString stringWithFormat:@"%d", 2];
+	[self.view addSubview:p1score];
+	
+	UILabel *p2score = [[UILabel alloc] initWithFrame:CGRectMake(w-20, h-20.0-(60.0/2.0) - (size/2.0), size, size)];
+	p2score.tag = 799;
+	p2score.backgroundColor = [UIColor clearColor];
+	p2score.textColor = [UIColor whiteColor];
+	p2score.text = [NSString stringWithFormat:@"%d", 2];
+	[self.view addSubview:p2score];
+	
 }
 
 

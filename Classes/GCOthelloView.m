@@ -32,12 +32,16 @@
 	CGContextRef ctx = UIGraphicsGetCurrentContext();
 	
 	//Making Green Rectangle Background
-	CGContextSetRGBFillColor(ctx, 0, .5, 0, 1);
-	CGContextFillRect(ctx, CGRectMake(PADDING, PADDING, cols*size, rows*size));
+	//CGContextSetRGBFillColor(ctx, 0, .5, 0, 1);
+	UIImage *bg = [UIImage imageNamed: @"379.jpg"];
+	[bg drawInRect:CGRectMake(PADDING, PADDING, cols*size, rows*size)];
+	//[background setFrame: CGRectMake(PADDING, PADDING, cols*size, rows*size)];
+	//[self addSubview:background];
+	//CGContextFillRect(ctx, CGRectMake(PADDING, PADDING, cols*size, rows*size));
 	
 	//Draw lines within Rectangle
 	
-	CGContextSetLineWidth(ctx, 2);
+	CGContextSetLineWidth(ctx, 1);
 	CGContextSetRGBStrokeColor(ctx, 0, 0, 0, 1);
 	
 	for (int i = 0; i <= cols; i += 1) {
