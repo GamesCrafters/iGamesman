@@ -74,7 +74,7 @@
 	winner.backgroundColor = [UIColor clearColor];
 	winner.textColor = [UIColor whiteColor];
 	[self.view addSubview:winner];
-	[self.view bringSubviewToFront:self.view.winner];
+	[self.view bringSubviewToFront:winner];
 }
 
 - (void) doMove:(NSNumber *)move {
