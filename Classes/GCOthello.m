@@ -138,8 +138,8 @@
 }
 
 - (void) doMove:(NSNumber *)move {
-	
 	[othView doMove:move];
+	
 	NSMutableArray *oldBoard = [[NSMutableArray alloc] initWithCapacity: 3];
 	[oldBoard addObject:[board copy]];
 	[oldBoard addObject:[NSNumber numberWithInt:p1pieces]];
@@ -159,8 +159,9 @@
 		p2pieces += changedPieces + 1;
 		p1pieces -= changedPieces;
 	}
-	NSLog(@"changed: %d p1: %d p2: %d",changedPieces,p1pieces,p2pieces);
+	
 	p1Turn = !p1Turn;
+	
 	
 }
 
@@ -179,9 +180,27 @@
 		p1Turn = !p1Turn;
 		if ([[[self legalMoves] objectAtIndex:0] isEqual:PASS]) {
 			p1Turn = !p1Turn;
-			if (p1pieces > p2pieces) return  p1Turn ? @"WIN" : @"LOSE";
-			else if (p2pieces > p1pieces) return p1Turn ? @"LOSE" : @"WIN";
-			else return @"TIE";
+			if (p1pieces > p2pieces) {
+				if (p1Turn) {
+					[othView gameWon:YES];
+					
+					return @"WIN";
+				} else{
+					[othView gameWon:NO];
+					return @"LOSE";
+				}
+			}
+			else if (p2pieces > p1pieces) {
+				if (p1Turn ) {
+					[othView gameWon:NO];
+					return @"LOSE";
+				} else {
+					[othView gameWon:YES];
+					return @"WIN";
+				}
+			} else {
+			 return @"TIE";
+			}
 		}
 		p1Turn = !p1Turn;
 	}

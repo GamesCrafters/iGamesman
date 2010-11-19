@@ -7,7 +7,7 @@
 //
 
 #import "GCOthelloView.h"
-#define PADDING 5
+#define PADDING 1
 
 @implementation GCOthelloView
 
@@ -33,7 +33,7 @@
 	
 	//Making Green Rectangle Background
 	//CGContextSetRGBFillColor(ctx, 0, .5, 0, 1);
-	UIImage *bg = [UIImage imageNamed: @"379.jpg"];
+	UIImage *bg = [UIImage imageNamed: @"felt.png"];
 	[bg drawInRect:CGRectMake(PADDING, PADDING, cols*size, rows*size)];
 	//[background setFrame: CGRectMake(PADDING, PADDING, cols*size, rows*size)];
 	//[self addSubview:background];

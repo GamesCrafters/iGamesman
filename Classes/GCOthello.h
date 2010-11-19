@@ -32,6 +32,7 @@
 @property (nonatomic, assign) int rows, cols;
 @property (nonatomic, assign) BOOL p1Turn;
 @property (nonatomic, retain) NSMutableArray *myOldMoves, *board;
+@property (nonatomic, assign) int p1pieces, p2pieces;
 
 - (void) resetBoard;
 - (NSArray *) getFlips: (int) loc;

@@ -9,7 +9,7 @@
 #import "GCOthelloViewController.h"
 #import "GCOthelloView.h"
 
-#define PADDING 5
+#define PADDING 1
 #define BLANK @"+"
 
 
@@ -59,6 +59,24 @@
 	}
 }
 
+- (void) gameWon: (BOOL) p1Won {
+	
+	CGFloat w = self.view.bounds.size.width;
+	CGFloat h = self.view.bounds.size.height;
+	UILabel *winner = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, w-20, 50)];
+	if (p1Won) {
+		NSLog(@"The winner is p1");
+		winner.text = @"Black Wins!!!";
+	} else {
+		NSLog(@"The winner is p2");
+		winner.text = @"White Wins!!!";
+	}
+	winner.backgroundColor = [UIColor clearColor];
+	winner.textColor = [UIColor whiteColor];
+	[self.view addSubview:winner];
+	[self.view bringSubviewToFront:self.view.winner];
+}
+
 - (void) doMove:(NSNumber *)move {
 	int col = [move intValue] % game.cols;
 	int row = [move intValue] / game.cols;
@@ -98,8 +116,18 @@
 	UILabel *p1score = [self.view viewWithTag:899];
 	UILabel *p2score = [self.view viewWithTag:799];
 	[UIView beginAnimations:nil context:NULL];
-	p1score.text = [NSString stringWithFormat:@"%@", [[game.myOldMoves lastObject] objectAtIndex: 1]] ;
-	p2score.text = [NSString stringWithFormat:@"%@", [[game.myOldMoves lastObject] objectAtIndex: 2]];
+	int p1pieces = game.p1pieces;
+	int p2pieces = game.p2pieces; 
+	int changedPieces = [myFlips count];
+	if (game.p1Turn) {
+		p1pieces += changedPieces + 1;
+		p2pieces -= changedPieces;
+	} else {
+		p2pieces += changedPieces + 1;
+		p1pieces -= changedPieces;
+	}
+	p1score.text = [NSString stringWithFormat:@"%d", p1pieces ];
+	p2score.text = [NSString stringWithFormat:@"%d", p2pieces ];
 	[UIView commitAnimations];
 	
 	//mode to display all legal moves
@@ -152,6 +180,9 @@
 	UILabel *p2score = [self.view viewWithTag:799];
 	[UIView beginAnimations:nil context:NULL];
 	
+	int p1pieces = [[myOldMoves lastObject] objectAtIndex: 1];
+	int p2pieces = [[myOldMoves lastObject] objectAtIndex: 2];
+	
 	p1score.text = [NSString stringWithFormat:@"%d", p1pieces] ;
 	p2score.text = [NSString stringWithFormat:@"%d", p2pieces];
 	[UIView commitAnimations];
@@ -197,14 +228,14 @@
 	p1score.tag = 899;
 	p1score.backgroundColor = [UIColor clearColor];
 	p1score.textColor = [UIColor whiteColor];
-	p1score.text = [NSString stringWithFormat:@"%d", 2];
+	p1score.text = [NSString stringWithFormat:@"%d", game.p1pieces];
 	[self.view addSubview:p1score];
 	
 	UILabel *p2score = [[UILabel alloc] initWithFrame:CGRectMake(w-20, h-20.0-(60.0/2.0) - (size/2.0), size, size)];
 	p2score.tag = 799;
 	p2score.backgroundColor = [UIColor clearColor];
 	p2score.textColor = [UIColor whiteColor];
-	p2score.text = [NSString stringWithFormat:@"%d", 2];
+	p2score.text = [NSString stringWithFormat:@"%d", game.p2pieces];
 	[self.view addSubview:p2score];
 	
 }
