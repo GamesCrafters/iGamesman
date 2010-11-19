@@ -234,6 +234,7 @@
 
 	UIImageView *img = [[UIImageView alloc] initWithFrame: CGRectMake(B.center.x - 5, B.center.y - 5, 10, 10)];
 	[self.view insertSubview: img atIndex: 0];
+	img.tag = 1000 + [move integerValue];
 	[img setImage: [UIImage imageNamed: (game.p1Turn ? @"ConXBar.png" : @"ConOBar.png")]];
 	
 	[UIView beginAnimations: @"Stretch" context: NULL];
@@ -267,6 +268,11 @@
 		B.frame = CGRectMake(B.center.x - B_width / 4, B.center.y - B_width * 2,  B_width / 2, B_width * 4);
 	}
 	[UIView commitAnimations];*/
+}
+
+- (void) undoMove: (NSNumber *) move {
+	UIImageView *piece = (UIImageView *) [self.view viewWithTag: 1000 + [move integerValue]];
+	[piece removeFromSuperview];
 }
 
 - (void) tapped: (UIButton *) button{

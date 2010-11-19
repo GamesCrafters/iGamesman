@@ -17,6 +17,8 @@
 	GCGame *game;
 	NSArray *section0, *section1;
 	
+	GCGameViewController *gameView;
+	
 	BOOL inProgress;
 }
 

@@ -14,9 +14,9 @@
 
 
 - (void) resume {
-	GCGameViewController *gameView = [[GCGameViewController alloc] initWithGame: game andPlayMode: [game playMode]];	
-	gameView.delegate = self;
-	gameView.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+	//GCGameViewController *gameView = [[GCGameViewController alloc] initWithGame: game andPlayMode: [game playMode]];	
+	//gameView.delegate = self;
+	//gameView.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
 	[self presentModalViewController: gameView animated: YES];
 	inProgress = YES;
 	[[gameView gameController] go];
@@ -90,6 +90,8 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+	if (gameView)
+		[gameView release];
 }
 
 
@@ -204,12 +206,13 @@
 		[self.tableView reloadData];
 		
 		PlayMode M = (index == 0) ? ONLINE_SOLVED : OFFLINE_UNSOLVED;
-		GCGameViewController *gameView = [[GCGameViewController alloc] initWithGame: game andPlayMode: M];
+		if (gameView)
+			[gameView release];
+		gameView = [[GCGameViewController alloc] initWithGame: game andPlayMode: M];
 		gameView.delegate = self;
 		gameView.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
 		inProgress = YES;
 		[self presentModalViewController: gameView animated: YES];
-		[gameView release];
 	}
 }
 
@@ -230,12 +233,13 @@
 			[tableView deselectRowAtIndexPath: indexPath animated: YES];
 		} else {
 			[game startGameInMode: M];
-			GCGameViewController *gameView = [[GCGameViewController alloc] initWithGame: game andPlayMode: M];	
+			if (gameView)
+				[gameView release];
+			gameView = [[GCGameViewController alloc] initWithGame: game andPlayMode: M];	
 			gameView.delegate = self;
 			gameView.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
 			[self presentModalViewController: gameView animated: YES];
 			inProgress = YES;
-			[gameView release];
 		}
 	} else if (indexPath.section == 1 && indexPath.row == 0) {
 		id menu = [game optionMenu];

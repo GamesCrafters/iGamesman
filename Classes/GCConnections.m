@@ -196,6 +196,17 @@
 	}
 }
 
+- (void) undoMove: (NSNumber *) move {
+	[conView undoMove: move];
+	
+	int slot = [move intValue] - 1;
+	[board replaceObjectAtIndex: slot withObject: BLANK];
+	p1Turn = !p1Turn;
+	
+	if (gameMode == OFFLINE_UNSOLVED)
+		[conView updateLabels];
+}
+
 - (NSString *) primitive: (NSArray *) theBoard  { 
 	IntegerQueue * queue = [[IntegerQueue alloc] init];
 	int position;

@@ -21,6 +21,7 @@
 - (void) updateLabels;
 - (void) displayPrimitive;
 - (void) doMove: (NSNumber *) move;
+- (void) undoMove: (NSNumber *) move;
 
 /// Convenience method for disabling all of the board's buttons.
 - (void) disableButtons;
