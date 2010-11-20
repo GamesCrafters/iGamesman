@@ -60,7 +60,7 @@
 }
 
 - (void) gameWon: (BOOL) p1Won {
-	
+	/*
 	CGFloat w = self.view.bounds.size.width;
 	CGFloat h = self.view.bounds.size.height;
 	UILabel *winner = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, w-20, 50)];
@@ -75,6 +75,24 @@
 	winner.textColor = [UIColor whiteColor];
 	[self.view addSubview:winner];
 	[self.view bringSubviewToFront:winner];
+	 */
+}
+
+- (void) updateLegalMoves {
+	[UIView beginAnimations:nil context:NULL];
+	[UIView setAnimationDelay: 1.0];
+	for (int i=0; i<game.cols; i+=1) {
+		for	(int j=0; j<game.rows; j+=1) {
+			UIImageView *newView = (UIImageView *)[self.view viewWithTag:5000 + i + j*game.cols];
+			[newView setHidden:YES];
+		}
+	}
+	NSArray *legalMoves = [game legalMoves];
+	for (NSNumber* move in legalMoves) {
+		UIImageView *newView = (UIImageView *)[self.view viewWithTag:5000 + [move intValue]];
+		[newView setHidden:NO];
+	}
+	[UIView commitAnimations];
 }
 
 - (void) doMove:(NSNumber *)move {
@@ -83,6 +101,10 @@
 	CGFloat w = self.view.bounds.size.width;
 	CGFloat h = self.view.bounds.size.height;
 	CGFloat size = MIN((w - 2*PADDING)/game.cols, (h - 80+PADDING)/game.rows);
+
+
+
+	
 	CGRect rect = CGRectMake( PADDING + col * size,  PADDING + row * size, size, size);
 	NSArray *myFlips = [game getFlips:(col + row*game.cols)];
 	UIImageView *piece = [[UIImageView alloc] initWithImage: [UIImage imageNamed: game.p1Turn ? @"simpleblack.png" : @"simplewhite.png"]];
@@ -90,7 +112,7 @@
 	piece.tag = 1000 + col + row*game.cols;
 	[self.view addSubview: piece];
 	for (NSNumber *flip in myFlips) {
-		UIImageView *image = [self.view viewWithTag:1000 + [flip intValue]];
+		UIImageView *image = (UIImageView *) [self.view viewWithTag:1000 + [flip intValue]];
 		[UIView beginAnimations:nil context:NULL];
 		[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
 		[UIView setAnimationDuration:1.0];
@@ -99,12 +121,13 @@
 		[UIView commitAnimations];
 	}
 	
+	
 	//display the number of pieces each player has
 	//and winning status bar
 	//----to do------
 	
 	//display turn
-	UIImageView *image = [self.view viewWithTag:999];
+	UIImageView *image = (UIImageView *)[self.view viewWithTag:999];
 	[UIView beginAnimations:nil context:NULL];
 	[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
 	[UIView setAnimationDuration:1.0];
@@ -113,8 +136,8 @@
 	[UIView commitAnimations];
 	
 	//display # of pieces for each player
-	UILabel *p1score = [self.view viewWithTag:899];
-	UILabel *p2score = [self.view viewWithTag:799];
+	UILabel *p1score = (UILabel *)[self.view viewWithTag:899];
+	UILabel *p2score = (UILabel *)[self.view viewWithTag:799];
 	[UIView beginAnimations:nil context:NULL];
 	int p1pieces = game.p1pieces;
 	int p2pieces = game.p2pieces; 
@@ -128,23 +151,17 @@
 	}
 	p1score.text = [NSString stringWithFormat:@"%d", p1pieces ];
 	p2score.text = [NSString stringWithFormat:@"%d", p2pieces ];
+	
+	//update sliding bar
+	UIImageView *blackbar = (UIImageView *)[self.view viewWithTag:10000];
+	[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+	[UIView setAnimationDuration:1.0];
+	[blackbar setFrame:CGRectMake(PADDING, PADDING + game.rows*size + 1.5, (w - 2*PADDING)*p1pieces/(p1pieces + p2pieces), 10)];
+	
 	[UIView commitAnimations];
 	
 	//mode to display all legal moves
-	if(FALSE) {
-		NSArray *legalMoves = [game legalMoves];
-		NSLog(@"%@\n", legalMoves);
-	/*	for (int move in legalMoves) {
-			UIImageView *pieceg = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"C4O.png"]];
-			rect = CGRectMake((move % game.cols) * size + PADDING + size / 3,
-							  (move / game.cols) * size + PADDING + size / 3,
-							  size / 3, size / 3);
-			[pieceg setFrame: rect];
-			pieceg.tag = 2000 + move;
-			[self.view addSubview: pieceg];
-		}
-	 */
-	}
+
 }
 
 - (void) undoMove:(NSNumber *)move {
@@ -153,11 +170,11 @@
 	for (int i = 0; i< game.rows*game.cols; i++) {
 		if ([myLastBoard objectAtIndex: i] != [game.board objectAtIndex:i]) {
 			if ([[myLastBoard objectAtIndex:i] isEqualToString:BLANK]) {
-				UIImageView *image = [self.view viewWithTag:1000 + i];
+				UIImageView *image = (UIImageView *) [self.view viewWithTag:1000 + i];
 				[image removeFromSuperview];
 			} else {
 					
-				UIImageView *image = [self.view viewWithTag:1000 + i];
+				UIImageView *image = (UIImageView *) [self.view viewWithTag:1000 + i];
 				[UIView beginAnimations:nil context:NULL];
 				[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
 				[UIView setAnimationDuration:1.0];
@@ -167,7 +184,7 @@
 			}
 		}
 	}
-	UIImageView *image = [self.view viewWithTag:999];
+	UIImageView *image = (UIImageView *) [self.view viewWithTag:999];
 	[UIView beginAnimations:nil context:NULL];
 	[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
 	[UIView setAnimationDuration:1.0];
@@ -176,15 +193,26 @@
 	[UIView commitAnimations];
 	
 	//display # of pieces for each player
-	UILabel *p1score = [self.view viewWithTag:899];
-	UILabel *p2score = [self.view viewWithTag:799];
+	UILabel *p1score = (UILabel *) [self.view viewWithTag:899];
+	UILabel *p2score = (UILabel *)[self.view viewWithTag:799];
 	[UIView beginAnimations:nil context:NULL];
 	
-	int p1pieces = [[myOldMoves lastObject] objectAtIndex: 1];
-	int p2pieces = [[myOldMoves lastObject] objectAtIndex: 2];
+	int p1pieces = [(NSNumber *) [[myOldMoves lastObject] objectAtIndex: 1] intValue];
+	int p2pieces = [(NSNumber *) [[myOldMoves lastObject] objectAtIndex: 2] intValue];
 	
 	p1score.text = [NSString stringWithFormat:@"%d", p1pieces] ;
 	p2score.text = [NSString stringWithFormat:@"%d", p2pieces];
+	
+	CGFloat w = self.view.bounds.size.width;
+	CGFloat h = self.view.bounds.size.height;
+	CGFloat size = MIN((w - 2*PADDING)/game.cols, (h - 80+PADDING)/game.rows);
+	
+	UIImageView *blackbar = (UIImageView *)[self.view viewWithTag:10000];
+	[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+	[UIView setAnimationDuration:1.0];
+	[blackbar setFrame:CGRectMake(PADDING, PADDING + game.rows*size + 1.5, (w - 2*PADDING)*p1pieces/(p1pieces + p2pieces), 10)];
+	
+	[UIView commitAnimations];
 	[UIView commitAnimations];
 }
 
@@ -218,25 +246,64 @@
 	piece4.tag = 1000 + (row+1)*game.cols + col+1;
 	[self.view addSubview: piece4];
 	
-	
+	//Turn
 	UIImageView *piecet = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"simpleblack.png"]];
 	[piecet setFrame: CGRectMake((w- size)/ 2.0, h - 20.0 - (60.0 / 2.0) - (size / 2.0), size, size)];
 	piecet.tag = 999;
 	[self.view addSubview: piecet];
 	
-	UILabel *p1score = [[UILabel alloc] initWithFrame:CGRectMake(20, h-20.0-(60.0/2.0) - (size/2.0), size, size)];
+	UILabel *turnLabel = [[UILabel alloc] initWithFrame:CGRectMake((w- size)/ 2.0 + 2 , h - 20.0 - (60.0 / 2.0) - (size / 2.0) + size/2 + 10 , size, size)];
+	turnLabel.text = @"Turn";
+	turnLabel.textColor = [UIColor whiteColor];
+	turnLabel.backgroundColor = [UIColor clearColor];
+	[self.view addSubview:turnLabel];
+	//Player Scores
+	UIImageView *pieceblack = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"simpleblack.png"]];
+	[pieceblack setFrame: CGRectMake(PADDING, h - 20.0 - (60.0 / 2.0) - (size / 2.0), size, size)];
+	[self.view addSubview:pieceblack];
+	UILabel *p1score = [[UILabel alloc] initWithFrame:CGRectMake(15, h-20.0-(60.0/2.0) - size/4, size, size/2)];
 	p1score.tag = 899;
 	p1score.backgroundColor = [UIColor clearColor];
 	p1score.textColor = [UIColor whiteColor];
 	p1score.text = [NSString stringWithFormat:@"%d", game.p1pieces];
 	[self.view addSubview:p1score];
 	
-	UILabel *p2score = [[UILabel alloc] initWithFrame:CGRectMake(w-20, h-20.0-(60.0/2.0) - (size/2.0), size, size)];
+	UIImageView *piecewhite = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"simplewhite.png"]];
+	[piecewhite setFrame: CGRectMake(w - (2*PADDING) - size, h - 20.0 - (60.0 / 2.0) - (size / 2.0), size, size)];
+	[self.view addSubview:piecewhite];
+	UILabel *p2score = [[UILabel alloc] initWithFrame:CGRectMake(w-27, h-20.0-(60.0/2.0) - (size/2.0), size, size)];
 	p2score.tag = 799;
 	p2score.backgroundColor = [UIColor clearColor];
-	p2score.textColor = [UIColor whiteColor];
+	p2score.textColor = [UIColor blackColor];
 	p2score.text = [NSString stringWithFormat:@"%d", game.p2pieces];
 	[self.view addSubview:p2score];
+	
+	// Legal Moves
+	for (int i=0; i<game.cols; i+=1) {
+		for	(int j=0; j<game.rows; j+=1) {
+			UIImageView *newView = [[UIImageView alloc] initWithFrame:CGRectMake(PADDING + i*size + size/4, PADDING + j*size + size/4, size/2, size/2)];
+			newView.tag = 5000 + i + j*game.cols;
+			[newView setImage:[UIImage imageNamed:@"rec.png"]];
+			[newView setHidden: YES];
+			[self.view addSubview:newView];
+		}
+	}
+	NSArray *legalMoves = [game legalMoves];
+	for (NSNumber* move in legalMoves) {
+		NSLog(@"%d\n", [move intValue]);
+		UIImageView *newView = (UIImageView *)[self.view viewWithTag:5000 + [move intValue]];
+		[newView setHidden: NO];
+	}
+	
+	// Sliding Bar
+	UIImageView *whitebar = [[UIImageView alloc] initWithFrame: CGRectMake(PADDING, PADDING + game.rows*size + 1.5, w - 2*PADDING, 10)];
+	[whitebar setImage:[UIImage imageNamed:@"whitebar.png"]];
+	[self.view addSubview:whitebar];
+	
+	UIImageView *blackbar = [[UIImageView alloc] initWithFrame: CGRectMake(PADDING, PADDING + game.rows*size + 1.5, (w - 2*PADDING)/2, 10)];
+	[blackbar setImage:[UIImage imageNamed:@"blackbar.png"]];
+	blackbar.tag = 10000;
+	[self.view addSubview:blackbar];	
 	
 }
 

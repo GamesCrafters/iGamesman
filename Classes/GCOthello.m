@@ -161,6 +161,7 @@
 	}
 	
 	p1Turn = !p1Turn;
+	[othView updateLegalMoves];
 	
 	
 }
@@ -173,6 +174,7 @@
 	p1pieces = [[b objectAtIndex:1] intValue];
 	p2pieces = [[b objectAtIndex:2] intValue];
 	p1Turn = !p1Turn;
+	[othView updateLegalMoves];
 }
 
 - (NSString *) primitive {

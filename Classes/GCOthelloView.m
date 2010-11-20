@@ -41,8 +41,8 @@
 	
 	//Draw lines within Rectangle
 	
-	CGContextSetLineWidth(ctx, 1);
-	CGContextSetRGBStrokeColor(ctx, 0, 0, 0, 1);
+	CGContextSetLineWidth(ctx, 1.5);
+	CGContextSetRGBStrokeColor(ctx, 0, .1, 0, 0.7);
 	
 	for (int i = 0; i <= cols; i += 1) {
 		CGContextMoveToPoint(ctx, PADDING + size * i, PADDING);
