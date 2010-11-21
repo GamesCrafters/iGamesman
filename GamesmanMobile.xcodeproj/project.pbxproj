@@ -447,9 +447,9 @@
 			children = (
 				0A3F4ABD127B780D0007B1FB /* GCQuickCross.h */,
 				0A3F4AC1127B780D0007B1FB /* GCQuickCross.m */,
+				0A3F4ABF127B780D0007B1FB /* GCQuickCrossView.h */,
 				0A3F4ABE127B780D0007B1FB /* GCQuickCrossOptionMenu.h */,
 				0A3F4AC2127B780D0007B1FB /* GCQuickCrossOptionMenu.m */,
-				0A3F4ABF127B780D0007B1FB /* GCQuickCrossView.h */,
 				0A3F4AC3127B780D0007B1FB /* GCQuickCrossView.m */,
 				0A3F4AC0127B780D0007B1FB /* GCQuickCrossViewController.h */,
 				0A3F4AC4127B780D0007B1FB /* GCQuickCrossViewController.m */,
@@ -692,7 +692,6 @@
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "GamesmanMobile" */;
 			compatibilityVersion = "Xcode 3.1";
-			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				English,

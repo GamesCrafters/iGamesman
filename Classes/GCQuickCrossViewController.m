@@ -10,12 +10,11 @@
 #import "GCQuickCrossView.h"
 
 #define BLANK @"+"
-#define XVERT @"X"
-#define XHORIZ @"x"
-#define YVERT @"Y"
-#define YHORIZ @"y"
+#define HORIZ @"-"
+#define VERT @"|"
 #define PLACE @"place"
 #define SPIN @"spin"
+
 
 @implementation GCQuickCrossViewController
 
@@ -32,68 +31,44 @@
 - (void) updateDisplay {
 	NSString *player = game.p1Turn ? [game player1Name] : [game player2Name];
 	NSString *oppPlayer = game.p1Turn ? [game player2Name] : [game player1Name];
-	NSString *color = game.p1Turn ? @"Green" : @"Red";
 	NSString *primitive = [game primitive];
-	
+	NSLog(@"%d", game.p1Turn);
+	NSLog(@"%@", primitive);
+	NSLog(@"%@", player);
 	if (primitive) {
-		if ([primitive isEqualToString: @"TIE"])
-			messageLabel.text = @"It's a tie!";
-		else {
-			messageLabel.text = [NSString stringWithFormat: @"%@ wins!", [primitive isEqualToString: @"WIN"] ? player : oppPlayer];
-		}
+		messageLabel.text = [NSString stringWithFormat: @"%@ wins!", [primitive isEqualToString: @"WIN"] ? player : oppPlayer];
 	} else
-		messageLabel.text = [NSString stringWithFormat: @"%@ %@'s turn", player, color];	
+		messageLabel.text = [NSString stringWithFormat: @"%@'s turn", player];	
 }
 
 - (void) doMove: (NSArray *) move {
 	if ([[move objectAtIndex: 2] isEqual: SPIN])
 	{
-		UIImageView *image = [self.view viewWithTag:1000 + [[move objectAtIndex: 0] intValue]];
+		UIImageView *image = [self.view viewWithTag:1000 + [[move objectAtIndex: 0] intValue]]; //piece is already there
 		[UIView beginAnimations:nil context:NULL];
 		[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
 		[UIView setAnimationDuration:1.0];
 		[UIView setAnimationTransition:UIViewAnimationTransitionNone forView:image cache:YES];
-		if (game.p1Turn)
-			if ([[move objectAtIndex: 1] isEqual: XHORIZ])
-			{
-				[image setImage:[UIImage imageNamed: @"ConGreenH.png"]];
-			}
-			else 
-			{
-				[image setImage:[UIImage imageNamed: @"ConGreenV.png"]];
-			}
-		else
+		if ([[move objectAtIndex: 1] isEqual: HORIZ])
 		{
-			if ([[move objectAtIndex: 1] isEqual: YHORIZ])
-			{
-				[image setImage:[UIImage imageNamed: @"ConRedH.png"]];
-			}
-			else 
-			{
-				[image setImage:[UIImage imageNamed: @"ConRedV.png"]];
-			}
+			[image setImage:[UIImage imageNamed: @"QCHoriz.png"]];
+		}
+		else 
+		{
+			[image setImage:[UIImage imageNamed: @"QCVert.png"]];
 		}
 		[UIView commitAnimations];
 	}
 	else
 	{
-		UIImageView *piece = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"ConGreenH.png"]];
-		if (game.p1Turn)
+		UIImageView *piece = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"QCHoriz.png"]]; //piece is not there; need to initialize
+		
+		if ([[move objectAtIndex: 1] isEqual: HORIZ]) 
 		{
-			if ([[move objectAtIndex: 1] isEqual: XHORIZ]) {
-				piece = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"ConGreenH.png"]];
-			}
-			else {
-				piece = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"ConGreenV.png"]];
-			}
+			piece = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"QCHoriz.png"]];
 		}
 		else {
-			if ([[move objectAtIndex: 1] isEqual: YHORIZ]) {
-				piece = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"ConRedH.png"]];
-			}
-			else {
-				piece = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"ConRedV.png"]];
-			}
+			piece = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"QCVert.png"]];
 		}
 		int col = [[move objectAtIndex: 0] intValue] % game.cols;
 		int row = [[move objectAtIndex: 0] intValue] / game.cols;
@@ -112,21 +87,13 @@
 	UIImageView *piece = (UIImageView *) [self.view viewWithTag: 1000 + [[move objectAtIndex: 0] intValue]];
 	if ([[move objectAtIndex: 2] isEqual: SPIN])
 	{
-		if ([[move objectAtIndex: 1] isEqual: XHORIZ])
+		if ([[move objectAtIndex: 1] isEqual: HORIZ])
 		{
-			[piece setImage:[UIImage imageNamed: @"ConGreenV.png"]];
+			[piece setImage:[UIImage imageNamed: @"QCVert.png"]];
 		}
-		else if ([[move objectAtIndex: 1] isEqual: XVERT])
+		else
 		{
-			[piece setImage:[UIImage imageNamed: @"ConGreenH.png"]];
-		}
-		else if ([[move objectAtIndex: 1] isEqual: YHORIZ])
-		{
-			[piece setImage:[UIImage imageNamed: @"ConRedV.png"]];
-		}
-		else if ([[move objectAtIndex: 1] isEqual: YVERT])
-		{
-			[piece setImage:[UIImage imageNamed: @"ConRedH.png"]];
+			[piece setImage:[UIImage imageNamed: @"QCHoriz.png"]];
 		}
 	}
 	else
@@ -139,48 +106,43 @@
 
 - (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
 	if(touchesEnabled) {
-		CGFloat w = self.view.bounds.size.width;
-		CGFloat h = self.view.bounds.size.height;
-	
-		CGFloat size = MIN((w - 180)/game.cols, (h - 20)/game.rows);
-	
 		UITouch *theTouch = [touches anyObject];
-		CGPoint loc = [theTouch locationInView: self.view];
-	
-		if (CGRectContainsPoint(CGRectMake(10, 10, size * game.cols, size * game.rows), loc)) {
-			int col = (loc.x - 10) / size;
-			int row = (loc.y - 10) / size;
-			int slot = col + game.cols * row;
+		start = [theTouch locationInView: self.view];
+	}
+}
 		
+- (void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+	CGFloat w = self.view.bounds.size.width;
+	CGFloat h = self.view.bounds.size.height;
+	
+	CGFloat size = MIN((w - 180)/game.cols, (h - 20)/game.rows);
+	
+	CGPoint loc = start;
+	if (CGRectContainsPoint(CGRectMake(10, 10, size * game.cols, size * game.rows), loc)) {
+		int col = (loc.x - 10) / size;
+		int row = (loc.y - 10) / size;
+		int slot = col + game.cols * row;
+	
+		if ([[[game getBoard] objectAtIndex: slot] isEqual: VERT])
+			[game postHumanMove: [NSArray arrayWithObjects: [NSNumber numberWithInt: slot], HORIZ, SPIN, nil]];
+		else if ([[[game getBoard] objectAtIndex: slot] isEqual: HORIZ])
+			[game postHumanMove: [NSArray arrayWithObjects: [NSNumber numberWithInt: slot], VERT, SPIN, nil]];
+		else if ([[[game getBoard] objectAtIndex: slot] isEqual: BLANK])
+		{
+			UITouch *theTouch = [touches anyObject];
+			CGPoint end = [theTouch locationInView: self.view];
 			
-			if (game.p1Turn)
+			double slope = ABS((end.y - start.y)/(end.x - start.x));
+			if (slope > 1)
 			{
-				if ([[[game getBoard] objectAtIndex: slot] isEqual: YVERT]){}
-				else if ([[[game getBoard] objectAtIndex: slot] isEqual: YHORIZ]){}
-				else if ([[[game getBoard] objectAtIndex: slot] isEqual: XVERT])
-					[game postHumanMove: [NSArray arrayWithObjects: [NSNumber numberWithInt: slot], XHORIZ, SPIN, nil]];
-				else if ([[[game getBoard] objectAtIndex: slot] isEqual: XHORIZ])
-					[game postHumanMove: [NSArray arrayWithObjects: [NSNumber numberWithInt: slot], XVERT, SPIN, nil]];
-				else if ([[[game getBoard] objectAtIndex: slot] isEqual: BLANK])
-				{
-					[game postHumanMove: [NSArray arrayWithObjects: [NSNumber numberWithInt: slot], XHORIZ, PLACE, nil]];
-				}
+				[game postHumanMove: [NSArray arrayWithObjects: [NSNumber numberWithInt: slot], VERT, PLACE, nil]];
 			}
-			else
-			{
-				if ([[[game getBoard] objectAtIndex: slot] isEqual: XVERT]){}
-				else if ([[[game getBoard] objectAtIndex: slot] isEqual: XHORIZ]){}
-				else if ([[[game getBoard] objectAtIndex: slot] isEqual: YVERT])
-					[game postHumanMove: [NSArray arrayWithObjects: [NSNumber numberWithInt: slot], YHORIZ, SPIN, nil]];
-				else if ([[[game getBoard] objectAtIndex: slot] isEqual: YHORIZ])
-					[game postHumanMove: [NSArray arrayWithObjects: [NSNumber numberWithInt: slot], YVERT, SPIN, nil]];
-				else if ([[[game getBoard] objectAtIndex: slot] isEqual: BLANK])
-				{
-					[game postHumanMove: [NSArray arrayWithObjects: [NSNumber numberWithInt: slot], YHORIZ, PLACE, nil]];
-				}
+			else {
+				[game postHumanMove: [NSArray arrayWithObjects: [NSNumber numberWithInt: slot], HORIZ, PLACE, nil]];
 			}
-			
+
 		}
+		
 	}
 }
 
@@ -188,13 +150,15 @@
 	self.view = [[GCQuickCrossView alloc] initWithFrame: CGRectMake(0, 0, 480, 256) andRows: game.rows andCols: game.cols];
 	
 	messageLabel = [[UILabel alloc] initWithFrame: CGRectMake(320, 50, 140, 156)];
-	messageLabel.text = [NSString stringWithFormat: @"%@ Green's turn", [game player1Name]];
+	messageLabel.text = [NSString stringWithFormat: @"%@'s turn", [game player1Name]];
 	messageLabel.backgroundColor = [UIColor clearColor];
 	messageLabel.textColor = [UIColor whiteColor];
 	messageLabel.textAlignment = UITextAlignmentCenter;
 	messageLabel.numberOfLines = 4;
 	messageLabel.lineBreakMode = UILineBreakModeWordWrap;
 	[self.view addSubview: messageLabel];
+	start = CGPointZero;
+	
 }
 
 - (void)viewDidLoad {

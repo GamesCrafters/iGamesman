@@ -16,6 +16,8 @@
 	UILabel *messageLabel;
 	
 	BOOL touchesEnabled;
+	
+	CGPoint start;
 }
 
 @property (nonatomic, assign) BOOL touchesEnabled;

@@ -11,10 +11,8 @@
 #import "GCQuickCrossViewController.h"
 
 #define BLANK @"+"
-#define XVERT @"X"
-#define XHORIZ @"x"
-#define YVERT @"Y"
-#define YHORIZ @"y"
+#define VERT @"|"
+#define HORIZ @"-"
 #define PLACE @"place"
 #define SPIN @"spin"
 
@@ -82,29 +80,14 @@
 - (NSArray *) legalMoves {
 	NSMutableArray *result = [[NSMutableArray alloc] initWithCapacity: 2 * rows * cols];
 	for (int i = 0; i < [board count]; i += 1) {
-		if (p1Turn)
+		if ([[board objectAtIndex: i] isEqual: VERT])
+			[result addObject: [NSArray arrayWithObjects: [NSNumber numberWithInt: i], HORIZ, SPIN, nil]];
+		else if ([[board objectAtIndex: i] isEqual: HORIZ])
+			[result addObject: [NSArray arrayWithObjects: [NSNumber numberWithInt: i], VERT, SPIN, nil]];
+		else if ([[board objectAtIndex: i] isEqual: BLANK])
 		{
-			if ([[board objectAtIndex: i] isEqual: XVERT])
-				[result addObject: [NSArray arrayWithObjects: [NSNumber numberWithInt: i], XHORIZ, SPIN, nil]];
-			else if ([[board objectAtIndex: i] isEqual: XHORIZ])
-				[result addObject: [NSArray arrayWithObjects: [NSNumber numberWithInt: i], XVERT, SPIN, nil]];
-			else if ([[board objectAtIndex: i] isEqual: BLANK])
-			{
-				[result addObject: [NSArray arrayWithObjects: [NSNumber numberWithInt: i], XVERT, PLACE, nil]];
-				[result addObject: [NSArray arrayWithObjects: [NSNumber numberWithInt: i], XHORIZ, PLACE, nil]];
-			}
-	    }
-		else
-		{
-			if ([[board objectAtIndex: i] isEqual: YVERT])
-				[result addObject: [NSArray arrayWithObjects: [NSNumber numberWithInt: i], YHORIZ, SPIN, nil]];
-			else if ([[board objectAtIndex: i] isEqual: YHORIZ])
-				 [result addObject: [NSArray arrayWithObjects: [NSNumber numberWithInt: i], YVERT, SPIN, nil]];
-			else if ([[board objectAtIndex: i] isEqual: BLANK])
-			{
-				[result addObject: [NSArray arrayWithObjects: [NSNumber numberWithInt: i], YVERT, PLACE, nil]];
-			    [result addObject: [NSArray arrayWithObjects: [NSNumber numberWithInt: i], YHORIZ, PLACE, nil]];
-			}
+			[result addObject: [NSArray arrayWithObjects: [NSNumber numberWithInt: i], VERT, PLACE, nil]];
+			[result addObject: [NSArray arrayWithObjects: [NSNumber numberWithInt: i], HORIZ, PLACE, nil]];
 		}
 	}
 	return [result autorelease];
@@ -125,27 +108,13 @@
 	if ([[move objectAtIndex: 2] isEqual: PLACE]) {
 		[board replaceObjectAtIndex: [[move objectAtIndex: 0] intValue] withObject: BLANK];
 	}
-	else if (!p1Turn)
+	else if ([[move objectAtIndex: 1] isEqual: HORIZ])
 	{
-		if ([[move objectAtIndex: 1] isEqual: XHORIZ])
-		{
-			[board replaceObjectAtIndex: [[move objectAtIndex: 0] intValue] withObject: XVERT];
-		}
-		else 
-		{
-			[board replaceObjectAtIndex: [[move objectAtIndex: 0] intValue] withObject: XHORIZ];
-		}
+		[board replaceObjectAtIndex: [[move objectAtIndex: 0] intValue] withObject: VERT];
 	}
-	else
+	else 
 	{
-		if ([[move objectAtIndex: 1] isEqual: YHORIZ])
-		{
-			[board replaceObjectAtIndex: [[move objectAtIndex: 0] intValue] withObject: YVERT];
-		}
-		else 
-		{
-			[board replaceObjectAtIndex: [[move objectAtIndex: 0] intValue] withObject: YHORIZ];
-		}
+		[board replaceObjectAtIndex: [[move objectAtIndex: 0] intValue] withObject: HORIZ];
 	}
 	p1Turn = !p1Turn;
 }
@@ -156,9 +125,9 @@
 		if ([piece isEqual: BLANK])
 			continue;
 		BOOL case1 = YES;
-		if ([piece isEqual: XHORIZ] || [piece isEqual: YHORIZ])
+		if ([piece isEqual: VERT])
 		{
-		// Check the horizontal case
+		// Check the horizontal case for vertical 
 			
 			for (int j = i; j < i + inalign; j += 1) {
 				if (j >= cols * rows || i % cols > j % cols || ![[board objectAtIndex: j] isEqual: piece]) {
@@ -168,109 +137,131 @@
 			}
 			if (case1)
 			{
-				if (p1Turn)
-					return (misere ? @"LOSE" : @"WIN");
-					return (misere ? @"WIN" : @"LOSE");
+				return (misere ? @"WIN" : @"LOSE");
 			}
 		}
 		
-		// Check the vertical case
 		BOOL case2 = YES;
-		if ([piece isEqual: XVERT] || [piece isEqual: YVERT])
-        {
-			for (int j = i; j < i + cols * inalign; j += cols) {
-				if ( j >= cols * rows || ![[board objectAtIndex: j] isEqual: piece] ) {
+		if ([piece isEqual: HORIZ])
+		{
+			// Check the horizontal case for Horizontal
+			
+			for (int j = i; j < i + inalign; j += 1) {
+				if (j >= cols * rows || i % cols > j % cols || ![[board objectAtIndex: j] isEqual: piece]) {
 					case2 = NO;
 					break;
 				}
 			}
 			if (case2)
 			{
-				if (p1Turn)
-					return (misere ? @"LOSE" : @"WIN");
-					return (misere ? @"WIN" : @"LOSE");
+			
+				return (misere ? @"WIN" : @"LOSE");
 			}
 		}
-	}
-		
-	// Finally, check if the board is full	
-	BOOL full = YES;
-	for (int i = 0; i < cols * rows; i += 1) {
-		if ([[board objectAtIndex: i] isEqual: BLANK]) {
-			full = NO;
-			break;
-		}
-	}
-	if (full)
-	{
-		BOOL tie = YES;
-		for (int i = 0; i < cols * rows; i += 1) { 
-			NSString *piece = [board objectAtIndex: i];
-			if([piece isEqual: XVERT] || [piece isEqual: XHORIZ])
-			{
-				//vertical case
-				BOOL pass = YES;
-				for (int j = i; j < i + cols * inalign; j += cols) {
-					if ( j >= cols * rows || !([[board objectAtIndex: j] isEqual: XVERT] || [[board objectAtIndex: j] isEqual: XHORIZ])) {
-						pass = NO;
-					}
-				}
-				if (pass)
-				{
-					tie = NO;
-					break;
-				}
-				pass = YES;
-				//horizontal case
-				for (int j = i; j < i + inalign; j += 1) {
-					if (j >= cols * rows || i % cols > j % cols || !([[board objectAtIndex: j] isEqual: XVERT] || [[board objectAtIndex: j] isEqual: XHORIZ])) 
-					{
-						pass = NO;
-						
-					}
-				}
-				if (pass)
-				{
-					tie = NO;
+		// Check the vertical case for vert
+			 
+		BOOL case3 = YES;
+		if ([piece isEqual: VERT])
+        {
+			for (int j = i; j < i + cols * inalign; j += cols) {
+				if ( j >= cols * rows || ![[board objectAtIndex: j] isEqual: piece] ) {
+					case3 = NO;
 					break;
 				}
 			}
-			else 
+			if (case3)
 			{
-				//vertical case
-				BOOL pass = YES;
-				for (int j = i; j < i + cols * inalign; j += cols) {
-					if ( j >= cols * rows || !([[board objectAtIndex: j] isEqual: YVERT] || [[board objectAtIndex: j] isEqual: YHORIZ])) {
-						pass = NO;
-					}
-				}
-				if (pass)
-				{
-					tie = NO;
-					break;
-				}
-				pass = YES;
-				//horizontal case
-				for (int j = i; j < i + inalign; j += 1) {
-					if (j >= cols * rows || i % cols > j % cols || !([[board objectAtIndex: j] isEqual: YVERT] || [[board objectAtIndex: j] isEqual: YHORIZ])) 
-					{
-						pass = NO;
-						
-					}
-				}
-				if (pass)
-				{
-					tie = NO;
-					break;
-				}
 				
+				return (misere ? @"WIN" : @"LOSE");
 			}
 		}
-		if (tie){
-			return @"TIE";
+		// Check the vertical case for Horiz
+			
+		BOOL case4 = YES;
+		if ([piece isEqual: HORIZ])
+		{
+			for (int j = i; j < i + cols * inalign; j += cols) {
+				if ( j >= cols * rows || ![[board objectAtIndex: j] isEqual: piece] ) {
+					case4 = NO;
+					break;
+				}
+			}
+			if (case4)
+			{
+				
+				return (misere ? @"WIN" : @"LOSE");
+			}
 		}
+		
+		// Check the diagonal case (positive slope) for HORIZ
+		BOOL case5 = YES;
+		if ([piece isEqual: HORIZ])
+		{
+			for (int j = i; j < i + inalign + cols * inalign; j += (cols + 1) ) {
+				if ( j >= cols * rows || (i % cols > j % cols) || ![[board objectAtIndex: j] isEqual: piece] ) {
+					case5 = NO;
+					break;
+				}
+			}
+			if (case5)
+			{
+				
+				return (misere ? @"WIN" : @"LOSE");
+			}
+		}
+		
+		// Check the diagonal case (positive slope) for VERT
+		BOOL case6 = YES;
+		if ([piece isEqual: VERT])
+		{
+			for (int j = i; j < i + inalign + cols * inalign; j += (cols + 1) ) {
+				if ( j >= cols * rows || (i % cols > j % cols) || ![[board objectAtIndex: j] isEqual: piece] ) {
+					case6 = NO;
+					break;
+				}
+			}
+			if (case6)
+			{
+				
+				return (misere ? @"WIN" : @"LOSE");
+			}
+		}
+		
+		// Check the diagonal case (negative slope) for VERT
+		BOOL case7 = YES;
+		if ([piece isEqual: VERT])
+		{
+			for (int j = i; j < i + cols * inalign - inalign; j += (cols - 1) ) {
+				if ( j >= cols * rows || (i % cols < j % cols) || ![[board objectAtIndex: j] isEqual: piece] ) {
+					case7 = NO;
+					break;
+				}
+			}
+			if (case7)
+			{
+				
+				return (misere ? @"WIN" : @"LOSE");
+			}
+		}
+		
+		// Check the diagonal case (negative slope) for HORIZ
+		BOOL case8 = YES;
+		if ([piece isEqual: HORIZ])
+		{
+			for (int j = i; j < i + cols * inalign - inalign; j += (cols - 1) ) {
+				if ( j >= cols * rows || (i % cols < j % cols) || ![[board objectAtIndex: j] isEqual: piece] ) {
+					case8 = NO;
+					break;
+				}
+			}
+			if (case8)
+			{
+				
+				return (misere ? @"WIN" : @"LOSE");
+			}
+		}
+		
 	}
-
 	return nil;
 }
 
