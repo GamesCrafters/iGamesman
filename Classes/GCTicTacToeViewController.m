@@ -47,15 +47,26 @@
 	CGFloat h = self.view.bounds.size.height;
 	CGFloat size = MIN((w - 180)/game.cols, (h - 20)/game.rows);
 	
-	[piece setFrame: CGRectMake(10 + col * size, 10 + row * size, size, size)];
+	[piece setFrame: CGRectMake(10 + (col + 0.5) * size, 10 + (row + 0.5) * size, 0, 0)];
 	piece.tag = 1000 + [move intValue];
+	
 	[self.view addSubview: piece];
+	
+	[UIView beginAnimations: @"AddPiece" context: NULL];
+	[piece setFrame: CGRectMake(10 + col * size, 10 + row * size, size, size)];
+	[UIView commitAnimations];
+	
+	[piece release];
 }
 
 - (void) undoMove: (NSNumber *) move {
 	UIImageView *piece = (UIImageView *) [self.view viewWithTag: 1000 + [move intValue]];
-	[piece removeFromSuperview];
-	[piece release];
+	
+	CGPoint center = piece.center;
+	[UIView beginAnimations: @"RemovePiece" context: NULL];
+	[piece setFrame: CGRectMake(center.x, center.y, 0, 0)];
+	piece.tag = 0;
+	[UIView commitAnimations];
 }
 
 - (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
