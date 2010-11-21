@@ -33,7 +33,7 @@
 	
 	//Making Green Rectangle Background
 	//CGContextSetRGBFillColor(ctx, 0, .5, 0, 1);
-	UIImage *bg = [UIImage imageNamed: @"felt.png"];
+	UIImage *bg = [UIImage imageNamed: @"felt2.png"];
 	[bg drawInRect:CGRectMake(PADDING, PADDING, cols*size, rows*size)];
 	//[background setFrame: CGRectMake(PADDING, PADDING, cols*size, rows*size)];
 	//[self addSubview:background];

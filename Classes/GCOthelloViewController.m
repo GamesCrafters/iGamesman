@@ -60,6 +60,13 @@
 }
 
 - (void) gameWon: (BOOL) p1Won {
+    UILabel *textLabel = (UILabel *) [self.view viewWithTag:2000];
+    if (p1Won) {
+        textLabel.text = @"Black Wins";
+    } else {
+        textLabel.text = @"White Wins";
+    }
+    
 	/*
 	CGFloat w = self.view.bounds.size.width;
 	CGFloat h = self.view.bounds.size.height;
@@ -156,7 +163,7 @@
 	UIImageView *blackbar = (UIImageView *)[self.view viewWithTag:10000];
 	[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
 	[UIView setAnimationDuration:1.0];
-	[blackbar setFrame:CGRectMake(PADDING, PADDING + game.rows*size + 1.5, (w - 2*PADDING)*p1pieces/(p1pieces + p2pieces), 10)];
+	[blackbar setFrame:CGRectMake(PADDING, PADDING + game.rows*size , (w - 2*PADDING)*p1pieces/(p1pieces + p2pieces), 10)];
 	
 	[UIView commitAnimations];
 	
@@ -210,7 +217,7 @@
 	UIImageView *blackbar = (UIImageView *)[self.view viewWithTag:10000];
 	[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
 	[UIView setAnimationDuration:1.0];
-	[blackbar setFrame:CGRectMake(PADDING, PADDING + game.rows*size + 1.5, (w - 2*PADDING)*p1pieces/(p1pieces + p2pieces), 10)];
+	[blackbar setFrame:CGRectMake(PADDING, PADDING + game.rows*size , (w - 2*PADDING)*p1pieces/(p1pieces + p2pieces), 10)];
 	
 	[UIView commitAnimations];
 	[UIView commitAnimations];
@@ -245,34 +252,39 @@
 	[piece4 setFrame: CGRectMake(PADDING	+ (col +1) * size, PADDING + (row+1) * size, size, size)];
 	piece4.tag = 1000 + (row+1)*game.cols + col+1;
 	[self.view addSubview: piece4];
+    
 	
 	//Turn
 	UIImageView *piecet = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"simpleblack.png"]];
-	[piecet setFrame: CGRectMake((w- size)/ 2.0, h - 20.0 - (60.0 / 2.0) - (size / 2.0), size, size)];
+	[piecet setFrame: CGRectMake((w- 50)/ 2.0, h - 20.0 - (60.0 / 2.0) - (50 / 2.0), 50, 50)];
 	piecet.tag = 999;
 	[self.view addSubview: piecet];
 	
-	UILabel *turnLabel = [[UILabel alloc] initWithFrame:CGRectMake((w- size)/ 2.0 + 2 , h - 20.0 - (60.0 / 2.0) - (size / 2.0) + size/2 + 10 , size, size)];
+	UILabel *turnLabel = [[UILabel alloc] initWithFrame:CGRectMake(PADDING, h - 20.0 - (60.0 / 2.0) - (50 / 2.0) + 50/2 + 10 , w, 50)];
+    turnLabel.textAlignment = UITextAlignmentCenter;
 	turnLabel.text = @"Turn";
+    turnLabel.tag = 2000;
 	turnLabel.textColor = [UIColor whiteColor];
 	turnLabel.backgroundColor = [UIColor clearColor];
 	[self.view addSubview:turnLabel];
 	//Player Scores
 	UIImageView *pieceblack = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"simpleblack.png"]];
-	[pieceblack setFrame: CGRectMake(PADDING, h - 20.0 - (60.0 / 2.0) - (size / 2.0), size, size)];
+	[pieceblack setFrame: CGRectMake(PADDING, h - 20.0 - (60.0 / 2.0) - (50 / 2.0), 50, 50)];
 	[self.view addSubview:pieceblack];
-	UILabel *p1score = [[UILabel alloc] initWithFrame:CGRectMake(15, h-20.0-(60.0/2.0) - size/4, size, size/2)];
+	UILabel *p1score = [[UILabel alloc] initWithFrame:CGRectMake(PADDING, h-20.0-(60.0/2.0) - 50/2.0, 50, 50)];
 	p1score.tag = 899;
+    p1score.textAlignment = UITextAlignmentCenter;
 	p1score.backgroundColor = [UIColor clearColor];
 	p1score.textColor = [UIColor whiteColor];
 	p1score.text = [NSString stringWithFormat:@"%d", game.p1pieces];
 	[self.view addSubview:p1score];
 	
 	UIImageView *piecewhite = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"simplewhite.png"]];
-	[piecewhite setFrame: CGRectMake(w - (2*PADDING) - size, h - 20.0 - (60.0 / 2.0) - (size / 2.0), size, size)];
+	[piecewhite setFrame: CGRectMake(w - (2*PADDING) - 50, h - 20.0 - (60.0 / 2.0) - (50 / 2.0), 50, 50)];
 	[self.view addSubview:piecewhite];
-	UILabel *p2score = [[UILabel alloc] initWithFrame:CGRectMake(w-27, h-20.0-(60.0/2.0) - (size/2.0), size, size)];
+	UILabel *p2score = [[UILabel alloc] initWithFrame:CGRectMake(w-PADDING-50, h-20.0-(60.0/2.0) - (50/2.0), 50, 50)];
 	p2score.tag = 799;
+    p2score.textAlignment = UITextAlignmentCenter;
 	p2score.backgroundColor = [UIColor clearColor];
 	p2score.textColor = [UIColor blackColor];
 	p2score.text = [NSString stringWithFormat:@"%d", game.p2pieces];
@@ -296,11 +308,11 @@
 	}
 	
 	// Sliding Bar
-	UIImageView *whitebar = [[UIImageView alloc] initWithFrame: CGRectMake(PADDING, PADDING + game.rows*size + 1.5, w - 2*PADDING, 10)];
+	UIImageView *whitebar = [[UIImageView alloc] initWithFrame: CGRectMake(PADDING, PADDING + game.rows*size , w - 2*PADDING, 10)];
 	[whitebar setImage:[UIImage imageNamed:@"whitebar.png"]];
 	[self.view addSubview:whitebar];
 	
-	UIImageView *blackbar = [[UIImageView alloc] initWithFrame: CGRectMake(PADDING, PADDING + game.rows*size + 1.5, (w - 2*PADDING)/2, 10)];
+	UIImageView *blackbar = [[UIImageView alloc] initWithFrame: CGRectMake(PADDING, PADDING + game.rows*size , (w - 2*PADDING)/2, 10)];
 	[blackbar setImage:[UIImage imageNamed:@"blackbar.png"]];
 	blackbar.tag = 10000;
 	[self.view addSubview:blackbar];	

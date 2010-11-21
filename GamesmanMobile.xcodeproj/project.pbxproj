@@ -98,6 +98,7 @@
 		2EE35F321297469600B2EB4F /* rec.png in Resources */ = {isa = PBXBuildFile; fileRef = 2EE35F311297469600B2EB4F /* rec.png */; };
 		82AA5D0A1278DF4A00E904B1 /* simplewhite.png in Resources */ = {isa = PBXBuildFile; fileRef = 82AA5D091278DF4A00E904B1 /* simplewhite.png */; };
 		82AA5D0C1278DF5700E904B1 /* simpleblack.png in Resources */ = {isa = PBXBuildFile; fileRef = 82AA5D0B1278DF5700E904B1 /* simpleblack.png */; };
+		82EF61F91298BCF300657333 /* felt2.png in Resources */ = {isa = PBXBuildFile; fileRef = 82EF61F81298BCF300657333 /* felt2.png */; };
 		9C692486115017B800E0EC4B /* IntegerQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C692485115017B800E0EC4B /* IntegerQueue.m */; };
 		C58F0D7511447A2A0058D6CE /* GCYBoardView0.xib in Resources */ = {isa = PBXBuildFile; fileRef = C58F0D7411447A2A0058D6CE /* GCYBoardView0.xib */; };
 		C58F0D7B114482CB0058D6CE /* GCYBoardView1.xib in Resources */ = {isa = PBXBuildFile; fileRef = C58F0D7A114482CB0058D6CE /* GCYBoardView1.xib */; };
@@ -250,6 +251,7 @@
 		32CA4F630368D1EE00C91783 /* GamesmanMobile_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GamesmanMobile_Prefix.pch; sourceTree = "<group>"; };
 		82AA5D091278DF4A00E904B1 /* simplewhite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = simplewhite.png; sourceTree = SOURCE_ROOT; };
 		82AA5D0B1278DF5700E904B1 /* simpleblack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = simpleblack.png; sourceTree = SOURCE_ROOT; };
+		82EF61F81298BCF300657333 /* felt2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = felt2.png; sourceTree = SOURCE_ROOT; };
 		8D1107310486CEB800E47090 /* GamesmanMobile-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GamesmanMobile-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		9C692484115017B800E0EC4B /* IntegerQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntegerQueue.h; sourceTree = "<group>"; };
 		9C692485115017B800E0EC4B /* IntegerQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntegerQueue.m; sourceTree = "<group>"; };
@@ -451,6 +453,7 @@
 		0A4DBD70124FF17C00FA71C5 /* Othello */ = {
 			isa = PBXGroup;
 			children = (
+				82EF61F81298BCF300657333 /* felt2.png */,
 				2EE35F311297469600B2EB4F /* rec.png */,
 				2EE35E98129735FF00B2EB4F /* blackbar.png */,
 				2EE35E96129735F600B2EB4F /* whitebar.png */,
@@ -748,6 +751,7 @@
 				2EE35E97129735F600B2EB4F /* whitebar.png in Resources */,
 				2EE35E99129735FF00B2EB4F /* blackbar.png in Resources */,
 				2EE35F321297469600B2EB4F /* rec.png in Resources */,
+				82EF61F91298BCF300657333 /* felt2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
