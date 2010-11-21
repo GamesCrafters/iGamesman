@@ -77,6 +77,7 @@
 		0A8756B7111415BE006AB678 /* GCGameMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A8756B6111415BE006AB678 /* GCGameMenuController.m */; };
 		0A87575811142585006AB678 /* GCPlayerChangeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A87575711142585006AB678 /* GCPlayerChangeController.m */; };
 		0A87575C111425A2006AB678 /* PlayerChanger.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A87575B111425A2006AB678 /* PlayerChanger.xib */; };
+		0A97826612972753006ADBE8 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A97826512972753006ADBE8 /* QuartzCore.framework */; };
 		0A98CC0C11C0AC34008D01AE /* C4O.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A98CC0B11C0AC34008D01AE /* C4O.png */; };
 		0A98CC1611C0ADB4008D01AE /* C4X.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A98CC1511C0ADB4008D01AE /* C4X.png */; };
 		0AB775A211D7103C00B04135 /* GCVVHView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AB775A111D7103C00B04135 /* GCVVHView.m */; };
@@ -223,6 +224,7 @@
 		0A87575611142585006AB678 /* GCPlayerChangeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCPlayerChangeController.h; sourceTree = "<group>"; };
 		0A87575711142585006AB678 /* GCPlayerChangeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCPlayerChangeController.m; sourceTree = "<group>"; };
 		0A87575B111425A2006AB678 /* PlayerChanger.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlayerChanger.xib; sourceTree = "<group>"; };
+		0A97826512972753006ADBE8 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		0A98CC0B11C0AC34008D01AE /* C4O.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = C4O.png; sourceTree = "<group>"; };
 		0A98CC1511C0ADB4008D01AE /* C4X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = C4X.png; sourceTree = "<group>"; };
 		0AB775A011D7103C00B04135 /* GCVVHView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCVVHView.h; sourceTree = "<group>"; };
@@ -290,6 +292,7 @@
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */,
+				0A97826612972753006ADBE8 /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -582,6 +585,7 @@
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
 				288765FC0DF74451002DB57D /* CoreGraphics.framework */,
+				0A97826512972753006ADBE8 /* QuartzCore.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

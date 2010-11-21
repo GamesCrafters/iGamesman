@@ -7,7 +7,6 @@
 //
 
 #import "GCVVHViewController.h"
-#import "GCVVHView.h"
 
 
 @implementation GCVVHViewController
@@ -44,16 +43,21 @@
 	
 	UIScrollView *scroll = [[UIScrollView alloc] initWithFrame: rect];
 	
-	GCVVHView *vvhView = [[GCVVHView alloc] initWithFrame: vvhRect];
+	vvhView = [[GCVVHView alloc] initWithFrame: vvhRect];
 	vvhView.data = data;
 	vvhView.p1Name = [game player1Name];
 	vvhView.p2Name = [game player2Name];
 	[scroll addSubview: vvhView];
 	[scroll setContentSize: CGSizeMake(vvhRect.size.width, vvhRect.size.height)];
-	[vvhView release];
 	
+	scroll.minimumZoomScale = 1;
+	scroll.maximumZoomScale = 4;
+	scroll.delegate = self;
 	[self.view addSubview: scroll];
-	//[scroll release];
+}
+
+- (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
+	return vvhView;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -67,6 +71,7 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+	[vvhView release];
 }
 
 - (BOOL) shouldAutorotateToInterfaceOrientation: (UIInterfaceOrientation) interfaceOrientation {

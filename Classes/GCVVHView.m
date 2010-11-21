@@ -7,6 +7,7 @@
 //
 
 #import "GCVVHView.h"
+#import <QuartzCore/QuartzCore.h>
 
 
 @implementation GCVVHView
@@ -15,28 +16,44 @@
 @synthesize p1Name, p2Name;
 
 
++ (Class) layerClass {
+    return [CATiledLayer class];
+}
+
+
 - (id)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
         self.backgroundColor = [UIColor whiteColor];
 		self.opaque = YES;
 		self.clearsContextBeforeDrawing = YES;
+		
+		CATiledLayer *tempTiledLayer = (CATiledLayer*)self.layer;
+        tempTiledLayer.levelsOfDetail = 5;
+        tempTiledLayer.levelsOfDetailBias = 2;
     }
     return self;
 }
 
 - (void)drawRect:(CGRect)rect {
+	// Real drawing code in -drawLayer:inContext:
+}
+
+- (void) drawLayer: (CALayer*) layer inContext: (CGContextRef) context {
 	int maxRemote = -1;
 	for (NSDictionary *entry in data)
 		maxRemote = MAX(maxRemote, [[entry objectForKey: @"remoteness"] integerValue]);
 	
-	CGContextRef context = UIGraphicsGetCurrentContext();
+	CGContextSetRGBFillColor(context, 1, 1, 1, 1);
+	CGContextFillRect(context, self.bounds);
 	
-	float x = self.frame.origin.x, y = self.frame.origin.y;
-	float w = self.frame.size.width, h = self.frame.size.height;
+	float x = self.bounds.origin.x, y = self.bounds.origin.y;
+	float w = self.bounds.size.width, h = self.bounds.size.height;
 	
 	CGContextSelectFont(context, "Helvetica", 11, kCGEncodingMacRoman);
 	// Flip drawing direction because of inverted coordinate system
 	CGContextSetTextMatrix(context, CGAffineTransformMakeScale(1.0, -1.0));
+	
+	CGContextSetRGBFillColor(context, 0, 0, 0, 1);
 	
 	CGContextSetTextDrawingMode(context, kCGTextFill);
 	CGContextShowTextAtPoint(context, x + w/2.0 - 4, y + 35, "D", 1);
@@ -108,7 +125,7 @@
 		int remoteness = [[entry objectForKey: @"remoteness"] integerValue];
 		NSString *value = [[entry objectForKey: @"value"] uppercaseString];
 		BOOL left = [[entry objectForKey: @"player"] isEqual: @"1"];
-	
+		
 		float leftX  = remoteness * step + 20;
 		float rightX = w - 20 - remoteness * step;
 		float r = 7; // radius

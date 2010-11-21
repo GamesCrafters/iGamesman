@@ -8,12 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "GCGame.h"
+#import "GCVVHView.h"
 
 
-@interface GCVVHViewController : UIViewController {
+@interface GCVVHViewController : UIViewController <UIScrollViewDelegate> {
 	UIInterfaceOrientation orientation;
 	NSArray *data;
 	GCGame *game;
+	
+	GCVVHView *vvhView;
 }
 
 @property (nonatomic, retain) GCGame *game;
