@@ -21,6 +21,14 @@
 		0A22EDD5118F79A0006855AE /* ConXBar.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A22EDD3118F79A0006855AE /* ConXBar.png */; };
 		0A28C3C51299CCA900B40A31 /* QCHoriz.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A28C3C31299CCA900B40A31 /* QCHoriz.png */; };
 		0A28C3C61299CCA900B40A31 /* QCVert.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A28C3C41299CCA900B40A31 /* QCVert.png */; };
+		0A28C4061299E78000B40A31 /* QCLoseH.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A28C3FE1299E78000B40A31 /* QCLoseH.png */; };
+		0A28C4071299E78000B40A31 /* QCLoseV.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A28C3FF1299E78000B40A31 /* QCLoseV.png */; };
+		0A28C4081299E78000B40A31 /* QCNeutralH.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A28C4001299E78000B40A31 /* QCNeutralH.png */; };
+		0A28C4091299E78000B40A31 /* QCNeutralV.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A28C4011299E78000B40A31 /* QCNeutralV.png */; };
+		0A28C40A1299E78000B40A31 /* QCTieH.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A28C4021299E78000B40A31 /* QCTieH.png */; };
+		0A28C40B1299E78000B40A31 /* QCTieV.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A28C4031299E78000B40A31 /* QCTieV.png */; };
+		0A28C40C1299E78000B40A31 /* QCWinH.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A28C4041299E78000B40A31 /* QCWinH.png */; };
+		0A28C40D1299E78000B40A31 /* QCWinV.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A28C4051299E78000B40A31 /* QCWinV.png */; };
 		0A307FF31123D64000BD4B8E /* C4GridTopClear.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A307FF21123D64000BD4B8E /* C4GridTopClear.png */; };
 		0A30802F1123DF6600BD4B8E /* GCGameController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A30802E1123DF6600BD4B8E /* GCGameController.m */; };
 		0A3292EE11323FF3006066E5 /* ConO.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A3292EC11323FF3006066E5 /* ConO.png */; };
@@ -146,6 +154,14 @@
 		0A28C3B31299C56900B40A31 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
 		0A28C3C31299CCA900B40A31 /* QCHoriz.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = QCHoriz.png; sourceTree = "<group>"; };
 		0A28C3C41299CCA900B40A31 /* QCVert.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = QCVert.png; sourceTree = "<group>"; };
+		0A28C3FE1299E78000B40A31 /* QCLoseH.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = QCLoseH.png; sourceTree = "<group>"; };
+		0A28C3FF1299E78000B40A31 /* QCLoseV.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = QCLoseV.png; sourceTree = "<group>"; };
+		0A28C4001299E78000B40A31 /* QCNeutralH.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = QCNeutralH.png; sourceTree = "<group>"; };
+		0A28C4011299E78000B40A31 /* QCNeutralV.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = QCNeutralV.png; sourceTree = "<group>"; };
+		0A28C4021299E78000B40A31 /* QCTieH.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = QCTieH.png; sourceTree = "<group>"; };
+		0A28C4031299E78000B40A31 /* QCTieV.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = QCTieV.png; sourceTree = "<group>"; };
+		0A28C4041299E78000B40A31 /* QCWinH.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = QCWinH.png; sourceTree = "<group>"; };
+		0A28C4051299E78000B40A31 /* QCWinV.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = QCWinV.png; sourceTree = "<group>"; };
 		0A307FF21123D64000BD4B8E /* C4GridTopClear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = C4GridTopClear.png; sourceTree = "<group>"; };
 		0A30802D1123DF6600BD4B8E /* GCGameController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCGameController.h; sourceTree = "<group>"; };
 		0A30802E1123DF6600BD4B8E /* GCGameController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCGameController.m; sourceTree = "<group>"; };
@@ -407,6 +423,14 @@
 			children = (
 				0A28C3C31299CCA900B40A31 /* QCHoriz.png */,
 				0A28C3C41299CCA900B40A31 /* QCVert.png */,
+				0A28C3FE1299E78000B40A31 /* QCLoseH.png */,
+				0A28C3FF1299E78000B40A31 /* QCLoseV.png */,
+				0A28C4001299E78000B40A31 /* QCNeutralH.png */,
+				0A28C4011299E78000B40A31 /* QCNeutralV.png */,
+				0A28C4021299E78000B40A31 /* QCTieH.png */,
+				0A28C4031299E78000B40A31 /* QCTieV.png */,
+				0A28C4041299E78000B40A31 /* QCWinH.png */,
+				0A28C4051299E78000B40A31 /* QCWinV.png */,
 			);
 			name = QuickCross;
 			sourceTree = "<group>";
@@ -692,6 +716,7 @@
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "GamesmanMobile" */;
 			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				English,
@@ -771,6 +796,14 @@
 				82EF61F91298BCF300657333 /* felt2.png in Resources */,
 				0A28C3C51299CCA900B40A31 /* QCHoriz.png in Resources */,
 				0A28C3C61299CCA900B40A31 /* QCVert.png in Resources */,
+				0A28C4061299E78000B40A31 /* QCLoseH.png in Resources */,
+				0A28C4071299E78000B40A31 /* QCLoseV.png in Resources */,
+				0A28C4081299E78000B40A31 /* QCNeutralH.png in Resources */,
+				0A28C4091299E78000B40A31 /* QCNeutralV.png in Resources */,
+				0A28C40A1299E78000B40A31 /* QCTieH.png in Resources */,
+				0A28C40B1299E78000B40A31 /* QCTieV.png in Resources */,
+				0A28C40C1299E78000B40A31 /* QCWinH.png in Resources */,
+				0A28C40D1299E78000B40A31 /* QCWinV.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
