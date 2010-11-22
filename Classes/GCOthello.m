@@ -22,6 +22,7 @@
 @synthesize player1Type, player2Type;
 @synthesize rows, cols;
 @synthesize misere;
+@synthesize autoPass;
 @synthesize p1Turn;
 @synthesize board, myOldMoves;
 @synthesize p1pieces, p2pieces;
@@ -37,6 +38,7 @@
 		p1Turn = YES;
 		p1pieces = 2;
 		p2pieces = 2;
+		autoPass = NO;
 		
 		board = [[NSMutableArray alloc] initWithCapacity: rows * cols];
 		for (int i = 0; i < rows * cols; i += 1) {
@@ -44,10 +46,10 @@
 		}
 		int x = rows/2 -1;
 		int y = cols/2 -1;
-		[board replaceObjectAtIndex:x+y*cols withObject:P1PIECE];
-		[board replaceObjectAtIndex:x+y*cols+1 withObject:P2PIECE];
-		[board replaceObjectAtIndex:x+(y+1)*cols withObject:P2PIECE];
-		[board replaceObjectAtIndex:x+(y+1)*cols+1 withObject:P1PIECE];
+		[board replaceObjectAtIndex:y+x*cols withObject:P1PIECE];
+		[board replaceObjectAtIndex:y+x*cols+1 withObject:P2PIECE];
+		[board replaceObjectAtIndex:y+(x+1)*cols withObject:P2PIECE];
+		[board replaceObjectAtIndex:y+(x+1)*cols+1 withObject:P1PIECE];
 	}
 	return self;
 }
@@ -139,41 +141,42 @@
 
 - (void) doMove:(NSNumber *)move {
 	[othView doMove:move];
-	
-	NSMutableArray *oldBoard = [[NSMutableArray alloc] initWithCapacity: 3];
-	[oldBoard addObject:[board copy]];
-	[oldBoard addObject:[NSNumber numberWithInt:p1pieces]];
-	[oldBoard addObject:[NSNumber numberWithInt:p2pieces]];
-	[myOldMoves addObject:oldBoard];
-	NSArray *flips = [self getFlips:[move intValue]];
-	NSString *myPiece = p1Turn ? P1PIECE : P2PIECE;
-	for (NSNumber *x in flips) {		
-		[board replaceObjectAtIndex:[x intValue] withObject:myPiece];
-	}
-	[board replaceObjectAtIndex:[move intValue] withObject:myPiece];
-	int changedPieces = [flips count];
-	if (p1Turn) {
-		p1pieces += changedPieces + 1;
-		p2pieces -= changedPieces;
-	} else {
-		p2pieces += changedPieces + 1;
-		p1pieces -= changedPieces;
-	}
-	
+	if  ([move intValue] != -1) {
+		NSMutableArray *oldBoard = [[NSMutableArray alloc] initWithCapacity: 3];
+		[oldBoard addObject:[board copy]];
+		[oldBoard addObject:[NSNumber numberWithInt:p1pieces]];
+		[oldBoard addObject:[NSNumber numberWithInt:p2pieces]];
+		[myOldMoves addObject:oldBoard];
+		NSArray *flips = [self getFlips:[move intValue]];
+		NSString *myPiece = p1Turn ? P1PIECE : P2PIECE;
+		for (NSNumber *x in flips) {		
+			[board replaceObjectAtIndex:[x intValue] withObject:myPiece];
+		}
+		[board replaceObjectAtIndex:[move intValue] withObject:myPiece];
+		int changedPieces = [flips count];
+		if (p1Turn) {
+			p1pieces += changedPieces + 1;
+			p2pieces -= changedPieces;
+		} else {
+			p2pieces += changedPieces + 1;
+			p1pieces -= changedPieces;
+		}
+	} 
 	p1Turn = !p1Turn;
 	[othView updateLegalMoves];
-	
-	
 }
 
 - (void) undoMove:(id)move {
+
 	[othView undoMove:move];
 	NSArray *b = [[myOldMoves lastObject] retain];
 	[myOldMoves removeLastObject];
 	board = [[b objectAtIndex:0] mutableCopy];
 	p1pieces = [[b objectAtIndex:1] intValue];
 	p2pieces = [[b objectAtIndex:2] intValue];
-	p1Turn = !p1Turn;
+	if ([move intValue] != -1) {
+		p1Turn = !p1Turn;
+	} 
 	[othView updateLegalMoves];
 }
 
@@ -184,23 +187,24 @@
 			p1Turn = !p1Turn;
 			if (p1pieces > p2pieces) {
 				if (p1Turn) {
-					[othView gameWon:YES];
+					[othView gameWon:1];
 					
 					return @"WIN";
 				} else{
-					[othView gameWon:NO];
+					[othView gameWon:0];
 					return @"LOSE";
 				}
 			}
 			else if (p2pieces > p1pieces) {
 				if (p1Turn ) {
-					[othView gameWon:NO];
+					[othView gameWon: 0];
 					return @"LOSE";
 				} else {
-					[othView gameWon:YES];
+					[othView gameWon:1];
 					return @"WIN";
 				}
 			} else {
+				[othView gameWon: 2];
 			 return @"TIE";
 			}
 		}
@@ -216,11 +220,33 @@
 }
 
 - (void) askUserForInput {
+	if([[[self legalMoves] objectAtIndex: 0] isEqual: @"PASS"]) {
+		if(!autoPass) {
+			
+			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Legal Moves" 
+															message:@"Click OK to pass"
+														   delegate:self
+												  cancelButtonTitle:@"OK" 
+												  otherButtonTitles: nil];
+			[alert show];
+			[alert release];
+			 
+			
+			
+		} else {
+			[self postHumanMove: [NSNumber numberWithInt: -1]];
+		}
+	} else {
 	othView.touchesEnabled = YES;
+	}
 }
 
 - (void) stopUserInput {
 	othView.touchesEnabled = NO;
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+	[self postHumanMove: [NSNumber numberWithInt: -1]];
 }
 
 - (NSNumber *) getHumanMove {

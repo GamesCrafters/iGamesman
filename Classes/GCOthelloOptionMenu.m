@@ -21,7 +21,7 @@
 		rows = game.rows;
 		cols = game.cols;
 		misere = game.misere;
-		
+		autoPass = game.autoPass;
 		self.tableView.allowsSelection = NO;
 	}
 	return self;
@@ -36,6 +36,7 @@
 	game.cols = cols;
 	game.rows = rows;
 	game.misere = misere;
+	game.autoPass = autoPass;
 	[game resetBoard];
 	[delegate rulesPanelDidFinish];
 }
@@ -46,10 +47,11 @@
 		cols = [sender selectedSegmentIndex] + 4;
 	else if (tag == 1)
 		rows = [sender selectedSegmentIndex] + 4;
-	else
+	else if (tag == 3)
 		misere = [sender selectedSegmentIndex] == 0 ? NO : YES;
-	
-	if (cols == game.cols && rows == game.rows && misere == game.misere)
+	else
+		autoPass = [sender selectedSegmentIndex] == 0 ? YES : NO;
+	if (cols == game.cols && rows == game.rows && misere == game.misere && autoPass == game.autoPass)
 		self.navigationItem.rightBarButtonItem.enabled = NO;
 	else
 		self.navigationItem.rightBarButtonItem.enabled = YES;
@@ -116,12 +118,12 @@
 #pragma mark Table view data source
 
 - (NSString *) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-	return [[NSArray arrayWithObjects: @"Height", @"Width", @"Misère", nil] objectAtIndex: section];
+	return [[NSArray arrayWithObjects: @"Height", @"Width", @"Misère",@"Alert me before passing?", nil] objectAtIndex: section];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
-    return 3;
+    return 4;
 }
 
 
@@ -151,15 +153,19 @@
 		[segment insertSegmentWithTitle: @"6" atIndex: 2 animated: NO];
 		[segment insertSegmentWithTitle: @"7" atIndex: 3 animated: NO];
 		[segment insertSegmentWithTitle: @"8" atIndex: 4 animated: NO];
-	} else {
+	} else if (indexPath.section == 2) {
 		[segment insertSegmentWithTitle: @"Standard" atIndex: 0 animated: NO];
 		[segment insertSegmentWithTitle: @"Misère" atIndex: 1 animated: NO];
+	} else {
+		[segment insertSegmentWithTitle: @"No" atIndex: 0 animated: NO];
+		[segment insertSegmentWithTitle: @"Yes" atIndex: 1 animated: NO];
 	}
 	
 	int selected;
 	if (indexPath.section == 0) selected = game.rows - 4;
 	if (indexPath.section == 1) selected = game.cols - 4;
 	if (indexPath.section == 2) selected = game.misere ? 1 : 0;
+	if (indexPath.section == 3) selected = game.autoPass ? 0 : 1;
 	[segment setSelectedSegmentIndex: selected];
 	
 	segment.segmentedControlStyle = UISegmentedControlStyleBar;

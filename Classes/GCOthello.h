@@ -12,13 +12,13 @@
 @class GCOthelloViewController;
 
 
-@interface GCOthello : GCGame {
+@interface GCOthello : GCGame <UIAlertViewDelegate> {
 	GCOthelloViewController *othView;
 	NSString *player1Name, *player2Name;
 	PlayMode gameMode;
 	PlayerType player1Type, player2Type;
 	int rows, cols;
-	BOOL misere;
+	BOOL misere, autoPass;
 	NSMutableArray *board;
 	BOOL p1Turn;
 	int p1pieces, p2pieces;
@@ -26,6 +26,7 @@
 	NSNumber *humanMove;
 }
 
+@property (nonatomic, assign) BOOL autoPass;
 @property(nonatomic, retain) NSString *player1Name, *player2Name;
 @property(nonatomic, assign) PlayerType player1Type, player2Type;
 @property (nonatomic, assign, getter=isMisere) BOOL misere;

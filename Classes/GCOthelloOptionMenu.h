@@ -16,7 +16,7 @@
 	id <GCRulesDelegate> delegate;
 	GCOthello *game;
 	int rows, cols;
-	BOOL misere;
+	BOOL misere, autoPass;
 }
 
 @property (nonatomic, assign) id <GCRulesDelegate> delegate;
