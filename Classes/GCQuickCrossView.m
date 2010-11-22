@@ -32,6 +32,9 @@
 	
 	CGContextRef ctx = UIGraphicsGetCurrentContext();
 	
+	UIImage *bgh = [UIImage imageNamed: @"QCNeutralH.png"];
+	UIImage *bgv = [UIImage imageNamed: @"QCNeutralV.png"];
+	
 	CGContextSetLineWidth(ctx, 4);
 	CGContextSetRGBStrokeColor(ctx, 1, 1, 1, 1);
 	
@@ -46,6 +49,16 @@
 	}
 	
 	CGContextStrokePath(ctx);
+	
+	for (int i = 0; i < cols; i += 1)
+	{
+		for (int j = 0; j < rows; j += 1)
+		{
+			[bgh drawInRect:CGRectMake (10 + i*size ,10 + j*size , size, size)];
+			[bgv drawInRect:CGRectMake (10 + i*size, 10 + j*size , size, size)];
+
+		}
+	}
 }
 
 - (void)dealloc {
