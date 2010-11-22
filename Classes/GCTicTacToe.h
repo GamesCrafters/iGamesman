@@ -26,6 +26,8 @@
 	NSMutableArray *board;
 	
 	NSNumber *humanMove;
+	
+	BOOL predictions, moveValues;
 }
 
 @property (nonatomic, retain) NSString *player1Name, *player2Name;
@@ -33,6 +35,7 @@
 @property (nonatomic, assign, getter=isMisere) BOOL misere;
 @property (nonatomic, assign) int rows, cols, inarow;
 @property (nonatomic, assign) BOOL p1Turn;
+@property (nonatomic, assign) BOOL predictions, moveValues;
 
 - (void) resetBoard;
 - (void) postHumanMove: (NSNumber *) move;

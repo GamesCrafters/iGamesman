@@ -35,8 +35,45 @@
 		else {
 			messageLabel.text = [NSString stringWithFormat: @"%@ wins!", [primitive isEqualToString: @"WIN"] ? player : oppPlayer];
 		}
-	} else
-		messageLabel.text = [NSString stringWithFormat: @"%@ (%@)'s turn", player, color];	
+	} else {
+		if ([game playMode] == OFFLINE_UNSOLVED || !game.predictions)
+			messageLabel.text = [NSString stringWithFormat: @"%@ (%@)'s turn", player, color];
+		else {
+			messageLabel.text = [NSString stringWithFormat: @"%@ (%@) should %@ in %d", player, color, [game getValue], [game getRemoteness]];
+		}
+	}
+	
+	if ([game playMode] == OFFLINE_UNSOLVED || !game.moveValues) {
+		// Remove any old values
+		for (int i = 0; i < game.rows * game.cols; i += 1)
+			[[self.view viewWithTag: 5000 + i] removeFromSuperview];
+	}
+	
+	if ([game playMode] == ONLINE_SOLVED && game.moveValues) {
+		// Remove the old values
+		for (int i = 0; i < game.rows * game.cols; i += 1)
+			[[self.view viewWithTag: 5000 + i] removeFromSuperview];
+		for (NSNumber *move in [game legalMoves]) {
+			UIImage *piece = [UIImage imageNamed: (game.p1Turn ? [[NSDictionary dictionaryWithObjectsAndKeys: @"TTTXWin.png", @"WIN",
+																  @"TTTXLose.png", @"LOSE", @"TTTXTie.png", @"TIE", nil] objectForKey: [game getValueOfMove: move]]
+												   : [[NSDictionary dictionaryWithObjectsAndKeys: @"TTTOWin.png", @"WIN",
+													   @"TTTOLose.png", @"LOSE", @"TTTOTie.png", @"TIE", nil] objectForKey: [game getValueOfMove: move]])];
+			UIImageView *valueMove = [[UIImageView alloc] initWithImage: piece];
+			
+			int col = [move intValue] % game.cols;
+			int row = [move intValue] / game.cols;
+			CGFloat w = self.view.bounds.size.width;
+			CGFloat h = self.view.bounds.size.height;
+			CGFloat size = MIN((w - 180)/game.cols, (h - 20)/game.rows);
+			
+			[valueMove setFrame: CGRectMake(10 + col * size, 10 + row * size, size, size)];
+			valueMove.tag = 5000 + [move intValue];
+			
+			[self.view addSubview: valueMove];
+			
+			[valueMove release];
+		}
+	}
 }
 
 - (void) doMove: (NSNumber *) move {	

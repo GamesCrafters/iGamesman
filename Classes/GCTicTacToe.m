@@ -22,6 +22,7 @@
 @synthesize misere;
 @synthesize rows, cols, inarow;
 @synthesize p1Turn;
+@synthesize predictions, moveValues;
 
 - (id) init {
 	if (self = [super init]) {
@@ -39,6 +40,8 @@
 		board = [[NSMutableArray alloc] initWithCapacity: rows * cols];
 		for (int i = 0; i < rows * cols; i += 1)
 			[board addObject: BLANK];
+		
+		srand(time(NULL));
 	}
 	return self;
 }
@@ -48,7 +51,7 @@
 }
 
 - (BOOL) supportsPlayMode: (PlayMode) mode {
-	return mode == OFFLINE_UNSOLVED;
+	return mode == OFFLINE_UNSOLVED || mode == ONLINE_SOLVED;
 }
 
 - (UIViewController *) optionMenu {
@@ -69,6 +72,10 @@
 	if (!tttView)
 		[tttView release];
 	tttView = [[GCTicTacToeViewController alloc] initWithGame: self];
+}
+
+- (PlayMode) playMode {
+	return gameMode;
 }
 
 - (void) resetBoard {
@@ -119,7 +126,7 @@
 }
 
 - (void) notifyWhenReady {
-	if (gameMode == OFFLINE_UNSOLVED)
+	if (gameMode == OFFLINE_UNSOLVED || gameMode == ONLINE_SOLVED)
 		[[NSNotificationCenter defaultCenter] postNotificationName: @"GameIsReady" object: self];
 }
 
@@ -138,6 +145,45 @@
 - (void) postHumanMove: (NSNumber *) move {
 	humanMove = move;
 	[[NSNotificationCenter defaultCenter] postNotificationName: @"HumanChoseMove" object: self];
+}
+
+
+// Return the value of the current board
+- (NSString *) getValue {
+	int choice = rand() % 3;
+	return [[NSArray arrayWithObjects: @"WIN", @"LOSE", @"TIE", nil] objectAtIndex: choice];
+}
+
+// Return the remoteness of the current board (or -1 if not available)
+- (NSInteger) getRemoteness {
+	return rand() % (rows * cols);
+}
+
+// Return the value of MOVE
+- (NSString *) getValueOfMove: (NSNumber *) move {
+	int choice = rand() % 3;
+	return [[NSArray arrayWithObjects: @"WIN", @"LOSE", @"TIE", nil] objectAtIndex: choice];
+}
+
+// Return the remoteness of MOVE (or -1 if not available)
+- (NSInteger) getRemotenessOfMove: (NSNumber *) move {
+	return rand() % (rows * cols);
+}
+
+
+// Setter for Predictions
+// Must update the view to reflect the new settings
+- (void) setPredictions: (BOOL) pred {
+	predictions = pred;
+	[tttView updateDisplay];
+}
+
+
+// Setter for Move Values
+// Must update the view to reflect the new settings
+- (void) setMoveValues: (BOOL) move {
+	moveValues = move;
+	[tttView updateDisplay];
 }
 	
 
@@ -173,7 +219,7 @@
 				break;
 			}
 		}
-		//file://localhost/home/cc/cs198/fa10/class/cs198-hx/iGamesman2/Classes/GCTicTacToeView.m
+		
 		// Check the diagonal case (negative slope)
 		BOOL case4 = YES;
 		for (int j = i; j < i + cols * inarow - inarow; j += (cols - 1) ) {
