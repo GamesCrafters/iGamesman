@@ -24,6 +24,7 @@
 	int p1pieces, p2pieces;
 	NSMutableArray *myOldMoves;
 	NSNumber *humanMove;
+    BOOL predictions, moveValues;
 }
 
 @property (nonatomic, assign) BOOL autoPass;
@@ -34,6 +35,7 @@
 @property (nonatomic, assign) BOOL p1Turn;
 @property (nonatomic, retain) NSMutableArray *myOldMoves, *board;
 @property (nonatomic, assign) int p1pieces, p2pieces;
+@property (nonatomic, assign) BOOL predictions, moveValues;
 
 - (void) resetBoard;
 - (NSArray *) getFlips: (int) loc;

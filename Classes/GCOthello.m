@@ -26,6 +26,7 @@
 @synthesize p1Turn;
 @synthesize board, myOldMoves;
 @synthesize p1pieces, p2pieces;
+@synthesize predictions, moveValues;
 
 - (id) init {
 	if (self = [super init]) {
@@ -56,6 +57,10 @@
 
 - (UIViewController *) gameViewController {
 	return othView;
+}
+
+- (PlayMode) playMode {
+	return gameMode;
 }
 
 - (void) startGameInMode:(PlayMode)mode {
@@ -164,6 +169,7 @@
 	} 
 	p1Turn = !p1Turn;
 	[othView updateLegalMoves];
+    [othView updateLabels];
 }
 
 - (void) undoMove:(id)move {
@@ -178,6 +184,7 @@
 		p1Turn = !p1Turn;
 	} 
 	[othView updateLegalMoves];
+    [othView updateLabels];
 }
 
 - (NSString *) primitive {
@@ -187,24 +194,19 @@
 			p1Turn = !p1Turn;
 			if (p1pieces > p2pieces) {
 				if (p1Turn) {
-					[othView gameWon:1];
 					
 					return @"WIN";
 				} else{
-					[othView gameWon:0];
 					return @"LOSE";
 				}
 			}
 			else if (p2pieces > p1pieces) {
 				if (p1Turn ) {
-					[othView gameWon: 0];
 					return @"LOSE";
 				} else {
-					[othView gameWon:1];
 					return @"WIN";
 				}
 			} else {
-				[othView gameWon: 2];
 			 return @"TIE";
 			}
 		}
@@ -214,9 +216,8 @@
 }
 
 - (void) notifyWhenReady {
-	if (gameMode == OFFLINE_UNSOLVED) {
-		[[NSNotificationCenter defaultCenter] postNotificationName:@"GameIsReady" object:self];
-	}
+	if (gameMode == OFFLINE_UNSOLVED || gameMode == ONLINE_SOLVED)
+		[[NSNotificationCenter defaultCenter] postNotificationName: @"GameIsReady" object: self];
 }
 
 - (void) askUserForInput {
@@ -260,7 +261,7 @@
 
 
 - (BOOL) supportsPlayMode: (PlayMode) mode {
-	return mode == OFFLINE_UNSOLVED;
+	return mode == OFFLINE_UNSOLVED || mode == ONLINE_SOLVED;
 }
 
 - (UIViewController *) optionMenu {
@@ -286,6 +287,47 @@
 	[board replaceObjectAtIndex:x+(y+1)*cols withObject:P2PIECE];
 	[board replaceObjectAtIndex:x+(y+1)*cols+1 withObject:P1PIECE];
 }
+
+
+// Return the value of the current board
+- (NSString *) getValue {
+	int choice = rand() % 3;
+	return [[NSArray arrayWithObjects: @"WIN", @"LOSE", @"TIE", nil] objectAtIndex: choice];
+}
+
+// Return the remoteness of the current board (or -1 if not available)
+- (NSInteger) getRemoteness {
+	return rand() % (rows * cols);
+}
+
+// Return the value of MOVE
+- (NSString *) getValueOfMove: (NSNumber *) move {
+	int choice = rand() % 3;
+	return [[NSArray arrayWithObjects: @"WIN", @"LOSE", @"TIE", nil] objectAtIndex: choice];
+}
+
+// Return the remoteness of MOVE (or -1 if not available)
+- (NSInteger) getRemotenessOfMove: (NSNumber *) move {
+	return rand() % (rows * cols);
+}
+
+
+// Setter for Predictions
+// Must update the view to reflect the new settings
+- (void) setPredictions: (BOOL) pred {
+	predictions = pred;
+	[othView updateLabels];
+}
+
+
+// Setter for Move Values
+// Must update the view to reflect the new settings
+- (void) setMoveValues: (BOOL) move {
+	moveValues = move;
+	[othView updateLegalMoves];
+}
+
+
 
 
 @end

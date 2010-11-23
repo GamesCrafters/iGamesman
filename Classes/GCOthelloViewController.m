@@ -90,21 +90,80 @@
 }
 
 - (void) updateLegalMoves {
+    NSLog(@"%d", [game playMode]==ONLINE_SOLVED);
+    if ([game playMode] == ONLINE_SOLVED && game.moveValues) {
+        NSLog(@"Hi");
+        for (int i=0; i<game.cols; i+=1) {
+            for	(int j=0; j<game.rows; j+=1) {
+                UIImageView *newView = (UIImageView *)[self.view viewWithTag:5000 + i + j*game.cols];
+                [newView setHidden:YES];
+            }
+        }
+        NSArray *legalMoves = [game legalMoves];
+        if([legalMoves objectAtIndex: 0] != @"PASS") {
+            NSLog(@"hi");
+            for (NSNumber* move in legalMoves) {
+                UIImageView *newView = (UIImageView *)[self.view viewWithTag:5000 + [move intValue]];
+                UIImage *moveImage = [UIImage imageNamed: (game.p1Turn ? [[NSDictionary dictionaryWithObjectsAndKeys: @"TTTXWin.png", @"WIN",
+                                                                       @"TTTXLose.png", @"LOSE", @"TTTXTie.png", @"TIE", nil] objectForKey: [game getValueOfMove: move]]
+                                                       : [[NSDictionary dictionaryWithObjectsAndKeys: @"TTTOWin.png", @"WIN",
+                                                           @"TTTOLose.png", @"LOSE", @"TTTOTie.png", @"TIE", nil] objectForKey: [game getValueOfMove: move]])];
+                [newView setImage:moveImage];
+                [newView setHidden:NO];
+            }
+        }
+    } else {
+        [UIView beginAnimations:nil context:NULL];
+        [UIView setAnimationDelay: 1.0];
+        for (int i=0; i<game.cols; i+=1) {
+            for	(int j=0; j<game.rows; j+=1) {
+                UIImageView *newView = (UIImageView *)[self.view viewWithTag:5000 + i + j*game.cols];
+                [newView setHidden:YES];
+            }
+        }
+        NSArray *legalMoves = [game legalMoves];
+        if([legalMoves objectAtIndex: 0] != @"PASS") {
+            for (NSNumber* move in legalMoves) {
+                UIImageView *newView = (UIImageView *)[self.view viewWithTag:5000 + [move intValue]];
+                [newView setHidden:NO];
+            }
+        }
+        [UIView commitAnimations];
+    }
+
+}
+
+- (void) updateLabels {
+    //display turn
+    NSString *prim = [game primitive];
+    UILabel *textLabel = (UILabel *) [self.view viewWithTag:2000];
+    if (prim != nil) {
+        if ([prim isEqualToString:@"Tie"]) {
+            textLabel.text = @"Tie Game";
+        } else if ([prim isEqualToString:@"Win"]) {
+            if (game.p1Turn) {
+                textLabel.text = @"Black Wins";
+            } else {
+                 textLabel.text = @"White Wins";
+            }
+            
+        } else if ([prim isEqualToString:@"Lose"]) {
+            if (game.p1Turn) {
+                textLabel.text = @"White Wins";
+            } else {
+                textLabel.text = @"Black Wins";
+            }
+           
+        }
+    } else {
+        textLabel.text = @"Turn";
+    }
+	UIImageView *image = (UIImageView *)[self.view viewWithTag:999];
 	[UIView beginAnimations:nil context:NULL];
-	[UIView setAnimationDelay: 1.0];
-	for (int i=0; i<game.cols; i+=1) {
-		for	(int j=0; j<game.rows; j+=1) {
-			UIImageView *newView = (UIImageView *)[self.view viewWithTag:5000 + i + j*game.cols];
-			[newView setHidden:YES];
-		}
-	}
-	NSArray *legalMoves = [game legalMoves];
-	if([legalMoves objectAtIndex: 0] != @"PASS") {
-		for (NSNumber* move in legalMoves) {
-			UIImageView *newView = (UIImageView *)[self.view viewWithTag:5000 + [move intValue]];
-			[newView setHidden:NO];
-		}
-	}
+	[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+	[UIView setAnimationDuration:1.0];
+	[UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:image cache:YES];
+	[image setImage:[UIImage imageNamed: game.p1Turn ? @"othsimpleblack.png" : @"othsimplewhite.png"]];
 	[UIView commitAnimations];
 }
 
@@ -121,7 +180,7 @@
 		
 		CGRect rect = CGRectMake( PADDING + col * size,  PADDING + row * size, size, size);
 		NSArray *myFlips = [game getFlips:(col + row*game.cols)];
-		UIImageView *piece = [[UIImageView alloc] initWithImage: [UIImage imageNamed: game.p1Turn ? @"simpleblack.png" : @"simplewhite.png"]];
+		UIImageView *piece = [[UIImageView alloc] initWithImage: [UIImage imageNamed: game.p1Turn ? @"othsimpleblack.png" : @"othsimplewhite.png"]];
 		[piece setFrame: rect];
 		piece.tag = 1000 + col + row*game.cols;
 		[self.view addSubview: piece];
@@ -131,7 +190,7 @@
 			[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
 			[UIView setAnimationDuration:1.0];
 			[UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:image cache:YES];
-			[image setImage:[UIImage imageNamed: game.p1Turn ? @"simpleblack.png" : @"simplewhite.png"]];
+			[image setImage:[UIImage imageNamed: game.p1Turn ? @"othsimpleblack.png" : @"othsimplewhite.png"]];
 			[UIView commitAnimations];
 		}
 		
@@ -160,14 +219,7 @@
 		
 		[UIView commitAnimations];
 	} 
-	//display turn
-	UIImageView *image = (UIImageView *)[self.view viewWithTag:999];
-	[UIView beginAnimations:nil context:NULL];
-	[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-	[UIView setAnimationDuration:1.0];
-	[UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:image cache:YES];
-	[image setImage:[UIImage imageNamed: game.p1Turn ? @"simplewhite.png" : @"simpleblack.png"]];
-	[UIView commitAnimations];
+
 
 }
 
@@ -187,24 +239,15 @@
 				[UIView setAnimationDuration:1.0];
 				[UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:image cache:YES];
 				if ([move intValue] == -1) {
-					[image setImage:[UIImage imageNamed: game.p1Turn ? @"simplewhite.png" : @"simpleblack.png"]];
+					[image setImage:[UIImage imageNamed: game.p1Turn ? @"othsimplewhite.png" : @"othsimpleblack.png"]];
 				} else {
-					[image setImage:[UIImage imageNamed: game.p1Turn ? @"simpleblack.png" : @"simplewhite.png"]];
+					[image setImage:[UIImage imageNamed: game.p1Turn ? @"othsimpleblack.png" : @"othsimplewhite.png"]];
 				}
 				[UIView commitAnimations];
 			}
 		}
 	}
 	
-	if ([move intValue] != -1) {
-		UIImageView *image = (UIImageView *) [self.view viewWithTag:999];
-		[UIView beginAnimations:nil context:NULL];
-		[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-		[UIView setAnimationDuration:1.0];
-		[UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:image cache:YES];
-		[image setImage:[UIImage imageNamed: game.p1Turn ? @"simplewhite.png" : @"simpleblack.png"]];
-		[UIView commitAnimations];
-	}
 	
 	//display # of pieces for each player
 	UILabel *p1score = (UILabel *) [self.view viewWithTag:899];
@@ -229,8 +272,6 @@
 	[UIView commitAnimations];
 	[UIView commitAnimations];
 	
-	UILabel *textLabel = (UILabel *) [self.view viewWithTag:2000];
-	textLabel.text = @"Turn";
 	
 	
 }
@@ -247,11 +288,11 @@
 	int row = game.rows/2 -1;
 	
 	
-	UIImageView *piece1 = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"simpleblack.png"]];
-	UIImageView *piece2 = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"simplewhite.png"]];
+	UIImageView *piece1 = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"othsimpleblack.png"]];
+	UIImageView *piece2 = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"othsimplewhite.png"]];
 	
-	UIImageView *piece3 = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"simplewhite.png"]];
-	UIImageView *piece4 = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"simpleblack.png"]];
+	UIImageView *piece3 = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"othsimplewhite.png"]];
+	UIImageView *piece4 = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"othsimpleblack.png"]];
 	[piece1 setFrame: CGRectMake(PADDING + col * size, PADDING + row * size, size, size)];
 	piece1.tag = 1000 + row*game.cols + col;
 	[self.view addSubview: piece1];
@@ -267,7 +308,7 @@
     
 	
 	//Turn
-	UIImageView *piecet = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"simpleblack.png"]];
+	UIImageView *piecet = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"othsimpleblack.png"]];
 	[piecet setFrame: CGRectMake((w- 50)/ 2.0, h - 20.0 - (60.0 / 2.0) - (50 / 2.0), 50, 50)];
 	piecet.tag = 999;
 	[self.view addSubview: piecet];
@@ -280,7 +321,7 @@
 	turnLabel.backgroundColor = [UIColor clearColor];
 	[self.view addSubview:turnLabel];
 	//Player Scores
-	UIImageView *pieceblack = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"simpleblack.png"]];
+	UIImageView *pieceblack = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"othsimpleblack.png"]];
 	[pieceblack setFrame: CGRectMake(PADDING, h - 20.0 - (60.0 / 2.0) - (50 / 2.0), 50, 50)];
 	[self.view addSubview:pieceblack];
 	UILabel *p1score = [[UILabel alloc] initWithFrame:CGRectMake(PADDING, h-20.0-(60.0/2.0) - 50/2.0, 50, 50)];
@@ -291,7 +332,7 @@
 	p1score.text = [NSString stringWithFormat:@"%d", game.p1pieces];
 	[self.view addSubview:p1score];
 	
-	UIImageView *piecewhite = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"simplewhite.png"]];
+	UIImageView *piecewhite = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"othsimplewhite.png"]];
 	[piecewhite setFrame: CGRectMake(w - (2*PADDING) - 50, h - 20.0 - (60.0 / 2.0) - (50 / 2.0), 50, 50)];
 	[self.view addSubview:piecewhite];
 	UILabel *p2score = [[UILabel alloc] initWithFrame:CGRectMake(w-PADDING-50, h-20.0-(60.0/2.0) - (50/2.0), 50, 50)];
@@ -307,7 +348,7 @@
 		for	(int j=0; j<game.rows; j+=1) {
 			UIImageView *newView = [[UIImageView alloc] initWithFrame:CGRectMake(PADDING + i*size + size/3, PADDING + j*size + size/3, size/3, size/3)];
 			newView.tag = 5000 + i + j*game.cols;
-			[newView setImage:[UIImage imageNamed:@"rec.png"]];
+			[newView setImage:[UIImage imageNamed:@"othrec.png"]];
 			[newView setHidden: YES];
 			[self.view addSubview:newView];
 		}
@@ -321,11 +362,11 @@
 	
 	// Sliding Bar
 	UIImageView *whitebar = [[UIImageView alloc] initWithFrame: CGRectMake(PADDING, PADDING + game.rows*size , w - 2*PADDING, 10)];
-	[whitebar setImage:[UIImage imageNamed:@"whitebar.png"]];
+	[whitebar setImage:[UIImage imageNamed:@"othwhitebar.png"]];
 	[self.view addSubview:whitebar];
 	
 	UIImageView *blackbar = [[UIImageView alloc] initWithFrame: CGRectMake(PADDING, PADDING + game.rows*size , (w - 2*PADDING)/2, 10)];
-	[blackbar setImage:[UIImage imageNamed:@"blackbar.png"]];
+	[blackbar setImage:[UIImage imageNamed:@"othblackbar.png"]];
 	blackbar.tag = 10000;
 	[self.view addSubview:blackbar];	
 	
