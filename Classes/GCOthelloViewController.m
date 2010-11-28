@@ -49,8 +49,6 @@
 			int col = (loc.x - PADDING) / size;
 			int row = (loc.y - PADDING) / size;
 			int pos = col + row*game.cols;
-			
-			CGRect rect = CGRectMake(PADDING + col * size, PADDING + row * size, size, size);
 			NSArray *myFlips = [game getFlips:(pos)];
 			if ([myFlips count] > 0 ){
 				[game postHumanMove: [NSNumber numberWithInt: col + row*game.cols]];
@@ -90,9 +88,7 @@
 }
 
 - (void) updateLegalMoves {
-    NSLog(@"%d", [game playMode]==ONLINE_SOLVED);
     if ([game playMode] == ONLINE_SOLVED && game.moveValues) {
-        NSLog(@"Hi");
         for (int i=0; i<game.cols; i+=1) {
             for	(int j=0; j<game.rows; j+=1) {
                 UIImageView *newView = (UIImageView *)[self.view viewWithTag:5000 + i + j*game.cols];
@@ -101,7 +97,6 @@
         }
         NSArray *legalMoves = [game legalMoves];
         if([legalMoves objectAtIndex: 0] != @"PASS") {
-            NSLog(@"hi");
             for (NSNumber* move in legalMoves) {
                 UIImageView *newView = (UIImageView *)[self.view viewWithTag:5000 + [move intValue]];
                 UIImage *moveImage = [UIImage imageNamed: (game.p1Turn ? [[NSDictionary dictionaryWithObjectsAndKeys: @"TTTXWin.png", @"WIN",
@@ -122,6 +117,7 @@
             }
         }
         NSArray *legalMoves = [game legalMoves];
+        NSLog(@"%@", [game board]);
         if([legalMoves objectAtIndex: 0] != @"PASS") {
             for (NSNumber* move in legalMoves) {
                 UIImageView *newView = (UIImageView *)[self.view viewWithTag:5000 + [move intValue]];
@@ -135,29 +131,36 @@
 
 - (void) updateLabels {
     //display turn
+    NSString *player = game.p1Turn ? [game player1Name] : [game player2Name];
     NSString *prim = [game primitive];
     UILabel *textLabel = (UILabel *) [self.view viewWithTag:2000];
     if (prim != nil) {
-        if ([prim isEqualToString:@"Tie"]) {
+        if ([prim isEqualToString:@"TIE"]) {
             textLabel.text = @"Tie Game";
-        } else if ([prim isEqualToString:@"Win"]) {
+        } else if ([prim isEqualToString:@"WIN"]) {
             if (game.p1Turn) {
-                textLabel.text = @"Black Wins";
+                textLabel.text = [NSString stringWithFormat: @"Black, %@ wins!!", player];
             } else {
-                 textLabel.text = @"White Wins";
+                 textLabel.text = [NSString stringWithFormat: @"White, %@ wins!!", player];
             }
             
-        } else if ([prim isEqualToString:@"Lose"]) {
+        } else if ([prim isEqualToString:@"LOSE"]) {
             if (game.p1Turn) {
-                textLabel.text = @"White Wins";
+                textLabel.text = [NSString stringWithFormat: @"White, %@ wins!!", player];
             } else {
-                textLabel.text = @"Black Wins";
+                textLabel.text = [NSString stringWithFormat: @"Black, %@ wins!!", player];
             }
            
         }
     } else {
-        textLabel.text = @"Turn";
+        if ([game playMode] == ONLINE_SOLVED && game.predictions) {
+            textLabel.text = [NSString stringWithFormat: @"%@ should %@ in %d",player,  [game getValue], [game getRemoteness]];
+        } else {
+            textLabel.text = [NSString stringWithFormat: @"%@", player];
+        }
+       
     }
+ 
 	UIImageView *image = (UIImageView *)[self.view viewWithTag:999];
 	[UIView beginAnimations:nil context:NULL];
 	[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
@@ -353,13 +356,13 @@
 			[self.view addSubview:newView];
 		}
 	}
+    /*
 	NSArray *legalMoves = [game legalMoves];
 	for (NSNumber* move in legalMoves) {
-		NSLog(@"%d\n", [move intValue]);
 		UIImageView *newView = (UIImageView *)[self.view viewWithTag:5000 + [move intValue]];
 		[newView setHidden: NO];
 	}
-	
+	*/
 	// Sliding Bar
 	UIImageView *whitebar = [[UIImageView alloc] initWithFrame: CGRectMake(PADDING, PADDING + game.rows*size , w - 2*PADDING, 10)];
 	[whitebar setImage:[UIImage imageNamed:@"othwhitebar.png"]];
@@ -368,7 +371,9 @@
 	UIImageView *blackbar = [[UIImageView alloc] initWithFrame: CGRectMake(PADDING, PADDING + game.rows*size , (w - 2*PADDING)/2, 10)];
 	[blackbar setImage:[UIImage imageNamed:@"othblackbar.png"]];
 	blackbar.tag = 10000;
-	[self.view addSubview:blackbar];	
+	[self.view addSubview:blackbar];
+	[self updateLabels];
+    [self updateLegalMoves];
 	
 }
 

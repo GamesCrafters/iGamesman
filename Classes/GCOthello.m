@@ -45,12 +45,12 @@
 		for (int i = 0; i < rows * cols; i += 1) {
 			[board addObject: BLANK];
 		}
-		int x = rows/2 -1;
-		int y = cols/2 -1;
-		[board replaceObjectAtIndex:y+x*cols withObject:P1PIECE];
-		[board replaceObjectAtIndex:y+x*cols+1 withObject:P2PIECE];
-		[board replaceObjectAtIndex:y+(x+1)*cols withObject:P2PIECE];
-		[board replaceObjectAtIndex:y+(x+1)*cols+1 withObject:P1PIECE];
+		int col = cols/2 -1;
+        int row = rows/2 -1;
+		[board replaceObjectAtIndex:col+row*cols withObject:P1PIECE];
+		[board replaceObjectAtIndex:1+col+row*cols withObject:P2PIECE];
+		[board replaceObjectAtIndex:col+(row+1)*cols withObject:P2PIECE];
+		[board replaceObjectAtIndex:1+col+(row+1)*cols withObject:P1PIECE];
 	}
 	return self;
 }
@@ -280,12 +280,12 @@
 	for (int i = 0; i < cols * rows; i += 1)
 		[board addObject: BLANK];
 	
-	int x = rows/2 -1;
-	int y = cols/2 -1;
-	[board replaceObjectAtIndex:x+y*cols withObject:P1PIECE];
-	[board replaceObjectAtIndex:x+y*cols+1 withObject:P2PIECE];
-	[board replaceObjectAtIndex:x+(y+1)*cols withObject:P2PIECE];
-	[board replaceObjectAtIndex:x+(y+1)*cols+1 withObject:P1PIECE];
+	int row = rows/2 -1;
+	int col = cols/2 -1;
+	[board replaceObjectAtIndex:col+row*cols withObject:P1PIECE];
+	[board replaceObjectAtIndex:col+row*cols+1 withObject:P2PIECE];
+	[board replaceObjectAtIndex:col+(row+1)*cols withObject:P2PIECE];
+	[board replaceObjectAtIndex:col+(row+1)*cols+1 withObject:P1PIECE];
 }
 
 
