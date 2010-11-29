@@ -99,11 +99,11 @@
         if([legalMoves objectAtIndex: 0] != @"PASS") {
             for (NSNumber* move in legalMoves) {
                 UIImageView *newView = (UIImageView *)[self.view viewWithTag:5000 + [move intValue]];
-                UIImage *moveImage = [UIImage imageNamed: (game.p1Turn ? [[NSDictionary dictionaryWithObjectsAndKeys: @"TTTXWin.png", @"WIN",
-                                                                       @"TTTXLose.png", @"LOSE", @"TTTXTie.png", @"TIE", nil] objectForKey: [game getValueOfMove: move]]
-                                                       : [[NSDictionary dictionaryWithObjectsAndKeys: @"TTTOWin.png", @"WIN",
-                                                           @"TTTOLose.png", @"LOSE", @"TTTOTie.png", @"TIE", nil] objectForKey: [game getValueOfMove: move]])];
-                [newView setImage:moveImage];
+				UIImage *moveImage = [UIImage imageNamed: (game.p1Turn ? [[NSDictionary dictionaryWithObjectsAndKeys: @"othwin.png", @"WIN",
+																	   @"othlose.png", @"LOSE", @"othtie.png", @"TIE", nil] objectForKey: [game getValueOfMove: move]]
+													   : [[NSDictionary dictionaryWithObjectsAndKeys: @"othwin.png", @"WIN",
+														   @"othlose.png", @"LOSE", @"othtie.png", @"TIE", nil] objectForKey: [game getValueOfMove: move]])];
+				[newView setImage:moveImage];
                 [newView setHidden:NO];
             }
         }
