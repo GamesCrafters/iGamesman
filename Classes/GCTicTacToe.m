@@ -24,6 +24,16 @@
 @synthesize p1Turn;
 @synthesize predictions, moveValues;
 
++ (NSString *) stringForBoard: (NSArray *) _board {
+	NSString *boardString = @"";
+	for (NSString *piece in _board) {
+		if ([piece isEqualToString: @"+"])
+			piece = @" ";
+		boardString = [NSString stringWithFormat: @"%@%@", boardString, piece];
+	}
+	return boardString;
+}
+
 - (id) init {
 	if (self = [super init]) {
 		player1Name = @"Player 1";
@@ -72,6 +82,11 @@
 	if (!tttView)
 		[tttView release];
 	tttView = [[GCTicTacToeViewController alloc] initWithGame: self];
+	
+	if (gameMode == ONLINE_SOLVED) {
+		service = [[GCJSONService alloc] init];
+		[tttView updateServerDataWithService: service];
+	}
 }
 
 - (PlayMode) playMode {
@@ -113,7 +128,10 @@
 	[board replaceObjectAtIndex: [move intValue] withObject: piece];
 	p1Turn = !p1Turn;
 	
-	[tttView updateDisplay];
+	if (gameMode == OFFLINE_UNSOLVED)
+		[tttView updateDisplay];
+	else
+		[tttView updateServerDataWithService: service];
 }
 
 - (void) undoMove: (NSNumber *) move {
@@ -122,12 +140,23 @@
 	[board replaceObjectAtIndex: [move intValue] withObject: BLANK];
 	p1Turn = !p1Turn;
 	
-	[tttView updateDisplay];
+	if (gameMode == OFFLINE_UNSOLVED)
+		[tttView updateDisplay];
+	else
+		[tttView updateServerDataWithService: service];
 }
 
 - (void) notifyWhenReady {
-	if (gameMode == OFFLINE_UNSOLVED || gameMode == ONLINE_SOLVED)
+	if (gameMode == OFFLINE_UNSOLVED)
 		[[NSNotificationCenter defaultCenter] postNotificationName: @"GameIsReady" object: self];
+}
+
+- (void) postReady {
+	[[NSNotificationCenter defaultCenter] postNotificationName: @"GameIsReady" object: self];
+}
+
+- (void) postProblem {
+	[[NSNotificationCenter defaultCenter] postNotificationName: @"GameEncounteredProblem" object: self];
 }
 
 - (void) askUserForInput {
@@ -148,26 +177,46 @@
 }
 
 
-// Return the value of the current board
 - (NSString *) getValue {
-	int choice = rand() % 3;
-	return [[NSArray arrayWithObjects: @"WIN", @"LOSE", @"TIE", nil] objectAtIndex: choice];
+	/*NSDictionary *entry = (NSDictionary *) [serverHistoryStack lastObject];
+	 NSString *value = [[entry objectForKey: @"value"] uppercaseString];
+	 if ([value isEqual: @"UNAVAILABLE"]) value = nil;
+	 return value;*/
+	
+	return [service getValue];
 }
 
-// Return the remoteness of the current board (or -1 if not available)
 - (NSInteger) getRemoteness {
-	return rand() % (rows * cols);
+	/*NSDictionary *entry = (NSDictionary *) [serverHistoryStack lastObject];
+	return [[entry objectForKey: @"remoteness"] integerValue];*/
+	
+	return [service getRemoteness];
 }
 
-// Return the value of MOVE
 - (NSString *) getValueOfMove: (NSNumber *) move {
-	int choice = rand() % 3;
-	return [[NSArray arrayWithObjects: @"WIN", @"LOSE", @"TIE", nil] objectAtIndex: choice];
+	/*NSString *s = [[NSString alloc] initWithFormat: @"%d", [move intValue] - 1];
+	NSDictionary *entry = (NSDictionary *) [serverHistoryStack lastObject];
+	NSDictionary *children = (NSDictionary *) [entry objectForKey: @"children"];
+	NSDictionary *moveEntry = (NSDictionary *) [children objectForKey: s];
+	NSString *value = [[moveEntry objectForKey: @"value"] uppercaseString];
+	if ([value isEqual: @"UNAVAILABLE"]) value = nil;
+	return value;*/
+	
+	NSString *serverMove = [NSString stringWithFormat: @"%c%d", 'A' + [move intValue] % cols, 1 + [move intValue] / cols];
+	
+	return [service getValueAfterMove: serverMove];
 }
 
-// Return the remoteness of MOVE (or -1 if not available)
 - (NSInteger) getRemotenessOfMove: (NSNumber *) move {
-	return rand() % (rows * cols);
+	/*NSString *s = [[NSString alloc] initWithFormat: @"%d", [move intValue] - 1];
+	NSDictionary *entry = (NSDictionary *) [serverHistoryStack lastObject];
+	NSDictionary *children = (NSDictionary *) [entry objectForKey: @"children"];
+	NSDictionary *moveEntry = (NSDictionary *) [children objectForKey: s];
+	return [[moveEntry objectForKey: @"remoteness"] integerValue];*/
+	
+	NSString *serverMove = [NSString stringWithFormat: @"%c%d", 'A' + [move intValue] % cols, 1 + [move intValue] / cols];
+	
+	return [service getRemotenessAfterMove: serverMove];
 }
 
 
@@ -244,6 +293,12 @@
 	
 	return nil;
 	
+}
+
+
+- (void) dealloc {
+	[service release];
+	[super dealloc];
 }
 
 @end

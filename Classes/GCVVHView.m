@@ -61,9 +61,15 @@
 	CGContextSetLineWidth(context, 2.0);
 	
 	int slots = (int) ceil(maxRemote / 5.0) * 5;
+	int scale = 1;
 	float step = (w/2.0 - 20) / (slots + 1); // Number of points (x) per one step in remoteness
 	
-	for (int i = 0 ; i <= slots; i += 1) {
+	while ((w/2.0 - 20) / (slots / 5) < 20) {
+		scale *= 2;
+		slots /= 2;
+	}
+	
+	for (int i = 0 ; i <= slots * scale; i += scale) {
 		float x0 = step * i;
 		
 		float dash[] = {5.0, 5.0};
@@ -87,16 +93,18 @@
 		CGContextAddLineToPoint(context, w - 20 - x0, y + h);
 		CGContextStrokePath(context);
 		
-		// Only label major tick lines (and not the center or centermost major tick lines)
-		if (x0 != w/2.0 - 20 && i % 5 == 0 && i != slots) {
+		// Only label major tick lines (and not the center line)
+		if (i % 5 == 0 && i != slots * scale) {
 			CGContextSetTextDrawingMode(context, kCGTextFill);
 			const char *str = [[NSString stringWithFormat: @"%d", i] UTF8String];
 			
+			CGSize textSize = [[NSString stringWithCString: str encoding: NSUTF8StringEncoding] sizeWithFont: [UIFont systemFontOfSize: 11]];
+			
 			// Left side label
-			CGContextShowTextAtPoint(context, 17 + x0, y + 35, str, strlen(str));
+			CGContextShowTextAtPoint(context, 20 - textSize.width/2.0 + x0, y + 35, str, strlen(str));
 			
 			// Right side label
-			CGContextShowTextAtPoint(context, w - 23 - x0, y + 35, str, strlen(str));
+			CGContextShowTextAtPoint(context, w - 20 - textSize.width/2.0 - x0, y + 35, str, strlen(str));
 		}
 	}
 	
@@ -117,8 +125,10 @@
 	
 	CGPoint previous[2] = {};
 	int prevCount = 0;
+	NSString *prevValue = nil;
 	
 	int WIDTH = 3;
+	float r = 7; // radius
 	
 	for (int i = 0; i < [data count]; i += 1) {
 		NSDictionary *entry = (NSDictionary *) [data objectAtIndex: i];
@@ -128,8 +138,8 @@
 		
 		float leftX  = remoteness * step + 20;
 		float rightX = w - 20 - remoteness * step;
-		float r = 7; // radius
 		
+		// First draw the connecting line
 		if ([value isEqual: @"WIN"]) {
 			// Choose points for the connecting line
 			CGPoint start, end;
@@ -148,16 +158,30 @@
 				CGContextStrokePath(context);
 			}
 			
-			// Draw the circle
-			CGContextSetLineWidth(context, 1);
-			CGContextSetRGBStrokeColor(context, 0, 0, 0, 1);
-			CGContextSetRGBFillColor(context, 0, 1, 0, 1);
-			CGContextFillEllipseInRect(context, CGRectMake((left ? leftX : rightX) - r, y1 - r, 2*r, 2*r));
-			CGContextStrokeEllipseInRect(context, CGRectMake((left ? leftX : rightX) - r, y1 - r, 2*r, 2*r));
+			// Draw the previous circle(s)
+			if (prevCount) {
+				CGContextSetRGBStrokeColor(context, 0, 0, 0, 1);
+				if ([prevValue isEqual: @"WIN"])
+					CGContextSetRGBFillColor(context, 0, 1, 0, 1);
+				else if ([prevValue isEqual: @"LOSE"])
+					CGContextSetRGBFillColor(context, 139.0/255.0, 0, 0, 1);
+				else
+					CGContextSetRGBFillColor(context, 1, 1, 0, 1);
+				
+				CGContextSetLineWidth(context, 1);
+				CGContextFillEllipseInRect(context, CGRectMake(previous[0].x - r, previous[0].y - r, 2*r, 2*r));
+				CGContextStrokeEllipseInRect(context, CGRectMake(previous[0].x - r, previous[0].y - r, 2*r, 2*r));
+				
+				if (prevCount == 2) {
+					CGContextFillEllipseInRect(context, CGRectMake(previous[1].x - r, previous[1].y - r, 2*r, 2*r));
+					CGContextStrokeEllipseInRect(context, CGRectMake(previous[1].x - r, previous[1].y - r, 2*r, 2*r));
+				}
+			}
 			
-			// Update previous
+			// Update "previous" data
 			previous[0] = CGPointMake(left ? leftX : rightX, y1);
 			prevCount = 1;
+			prevValue = @"WIN";
 		} else if ([value isEqual: @"LOSE"]) {
 			// Choose points for the connecting line
 			CGPoint start, end;
@@ -167,7 +191,6 @@
 				start = left ? previous[1] : previous[0];
 			end = CGPointMake(left ? rightX : leftX, y1);
 			
-			// Draw the connecting line
 			if (prevCount) {
 				CGContextSetRGBStrokeColor(context, 0, 1, 0, 1);
 				CGContextSetLineWidth(context, WIDTH);
@@ -176,16 +199,30 @@
 				CGContextStrokePath(context);
 			}
 			
-			// Draw the circle
-			CGContextSetLineWidth(context, 1);
-			CGContextSetRGBFillColor(context, 139.0/255.0, 0, 0, 1);
-			CGContextSetRGBStrokeColor(context, 0, 0, 0, 1);
-			CGContextFillEllipseInRect(context, CGRectMake((left ? rightX : leftX) - r, y1 - r, 2*r, 2*r));
-			CGContextStrokeEllipseInRect(context, CGRectMake((left ? rightX : leftX) - r, y1 - r, 2*r, 2*r));
+			// Draw the previous circle(s)
+			if (prevCount) {
+				CGContextSetRGBStrokeColor(context, 0, 0, 0, 1);
+				if ([prevValue isEqual: @"WIN"])
+					CGContextSetRGBFillColor(context, 0, 1, 0, 1);
+				else if ([prevValue isEqual: @"LOSE"])
+					CGContextSetRGBFillColor(context, 139.0/255.0, 0, 0, 1);
+				else
+					CGContextSetRGBFillColor(context, 1, 1, 0, 1);
+				
+				CGContextSetLineWidth(context, 1);
+				CGContextFillEllipseInRect(context, CGRectMake(previous[0].x - r, previous[0].y - r, 2*r, 2*r));
+				CGContextStrokeEllipseInRect(context, CGRectMake(previous[0].x - r, previous[0].y - r, 2*r, 2*r));
+				
+				if (prevCount == 2) {
+					CGContextFillEllipseInRect(context, CGRectMake(previous[1].x - r, previous[1].y - r, 2*r, 2*r));
+					CGContextStrokeEllipseInRect(context, CGRectMake(previous[1].x - r, previous[1].y - r, 2*r, 2*r));
+				}
+			}
 			
-			// Update previous
+			// Update "previous" data
 			previous[0] = CGPointMake(left ? rightX : leftX, y1);
 			prevCount = 1;
+			prevValue = @"LOSE";
 		} else if ([value isEqual: @"DRAW"]) {
 			// Choose points for the connections lines
 			CGPoint start0, start1, end0, end1;
@@ -199,32 +236,31 @@
 				end1   = CGPointMake(w/2.0 + r, y1);
 			}
 			
-			// Draw the connecting lines
+			// Draw the previous circle(s)
 			if (prevCount) {
-				CGContextSetRGBStrokeColor(context, 1, 1, 0, 1);
-				CGContextSetLineWidth(context, WIDTH);
-				CGContextMoveToPoint(context, start0.x, start0.y);
-				CGContextAddLineToPoint(context, end0.x, end0.y);
+				CGContextSetRGBStrokeColor(context, 0, 0, 0, 1);
+				if ([prevValue isEqual: @"WIN"])
+					CGContextSetRGBFillColor(context, 0, 1, 0, 1);
+				else if ([prevValue isEqual: @"LOSE"])
+					CGContextSetRGBFillColor(context, 139.0/255.0, 0, 0, 1);
+				else
+					CGContextSetRGBFillColor(context, 1, 1, 0, 1);
+				
+				CGContextSetLineWidth(context, 1);
+				CGContextFillEllipseInRect(context, CGRectMake(previous[0].x - r, previous[0].y - r, 2*r, 2*r));
+				CGContextStrokeEllipseInRect(context, CGRectMake(previous[0].x - r, previous[0].y - r, 2*r, 2*r));
+				
 				if (prevCount == 2) {
-					CGContextMoveToPoint(context, start1.x, start1.y);
-					CGContextAddLineToPoint(context, end1.x, end1.y);
+					CGContextFillEllipseInRect(context, CGRectMake(previous[1].x - r, previous[1].y - r, 2*r, 2*r));
+					CGContextStrokeEllipseInRect(context, CGRectMake(previous[1].x - r, previous[1].y - r, 2*r, 2*r));
 				}
-				CGContextStrokePath(context);
 			}
 			
-			// Draw the circles
-			CGContextSetLineWidth(context, 1);
-			CGContextSetRGBStrokeColor(context, 0, 0, 0, 1);
-			CGContextSetRGBFillColor(context, 1, 1, 0, 1);
-			CGContextFillEllipseInRect(context, CGRectMake(w/2.0 - 2*r, y1 - r, 2*r, 2*r));
-			CGContextFillEllipseInRect(context, CGRectMake(w/2.0, y1 - r, 2*r, 2*r));
-			CGContextStrokeEllipseInRect(context, CGRectMake(w/2.0 - 2*r, y1 - r, 2*r, 2*r));
-			CGContextStrokeEllipseInRect(context, CGRectMake(w/2.0, y1 - r, 2*r, 2*r));
-			
-			// Update previous
+			// Update "previous" data
 			previous[0] = CGPointMake(w/2.0 - r, y1);
 			previous[1] = CGPointMake(w/2.0 + r, y1);
 			prevCount = 2;
+			prevValue = @"TIE";
 		} else if ([value isEqual: @"TIE"]) {
 			// Choose points for the connecting lines
 			CGPoint start0, start1, end0, end1;
@@ -238,7 +274,6 @@
 				end1   = CGPointMake(rightX, y1);
 			}
 			
-			// Draw the connecting lines
 			if (prevCount) {
 				CGContextSetRGBStrokeColor(context, 1, 1, 0, 1);
 				CGContextSetLineWidth(context, WIDTH);
@@ -251,22 +286,54 @@
 				CGContextStrokePath(context);
 			}
 			
-			// Draw the circles
-			CGContextSetLineWidth(context, 1);
-			CGContextSetRGBStrokeColor(context, 0, 0, 0, 1);
-			CGContextSetRGBFillColor(context, 1, 1, 0, 1);
-			CGContextFillEllipseInRect(context, CGRectMake(leftX - r, y1 - r, 2*r, 2*r));
-			CGContextFillEllipseInRect(context, CGRectMake(rightX - r, y1 - r, 2*r, 2*r));
-			CGContextStrokeEllipseInRect(context, CGRectMake(leftX - r, y1 - r, 2*r, 2*r));
-			CGContextStrokeEllipseInRect(context, CGRectMake(rightX - r, y1 - r, 2*r, 2*r));
+			// Draw the previous circle(s)
+			if (prevCount) {
+				CGContextSetRGBStrokeColor(context, 0, 0, 0, 1);
+				if ([prevValue isEqual: @"WIN"])
+					CGContextSetRGBFillColor(context, 0, 1, 0, 1);
+				else if ([prevValue isEqual: @"LOSE"])
+					CGContextSetRGBFillColor(context, 139.0/255.0, 0, 0, 1);
+				else
+					CGContextSetRGBFillColor(context, 1, 1, 0, 1);
+				
+				CGContextSetLineWidth(context, 1);
+				CGContextFillEllipseInRect(context, CGRectMake(previous[0].x - r, previous[0].y - r, 2*r, 2*r));
+				CGContextStrokeEllipseInRect(context, CGRectMake(previous[0].x - r, previous[0].y - r, 2*r, 2*r));
+				
+				if (prevCount == 2) {
+					CGContextFillEllipseInRect(context, CGRectMake(previous[1].x - r, previous[1].y - r, 2*r, 2*r));
+					CGContextStrokeEllipseInRect(context, CGRectMake(previous[1].x - r, previous[1].y - r, 2*r, 2*r));
+				}
+			}
 			
-			// Update previous
+			// Update "previous" data
 			previous[0] = CGPointMake(leftX, y1);
 			previous[1] = CGPointMake(rightX, y1);
 			prevCount = 2;
+			prevValue = @"TIE";
 		}
 		
 		y1 += 5 + 2 * r;
+	}
+	
+	// Draw the last circle(s)
+	if (prevCount) {
+		CGContextSetRGBStrokeColor(context, 0, 0, 0, 1);
+		if ([prevValue isEqual: @"WIN"])
+			CGContextSetRGBFillColor(context, 0, 1, 0, 1);
+		else if ([prevValue isEqual: @"LOSE"])
+			CGContextSetRGBFillColor(context, 139.0/255.0, 0, 0, 1);
+		else
+			CGContextSetRGBFillColor(context, 1, 1, 0, 1);
+		
+		CGContextSetLineWidth(context, 1);
+		CGContextFillEllipseInRect(context, CGRectMake(previous[0].x - r, previous[0].y - r, 2*r, 2*r));
+		CGContextStrokeEllipseInRect(context, CGRectMake(previous[0].x - r, previous[0].y - r, 2*r, 2*r));
+		
+		if (prevCount == 2) {
+			CGContextFillEllipseInRect(context, CGRectMake(previous[1].x - r, previous[1].y - r, 2*r, 2*r));
+			CGContextStrokeEllipseInRect(context, CGRectMake(previous[1].x - r, previous[1].y - r, 2*r, 2*r));
+		}
 	}
 }
 

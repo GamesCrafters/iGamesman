@@ -23,6 +23,78 @@
 	return self;
 }
 
+- (void) updateServerDataWithService: (GCJSONService *) _service {
+	service = _service;
+	[spinner startAnimating];
+	[self.view bringSubviewToFront: spinner];
+	waiter = [[NSThread alloc] initWithTarget: self selector: @selector(fetchNewData:) object: [NSNumber numberWithBool:touchesEnabled]];
+	[waiter start];
+	timer = [[NSTimer scheduledTimerWithTimeInterval: 60 target: self selector: @selector(timedOut:) userInfo: nil repeats: NO] retain];
+}
+
+- (void) fetchNewData: (BOOL) buttonsOn {
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	NSString *boardString = [GCTicTacToe stringForBoard: [game getBoard]];
+	NSString *boardURL = [boardString stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
+	NSString *boardVal = [[NSString stringWithFormat: @"http://nyc.cs.berkeley.edu:8080/gcweb/service/gamesman/puzzles/ttt/getMoveValue;width=%d;height=%d;pieces=%d;board=%@", game.cols, game.rows, game.inarow, boardURL] retain];
+	NSString *moveVals = [[NSString stringWithFormat: @"http://nyc.cs.berkeley.edu:8080/gcweb/service/gamesman/puzzles/ttt/getNextMoveValues;width=%d;height=%d;pieces=%d;board=%@", game.cols, game.rows, game.inarow, boardURL] retain];
+	[service retrieveDataForBoard: boardString URL: boardVal andNextMovesURL: moveVals];
+	[self performSelectorOnMainThread: @selector(fetchFinished:) withObject: [NSNumber numberWithBool: buttonsOn] waitUntilDone: NO];
+	[pool release];
+}
+
+
+- (void) fetchFinished: (BOOL) buttonsOn {
+	if (waiter != nil) {
+		if (buttonsOn);
+		//[self enableButtons];
+		[spinner stopAnimating];
+		[timer invalidate];
+	}
+	if (![service connected] || ![service status])
+		[game postProblem];
+	else {
+		// Create the new data entry
+		/*NSArray *keys = [[NSArray alloc] initWithObjects: @"board", @"value", @"remoteness", @"children", nil];
+		NSMutableDictionary *children = [[NSMutableDictionary alloc] init];
+		for (NSString *move in [game legalMoves]) {
+			move = [NSString stringWithFormat: @"%d", [move integerValue] - 1];
+			NSDictionary *moveDict = [[NSDictionary alloc] initWithObjectsAndKeys: [[service getValueAfterMove: move] lowercaseString], @"value",
+									  [NSNumber numberWithInteger: [service getRemotenessAfterMove: move]], @"remoteness", nil];
+			[children setObject: moveDict forKey: move];
+		}
+		NSString *val = [service getValue];
+		if (!val) val = @"UNAVAILABLE";
+		NSArray *values = [[NSArray alloc] initWithObjects: [[game getBoard] copy], val, [NSNumber numberWithInteger: [service getRemoteness]], children, nil];
+		[children release];
+		NSDictionary *entry = [[NSDictionary alloc] initWithObjects: values forKeys: keys];
+		[values release];
+		[keys release];*/
+		
+		// Push the new entry onto the history stack
+		/*NSDictionary *last = [game.serverHistoryStack lastObject];
+		if ([[last objectForKey: @"board"] isEqual: [entry objectForKey: @"board"]])
+			[game.serverHistoryStack removeLastObject];
+		[game.serverHistoryStack addObject: entry];*/
+		
+		[game postReady];
+	}
+	[self updateDisplay];
+}
+
+
+- (void) timedOut: (NSTimer *) theTimer {
+	messageLabel.numberOfLines = 4;
+	messageLabel.lineBreakMode = UILineBreakModeWordWrap;
+	[messageLabel setText: @"Server request timed out. Check the strength of your Internet connection."];
+	
+	[waiter cancel];
+	[waiter release];
+	waiter = nil;
+	[spinner stopAnimating];
+}
+
+
 - (void) updateDisplay {
 	NSString *player = game.p1Turn ? [game player1Name] : [game player2Name];
 	NSString *oppPlayer = game.p1Turn ? [game player2Name] : [game player1Name];
@@ -54,10 +126,8 @@
 		for (int i = 0; i < game.rows * game.cols; i += 1)
 			[[self.view viewWithTag: 5000 + i] removeFromSuperview];
 		for (NSNumber *move in [game legalMoves]) {
-			UIImage *piece = [UIImage imageNamed: (game.p1Turn ? [[NSDictionary dictionaryWithObjectsAndKeys: @"TTTXWin.png", @"WIN",
-																  @"TTTXLose.png", @"LOSE", @"TTTXTie.png", @"TIE", nil] objectForKey: [game getValueOfMove: move]]
-												   : [[NSDictionary dictionaryWithObjectsAndKeys: @"TTTOWin.png", @"WIN",
-													   @"TTTOLose.png", @"LOSE", @"TTTOTie.png", @"TIE", nil] objectForKey: [game getValueOfMove: move]])];
+			UIImage *piece = [UIImage imageNamed: [[NSDictionary dictionaryWithObjectsAndKeys: @"TTTWin.png", @"WIN",
+																  @"TTTLose.png", @"LOSE", @"TTTTie.png", @"TIE", nil] objectForKey: [[game getValueOfMove: move] uppercaseString]]];
 			UIImageView *valueMove = [[UIImageView alloc] initWithImage: piece];
 			
 			int col = [move intValue] % game.cols;
@@ -138,6 +208,14 @@
 	messageLabel.numberOfLines = 4;
 	messageLabel.lineBreakMode = UILineBreakModeWordWrap;
 	[self.view addSubview: messageLabel];
+	
+	CGFloat w = self.view.bounds.size.width;
+	CGFloat h = self.view.bounds.size.height;
+	CGFloat size = MIN((w - 180)/game.cols, (h - 20)/game.rows);
+
+	spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle: UIActivityIndicatorViewStyleWhiteLarge];
+	spinner.center = CGPointMake(10 + size * game.cols / 2.0, 10 + size * game.rows / 2.0);
+	[self.view addSubview: spinner];
 }
 
 - (void)viewDidLoad {
@@ -161,6 +239,7 @@
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 	[messageLabel release];
+	[spinner release];
 }
 
 

@@ -8,11 +8,14 @@
 
 #import <Foundation/Foundation.h>
 #import "GCGame.h"
+#import "GCJSONService.h"
 
 @class GCTicTacToeViewController;
 
 @interface GCTicTacToe : GCGame {
 	GCTicTacToeViewController *tttView;
+	
+	GCJSONService *service;
 	
 	NSString *player1Name, *player2Name;
 	PlayerType player1Type, player2Type;
@@ -37,7 +40,10 @@
 @property (nonatomic, assign) BOOL p1Turn;
 @property (nonatomic, assign) BOOL predictions, moveValues;
 
++ (NSString *) stringForBoard: (NSArray *) _board;
 - (void) resetBoard;
 - (void) postHumanMove: (NSNumber *) move;
+- (void) postReady;
+- (void) postProblem;
 
 @end
