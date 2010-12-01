@@ -64,7 +64,7 @@
 - (void) fetchFinished: (BOOL) buttonsOn {
 	if (waiter != nil) {
 		if (buttonsOn);
-        //[self enableButtons];
+		//[self enableButtons];
 		[spinner stopAnimating];
 		[timer invalidate];
 	}
@@ -72,31 +72,32 @@
 		[game postProblem];
 	else {
 		// Create the new data entry
-		NSArray *keys = [[NSArray alloc] initWithObjects: @"board", @"value", @"remoteness", @"children", nil];
-		NSMutableDictionary *children = [[NSMutableDictionary alloc] init];
-		for (NSString *move in [game legalMoves]) {
-			move = [NSString stringWithFormat: @"%d", [move integerValue] - 1];
-			NSDictionary *moveDict = [[NSDictionary alloc] initWithObjectsAndKeys: [[service getValueAfterMove: move] lowercaseString], @"value",
-									  [NSNumber numberWithInteger: [service getRemotenessAfterMove: move]], @"remoteness", nil];
-			[children setObject: moveDict forKey: move];
-		}
-		NSString *val = [service getValue];
-		if (!val) val = @"UNAVAILABLE";
-		NSArray *values = [[NSArray alloc] initWithObjects: [[game getBoard] copy], val, [NSNumber numberWithInteger: [service getRemoteness]], children, nil];
-		[children release];
-		NSDictionary *entry = [[NSDictionary alloc] initWithObjects: values forKeys: keys];
-		[values release];
-		[keys release];
+		/*NSArray *keys = [[NSArray alloc] initWithObjects: @"board", @"value", @"remoteness", @"children", nil];
+         NSMutableDictionary *children = [[NSMutableDictionary alloc] init];
+         for (NSString *move in [game legalMoves]) {
+         move = [NSString stringWithFormat: @"%d", [move integerValue] - 1];
+         NSDictionary *moveDict = [[NSDictionary alloc] initWithObjectsAndKeys: [[service getValueAfterMove: move] lowercaseString], @"value",
+         [NSNumber numberWithInteger: [service getRemotenessAfterMove: move]], @"remoteness", nil];
+         [children setObject: moveDict forKey: move];
+         }
+         NSString *val = [service getValue];
+         if (!val) val = @"UNAVAILABLE";
+         NSArray *values = [[NSArray alloc] initWithObjects: [[game getBoard] copy], val, [NSNumber numberWithInteger: [service getRemoteness]], children, nil];
+         [children release];
+         NSDictionary *entry = [[NSDictionary alloc] initWithObjects: values forKeys: keys];
+         [values release];
+         [keys release];*/
 		
 		// Push the new entry onto the history stack
-		NSDictionary *last = [game.serverHistoryStack lastObject];
-		if ([[last objectForKey: @"board"] isEqual: [entry objectForKey: @"board"]])
-			[game.serverHistoryStack removeLastObject];
-		[game.serverHistoryStack addObject: entry];
+		/*NSDictionary *last = [game.serverHistoryStack lastObject];
+         if ([[last objectForKey: @"board"] isEqual: [entry objectForKey: @"board"]])
+         [game.serverHistoryStack removeLastObject];
+         [game.serverHistoryStack addObject: entry];*/
 		
 		[game postReady];
 	}
 	[self updateLabels];
+    [self updateLegalMoves];
 }
 
 
@@ -176,10 +177,10 @@
         if([legalMoves objectAtIndex: 0] != @"PASS") {
             for (NSNumber* move in legalMoves) {
                 UIImageView *newView = (UIImageView *)[self.view viewWithTag:5000 + [move intValue]];
-                UIImage *moveImage = [UIImage imageNamed: (game.p1Turn ? [[NSDictionary dictionaryWithObjectsAndKeys: @"TTTXWin.png", @"WIN",
-                                                                       @"TTTXLose.png", @"LOSE", @"TTTXTie.png", @"TIE", nil] objectForKey: [game getValueOfMove: move]]
-                                                       : [[NSDictionary dictionaryWithObjectsAndKeys: @"TTTOWin.png", @"WIN",
-                                                           @"TTTOLose.png", @"LOSE", @"TTTOTie.png", @"TIE", nil] objectForKey: [game getValueOfMove: move]])];
+                UIImage *moveImage = [UIImage imageNamed: (game.p1Turn ? [[NSDictionary dictionaryWithObjectsAndKeys: @"othwin.png", @"WIN",
+                                                                       @"othlose.png", @"LOSE", @"othtie.png", @"TIE", nil] objectForKey: [game getValueOfMove: move]]
+                                                       : [[NSDictionary dictionaryWithObjectsAndKeys: @"othwin.png", @"WIN",
+                                                           @"othlose.png", @"LOSE", @"othtie.png", @"TIE", nil] objectForKey: [game getValueOfMove: move]])];
                 [newView setImage:moveImage];
                 [newView setHidden:NO];
             }

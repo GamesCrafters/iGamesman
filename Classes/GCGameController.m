@@ -136,6 +136,7 @@
 			NSArray *values = [[NSArray alloc] initWithObjects: [[game getBoard] copy],
 							   ([game currentPlayer] == PLAYER1 ? @"1" : @"2"), [game getValue], 
 							   [NSNumber numberWithInteger: [game getRemoteness]], nil];
+           
 			NSDictionary *entry = [[NSDictionary alloc] initWithObjects: values forKeys: keys];
 			[keys autorelease]; [values autorelease];
 			

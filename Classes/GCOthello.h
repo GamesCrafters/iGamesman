@@ -26,8 +26,8 @@
 	NSMutableArray *myOldMoves;
 	NSNumber *humanMove;
     BOOL predictions, moveValues;
-    NSMutableArray				*serverHistoryStack;
-	NSMutableArray				*serverUndoStack;
+  //  NSMutableArray				*serverHistoryStack;
+	//NSMutableArray				*serverUndoStack;
     GCJSONService				*service;
 }
 
@@ -40,7 +40,7 @@
 @property (nonatomic, retain) NSMutableArray *myOldMoves, *board;
 @property (nonatomic, assign) int p1pieces, p2pieces;
 @property (nonatomic, assign) BOOL predictions, moveValues;
-@property (nonatomic, retain) NSMutableArray *serverHistoryStack;
+//@property (nonatomic, retain) NSMutableArray *serverHistoryStack;
 
 - (void) resetBoard;
 - (NSArray *) getFlips: (int) loc;
