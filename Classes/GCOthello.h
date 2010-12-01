@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "GCGame.h"
+#import "GCJSONService.h"
 
 @class GCOthelloViewController;
 
@@ -25,6 +26,9 @@
 	NSMutableArray *myOldMoves;
 	NSNumber *humanMove;
     BOOL predictions, moveValues;
+    NSMutableArray				*serverHistoryStack;
+	NSMutableArray				*serverUndoStack;
+    GCJSONService				*service;
 }
 
 @property (nonatomic, assign) BOOL autoPass;
@@ -36,10 +40,14 @@
 @property (nonatomic, retain) NSMutableArray *myOldMoves, *board;
 @property (nonatomic, assign) int p1pieces, p2pieces;
 @property (nonatomic, assign) BOOL predictions, moveValues;
+@property (nonatomic, retain) NSMutableArray *serverHistoryStack;
 
 - (void) resetBoard;
 - (NSArray *) getFlips: (int) loc;
 - (BOOL) isOutOfBounds: (int) loc offset: (int) offset;
 - (void) postHumanMove: (NSNumber *) move;
++ (NSString *) stringForBoard: (NSArray *) _board;
+- (void) postReady;
+- (void) postProblem;
 
 @end

@@ -8,10 +8,19 @@
 
 #import <UIKit/UIKit.h>
 #import "GCOthello.h"
+#import "GCJSONService.h"
 
 @interface GCOthelloViewController : UIViewController {
+    
+    UIActivityIndicatorView *spinner;
+	NSThread *waiter;
+	NSTimer *timer;
+    
+    
 	GCOthello *game;
 	BOOL touchesEnabled;
+    
+    GCJSONService *service;
 
 }
 
@@ -19,5 +28,13 @@
 
 -(id) initWithGame: (GCOthello *) _game;
 -(void) doMove: (NSNumber *) move;
+- (void) updateServerDataWithService: (GCJSONService *) _service;
+- (void) fetchNewData: (BOOL) buttonsOn;
+- (void) timedOut: (NSTimer *) theTimer;
+- (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event;
+- (void) gameWon: (int) p1Won;
+- (void) updateLegalMoves;
+- (void) updateLabels;
+- (void) undoMove:(NSNumber *)move;
 
 @end
