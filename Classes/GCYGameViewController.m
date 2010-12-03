@@ -83,14 +83,15 @@
 
 //added this method to label whose turn it is! 
 - (void) updateLabels{
-	NSLog(@"doing the label thing");
 	NSString *player = ([game currentPlayer] == PLAYER1) ? [game player1Name] : [game player2Name];
 	NSString *color = ([game currentPlayer] == PLAYER1) ? @"Red" : @"Blue";
 	//remove this later
 	[message setText: [NSString stringWithFormat: @"%@ (%@)'s turn", player, color]];
 	
-	
-	if(game.gameMode == ONLINE_SOLVED && game.predictions){
+	if([game primitive]){
+		[self displayPrimitive];
+		
+	} else if(game.gameMode == ONLINE_SOLVED && game.predictions){
 		message.numberOfLines = 2;
 		NSString *value = [service getValue];
 		PlayerType typePlay = ([game currentPlayer] == PLAYER1) ? [game player1Type] : [game player2Type];
@@ -104,34 +105,25 @@
 			modifier = @"will";
 		} else modifier = @"should";
 		[message setText: [NSString stringWithFormat: @"%@ (%@)'s turn\n%@ %@ in %d", player, color, modifier, [service getValue], [service getRemoteness]]];
-	}
-	else{
+	} else{
 		//TODO: update to show an image
 		[message setText: [NSString stringWithFormat: @"%@ (%@)'s turn", player, color]];
 	}
 	
-	if (game.gameMode == ONLINE_SOLVED && game.moveValues) {
-		NSDictionary *movesAndValues = [self getServerValues: [self translateToServer: [game legalMoves]]];
-		for (NSNumber *move in [movesAndValues allKeys]) {
-			GCYGamePiece *B = (GCYGamePiece *) [self.view viewWithTag: [move intValue] + 1];
-			NSString *color, *direction;
+	if ([game playMode] == ONLINE_SOLVED && game.moveValues) {
+		NSLog(@"doing move values");
+		//NSDictionary *movesAndValues = [self getServerValues: [self translateToServer: [game legalMoves]]];
+		for (NSNumber *move in [game legalMoves]) {
+			GCYGamePiece *B = (GCYGamePiece *) [self.view viewWithTag: [move intValue]];
+			//NSString *color, *direction;
+			UIImage *piece = [UIImage imageNamed: [[NSDictionary dictionaryWithObjectsAndKeys: @"TTTWin.png", @"WIN",
+													@"TTTLose.png", @"LOSE", @"TTTTie.png", @"TIE", nil] objectForKey: 
+												   [[game getValueOfMove: move] uppercaseString]]];
 			
-			//eventually change these to circular backgrounds
-			if ([[movesAndValues objectForKey: move] isEqual: @"CLEAR"])
-				[B.moveValue setBackgroundColor: [UIColor clearColor]];
-			else if ([[movesAndValues objectForKey: move] isEqual: @"WIN"])
-				[B.moveValue setBackgroundColor: [UIColor greenColor]];
-			else if ([[movesAndValues objectForKey: move] isEqual: @"LOSE"])
-				[B.moveValue setBackgroundColor: [UIColor brownColor]];
-			else
-				[B.moveValue setBackgroundColor: [UIColor yellowColor]];
-			
+			[B.moveValue setImage: piece];
+
 
 		}
-	}
-	
-	if([[game primitive] isEqualToString: @"WIN"]){
-		[self displayPrimitive];
 	}
 }
 
@@ -197,14 +189,12 @@
 		
 		if (game.p1Turn){
 			if ([game boardContainsPlayerPiece: @"X" forPosition: neighborPosition]){
-				NSLog(@" %d, %d", moveInt, neighborInt);
 				[boardView addConnectionFrom: moveInt - 1 to: neighborInt - 1 forPlayer: YES];
 
 			}
 		}
 		else{
 			if ([game boardContainsPlayerPiece: @"O" forPosition: neighborPosition]){
-				NSLog(@" %d, %d", moveInt, neighborInt);
 				[boardView addConnectionFrom: moveInt - 1 to: neighborInt - 1 forPlayer: NO];
 				
 
@@ -243,11 +233,9 @@
  Makes a move corresponding to the given button's position if it is a human player's turn.  
  **/
 - (IBAction) tapped: (UIButton *) button{
-	NSLog(@"tapped");
 	if (touchesEnabled) {
 		NSNumber * num = [NSNumber numberWithInt: button.tag];
 		if([[game legalMoves] containsObject: num]){
-			NSLog(@"posting human move");
 			[game postHumanMove: num];
 		}
 	}
@@ -307,19 +295,15 @@
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	NSString *boardString = [GCYGame stringForBoard: [game getBoard]];
 	NSString *boardURL = [boardString stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
-	NSLog([NSString stringWithFormat: @"http://nyc.cs.berkeley.edu:8080/gcweb/service/gamesman/puzzles/y/getMoveValue;board=%@;centerRows=%d;outerRows=%d", boardURL, game.innerTriangleLength + 1, game.layers]);
 	NSString *boardVal = [[NSString stringWithFormat: @"http://nyc.cs.berkeley.edu:8080/gcweb/service/gamesman/puzzles/y/getMoveValue;board=%@;centerRows=%d;outerRows=%d", boardURL, game.innerTriangleLength + 1, game.layers] retain];
 	NSString *moveVals = [[NSString stringWithFormat: @"http://nyc.cs.berkeley.edu:8080/gcweb/service/gamesman/puzzles/y/getNextMoveValues;board=%@;centerRows=%d;outerRows=%d", boardURL, game.innerTriangleLength + 1, game.layers] retain];
-	NSLog(@"starting the hellish retrieval");
 	[service retrieveDataForBoard: boardString URL: boardVal andNextMovesURL: moveVals];
 	[self performSelectorOnMainThread: @selector(fetchFinished:) withObject: [NSNumber numberWithBool: buttonsOn] waitUntilDone: NO];
 	[pool release];
-	NSLog(@"OMG Almost DONE");
 
 }
 
 - (void) fetchFinished: (BOOL) buttonsOn {
-	NSLog(@"OMG DONE");
 	if (waiter != nil) {
 		[spinner stopAnimating];
 		[timer invalidate];

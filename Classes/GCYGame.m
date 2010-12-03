@@ -50,9 +50,7 @@
 		
 		board = [[NSMutableArray alloc] initWithCapacity: 15];
 		for (int i = 0; i < 15; i += 1)
-			[board addObject: BLANK];
-		NSLog(@"board size: %d", [board count]);
-		
+			[board addObject: BLANK];		
 	}
 	
 	return self;
@@ -111,20 +109,15 @@
 	if (board != nil) {
 		[board release];
 		board = nil;
-		NSLog(@"nil board");
 	}
 	
 	boardSize = ((innerTriangleLength + 1) * (innerTriangleLength + 2)) / 2;	
 
-	NSLog(@"better board? %d", boardSize);
-
 	//calculate the sizes of each layer
 	for (int i = 1; i <= layers; i++){
 		boardSize += (innerTriangleLength + i) * 3;
-		NSLog(@"new layer %d", boardSize);
 	}
-	
-	NSLog(@"better board? %d", boardSize);
+
 	board = [[NSMutableArray alloc] initWithCapacity: boardSize];
 	for (int i = 0; i < boardSize; i++)
 		[board addObject: BLANK];
@@ -176,7 +169,6 @@
 	NSMutableArray *moves = [[NSMutableArray alloc] init];
 	NSLog(@"begin legal moves");
 	for (int i = 0; i < [board count]; i += 1) {
-		NSLog([board objectAtIndex: i]);
 		if ([[board objectAtIndex: i] isEqual: BLANK])
 			[moves addObject: [NSNumber numberWithInt: i + 1]];
 	}
@@ -351,8 +343,6 @@
 			//Check if all of the edges are reached
 			if ([edgesReached count] == 3){
 				[queue release];
-				NSLog(@"Game Over");
-				NSLog(@"funny business opponent");
 				return misere ? @"WIN" : @"LOSE";
 			}
 			
