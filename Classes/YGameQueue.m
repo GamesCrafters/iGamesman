@@ -81,6 +81,7 @@
 - (void) clearAll{
 	[fringe removeAllObjects];
 	[blackList removeAllObjects];
+	[parents removeAllObjects];
 }
 
 @end
