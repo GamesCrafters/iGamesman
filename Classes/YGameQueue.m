@@ -51,7 +51,6 @@
 /**Return a path for the given edge **/
 - (NSMutableArray *) getPath: (NSNumber *) starter {
 	NSMutableArray *myPath = [[NSMutableArray alloc] init];
-	NSLog([starter stringValue]);
 	[myPath addObject: starter];
 	NSNumber *parent = [parents valueForKey: [starter stringValue]];
 	
