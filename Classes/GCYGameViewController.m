@@ -306,7 +306,7 @@
 
 - (void) fetchNewData: (BOOL) buttonsOn {
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-	NSString *boardString = [GCYGame stringForBoard: game.board];
+	NSString *boardString = [GCYGame stringForBoard: [game getBoard]];
 	NSString *boardURL = [boardString stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
 	NSString *boardVal = [[NSString stringWithFormat: @"http://nyc.cs.berkeley.edu:8080/gcweb/service/gamesman/puzzles/y/getMoveValue;board=%@;centerRows=%d;outerRows=%d", boardURL, game.innerTriangleLength, game.layers] retain];
 	NSString *moveVals = [[NSString stringWithFormat: @"http://nyc.cs.berkeley.edu:8080/gcweb/service/gamesman/puzzles/y/getNextMoveValues;board=%@;centerRows=%d;outerRows=%d", boardURL, game.innerTriangleLength, game.layers] retain];
@@ -316,7 +316,6 @@
 }
 
 - (void) fetchFinished: (BOOL) buttonsOn {
-	if(waiter)	[waiter release];
 	if (waiter != nil) {
 		[spinner stopAnimating];
 		[timer invalidate];

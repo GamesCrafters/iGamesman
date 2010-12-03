@@ -93,8 +93,8 @@
 	
 	if (mode == ONLINE_SOLVED) {
 		service = [[GCJSONService alloc] init];
-		serverHistoryStack = [[NSMutableArray alloc] init];
-		serverUndoStack    = [[NSMutableArray alloc] init];
+		//serverHistoryStack = [[NSMutableArray alloc] init];
+		//serverUndoStack    = [[NSMutableArray alloc] init];
 		[yGameView updateServerDataWithService: service];
 	}
 }
@@ -242,7 +242,7 @@
 //			[yGameView updateServerDataWithService: service];
 //		}
 	} else {
-		[yGameView updateLabels];
+		[yGameView updateDisplay];
 	}
 }
 

@@ -43,7 +43,7 @@
 
 - (NSArray *) translateToServer: (NSArray *) moveArray;
 - (NSDictionary *) getServerValues: (NSArray *) moves;
-- (void) updateServerDataWithService: (GCJSONService *) service;
+- (void) updateServerDataWithService: (GCJSONService *) _service;
 - (void) fetchNewData: (BOOL) buttonsOn;
 - (void) fetchFinished: (BOOL) buttonsOn;
 
