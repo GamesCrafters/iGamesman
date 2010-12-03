@@ -32,13 +32,51 @@
 	NSString *player = game.p1Turn ? [game player1Name] : [game player2Name];
 	NSString *oppPlayer = game.p1Turn ? [game player2Name] : [game player1Name];
 	NSString *primitive = [game primitive];
-	NSLog(@"%d", game.p1Turn);
-	NSLog(@"%@", primitive);
-	NSLog(@"%@", player);
 	if (primitive) {
-		messageLabel.text = [NSString stringWithFormat: @"%@ wins!", [primitive isEqualToString: @"WIN"] ? player : oppPlayer];
-	} else
-		messageLabel.text = [NSString stringWithFormat: @"%@'s turn", player];	
+		messageLabel.text = [NSString stringWithFormat: @"%@ wins!", ([primitive isEqualToString: @"HorizWIN"] || [primitive isEqualToString: @"VertWin"]) ? player : oppPlayer];
+	} else {
+		if ([game playMode] == OFFLINE_UNSOLVED || !game.predictions)
+			messageLabel.text = [NSString stringWithFormat: @"%@'s turn", player];	
+		else {
+			messageLabel.text = [NSString stringWithFormat: @"%@ should %@ in %d", player, [game getValue], [game getRemoteness]];
+		}
+	}
+	
+	if ([game playMode] == OFFLINE_UNSOLVED || !game.moveValues) {
+		// Remove any move values from screen since move values must have turned off
+		for (int i = 0; i < game.rows * game.cols; i += 1)
+			[[self.view viewWithTag: 5000 + i] removeFromSuperview];
+	}
+	if ([game playMode] == ONLINE_SOLVED && game.moveValues) {
+		// Remove the old values; new values
+		for (int i = 0; i < game.rows * game.cols; i += 1)
+			[[self.view viewWithTag: 5000 + i] removeFromSuperview];
+		for (NSArray *move in [game legalMoves]) {
+			UIImage *piece = [UIImage imageNamed: @"QCHoriz.png"];
+			
+			if ([[move objectAtIndex: 1] isEqual: HORIZ])
+			{
+				piece = [UIImage imageNamed: [[NSDictionary dictionaryWithObjectsAndKeys: @"QCWinH.png", @"WIN", @"QCLoseH.png", @"LOSE", nil] objectForKey: [game getValueOfMove: move]]];
+			}
+			else {
+				piece = [UIImage imageNamed: [[NSDictionary dictionaryWithObjectsAndKeys: @"QCWinV.png", @"WIN", @"QCLoseV.png", @"LOSE", nil] objectForKey: [game getValueOfMove: move]]];
+			}
+			
+			UIImageView *valueMove = [[UIImageView alloc] initWithImage: piece];
+			
+			int col = [[move objectAtIndex: 0] intValue] % game.cols;
+			int row = [[move objectAtIndex: 0] intValue] / game.cols;
+			CGFloat w = self.view.bounds.size.width;
+			CGFloat h = self.view.bounds.size.height;
+			CGFloat size = MIN((w - 180)/game.cols, (h - 20)/game.rows);
+			
+			[valueMove setFrame: CGRectMake(10 + col * size, 10 + row * size, size, size)];
+			valueMove.tag = 5000 + [[move objectAtIndex: 0] intValue];
+			NSInteger index = 1;
+			[self.view insertSubview: valueMove atIndex: index];
+			[valueMove release];
+		}
+	}
 }
 
 - (void) doMove: (NSArray *) move {
@@ -158,6 +196,7 @@
 	messageLabel.lineBreakMode = UILineBreakModeWordWrap;
 	[self.view addSubview: messageLabel];
 	start = CGPointZero;
+	[self updateDisplay];
 	
 }
 

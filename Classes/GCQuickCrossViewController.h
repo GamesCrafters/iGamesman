@@ -26,6 +26,7 @@
 - (id) initWithGame: (GCQuickCross *) _game;
 - (void) doMove: (NSArray *) move;
 - (void) undoMove: (NSArray *) move; 
+- (void) updateDisplay;
 
 @end
 

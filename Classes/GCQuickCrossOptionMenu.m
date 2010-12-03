@@ -121,8 +121,8 @@
 	}
 	
 	int selected;
-	if (indexPath.section == 0) selected = game.rows - 3;
-	if (indexPath.section == 1) selected = game.cols - 3;
+	if (indexPath.section == 0) selected = game.cols - 3;
+	if (indexPath.section == 1) selected = game.rows - 3;
 	if (indexPath.section == 2) selected = game.inalign - 3;
 	if (indexPath.section == 3) selected = game.misere ? 1 : 0;
 	[segment setSelectedSegmentIndex: selected];

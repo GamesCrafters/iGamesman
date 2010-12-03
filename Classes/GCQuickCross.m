@@ -22,6 +22,8 @@
 @synthesize player1Type, player2Type;
 @synthesize rows, cols, inalign, misere;
 @synthesize p1Turn;
+@synthesize predictions, moveValues;
+
 
 - (id) init {
 	if (self = [super init]) {
@@ -46,8 +48,12 @@
 	return @"QuickCross";
 }
 
+- (PlayMode) playMode {
+	return gameMode;
+}
+
 - (BOOL) supportsPlayMode: (PlayMode) mode {
-	return mode == OFFLINE_UNSOLVED;
+	return mode == OFFLINE_UNSOLVED || mode == ONLINE_SOLVED;
 }
 
 - (UIViewController *) optionMenu {
@@ -117,6 +123,7 @@
 		[board replaceObjectAtIndex: [[move objectAtIndex: 0] intValue] withObject: HORIZ];
 	}
 	p1Turn = !p1Turn;
+	[qcView updateDisplay];
 }
 
 - (NSString *) primitive {
@@ -137,7 +144,7 @@
 			}
 			if (case1)
 			{
-				return (misere ? @"WIN" : @"LOSE");
+				return (misere ? @"VertWIN" : @"VertLOSE");
 			}
 		}
 		
@@ -155,7 +162,7 @@
 			if (case2)
 			{
 			
-				return (misere ? @"WIN" : @"LOSE");
+				return (misere ? @"HorizWIN" : @"HorizLOSE");
 			}
 		}
 		// Check the vertical case for vert
@@ -172,7 +179,7 @@
 			if (case3)
 			{
 				
-				return (misere ? @"WIN" : @"LOSE");
+				return (misere ? @"VertWIN" : @"VertLOSE");
 			}
 		}
 		// Check the vertical case for Horiz
@@ -189,7 +196,7 @@
 			if (case4)
 			{
 				
-				return (misere ? @"WIN" : @"LOSE");
+				return (misere ? @"HorizWIN" : @"HorizLOSE");
 			}
 		}
 		
@@ -206,7 +213,7 @@
 			if (case5)
 			{
 				
-				return (misere ? @"WIN" : @"LOSE");
+				return (misere ? @"HorizWIN" : @"HorizLOSE");
 			}
 		}
 		
@@ -223,7 +230,7 @@
 			if (case6)
 			{
 				
-				return (misere ? @"WIN" : @"LOSE");
+				return (misere ? @"VertWIN" : @"VertLOSE");
 			}
 		}
 		
@@ -240,7 +247,7 @@
 			if (case7)
 			{
 				
-				return (misere ? @"WIN" : @"LOSE");
+				return (misere ? @"VertWIN" : @"VertLOSE");
 			}
 		}
 		
@@ -257,7 +264,7 @@
 			if (case8)
 			{
 				
-				return (misere ? @"WIN" : @"LOSE");
+				return (misere ? @"HorizWIN" : @"HorizLOSE");
 			}
 		}
 		
@@ -278,7 +285,7 @@
 }
 
 - (void) notifyWhenReady {
-	if (gameMode == OFFLINE_UNSOLVED)
+	if (gameMode == OFFLINE_UNSOLVED || gameMode == ONLINE_SOLVED)
 		[[NSNotificationCenter defaultCenter] postNotificationName: @"GameIsReady" object: self];
 }				 
 
@@ -298,5 +305,43 @@
 	humanMove = move;
 	[[NSNotificationCenter defaultCenter] postNotificationName: @"HumanChoseMove" object: self];
 }
+
+// Return the value of the current board
+- (NSString *) getValue {
+	int choice = rand() % 2;
+	return [[NSArray arrayWithObjects: @"WIN", @"LOSE", nil] objectAtIndex: choice];
+}
+
+// Return the remoteness of the current board (or -1 if not available)
+- (NSInteger) getRemoteness {
+	return rand() % (rows * cols);
+}
+
+// Return the value of MOVE
+- (NSString *) getValueOfMove: (NSArray *) move {
+	int choice = rand() % 2;
+	return [[NSArray arrayWithObjects: @"WIN", @"LOSE", nil] objectAtIndex: choice];
+}
+
+// Return the remoteness of MOVE (or -1 if not available)
+- (NSInteger) getRemotenessOfMove: (NSArray *) move {
+	return rand() % (rows * cols);
+}
+
+// Setter for Predictions
+// Must update the view to reflect the new settings
+- (void) setPredictions: (BOOL) pred {
+	predictions = pred;
+	[qcView updateDisplay];
+}
+
+
+// Setter for Move Values
+// Must update the view to reflect the new settings
+- (void) setMoveValues: (BOOL) move {
+	moveValues = move;
+	[qcView updateDisplay];
+}
+	
 				 
 @end
