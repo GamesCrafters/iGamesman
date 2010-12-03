@@ -68,6 +68,37 @@
 }
 
 
+- (void) removeConnectionFrom: (CGPoint) point1 ForPlayer: (BOOL) player1{
+	NSMutableArray *removeThese = [[NSMutableArray alloc] init];
+	
+	NSLog(@"before 1: %d 2: %d", [p1Connections count], [p2Connections count]);
+	if (player1) {
+		for (YConnection *connection in p2Connections) {
+			if (connection.pointA.x == point1.x && connection.pointA.y == point1.y) {
+				[removeThese addObject: connection];
+				NSLog(@"removing...");
+			}
+		}
+		for (YConnection *connection in removeThese) {
+			[p2Connections removeObject: connection];
+		}
+	} else {
+		
+		for (YConnection *connection in p1Connections) {
+			if (connection.pointA.x == point1.x && connection.pointA.y == point1.y) {
+				[removeThese addObject: connection];
+				NSLog(@"removing...");
+			}
+		}
+		for (YConnection *connection in removeThese) {
+			[p1Connections removeObject: connection];
+		}
+	}
+	NSLog(@"after 1: %d, 2: %d", [p1Connections count], [p2Connections count]);
+	[removeThese release];
+
+}
+
 - (void) addConnectionFrom: (CGPoint) point1 To: (CGPoint) point2 ForPlayer: (BOOL) player1{
 	YConnection *connection = [[YConnection alloc] initWithPointA: point1 andPointB: point2];
 	if (player1)
@@ -80,6 +111,9 @@
 
 - (void)drawRect:(CGRect)rect {
     // Drawing code for all of the connections... yay!
+	
+	//[[NSColor whiteColor] set];
+	//NSRectFill([self bounds]);
 	
 //	//Animate new connections
 //	if (p1Count <  [p1Connections count]){

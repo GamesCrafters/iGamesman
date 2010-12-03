@@ -111,7 +111,6 @@
 	}
 	
 	if ([game playMode] == ONLINE_SOLVED && game.moveValues) {
-		NSLog(@"doing move values");
 		//NSDictionary *movesAndValues = [self getServerValues: [self translateToServer: [game legalMoves]]];
 		for (NSNumber *move in [game legalMoves]) {
 			GCYGamePiece *B = (GCYGamePiece *) [self.view viewWithTag: [move intValue]];
@@ -216,9 +215,18 @@
 }
 
 - (void) undoMove: (NSNumber *) move {
+	NSInteger moveInt = [move integerValue];
 	
 	GCYGamePiece *B = (GCYGamePiece *) [self.view viewWithTag: [move intValue]];
 	[B undoMove];
+
+		
+	if (game.p1Turn){
+		[boardView removeConnectionFrom: moveInt - 1 forPlayer: YES];
+				
+	} else {
+		[boardView removeConnectionFrom: moveInt - 1 forPlayer: NO];
+	}
 	// what tic tac toe did
 //	UIImageView *piece = (UIImageView *) [self.view viewWithTag: 1000 + [move intValue]];
 //	

@@ -91,8 +91,8 @@
 	
 	if (mode == ONLINE_SOLVED) {
 		service = [[GCJSONService alloc] init];
-		//serverHistoryStack = [[NSMutableArray alloc] init];
-		//serverUndoStack    = [[NSMutableArray alloc] init];
+		serverHistoryStack = [[NSMutableArray alloc] init];
+		serverUndoStack    = [[NSMutableArray alloc] init];
 		[yGameView updateServerDataWithService: service];
 	}
 }
@@ -167,13 +167,11 @@
 
 - (NSArray *) legalMoves {
 	NSMutableArray *moves = [[NSMutableArray alloc] init];
-	NSLog(@"begin legal moves");
 	for (int i = 0; i < [board count]; i += 1) {
 		if ([[board objectAtIndex: i] isEqual: BLANK])
 			[moves addObject: [NSNumber numberWithInt: i + 1]];
 	}
-	
-	//######################################################################
+
 	return [moves autorelease];
 }
 
@@ -302,8 +300,6 @@
 			//Check if all of the edges are reached
 			if ([edgesReached count] == 3){
 				[queue release];
-				NSLog(@"Game Over");
-				NSLog(@"opponent win");
 				return misere ? @"LOSE" : @"WIN";
 			}
 			

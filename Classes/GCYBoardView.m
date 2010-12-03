@@ -326,6 +326,12 @@
 	[connectionsView setNeedsDisplay];
 }
 
+- (void) removeConnectionFrom: (int) posA forPlayer: (BOOL) p1 {
+	[connectionsView removeConnectionFrom: [[centers objectAtIndex: posA] CGPointValue] ForPlayer: p1];
+	[connectionsView setNeedsDisplay];
+}
+
+
 /** Utility function that returns the board size **/
 - (int) boardSize{
 	int size = 0;

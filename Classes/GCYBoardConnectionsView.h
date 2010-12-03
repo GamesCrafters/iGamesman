@@ -28,6 +28,8 @@
 @property (nonatomic, assign) CGFloat lineWidth;
 
 - (void) addConnectionFrom: (CGPoint) point1 To: (CGPoint) point2 ForPlayer: (BOOL) player1;
+- (void) removeConnectionFrom: (CGPoint) point1 ForPlayer: (BOOL) player1;
+
 
 @end
 

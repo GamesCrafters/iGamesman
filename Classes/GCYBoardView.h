@@ -55,6 +55,7 @@
 //Stuff that GCYGameVC will need
 - (int) boardSize;
 - (void) addConnectionFrom: (int) posA to: (int) posB forPlayer: (BOOL) p1;
+- (void) removeConnectionFrom: (int) posA forPlayer: (BOOL) p1;
 - (NSMutableSet *) edgesForPosition: (NSNumber *) position;
 
 
