@@ -24,19 +24,18 @@
 }
 
 @property (nonatomic, retain) GCYBoardView *boardView;
-@property (nonatomic, retain) GCJSONService *service;
 @property (nonatomic, assign) BOOL touchesEnabled;
-
 
 //- (id) initWithLayers: (int) layers; //can probably delete
 - (id) initWithGame: (GCYGame *) _game;
+
 - (void) doMove: (NSNumber *) move;
+- (void) undoMove: (NSNumber *) move;
+
+- (IBAction) tapped: (UIButton *) button;
 - (void) disableButtons;
 - (void) enableButtons;
-- (void) newBoard;
-- (void) displayPrimitive;
-- (IBAction) tapped: (UIButton *) button;
-- (void) updateLabels;
+
 - (NSArray *) leftEdges;
 - (NSSet *) positionEdges: (NSNumber *) position;
 - (NSSet *) positionConnections: (NSNumber *) position;
@@ -44,9 +43,13 @@
 
 - (NSArray *) translateToServer: (NSArray *) moveArray;
 - (NSDictionary *) getServerValues: (NSArray *) moves;
-
 - (void) updateServerDataWithService: (GCJSONService *) service;
 - (void) fetchNewData: (BOOL) buttonsOn;
 - (void) fetchFinished: (BOOL) buttonsOn;
+
+- (void) updateDisplay;
+- (void) updateLabels;
+- (void) displayPrimitive;
+
 
 @end

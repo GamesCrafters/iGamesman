@@ -28,8 +28,9 @@
 @synthesize innerTriangleLength;
 @synthesize gameMode;
 @synthesize serverHistoryStack;
+@synthesize predictions, moveValues;
 
-//
+
 - (id) init {
 	if (self = [super init]) {
 		player1Name = @"Player 1";
@@ -44,9 +45,13 @@
 		p1Turn = YES;
 		misere = NO;
 		
+		predictions = NO;
+		moveValues = NO;
+		
 		board = [[NSMutableArray alloc] initWithCapacity: 15];
 		for (int i = 0; i < 15; i += 1)
 			[board addObject: BLANK];
+		NSLog(@"board size: %d", [board count]);
 		
 	}
 	
@@ -57,14 +62,15 @@
 	return @"Y";
 }
 
+
+//##############################################
 - (BOOL) supportsPlayMode:(PlayMode)mode {
-	return mode == OFFLINE_UNSOLVED;
+	return mode == OFFLINE_UNSOLVED || mode == ONLINE_SOLVED;
 }
 
 - (PlayMode) playMode { 
 	return gameMode; 
 }
-
 
 - (UIViewController *) optionMenu {
 	return [[GCYOptionMenu alloc] initWithGame: self];
@@ -79,15 +85,11 @@
 		[yGameView release];
 	
 	yGameView = [[GCYGameViewController alloc] initWithGame: self];
-	
 	p1Turn = YES;
+	gameMode = mode;
 	
 	[self resetBoard];
 	
-	if(mode == ONLINE_SOLVED){
-		service = [[GCJSONService alloc] init];
-		[self startFetch];
-	}
 	
 	if (mode == ONLINE_SOLVED) {
 		service = [[GCJSONService alloc] init];
@@ -95,8 +97,6 @@
 		serverUndoStack    = [[NSMutableArray alloc] init];
 		[yGameView updateServerDataWithService: service];
 	}
-	
-	gameMode = mode;
 }
 
 
@@ -106,15 +106,46 @@
 
 
 - (void) resetBoard {
-	if (board)
-		[board release];
+	int boardSize;
 	
-	board = [[NSMutableArray alloc] initWithCapacity: [yGameView boardSize]];
-	for (int i = 0; i < [yGameView boardSize]; i++)
+	if (board != nil) {
+		[board release];
+		board = nil;
+		NSLog(@"nil board");
+	}
+	
+	boardSize = ((innerTriangleLength + 1) * (innerTriangleLength + 2)) / 2;	
+
+	NSLog(@"better board? %d", boardSize);
+
+	//calculate the sizes of each layer
+	for (int i = 1; i <= layers; i++){
+		boardSize += (innerTriangleLength + i) * 3;
+		NSLog(@"new layer %d", boardSize);
+	}
+	
+	NSLog(@"better board? %d", boardSize);
+	board = [[NSMutableArray alloc] initWithCapacity: boardSize];
+	for (int i = 0; i < boardSize; i++)
 		[board addObject: BLANK];
 
 }
 	
+/** A modified setter for Predictions
+ ** Must update the view to reflect the new settings **/
+- (void) setPredictions: (BOOL) pred {
+	predictions = pred;
+	[yGameView updateDisplay];
+}
+
+
+/** A modified setter for Move Values
+ ** Must update the view to reflect the new settings **/
+- (void) setMoveValues: (BOOL) move {
+	moveValues = move;
+	[yGameView updateDisplay];
+}
+
 
 - (Player) currentPlayer {
 	return p1Turn ? PLAYER1 : PLAYER2;
@@ -131,7 +162,7 @@
 	yGameView.touchesEnabled = NO;
 }
 
-- (void) postHumanMove: (NSNumber *) num{
+- (void) postHumanMove: (NSNumber *) num {
 	humanMove = num;
 	[[NSNotificationCenter defaultCenter] postNotificationName: @"HumanChoseMove" object: self];
 }
@@ -143,13 +174,15 @@
 
 - (NSArray *) legalMoves {
 	NSMutableArray *moves = [[NSMutableArray alloc] init];
-	
+	NSLog(@"begin legal moves");
 	for (int i = 0; i < [board count]; i += 1) {
+		NSLog([board objectAtIndex: i]);
 		if ([[board objectAtIndex: i] isEqual: BLANK])
 			[moves addObject: [NSNumber numberWithInt: i + 1]];
 	}
 	
-	return moves;
+	//######################################################################
+	return [moves autorelease];
 }
 
 
@@ -183,37 +216,50 @@
 	[board replaceObjectAtIndex: slot withObject: (p1Turn ? X : O)];
 	p1Turn = !p1Turn;
 	
-	if (gameMode != ONLINE_SOLVED)
-		[yGameView updateLabels];
-	
 	if(gameMode == ONLINE_SOLVED){
-		// Peek at the top of the undo stack
-		NSDictionary *undoEntry = [serverUndoStack lastObject];
-		if ([[undoEntry objectForKey: @"board"] isEqual: board]) {
-			// Pop it off the undo stack
-			[undoEntry retain];
-			[serverUndoStack removeLastObject];
-			
-			// Push it onto the history stack
-			[serverHistoryStack addObject: undoEntry];
-			[undoEntry release];
-			[yGameView updateLabels];
-			[self postReady];
-		} else {
-			// Wipe the undo stack
-			[serverUndoStack release];
-			serverUndoStack = [[NSMutableArray alloc] init];
-			
-			// Wipe the service object
-			[service release];
-			service = [[GCJSONService alloc] init];
-			
-			[yGameView updateServerDataWithService: service];
-		}
-	}	
+		[yGameView updateServerDataWithService: service];
+//		// Peek at the top of the undo stack
+//		NSDictionary *undoEntry = [serverUndoStack lastObject];
+//		if ([[undoEntry objectForKey: @"board"] isEqual: board]) {
+//			// Pop it off the undo stack
+//			[undoEntry retain];
+//			[serverUndoStack removeLastObject];
+//			
+//			// Push it onto the history stack
+//			[serverHistoryStack addObject: undoEntry];
+//			[undoEntry release];
+//			[yGameView updateLabels];
+//			[self postReady];
+//		} else {
+//			// Wipe the undo stack
+//			[serverUndoStack release];
+//			serverUndoStack = [[NSMutableArray alloc] init];
+//			
+//			// Wipe the service object
+//			[service release];
+//			service = [[GCJSONService alloc] init];
+//			
+//			[yGameView updateServerDataWithService: service];
+//		}
+	} else {
+		[yGameView updateLabels];
+	}
 }
 
-/** Returns @"WIN" or @"LOSE" if in a primitive state since Y has no draws/ties.  Returns nil if not in a primitive state **/
+- (void) undoMove: (NSNumber *) move {
+	[yGameView undoMove: move];
+	
+	[board replaceObjectAtIndex: ([move integerValue] - 1) withObject: BLANK];
+	p1Turn = !p1Turn;
+	
+	if (gameMode == OFFLINE_UNSOLVED)
+		[yGameView updateDisplay];
+	else
+		[yGameView updateServerDataWithService: service];
+}
+
+/** Returns @"WIN" or @"LOSE" if in a primitive state since Y has no draws/ties.  
+ ** Returns nil if not in a primitive state **/
 - (NSString *) primitive { 
 	NSMutableSet *edgesReached = [NSMutableSet set];
 	NSString *currentPlayerPiece;
@@ -265,6 +311,7 @@
 			if ([edgesReached count] == 3){
 				[queue release];
 				NSLog(@"Game Over");
+				NSLog(@"opponent win");
 				return misere ? @"LOSE" : @"WIN";
 			}
 			
@@ -305,6 +352,7 @@
 			if ([edgesReached count] == 3){
 				[queue release];
 				NSLog(@"Game Over");
+				NSLog(@"funny business opponent");
 				return misere ? @"WIN" : @"LOSE";
 			}
 			
@@ -332,7 +380,7 @@
 
 /** 
  A really simple utility function that deals with the whole 'convert an NSNumber to an int and check for a player's piece in that
- position' thing 
+ position thing 
  */
 - (BOOL) boardContainsPlayerPiece: (NSString *) piece forPosition: (NSNumber *) position{
 
@@ -367,7 +415,7 @@
 	[board release];
 	[humanMove release];
 
-	//[service release];
+	[service release];
 	[super dealloc];
 }
 

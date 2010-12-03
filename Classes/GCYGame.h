@@ -14,32 +14,41 @@
 @class GCYGameViewController;
 
 @interface GCYGame : GCGame {
-	NSString					*player1Name, *player2Name;
-	PlayerType					player1Type, player2Type;
+	//UI
+	GCYGameViewController		*yGameView;
 	NSMutableArray				*board;
-	GCJSONService				*service;
+	
+	//game instance variables
 	int							layers;
 	int							innerTriangleLength;
-	BOOL						p1Turn;
 	BOOL						misere;
-	GCYGameViewController		*yGameView;
+	BOOL						predictions, moveValues;
+	NSString					*player1Name, *player2Name;
+	PlayerType					player1Type, player2Type;
+	
+	//game management
+	BOOL						p1Turn;
 	PlayMode					gameMode;
+	GCJSONService				*service;
 	NSNumber					*humanMove;
 	NSMutableArray				*serverHistoryStack;
 	NSMutableArray				*serverUndoStack;
-	
 }
 
-@property (nonatomic, assign) BOOL misere;
+
+@property (nonatomic, assign) int layers;
 @property (nonatomic, assign) int innerTriangleLength;
+
+@property (nonatomic, assign) BOOL p1Turn;
+@property (nonatomic, assign) BOOL misere;
+@property (nonatomic, assign) BOOL predictions, moveValues;
+
+@property (nonatomic, assign) PlayMode gameMode;
+@property (nonatomic, retain) NSMutableArray *board;
+@property (readonly) GCYGameViewController *yGameView;
+@property (nonatomic, retain) NSMutableArray *serverHistoryStack;
 @property (nonatomic, retain) NSString *player1Name, *player2Name;
 @property (nonatomic, assign) PlayerType player1Type, player2Type;
-@property (nonatomic, assign) int layers;
-@property (nonatomic, retain) NSMutableArray *board;
-@property (nonatomic, assign) BOOL p1Turn;
-@property (readonly) GCYGameViewController *yGameView;
-@property (nonatomic, assign) PlayMode gameMode;
-@property (nonatomic, retain) NSMutableArray *serverHistoryStack;
 
 - (void) resetBoard;
 - (void) postHumanMove: (NSNumber *) num;

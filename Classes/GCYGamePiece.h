@@ -19,5 +19,6 @@
 
 - (void) makeMove: (BOOL) p1;
 - (void) moveCenter: (CGPoint) centerPoint;
+- (void) undoMove;
 
 @end

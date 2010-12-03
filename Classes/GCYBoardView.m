@@ -297,7 +297,6 @@
 	for (NSNumber *potentialNeighbor in potentialNeighbors){
 		
 		if (position != [potentialNeighbor intValue]){
-			NSLog(@"%d, %d, %d", position, [potentialNeighbor intValue], neighborCount);
 			PositionDistance * pd = [[PositionDistance alloc] initWithPosition: potentialNeighbor
 																	  Distance: [self distanceFrom: center 
 																								to: [[centers objectAtIndex: ([potentialNeighbor intValue] - 1)] CGPointValue]]];
@@ -375,11 +374,9 @@
 - (NSMutableArray *) potentialNeighborsForPosition: (int) pos{
 	//figure out what layer this is
 	int myLayer = [self layerForPos: pos];
-	NSLog(@"Layer: %d", myLayer);
 	NSMutableArray *potentialNeighbors = [self positionsInLayer: myLayer];
 	
 	if (myLayer == 0){
-		NSLog(@"%d", layers);
 		if (layers > 0)
 			[potentialNeighbors addObjectsFromArray: [self positionsInLayer: myLayer + 1]];
 	}else if (myLayer == layers){

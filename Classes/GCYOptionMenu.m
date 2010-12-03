@@ -42,6 +42,8 @@
 	game.layers = layers;
 	game.innerTriangleLength = innerTriangleLength;
 	game.misere = misere;
+	
+	[game resetBoard];
 	[delegate rulesPanelDidFinish];
 }
 

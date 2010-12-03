@@ -13,10 +13,13 @@
 @implementation GCYGameViewController
 
 @synthesize touchesEnabled;
+@synthesize boardView;
 
 - (id) initWithGame: (GCYGame *) _game{
 	if (self = [super init]){
 		game = _game;
+		touchesEnabled = NO;
+		
 		boardView = [[GCYBoardView alloc] initWithFrame: CGRectMake(0, 0, 320, 416) withLayers: game.layers andInnerLength: game.innerTriangleLength];
 		self.view = boardView;
 		
@@ -29,7 +32,12 @@
 		message.text = @" ";
 		[boardView addSubview: message];
 		
+		// The stupid spinner I forgot to create...
+		spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle: UIActivityIndicatorViewStyleWhiteLarge];
+		spinner.center = self.view.center;
+		[self.view addSubview: spinner];
 		
+		// Version Indicator (Misere vs Normal)
 		UILabel *version = [[UILabel alloc] initWithFrame: CGRectMake(200, 0, 120, 20)];
 		version.backgroundColor = [UIColor blackColor];
 		version.adjustsFontSizeToFitWidth = YES;
@@ -39,7 +47,6 @@
 		[boardView addSubview: version];
 		[self updateLabels];
 		boardView.multipleTouchEnabled = NO;
-		touchesEnabled = NO;
 		
 		CGPoint currentCenter;
 		CGFloat frameSize = [boardView circleRadius] * 5;
@@ -58,6 +65,7 @@
 			
 			[button release];
 		}
+		
 	}
 	return self;
 }
@@ -67,8 +75,15 @@
 	return [boardView boardSize];
 }
 
+
+- (void) updateDisplay {
+	[self updateLabels];
+}
+
+
 //added this method to label whose turn it is! 
 - (void) updateLabels{
+	NSLog(@"doing the label thing");
 	NSString *player = ([game currentPlayer] == PLAYER1) ? [game player1Name] : [game player2Name];
 	NSString *color = ([game currentPlayer] == PLAYER1) ? @"Red" : @"Blue";
 	//remove this later
@@ -81,10 +96,13 @@
 		PlayerType typePlay = ([game currentPlayer] == PLAYER1) ? [game player1Type] : [game player2Type];
 		PlayerType typeOpp  = ([game currentPlayer] == PLAYER1) ? [game player2Type] : [game player1Type];
 		NSString *modifier;
-		if ([game playMode] == COMPUTER_PERFECT && value == @"win") modifier = @"will";
-		else if (typeOpp == COMPUTER_PERFECT && value == @"lose") modifier = @"will";
-		else if (typePlay == COMPUTER_PERFECT && typeOpp == COMPUTER_PERFECT) modifier = @"will";
-		else modifier = @"should";
+		if ([game playMode] == COMPUTER_PERFECT && value == @"win") {
+			modifier = @"will";
+		} else if (typeOpp == COMPUTER_PERFECT && value == @"lose") {
+			modifier = @"will";
+		} else if (typePlay == COMPUTER_PERFECT && typeOpp == COMPUTER_PERFECT) {
+			modifier = @"will";
+		} else modifier = @"should";
 		[message setText: [NSString stringWithFormat: @"%@ (%@)'s turn\n%@ %@ in %d", player, color, modifier, [service getValue], [service getRemoteness]]];
 	}
 	else{
@@ -101,16 +119,19 @@
 			//eventually change these to circular backgrounds
 			if ([[movesAndValues objectForKey: move] isEqual: @"CLEAR"])
 				[B.moveValue setBackgroundColor: [UIColor clearColor]];
-			else if ([[movesAndValues objectForKey: move] isEqual: @"win"])
+			else if ([[movesAndValues objectForKey: move] isEqual: @"WIN"])
 				[B.moveValue setBackgroundColor: [UIColor greenColor]];
-			else
+			else if ([[movesAndValues objectForKey: move] isEqual: @"LOSE"])
 				[B.moveValue setBackgroundColor: [UIColor brownColor]];
+			else
+				[B.moveValue setBackgroundColor: [UIColor yellowColor]];
 			
 
 		}
 	}
 	
-	if([game primitive]){
+	if([[game primitive] isEqualToString: @"WIN"]){
+		NSLog([game primitive]);
 		[self displayPrimitive];
 	}
 }
@@ -126,10 +147,7 @@
 	return result;
 }
 - (NSDictionary *) getServerValues: (NSArray *) moves{
-	int realValue = 0;
 	NSMutableDictionary *result = [[NSMutableDictionary alloc] initWithCapacity: [moves count]];
-
-	//no idea what I'm doing here
 	
 	return result;
 }
@@ -138,10 +156,9 @@
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
-
 	
-	[self disableButtons];
-	[self updateLabels];
+	//[self disableButtons];
+	[self updateDisplay];
 
 }
 
@@ -175,7 +192,7 @@
 	[B makeMove: [game p1Turn]];
 	//[B setBackgroundColor: ([game p1Turn] ? [UIColor redColor] : [UIColor blueColor])];
 	
-	// do the board animations here (ie piece and connection animations)
+	// do the board animations here (ie connection animations)
 	for (NSNumber *neighborPosition in [[boardView neighborsForPosition] objectForKey: move]){
 		neighborInt = [neighborPosition integerValue];
 		
@@ -209,6 +226,19 @@
 	//[boardView doMove: move];
 }
 
+- (void) undoMove: (NSNumber *) move {
+	
+	GCYGamePiece *B = (GCYGamePiece *) [self.view viewWithTag: [move intValue]];
+	[B undoMove];
+	// what tic tac toe did
+//	UIImageView *piece = (UIImageView *) [self.view viewWithTag: 1000 + [move intValue]];
+//	
+//	CGPoint center = piece.center;
+//	[UIView beginAnimations: @"RemovePiece" context: NULL];
+//	[piece setFrame: CGRectMake(center.x, center.y, 0, 0)];
+//	piece.tag = 0;
+//	[UIView commitAnimations];
+}
 
 /** 
  Makes a move corresponding to the given button's position if it is a human player's turn.  
@@ -221,6 +251,14 @@
 			NSLog(@"posting human move");
 			[game postHumanMove: num];
 		}
+	}
+}
+
+/**  If touches are enabled and the piece is currently not over a valid slot, move it around.
+ **
+ **/
+- (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+	if (touchesEnabled) {
 	}
 }
 
@@ -261,24 +299,23 @@
 	service = _service;
 	[spinner startAnimating];
 	[self.view bringSubviewToFront: spinner];
-	waiter = [[NSThread alloc] initWithTarget: self selector: @selector(fetchNewData:) object: nil];
+	waiter = [[NSThread alloc] initWithTarget: self selector: @selector(fetchNewData:) object: [NSNumber numberWithBool:touchesEnabled]];
 	[waiter start];
 	timer = [[NSTimer scheduledTimerWithTimeInterval: 60 target: self selector: @selector(timedOut:) userInfo: nil repeats: NO] retain];
 }
 
-- (void) fetchNewData{
+- (void) fetchNewData: (BOOL) buttonsOn {
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	NSString *boardString = [GCYGame stringForBoard: game.board];
 	NSString *boardURL = [boardString stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
-	NSString *boardVal = [[NSString stringWithFormat: @"http://nyc.cs.berkeley.edu:8080/gcweb/service/gamesman/puzzles/y/getMoveValue;centerRows=%d;outerRows=%d;board=%@", game.innerTriangleLength, game.layers, boardURL] retain];
-	NSString *moveVals = [[NSString stringWithFormat: @"http://nyc.cs.berkeley.edu:8080/gcweb/service/gamesman/puzzles/y/getNextMoveValues;centerRows=%d;outerRows=%d;board=%@", game.innerTriangleLength, game.layers, boardURL] retain];
+	NSString *boardVal = [[NSString stringWithFormat: @"http://nyc.cs.berkeley.edu:8080/gcweb/service/gamesman/puzzles/y/getMoveValue;board=%@;centerRows=%d;outerRows=%d", boardURL, game.innerTriangleLength, game.layers] retain];
+	NSString *moveVals = [[NSString stringWithFormat: @"http://nyc.cs.berkeley.edu:8080/gcweb/service/gamesman/puzzles/y/getNextMoveValues;board=%@;centerRows=%d;outerRows=%d", boardURL, game.innerTriangleLength, game.layers] retain];
 	[service retrieveDataForBoard: boardString URL: boardVal andNextMovesURL: moveVals];
-	[self performSelectorOnMainThread: @selector (fetchFinished) withObject: nil waitUntilDone: NO];
+	[self performSelectorOnMainThread: @selector (fetchFinished) withObject: [NSNumber numberWithBool: buttonsOn] waitUntilDone: NO];
 	[pool release];
-	
 }
 
-- (void) fetchFinished{
+- (void) fetchFinished: (BOOL) buttonsOn {
 	if(waiter)	[waiter release];
 	if (waiter != nil) {
 		[spinner stopAnimating];
@@ -287,6 +324,7 @@
 	if (![service connected] || ![service status])
 		[game postProblem];
 	else {
+		/**
 		// Create the new data entry
 		NSArray *keys = [[NSArray alloc] initWithObjects: @"board", @"value", @"remoteness", @"children", nil];
 		NSMutableDictionary *children = [[NSMutableDictionary alloc] init];
@@ -308,11 +346,11 @@
 		NSDictionary *last = [game.serverHistoryStack lastObject];
 		if ([[last objectForKey: @"board"] isEqual: [entry objectForKey: @"board"]])
 			[game.serverHistoryStack removeLastObject];
-		[game.serverHistoryStack addObject: entry];
+		[game.serverHistoryStack addObject: entry];**/
 		
 		[game postReady];
 	}
-	[self updateLabels];
+	[self updateDisplay];
 }
 
 - (void) timedOut: (NSTimer *) theTimer {
@@ -336,6 +374,8 @@
 - (void)viewDidUnload {
 	// Release any retained subviews of the main view.
 	// e.g. self.myOutlet = nil;
+	[spinner release];
+	[message release];
 }
 
 

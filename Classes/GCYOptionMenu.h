@@ -17,8 +17,7 @@
 @interface GCYOptionMenu : UITableViewController <GCOptionMenu> {
 	id <GCRulesDelegate>		delegate;
 	GCYGame						*game;
-	int							layers;
-	int							innerTriangleLength;
+	int							layers, innerTriangleLength;
 	BOOL						misere;
 }
 

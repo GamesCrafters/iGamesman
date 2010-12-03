@@ -27,11 +27,25 @@
 }
 
 
-
+/** Sets the playerPiece image to be the piece of player1 or player2 depending 
+ ** on whose turn it currently is. 
+ **
+ ** @p1 - a boolean representing what player's turn it is
+ **/
 - (void) makeMove: (BOOL) p1{
 	[playerPiece setImage: [UIImage imageNamed: (p1 ? @"C4X.png" : @"C4O.png")]];
+	[moveValue setBackgroundColor: [UIColor	clearColor]];
+	
+//	[UIView beginAnimations: @"AddPiece" context: NULL];
+//	[playerPiece setFrame: CGRectMake(10 + col * size, 10 + row * size, size, size)];
+//	[UIView commitAnimations];
 	//[self setImage: [UIImage imageNamed: (p1 ? @"C4X.png" : @"C4O.png")] forState: UIControlStateNormal];
 	//[self setBackgroundImage: [UIImage imageNamed: (p1 ? @"C4X.png" : @"C4O.png")] forState:UIControlStateNormal];
+}
+
+//#######################################################
+- (void) undoMove {
+	[playerPiece setImage: nil];
 }
 		
 
