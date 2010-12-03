@@ -15,12 +15,15 @@
 	[super init];
 	fringe = [[NSMutableArray alloc] init];
 	blackList = [[NSMutableArray alloc] init];
+	parents = [[NSMutableDictionary alloc] init];
+	lastParent = nil;
 	return self;
 }
 
 - (void) dealloc {
 	[fringe release];
 	[blackList release];
+	[parents release];
 	[super dealloc];
 }
 
@@ -30,6 +33,9 @@
 	if (![blackList containsObject: position]){
 		[fringe addObject: position];
 		[blackList addObject: position];
+		if (lastParent != nil) {
+			[parents setValue:lastParent forKey: [position stringValue]];
+		}
 	}
 }
 
@@ -38,9 +44,24 @@
 - (NSNumber *) pop{
 	NSNumber * ret = [fringe objectAtIndex: 0];
 	[fringe removeObjectAtIndex: 0];
+	lastParent = ret;
 	return ret;
 }
 
+/**Return a path for the given edge **/
+- (NSMutableArray *) getPath: (NSNumber *) starter {
+	NSMutableArray *myPath = [[NSMutableArray alloc] init];
+	NSLog([starter stringValue]);
+	[myPath addObject: starter];
+	NSNumber *parent = [parents valueForKey: [starter stringValue]];
+	
+	while (parent != nil) {
+	[myPath addObject: parent];
+		parent = [parents valueForKey: [parent stringValue]];
+	}
+	
+	return myPath;
+}
 
 /** Returns and empty YGameQueue**/
 - (BOOL) notEmpty{
@@ -51,6 +72,8 @@
 /** Empty the fringe but not the blackList **/
 - (void) emptyFringe{
 	[fringe removeAllObjects];
+	[parents removeAllObjects];
+	lastParent = nil;
 }
 
 

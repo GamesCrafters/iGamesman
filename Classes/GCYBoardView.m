@@ -72,6 +72,22 @@
 
 
 #pragma mark Drawing_Stuff
+- (void) drawWinnerLine: (NSMutableArray *) path ForMode: (BOOL) misere {
+	CGPoint lastPosition = [[centers objectAtIndex:[[path objectAtIndex:0] intValue] - 1] CGPointValue];
+	CGPoint currentPosition;
+	
+	for (NSNumber *number in path){
+		currentPosition = [[centers objectAtIndex:[number intValue] - 1] CGPointValue];
+		[connectionsView addWinnerConnectionFrom: lastPosition To: currentPosition ForMode: misere];
+		lastPosition = currentPosition;
+	}
+}
+
+- (void) removeWinnerLine {
+	[connectionsView removeWinnerLine];
+}
+
+
 
 - (void)drawRect:(CGRect)rect {
 	NSMutableArray *drawnConnections = [NSMutableArray arrayWithCapacity: 0];

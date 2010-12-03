@@ -238,6 +238,7 @@
 }
 
 - (void) undoMove: (NSNumber *) move {
+	[yGameView.boardView removeWinnerLine];
 	[yGameView undoMove: move];
 	
 	[board replaceObjectAtIndex: ([move integerValue] - 1) withObject: BLANK];
@@ -253,6 +254,7 @@
  ** Returns nil if not in a primitive state **/
 - (NSString *) primitive { 
 	NSMutableSet *edgesReached = [NSMutableSet set];
+	NSMutableSet *edgePieces = [NSMutableSet set];
 	NSString *currentPlayerPiece;
 	NSNumber *currentPosition;
 	YGameQueue *queue = [[YGameQueue alloc] init];
@@ -260,12 +262,6 @@
 	//NSMutableDictionary *positionConnections = yGameView.boardView.neighborsForPosition;
 	NSArray *leftEdges = [yGameView leftEdges];
 	
-	
-	//Might need to do away with this... 
-	if ([[self legalMoves] count] == 0){
-		[queue release];
-		return misere ? @"LOSE" : @"WIN";
-	}
 	
 	//Check current player's pieces
 	if (!p1Turn)
@@ -276,6 +272,8 @@
 	//for each position in left edges
 	for (NSNumber * position in leftEdges){
 		[queue emptyFringe]; //don't empty the blacklist, just the queue
+		[edgePieces removeAllObjects];
+		NSLog(@"reset");
 			
 		//If the current player's piece is in that position, add it to the queue
 		if ([self boardContainsPlayerPiece: currentPlayerPiece forPosition: position]){
@@ -294,13 +292,26 @@
 					NSSet * neighborEdges = [yGameView positionEdges: neighborPosition];
 					
 					//If neighborPosition touches any edges, add them to edgesReached
-					if (neighborEdges)
-						[edgesReached unionSet: neighborEdges];
+					if (neighborEdges) {
+						NSMutableSet *tempSet = [NSMutableSet set];
+						[tempSet setSet: edgesReached];
+						[tempSet unionSet:neighborEdges];
+						NSLog(@"count: %d %d for: neigborPosition: %@", [tempSet count], [edgesReached count], [neighborPosition stringValue]);
+						if ([tempSet count] > [edgesReached count]) {
+							edgesReached = tempSet;
+							[edgePieces addObject: neighborPosition];
+						}
+					}
 				}
 			}
 			//Check if all of the edges are reached
 			if ([edgesReached count] == 3){
+				
+				for (NSNumber *awesomeEdge in edgePieces) {
+					[yGameView.boardView drawWinnerLine: [queue getPath: awesomeEdge] ForMode: misere];
+				}
 				[queue release];
+				NSLog(@"this is the win");
 				return misere ? @"LOSE" : @"WIN";
 			}
 			
@@ -317,6 +328,8 @@
 	//for each position in left edges
 	for (NSNumber * position in leftEdges){
 		[queue emptyFringe]; //don't empty the blacklist, just the queue
+		[edgePieces removeAllObjects];
+		NSLog(@"reset");
 		
 		//If the current player's piece is in that position, add it to the queue
 		if ([self boardContainsPlayerPiece: currentPlayerPiece forPosition: position]){
@@ -333,17 +346,35 @@
 					[queue push: neighborPosition];
 					NSSet * neighborEdges = [yGameView positionEdges: neighborPosition];
 					//If neighborPosition touches any edges, add them to edgesReached
-					if (neighborEdges)
-						[edgesReached unionSet: neighborEdges];
+					if (neighborEdges) {
+						NSMutableSet *tempSet = [NSMutableSet set];
+						[tempSet setSet: edgesReached];
+						[tempSet unionSet:neighborEdges];
+						if ([tempSet count] > [edgesReached count]) {
+							NSLog(@"count: %d %d for: neigborPosition: %@", [tempSet count], [edgesReached count], [neighborPosition stringValue]);
+							edgesReached = tempSet;
+							[edgePieces addObject: neighborPosition];
+						}
+					}
 				}
 			}
 			//Check if all of the edges are reached
 			if ([edgesReached count] == 3){
+				for (NSNumber *awesomeEdge in edgePieces) {
+					[yGameView.boardView drawWinnerLine: [queue getPath: awesomeEdge] ForMode: misere];
+				}
 				[queue release];
+				NSLog(@"this is the real win");
 				return misere ? @"WIN" : @"LOSE";
 			}
 			
 		}
+	}
+	
+	//Might need to do away with this... 
+	if ([[self legalMoves] count] == 0){
+		[queue release];
+		return misere ? @"LOSE" : @"WIN";
 	}
 	
 	[queue release];

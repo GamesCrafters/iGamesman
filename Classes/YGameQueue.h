@@ -12,6 +12,8 @@
 @interface YGameQueue : NSObject {
 	NSMutableArray *fringe;
 	NSMutableArray *blackList;
+	NSMutableDictionary *parents;
+	NSNumber *lastParent;
 }
 
 - (void) push: (NSNumber *) position;
@@ -19,6 +21,7 @@
 - (BOOL) notEmpty;
 - (void) emptyFringe;
 - (void) clearAll;
+- (NSMutableArray *) getPath: (NSNumber *) starter;
 
 
 @end

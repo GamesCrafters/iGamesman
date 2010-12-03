@@ -57,6 +57,7 @@
     if (self = [super initWithFrame:frame]) {
         p1Connections = [[NSMutableArray alloc] init];
 		p2Connections = [[NSMutableArray alloc] init];
+		winnerConnections = [[NSMutableArray alloc] init];
 		p1Color = [UIColor redColor];
 		p2Color = [UIColor blueColor];
 		p1Count = 0;
@@ -108,6 +109,17 @@
 	[connection release];
 }
 
+- (void) addWinnerConnectionFrom: (CGPoint) point1 To: (CGPoint) point2 ForMode: (BOOL) _misere{
+	misere = _misere;
+	YConnection *connection = [[YConnection alloc] initWithPointA: point1 andPointB: point2];
+	[winnerConnections addObject: connection];
+	[connection release];
+}
+
+- (void) removeWinnerLine {
+	[winnerConnections removeAllObjects];
+}
+
 
 - (void)drawRect:(CGRect)rect {
     // Drawing code for all of the connections... yay!
@@ -153,12 +165,23 @@
 		CGContextAddLineToPoint(context, connection.pointB.x, connection.pointB.y);
 		CGContextStrokePath(context);
 	}
+	
+	CGContextSetLineWidth(context, lineWidth * 1.5);
+	if (misere) {
+		CGContextSetRGBStrokeColor(context, 0.5f, 0.0f, 0.0f, 1.0f);
+	}else CGContextSetRGBStrokeColor(context, 0.0f, 1.0f, 0.0f, 1.0f);
+	for (YConnection *connection in winnerConnections){
+		CGContextMoveToPoint(context, connection.pointA.x, connection.pointA.y);
+		CGContextAddLineToPoint(context, connection.pointB.x, connection.pointB.y);
+		CGContextStrokePath(context);
+	}
 }
 
 
 - (void)dealloc {
 	[p1Connections release];
 	[p2Connections release];
+	[winnerConnections release];
     [super dealloc];
 }
 

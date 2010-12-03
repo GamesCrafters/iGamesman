@@ -12,8 +12,10 @@
 @interface GCYBoardConnectionsView : UIView {
 	NSMutableArray		*p1Connections;
 	NSMutableArray		*p2Connections;
+	NSMutableArray		*winnerConnections;
 	UIColor				*p1Color;
 	UIColor				*p2Color;
+	BOOL				misere;
 	int					p1Count;
 	int					p2Count;
 	CGFloat				lineWidth;
@@ -29,6 +31,8 @@
 
 - (void) addConnectionFrom: (CGPoint) point1 To: (CGPoint) point2 ForPlayer: (BOOL) player1;
 - (void) removeConnectionFrom: (CGPoint) point1 ForPlayer: (BOOL) player1;
+- (void) addWinnerConnectionFrom: (CGPoint) point1 To: (CGPoint) point2 ForMode: (BOOL) _misere;
+- (void) removeWinnerLine;
 
 
 @end

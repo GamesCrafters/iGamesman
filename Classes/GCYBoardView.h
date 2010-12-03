@@ -68,5 +68,7 @@
 - (NSMutableArray *) potentialNeighborsForPosition: (int) pos;
 - (int) layerForPos: (int) pos;
 - (NSMutableArray *) positionsInLayer: (int) layer;
+- (void) drawWinnerLine: (NSMutableArray *) path ForMode: (BOOL) misere;
+- (void) removeWinnerLine;
 
 @end
