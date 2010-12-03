@@ -207,7 +207,6 @@
 	p1Turn = !p1Turn;
 	
 	if(gameMode == ONLINE_SOLVED){
-		[yGameView updateServerDataWithService: service];
 //		// Peek at the top of the undo stack
 //		NSDictionary *undoEntry = [serverUndoStack lastObject];
 //		if ([[undoEntry objectForKey: @"board"] isEqual: board]) {
@@ -231,6 +230,8 @@
 //			
 //			[yGameView updateServerDataWithService: service];
 //		}
+		[yGameView updateServerDataWithService: service];
+
 	} else {
 		[yGameView updateDisplay];
 	}
