@@ -196,8 +196,8 @@
         [othView updateLegalMoves];
         [othView updateLabels];
 //    } else {
- //       [othView updateServerDataWithService: service];
- //   }
+//        [othView updateServerDataWithService: service];
+//    }
 		
 	
 }
@@ -213,10 +213,10 @@
 	if ([move intValue] != -1) {
 		p1Turn = !p1Turn;
 	} 
- //   if (gameMode == OFFLINE_UNSOLVED) {
+//    if (gameMode == OFFLINE_UNSOLVED) {
         [othView updateLegalMoves];
         [othView updateLabels];
- //   } else {
+//    } else {
 //        [othView updateServerDataWithService: service];
 //    }
 }
@@ -250,7 +250,7 @@
 }
 
 - (void) notifyWhenReady {
-	if (gameMode == OFFLINE_UNSOLVED || gameMode ==ONLINE_SOLVED)
+	if (gameMode == OFFLINE_UNSOLVED || gameMode == ONLINE_SOLVED)
 		[[NSNotificationCenter defaultCenter] postNotificationName: @"GameIsReady" object: self];
 }
 
@@ -345,7 +345,7 @@
 	return rand() % (rows * cols);
 }
 
-
+/*
 - (void) postReady {
 	[[NSNotificationCenter defaultCenter] postNotificationName: @"GameIsReady" object: self];
 }
@@ -353,8 +353,9 @@
 - (void) postProblem {
 	[[NSNotificationCenter defaultCenter] postNotificationName: @"GameEncounteredProblem" object: self];
 }
-/*
+
 - (NSString *) getValue {
+	
 	NSDictionary *entry = (NSDictionary *) [serverHistoryStack lastObject];
 	 NSString *value = [[entry objectForKey: @"value"] uppercaseString];
 	 if ([value isEqual: @"UNAVAILABLE"]) value = nil;
@@ -362,16 +363,16 @@
 	
 	return [service getValue];
 }
-/*
+
 - (NSInteger) getRemoteness {
-	/*NSDictionary *entry = (NSDictionary *) [serverHistoryStack lastObject];
+	NSDictionary *entry = (NSDictionary *) [serverHistoryStack lastObject];
      return [[entry objectForKey: @"remoteness"] integerValue];
 	
 	return [service getRemoteness];
 }
 
 - (NSString *) getValueOfMove: (NSNumber *) move {
-	/*NSString *s = [[NSString alloc] initWithFormat: @"%d", [move intValue] - 1];
+	NSString *s = [[NSString alloc] initWithFormat: @"%d", [move intValue] - 1];
      NSDictionary *entry = (NSDictionary *) [serverHistoryStack lastObject];
      NSDictionary *children = (NSDictionary *) [entry objectForKey: @"children"];
      NSDictionary *moveEntry = (NSDictionary *) [children objectForKey: s];
@@ -379,13 +380,14 @@
      if ([value isEqual: @"UNAVAILABLE"]) value = nil;
      return value;
 	
-	NSString *serverMove = [NSString stringWithFormat: @"%c%d", 'A' + [move intValue] % cols, 1 + [move intValue] / cols];
 	
+	NSString *serverMove = [NSString stringWithFormat: @"%c%d", 'A' + [move intValue] % cols, 1 + [move intValue] / cols];
+	NSLog(@"%@", [service getValueAfterMove:serverMove]);
 	return [service getValueAfterMove: serverMove];
 }
 
 - (NSInteger) getRemotenessOfMove: (NSNumber *) move {
-	/*NSString *s = [[NSString alloc] initWithFormat: @"%d", [move intValue] - 1];
+	NSString *s = [[NSString alloc] initWithFormat: @"%d", [move intValue] - 1];
      NSDictionary *entry = (NSDictionary *) [serverHistoryStack lastObject];
      NSDictionary *children = (NSDictionary *) [entry objectForKey: @"children"];
      NSDictionary *moveEntry = (NSDictionary *) [children objectForKey: s];

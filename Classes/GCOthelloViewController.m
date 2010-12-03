@@ -53,7 +53,7 @@
     int player = !game.p1Turn + 1;
 	NSString *boardVal = [[NSString stringWithFormat: @"http://nyc.cs.berkeley.edu:8080/gcweb/service/gamesman/puzzles/othello/getMoveValue;board=%@;player=%d;option=136", boardURL, player] retain];
 	NSString *moveVals = [[NSString stringWithFormat: @"http://nyc.cs.berkeley.edu:8080/gcweb/service/gamesman/puzzles/othello/getNextMoveValues;board=%@;player=%d;option=136", boardURL, player] retain];
- //   NSLog(@"BoardString %@ Board URL %@ Move URLs %@", boardString, boardVal, moveVals);
+    NSLog(@"BoardString %@ Board URL %@ Move URLs %@", boardString, boardVal, moveVals);
 	[service retrieveDataForBoard: boardString URL: boardVal andNextMovesURL: moveVals];
 	
 	[self performSelectorOnMainThread: @selector(fetchFinished:) withObject: [NSNumber numberWithBool: buttonsOn] waitUntilDone: NO];
