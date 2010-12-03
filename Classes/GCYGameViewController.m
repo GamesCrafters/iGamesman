@@ -131,7 +131,6 @@
 	}
 	
 	if([[game primitive] isEqualToString: @"WIN"]){
-		NSLog([game primitive]);
 		[self displayPrimitive];
 	}
 }
@@ -308,14 +307,19 @@
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	NSString *boardString = [GCYGame stringForBoard: [game getBoard]];
 	NSString *boardURL = [boardString stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
-	NSString *boardVal = [[NSString stringWithFormat: @"http://nyc.cs.berkeley.edu:8080/gcweb/service/gamesman/puzzles/y/getMoveValue;board=%@;centerRows=%d;outerRows=%d", boardURL, game.innerTriangleLength, game.layers] retain];
-	NSString *moveVals = [[NSString stringWithFormat: @"http://nyc.cs.berkeley.edu:8080/gcweb/service/gamesman/puzzles/y/getNextMoveValues;board=%@;centerRows=%d;outerRows=%d", boardURL, game.innerTriangleLength, game.layers] retain];
+	NSLog([NSString stringWithFormat: @"http://nyc.cs.berkeley.edu:8080/gcweb/service/gamesman/puzzles/y/getMoveValue;board=%@;centerRows=%d;outerRows=%d", boardURL, game.innerTriangleLength + 1, game.layers]);
+	NSString *boardVal = [[NSString stringWithFormat: @"http://nyc.cs.berkeley.edu:8080/gcweb/service/gamesman/puzzles/y/getMoveValue;board=%@;centerRows=%d;outerRows=%d", boardURL, game.innerTriangleLength + 1, game.layers] retain];
+	NSString *moveVals = [[NSString stringWithFormat: @"http://nyc.cs.berkeley.edu:8080/gcweb/service/gamesman/puzzles/y/getNextMoveValues;board=%@;centerRows=%d;outerRows=%d", boardURL, game.innerTriangleLength + 1, game.layers] retain];
+	NSLog(@"starting the hellish retrieval");
 	[service retrieveDataForBoard: boardString URL: boardVal andNextMovesURL: moveVals];
-	[self performSelectorOnMainThread: @selector (fetchFinished) withObject: [NSNumber numberWithBool: buttonsOn] waitUntilDone: NO];
+	[self performSelectorOnMainThread: @selector(fetchFinished:) withObject: [NSNumber numberWithBool: buttonsOn] waitUntilDone: NO];
 	[pool release];
+	NSLog(@"OMG Almost DONE");
+
 }
 
 - (void) fetchFinished: (BOOL) buttonsOn {
+	NSLog(@"OMG DONE");
 	if (waiter != nil) {
 		[spinner stopAnimating];
 		[timer invalidate];
