@@ -207,13 +207,13 @@
 		[conView updateLabels];
 }
 
-- (NSString *) primitive: (NSArray *) theBoard  { 
+- (NSString *) primitive { 
 	IntegerQueue * queue = [[IntegerQueue alloc] init];
 	int position;
 	int neighborPosition;
 	
 	if(circling){
-		if([self encircled: theBoard]){
+		if([self encircled: board]){
 			return misere ? @"WIN" : @"LOSE";
 		}
 	}
@@ -376,7 +376,7 @@
 	return nil;
 }
 
-- (BOOL) encircled: (NSArray *) theBoard{
+- (BOOL) encircled: (NSArray *) theBoard {
 	NSMutableArray * loop = [[NSMutableArray alloc] initWithCapacity: size*size];
 	
 	for(int i = 0; i < size*size; i += 1){
