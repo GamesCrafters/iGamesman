@@ -306,13 +306,13 @@
 				moveIndex = [tieRemotes indexOfObject: R inRange: NSMakeRange(moveIndex + 1, [tieRemotes count] - moveIndex - 1)];
 			}
 		} else if ([draws count] != 0) {
-			NSLog(@"Some draw");
+			moveChoices = draws;
 		} else {
 			NSLog(@"Lose case");
 			int maxRemote = -1;
 			for (id a_move in loses) {
 				int index = [legals indexOfObject: a_move];
-				maxRemote = MIN(maxRemote, [[remotes objectAtIndex: index] integerValue]);
+				maxRemote = MAX(maxRemote, [[remotes objectAtIndex: index] integerValue]);
 			}
 			NSLog(@"%d", maxRemote);
 			NSNumber *R = [NSNumber numberWithInt: maxRemote];
