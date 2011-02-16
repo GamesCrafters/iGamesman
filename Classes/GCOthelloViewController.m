@@ -177,10 +177,10 @@
         if([legalMoves objectAtIndex: 0] != @"PASS") {
             for (NSNumber* move in legalMoves) {
                 UIImageView *newView = (UIImageView *)[self.view viewWithTag:5000 + [move intValue]];
-                UIImage *moveImage = [UIImage imageNamed: (game.p1Turn ? [[NSDictionary dictionaryWithObjectsAndKeys: @"othwin.png", @"WIN",
-                                                                       @"othlose.png", @"LOSE", @"othtie.png", @"TIE", nil] objectForKey: [game getValueOfMove: move]]
-                                                       : [[NSDictionary dictionaryWithObjectsAndKeys: @"othwin.png", @"WIN",
-                                                           @"othlose.png", @"LOSE", @"othtie.png", @"TIE", nil] objectForKey: [game getValueOfMove: move]])];
+                UIImage *moveImage = [UIImage imageNamed: (game.p1Turn ? [[NSDictionary dictionaryWithObjectsAndKeys: @"othwin.png", @"lose",
+                                                                       @"othlose.png", @"win", @"othtie.png", @"tie", nil] objectForKey: [game getValueOfMove: move]]
+                                                       : [[NSDictionary dictionaryWithObjectsAndKeys: @"othwin.png", @"lose",
+                                                           @"othlose.png", @"win", @"othtie.png", @"tie", nil] objectForKey: [game getValueOfMove: move]])];
                 [newView setImage:moveImage];
                 [newView setHidden:NO];
             }
@@ -231,7 +231,7 @@
         }
     } else {
         if ([game playMode] == ONLINE_SOLVED && game.predictions) {
-            textLabel.text = [NSString stringWithFormat: @"%@ should %@ in %d",player,  [game getValue], [game getRemoteness]];
+            textLabel.text = [NSString stringWithFormat: @"%@ should %@",player,  [game getValue], [game getRemoteness]];
         } else {
             textLabel.text = [NSString stringWithFormat: @"%@", player];
         }

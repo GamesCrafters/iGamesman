@@ -93,10 +93,10 @@
         predictions = NO;
         moveValues = NO;
     }
-//	if (mode == ONLINE_SOLVED) {
-//		service = [[GCJSONService alloc] init];
-//		[othView updateServerDataWithService: service];
-//	}
+	if (mode == ONLINE_SOLVED) {
+		service = [[GCJSONService alloc] init];
+		[othView updateServerDataWithService: service];
+	}
 }
 
 
@@ -192,12 +192,12 @@
 		}
 	} 
 	p1Turn = !p1Turn;
-//    if (gameMode == OFFLINE_UNSOLVED) {
+    if (gameMode == OFFLINE_UNSOLVED) {
         [othView updateLegalMoves];
         [othView updateLabels];
-//    } else {
-//        [othView updateServerDataWithService: service];
-//    }
+    } else {
+        [othView updateServerDataWithService: service];
+    }
 		
 	
 }
@@ -213,12 +213,12 @@
 	if ([move intValue] != -1) {
 		p1Turn = !p1Turn;
 	} 
-//    if (gameMode == OFFLINE_UNSOLVED) {
+    if (gameMode == OFFLINE_UNSOLVED) {
         [othView updateLegalMoves];
         [othView updateLabels];
-//    } else {
-//        [othView updateServerDataWithService: service];
-//    }
+    } else {
+        [othView updateServerDataWithService: service];
+    }
 }
 
 - (NSString *) primitive {
@@ -250,7 +250,7 @@
 }
 
 - (void) notifyWhenReady {
-	if (gameMode == OFFLINE_UNSOLVED || gameMode == ONLINE_SOLVED)
+	if (gameMode == OFFLINE_UNSOLVED)
 		[[NSNotificationCenter defaultCenter] postNotificationName: @"GameIsReady" object: self];
 }
 
@@ -322,7 +322,7 @@
 	[board replaceObjectAtIndex:col+(row+1)*cols+1 withObject:P1PIECE];
 }
 
-
+/*
 // Return the value of the current board
 - (NSString *) getValue {
 	int choice = rand() % 3;
@@ -345,7 +345,7 @@
 	return rand() % (rows * cols);
 }
 
-/*
+*/
 - (void) postReady {
 	[[NSNotificationCenter defaultCenter] postNotificationName: @"GameIsReady" object: self];
 }
@@ -355,49 +355,58 @@
 }
 
 - (NSString *) getValue {
-	
-	NSDictionary *entry = (NSDictionary *) [serverHistoryStack lastObject];
+	/*NSDictionary *entry = (NSDictionary *) [serverHistoryStack lastObject];
 	 NSString *value = [[entry objectForKey: @"value"] uppercaseString];
 	 if ([value isEqual: @"UNAVAILABLE"]) value = nil;
-	 return value;
+	 return value;*/
 	
 	return [service getValue];
 }
 
 - (NSInteger) getRemoteness {
-	NSDictionary *entry = (NSDictionary *) [serverHistoryStack lastObject];
-     return [[entry objectForKey: @"remoteness"] integerValue];
+	/*NSDictionary *entry = (NSDictionary *) [serverHistoryStack lastObject];
+     return [[entry objectForKey: @"remoteness"] integerValue];*/
 	
 	return [service getRemoteness];
 }
 
 - (NSString *) getValueOfMove: (NSNumber *) move {
-	NSString *s = [[NSString alloc] initWithFormat: @"%d", [move intValue] - 1];
+	/*NSString *s = [[NSString alloc] initWithFormat: @"%d", [move intValue] - 1];
      NSDictionary *entry = (NSDictionary *) [serverHistoryStack lastObject];
      NSDictionary *children = (NSDictionary *) [entry objectForKey: @"children"];
      NSDictionary *moveEntry = (NSDictionary *) [children objectForKey: s];
      NSString *value = [[moveEntry objectForKey: @"value"] uppercaseString];
      if ([value isEqual: @"UNAVAILABLE"]) value = nil;
-     return value;
+     return value;*/
+    int row = [move intValue] / cols + 1;
+    if (row==4) {
+        row = 1;
+    } else if (row==1) {
+        row =4;
+    } else if (row==2){
+        row = 3;
+    } else {
+        row  = 2;
+    }
+    
 	
-	
-	NSString *serverMove = [NSString stringWithFormat: @"%c%d", 'A' + [move intValue] % cols, 1 + [move intValue] / cols];
-	NSLog(@"%@", [service getValueAfterMove:serverMove]);
+	NSString *serverMove = [NSString stringWithFormat: @"%c%d", 'a' + [move intValue] % cols,  row];
+	NSLog(serverMove);
+    NSLog(@"%@", [service getValueAfterMove: serverMove]);
 	return [service getValueAfterMove: serverMove];
 }
 
 - (NSInteger) getRemotenessOfMove: (NSNumber *) move {
-	NSString *s = [[NSString alloc] initWithFormat: @"%d", [move intValue] - 1];
+	/*NSString *s = [[NSString alloc] initWithFormat: @"%d", [move intValue] - 1];
      NSDictionary *entry = (NSDictionary *) [serverHistoryStack lastObject];
      NSDictionary *children = (NSDictionary *) [entry objectForKey: @"children"];
      NSDictionary *moveEntry = (NSDictionary *) [children objectForKey: s];
-     return [[moveEntry objectForKey: @"remoteness"] integerValue];
+     return [[moveEntry objectForKey: @"remoteness"] integerValue];*/
 	
 	NSString *serverMove = [NSString stringWithFormat: @"%c%d", 'A' + [move intValue] % cols, 1 + [move intValue] / cols];
 	
 	return [service getRemotenessAfterMove: serverMove];
 }
-*/
 
 // Setter for Predictions
 // Must update the view to reflect the new settings
