@@ -391,9 +391,13 @@
     
 	
 	NSString *serverMove = [NSString stringWithFormat: @"%c%d", 'a' + [move intValue] % cols,  row];
-	NSLog(serverMove);
-    NSLog(@"%@", [service getValueAfterMove: serverMove]);
-	return [service getValueAfterMove: serverMove];
+    NSString * value = [service getValueAfterMove: serverMove];
+    if ([value isEqualToString:@"win"]){
+        value = @"lose";
+    } else if ([value isEqualToString:@"lose"]) {
+        value = @"win";
+    }
+	return value;
 }
 
 - (NSInteger) getRemotenessOfMove: (NSNumber *) move {

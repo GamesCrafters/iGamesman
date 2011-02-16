@@ -903,13 +903,14 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Kevin Jorgensen";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Don't Code Sign";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9504B0D9-9206-4161-B5A6-AB16AEE1CEBD";
-				SDKROOT = iphoneos4.0;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				SDKROOT = iphoneos;
 			};
 			name = Distribution;
 		};
@@ -923,7 +924,7 @@
 				GCC_PREFIX_HEADER = GamesmanMobile_Prefix.pch;
 				INFOPLIST_FILE = "GamesmanMobile-Info.plist";
 				PRODUCT_NAME = GamesmanMobile;
-				SDKROOT = iphoneos4.0;
+				SDKROOT = iphonesimulator4.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Distribution;
@@ -940,7 +941,7 @@
 				GCC_PREFIX_HEADER = GamesmanMobile_Prefix.pch;
 				INFOPLIST_FILE = "GamesmanMobile-Info.plist";
 				PRODUCT_NAME = GamesmanMobile;
-				SDKROOT = iphoneos4.0;
+				SDKROOT = iphonesimulator4.0;
 			};
 			name = Debug;
 		};
@@ -954,7 +955,7 @@
 				GCC_PREFIX_HEADER = GamesmanMobile_Prefix.pch;
 				INFOPLIST_FILE = "GamesmanMobile-Info.plist";
 				PRODUCT_NAME = GamesmanMobile;
-				SDKROOT = iphoneos4.0;
+				SDKROOT = iphonesimulator4.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -964,14 +965,14 @@
 			buildSettings = {
 				ADDITIONAL_SDKS = "";
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Kevin Jorgensen (77P3ZL8N2K)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Don't Code Sign";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "2F978BBD-8493-4F32-89DC-0F5811EA6084";
-				SDKROOT = iphoneos4.1;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				SDKROOT = iphoneos;
 			};
 			name = Debug;
 		};
@@ -979,12 +980,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Don't Code Sign";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
-				SDKROOT = iphoneos4.0;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				SDKROOT = iphoneos;
 			};
 			name = Release;
 		};

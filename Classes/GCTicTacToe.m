@@ -203,7 +203,7 @@
 	return value;*/
 	
 	NSString *serverMove = [NSString stringWithFormat: @"%c%d", 'A' + [move intValue] % cols, 1 + [move intValue] / cols];
-	
+	NSLog([service getValueAfterMove: serverMove]);
 	return [service getValueAfterMove: serverMove];
 }
 
