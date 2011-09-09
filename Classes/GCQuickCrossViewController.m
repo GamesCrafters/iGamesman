@@ -82,7 +82,7 @@
 - (void) doMove: (NSArray *) move {
 	if ([[move objectAtIndex: 2] isEqual: SPIN])
 	{
-		UIImageView *image = [self.view viewWithTag:1000 + [[move objectAtIndex: 0] intValue]]; //piece is already there
+		UIImageView *image = (UIImageView *)[self.view viewWithTag:1000 + [[move objectAtIndex: 0] intValue]]; //piece is already there
 		[UIView beginAnimations:nil context:NULL];
 		[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
 		[UIView setAnimationDuration:1.0];

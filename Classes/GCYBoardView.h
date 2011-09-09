@@ -64,7 +64,7 @@
 - (int) positionsInTriangle: (int) triangleSideLength;
 - (NSMutableArray *) positionsAtEdge: (int) edge;
 - (NSMutableArray *) layerPositionsAtEdge: (int) edge;
-- (NSMutableSet *) trianglePositionsAtEdge: (int) edge;
+- (NSMutableArray *) trianglePositionsAtEdge: (int) edge;
 - (NSMutableArray *) potentialNeighborsForPosition: (int) pos;
 - (int) layerForPos: (int) pos;
 - (NSMutableArray *) positionsInLayer: (int) layer;
