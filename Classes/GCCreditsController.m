@@ -17,7 +17,7 @@
 		self.title = @"Gamesman Credits";
 		self.tableView.allowsSelection = NO;
 		
-		headers = [[NSArray alloc] initWithObjects: @"GamesmanMobile", @"Project Lead", @"Team Lead",
+		headers = [[NSArray alloc] initWithObjects: @"iGamesman", @"GamesCrafters Project Lead", @"iGamesman Team Lead",
 				   @"Connect-4", @"Connections", @"Y", @"Connect-4 Databases", 
 				   @"Connections & Y Databases", nil];
 		NSArray *connections = [NSArray arrayWithObjects: @"Arturo Wu Zhou", @"Kevin Jorgensen", nil];
@@ -27,7 +27,8 @@
 						 @"Patrick Horn", @"Steven Schlansker", @"Wesley Hart", nil];
 		NSArray *sp10solvers = [NSArray arrayWithObjects: @"David Spies", @"Rohit Poddar", 
 								@"Sri Thatipamala", @"Thomas Lam", @"Yang Wen", @"Yian Shang", nil];
-		info    = [[NSArray alloc] initWithObjects: @"Version 0.7.6", @"Dan Garcia", @"Kevin Jorgensen", 
+		NSString *versionNumber = [NSString stringWithFormat: @"Version %@", [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleVersion"]];
+		info    = [[NSArray alloc] initWithObjects: versionNumber, @"Dan Garcia", @"Kevin Jorgensen", 
 				   @"Kevin Jorgensen", connections, y, java, sp10solvers, nil];
     }
     return self;
