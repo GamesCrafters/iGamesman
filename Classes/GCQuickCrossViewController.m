@@ -28,6 +28,89 @@
 	return self;
 }
 
+#pragma mark - Networking
+
+- (void) updateServerDataWithService: (GCJSONService *) _service
+{
+    service = _service;
+    [spinner startAnimating];
+    [self.view bringSubviewToFront:spinner];
+    waiter = [[NSThread alloc] initWithTarget:self selector:@selector(fetchNewData:) object:[NSNumber numberWithBool:touchesEnabled]];
+    [waiter start];
+    timer = [[NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(timedOut:) userInfo:nil repeats:NO] retain];
+}
+
+#pragma mark TODO use correct back-end interface
+- (void) fetchNewData: (BOOL) buttonsOn
+{
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    
+    NSString *boardString = [game getBoardString];
+    NSString *boardURL = [boardString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *boardVal = [[NSString stringWithFormat:@"http://nyc.cs.berkeley.edu:8080/gcweb/service/gamesman/puzzles/quickcross/getMoveValue;board=%@", boardURL] retain];
+    NSString *moveVals = [[NSString stringWithFormat:@"http://nyc.cs.berkeley.edu:8080/gcweb/service/gamesman/puzzles/quickcross/getNextMoveValues;board=%@", boardURL] retain];
+    [service retrieveDataForBoard:boardString URL:boardVal andNextMovesURL:moveVals];
+    [self performSelectorOnMainThread:@selector(fetchFinished:) withObject:[NSNumber numberWithBool:buttonsOn] waitUntilDone:NO];
+    [pool release];
+}
+
+- (void) fetchFinished: (BOOL) buttonsOn
+{
+    if (waiter) {
+        [spinner stopAnimating];
+        [timer invalidate];
+    }
+    
+    if (![service connected] || ![service status]) {
+        [game postProblem];
+    } else {
+        // Create the new data entry
+		NSArray *keys = [[NSArray alloc] initWithObjects: @"board", @"value", @"remoteness", @"children", nil];
+		NSMutableDictionary *children = [[NSMutableDictionary alloc] init];
+		for (NSString *move in [game legalMoves]) {
+			move = [NSString stringWithFormat: @"%d", [move integerValue] - 1];
+			NSDictionary *moveDict = [[NSDictionary alloc] initWithObjectsAndKeys: [[service getValueAfterMove: move] lowercaseString], @"value",
+									  [NSNumber numberWithInteger: [service getRemotenessAfterMove: move]], @"remoteness", nil];
+			[children setObject: moveDict forKey: move];
+		}
+		NSString *val = [service getValue];
+		if (!val) val = @"UNAVAILABLE";
+		NSArray *values = [[NSArray alloc] initWithObjects: [[game getBoard] copy], val, [NSNumber numberWithInteger: [service getRemoteness]], children, nil];
+		[children release];
+		NSDictionary *entry = [[NSDictionary alloc] initWithObjects: values forKeys: keys];
+		[values release];
+		[keys release];
+		
+		// Push the new entry onto the history stack
+		NSDictionary *last = [game.serverHistoryStack lastObject];
+		if ([[last objectForKey: @"board"] isEqual: [entry objectForKey: @"board"]])
+			[game.serverHistoryStack removeLastObject];
+		[game.serverHistoryStack addObject: entry];
+		
+		[game postReady];
+    }
+}
+
+- (void) timedOut: (NSTimer *) theTimer
+{
+    messageLabel.numberOfLines = 4;
+	messageLabel.lineBreakMode = UILineBreakModeWordWrap;
+	[messageLabel setText: @"Server request timed out. Check the strength of your Internet connection."];
+	
+	[waiter cancel];
+	[waiter release];
+	waiter = nil;
+	[spinner stopAnimating];
+}
+
+- (void) stop {
+	if (waiter)
+		[waiter cancel];
+	if (timer)
+		[timer invalidate];
+}
+
+
 - (void) updateDisplay {
 	NSString *player = game.p1Turn ? [game player1Name] : [game player2Name];
 	NSString *oppPlayer = game.p1Turn ? [game player2Name] : [game player1Name];
@@ -202,6 +285,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle: UIActivityIndicatorViewStyleWhiteLarge];
+    spinner.frame = CGRectMake(self.view.frame.size.width / 2.0, self.view.frame.size.height / 2.0, 37.0f, 37.0f);
+	[self.view addSubview: spinner];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {

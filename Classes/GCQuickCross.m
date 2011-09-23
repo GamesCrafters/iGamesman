@@ -23,6 +23,7 @@
 @synthesize rows, cols, inalign, misere;
 @synthesize p1Turn;
 @synthesize predictions, moveValues;
+@synthesize serverHistoryStack;
 
 
 - (id) init {
@@ -272,16 +273,32 @@
 	return nil;
 }
 
-- (void) startGameInMode:(PlayMode)mode {
+- (void) startGameInMode: (PlayMode) mode {
 	[self resetBoard];
 	
 	gameMode = mode;
 	
 	p1Turn = YES;
 	
+	if (mode == OFFLINE_UNSOLVED) {
+		predictions = NO;
+		moveValues = NO;
+	}
+	
 	if (!qcView)
 		[qcView release];
 	qcView = [[GCQuickCrossViewController alloc] initWithGame: self];
+	
+	PlayerType current = [self currentPlayer] == PLAYER1 ? player1Type : player2Type;
+	if (current == HUMAN)
+		qcView.touchesEnabled = YES;		
+	
+	if (mode == ONLINE_SOLVED) {
+		service = [[GCJSONService alloc] init];
+		serverHistoryStack = [[NSMutableArray alloc] init];
+		serverUndoStack    = [[NSMutableArray alloc] init];
+		[qcView updateServerDataWithService: service];
+	}
 }
 
 - (void) notifyWhenReady {
@@ -304,6 +321,23 @@
 - (void) postHumanMove: (NSArray *) move {
 	humanMove = move;
 	[[NSNotificationCenter defaultCenter] postNotificationName: @"HumanChoseMove" object: self];
+}
+
+- (void) postReady {
+	[[NSNotificationCenter defaultCenter] postNotificationName: @"GameIsReady" object: self];
+}
+
+- (void) postProblem {
+	[[NSNotificationCenter defaultCenter] postNotificationName: @"GameEncounteredProblem" object: self];
+}
+
+- (NSString *) getBoardString
+{
+    NSString *boardString = @"";
+	for (NSString *piece in board) {
+		boardString = [boardString stringByAppendingString:piece];
+	}
+	return boardString;
 }
 
 // Return the value of the current board

@@ -78,8 +78,8 @@
 
 - (void) fetchFinished: (BOOL) buttonsOn {
 	if (waiter != nil) {
-		if (buttonsOn);
-			//[self enableButtons];
+//		if (buttonsOn);
+//			[self enableButtons];
 		[spinner stopAnimating];
 		[timer invalidate];
 	}
