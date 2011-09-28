@@ -1,0 +1,404 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0A33960E14313E7D00B04884 /* game0.gif in Resources */ = {isa = PBXBuildFile; fileRef = 0A33960914313E7D00B04884 /* game0.gif */; };
+		0A33960F14313E7D00B04884 /* game1.gif in Resources */ = {isa = PBXBuildFile; fileRef = 0A33960A14313E7D00B04884 /* game1.gif */; };
+		0A33961014313E7D00B04884 /* game2.gif in Resources */ = {isa = PBXBuildFile; fileRef = 0A33960B14313E7D00B04884 /* game2.gif */; };
+		0A33961114313E7D00B04884 /* game3.gif in Resources */ = {isa = PBXBuildFile; fileRef = 0A33960C14313E7D00B04884 /* game3.gif */; };
+		0A33961214313E7D00B04884 /* game4.gif in Resources */ = {isa = PBXBuildFile; fileRef = 0A33960D14313E7D00B04884 /* game4.gif */; };
+		0A33961614313FC600B04884 /* Patchwork.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A33961414313FC600B04884 /* Patchwork.png */; };
+		0A33961714313FC600B04884 /* Patchwork@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A33961514313FC600B04884 /* Patchwork@2x.png */; };
+		0A39717714180752003CACF9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A39717614180752003CACF9 /* UIKit.framework */; };
+		0A39717914180752003CACF9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A39717814180752003CACF9 /* Foundation.framework */; };
+		0A39717B14180752003CACF9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A39717A14180752003CACF9 /* CoreGraphics.framework */; };
+		0A39718114180752003CACF9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0A39717F14180752003CACF9 /* InfoPlist.strings */; };
+		0A39718314180752003CACF9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A39718214180752003CACF9 /* main.m */; };
+		0A39718714180752003CACF9 /* iGamesmanAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A39718614180752003CACF9 /* iGamesmanAppDelegate.m */; };
+		0A50E9311433BD3B00B8BD49 /* GCPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A50E9301433BD3B00B8BD49 /* GCPlayer.m */; };
+		0A5D6209142D304A00B8BE28 /* GCCoverFlowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A5D6208142D304A00B8BE28 /* GCCoverFlowViewController.m */; };
+		0A6CB3A01427DF6D0072B2B6 /* GCSetupGameView~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A6CB39F1427DF6D0072B2B6 /* GCSetupGameView~ipad.xib */; };
+		0A6CB3A5142825160072B2B6 /* GCSetupGameView~iphone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A6CB3A4142825160072B2B6 /* GCSetupGameView~iphone.xib */; };
+		0A6CB3A8142827340072B2B6 /* GCSetupGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A6CB3A7142827340072B2B6 /* GCSetupGameViewController.m */; };
+		0AFC4A15142172030049FE1B /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AFC4A14142172030049FE1B /* Default.png */; };
+		0AFC4A17142172060049FE1B /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AFC4A16142172060049FE1B /* Default@2x.png */; };
+		0AFC4A191421723A0049FE1B /* Icon~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AFC4A181421723A0049FE1B /* Icon~ipad.png */; };
+		0AFC4A1B1421723D0049FE1B /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AFC4A1A1421723D0049FE1B /* Icon.png */; };
+		0AFC4A1D142172410049FE1B /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AFC4A1C142172410049FE1B /* Icon@2x.png */; };
+		0AFC4A371422A9C80049FE1B /* GCConnectFour.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AFC4A361422A9C80049FE1B /* GCConnectFour.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0A33960914313E7D00B04884 /* game0.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = game0.gif; sourceTree = "<group>"; };
+		0A33960A14313E7D00B04884 /* game1.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = game1.gif; sourceTree = "<group>"; };
+		0A33960B14313E7D00B04884 /* game2.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = game2.gif; sourceTree = "<group>"; };
+		0A33960C14313E7D00B04884 /* game3.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = game3.gif; sourceTree = "<group>"; };
+		0A33960D14313E7D00B04884 /* game4.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = game4.gif; sourceTree = "<group>"; };
+		0A33961414313FC600B04884 /* Patchwork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Patchwork.png; sourceTree = "<group>"; };
+		0A33961514313FC600B04884 /* Patchwork@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Patchwork@2x.png"; sourceTree = "<group>"; };
+		0A39717214180752003CACF9 /* iGamesman.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iGamesman.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0A39717614180752003CACF9 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		0A39717814180752003CACF9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		0A39717A14180752003CACF9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		0A39717E14180752003CACF9 /* iGamesman-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "iGamesman-Info.plist"; sourceTree = "<group>"; };
+		0A39718014180752003CACF9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		0A39718214180752003CACF9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		0A39718414180752003CACF9 /* iGamesman-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iGamesman-Prefix.pch"; sourceTree = "<group>"; };
+		0A39718514180752003CACF9 /* iGamesmanAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iGamesmanAppDelegate.h; sourceTree = "<group>"; };
+		0A39718614180752003CACF9 /* iGamesmanAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iGamesmanAppDelegate.m; sourceTree = "<group>"; };
+		0A50E92F1433BD3B00B8BD49 /* GCPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCPlayer.h; sourceTree = "<group>"; };
+		0A50E9301433BD3B00B8BD49 /* GCPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCPlayer.m; sourceTree = "<group>"; };
+		0A5D6207142D304A00B8BE28 /* GCCoverFlowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCCoverFlowViewController.h; sourceTree = "<group>"; };
+		0A5D6208142D304A00B8BE28 /* GCCoverFlowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCCoverFlowViewController.m; sourceTree = "<group>"; };
+		0A6CB39F1427DF6D0072B2B6 /* GCSetupGameView~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "GCSetupGameView~ipad.xib"; sourceTree = "<group>"; };
+		0A6CB3A4142825160072B2B6 /* GCSetupGameView~iphone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "GCSetupGameView~iphone.xib"; sourceTree = "<group>"; };
+		0A6CB3A6142827340072B2B6 /* GCSetupGameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCSetupGameViewController.h; sourceTree = "<group>"; };
+		0A6CB3A7142827340072B2B6 /* GCSetupGameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCSetupGameViewController.m; sourceTree = "<group>"; };
+		0AFC4A14142172030049FE1B /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ../Default.png; sourceTree = "<group>"; };
+		0AFC4A16142172060049FE1B /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "../Default@2x.png"; sourceTree = "<group>"; };
+		0AFC4A181421723A0049FE1B /* Icon~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon~ipad.png"; path = "../Icon~ipad.png"; sourceTree = "<group>"; };
+		0AFC4A1A1421723D0049FE1B /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = ../Icon.png; sourceTree = "<group>"; };
+		0AFC4A1C142172410049FE1B /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "../Icon@2x.png"; sourceTree = "<group>"; };
+		0AFC4A351422A9C80049FE1B /* GCConnectFour.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCConnectFour.h; sourceTree = "<group>"; };
+		0AFC4A361422A9C80049FE1B /* GCConnectFour.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCConnectFour.m; sourceTree = "<group>"; };
+		0AFC4A381422A9FB0049FE1B /* GCGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCGame.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		0A39716F14180752003CACF9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0A39717714180752003CACF9 /* UIKit.framework in Frameworks */,
+				0A39717914180752003CACF9 /* Foundation.framework in Frameworks */,
+				0A39717B14180752003CACF9 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0A33961314313E8200B04884 /* games */ = {
+			isa = PBXGroup;
+			children = (
+				0A33960914313E7D00B04884 /* game0.gif */,
+				0A33960A14313E7D00B04884 /* game1.gif */,
+				0A33960B14313E7D00B04884 /* game2.gif */,
+				0A33960C14313E7D00B04884 /* game3.gif */,
+				0A33960D14313E7D00B04884 /* game4.gif */,
+			);
+			name = games;
+			sourceTree = "<group>";
+		};
+		0A39716714180752003CACF9 = {
+			isa = PBXGroup;
+			children = (
+				0A39717C14180752003CACF9 /* iGamesman */,
+				0A39717514180752003CACF9 /* Frameworks */,
+				0A39717314180752003CACF9 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		0A39717314180752003CACF9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0A39717214180752003CACF9 /* iGamesman.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0A39717514180752003CACF9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0A39717614180752003CACF9 /* UIKit.framework */,
+				0A39717814180752003CACF9 /* Foundation.framework */,
+				0A39717A14180752003CACF9 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		0A39717C14180752003CACF9 /* iGamesman */ = {
+			isa = PBXGroup;
+			children = (
+				0A5D6207142D304A00B8BE28 /* GCCoverFlowViewController.h */,
+				0A5D6208142D304A00B8BE28 /* GCCoverFlowViewController.m */,
+				0AFC4A381422A9FB0049FE1B /* GCGame.h */,
+				0A50E92F1433BD3B00B8BD49 /* GCPlayer.h */,
+				0A50E9301433BD3B00B8BD49 /* GCPlayer.m */,
+				0A6CB3A6142827340072B2B6 /* GCSetupGameViewController.h */,
+				0A6CB3A7142827340072B2B6 /* GCSetupGameViewController.m */,
+				0AFC4A341422A95B0049FE1B /* Connect Four */,
+				0A39718514180752003CACF9 /* iGamesmanAppDelegate.h */,
+				0A39718614180752003CACF9 /* iGamesmanAppDelegate.m */,
+				0A39717D14180752003CACF9 /* Supporting Files */,
+			);
+			path = iGamesman;
+			sourceTree = "<group>";
+		};
+		0A39717D14180752003CACF9 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				0A6CB39D1427DF300072B2B6 /* NIBs */,
+				0AFC4A1E1421724D0049FE1B /* images */,
+				0A39717E14180752003CACF9 /* iGamesman-Info.plist */,
+				0A39717F14180752003CACF9 /* InfoPlist.strings */,
+				0A39718214180752003CACF9 /* main.m */,
+				0A39718414180752003CACF9 /* iGamesman-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		0A39719114180C6E003CACF9 /* icons */ = {
+			isa = PBXGroup;
+			children = (
+				0AFC4A1A1421723D0049FE1B /* Icon.png */,
+				0AFC4A1C142172410049FE1B /* Icon@2x.png */,
+				0AFC4A181421723A0049FE1B /* Icon~ipad.png */,
+			);
+			name = icons;
+			sourceTree = "<group>";
+		};
+		0A6CB39D1427DF300072B2B6 /* NIBs */ = {
+			isa = PBXGroup;
+			children = (
+				0A6CB39F1427DF6D0072B2B6 /* GCSetupGameView~ipad.xib */,
+				0A6CB3A4142825160072B2B6 /* GCSetupGameView~iphone.xib */,
+			);
+			name = NIBs;
+			sourceTree = "<group>";
+		};
+		0AFC4A1E1421724D0049FE1B /* images */ = {
+			isa = PBXGroup;
+			children = (
+				0A33961414313FC600B04884 /* Patchwork.png */,
+				0A33961514313FC600B04884 /* Patchwork@2x.png */,
+				0A33961314313E8200B04884 /* games */,
+				0AFC4A1F142172590049FE1B /* defaults */,
+				0A39719114180C6E003CACF9 /* icons */,
+			);
+			name = images;
+			sourceTree = "<group>";
+		};
+		0AFC4A1F142172590049FE1B /* defaults */ = {
+			isa = PBXGroup;
+			children = (
+				0AFC4A14142172030049FE1B /* Default.png */,
+				0AFC4A16142172060049FE1B /* Default@2x.png */,
+			);
+			name = defaults;
+			sourceTree = "<group>";
+		};
+		0AFC4A341422A95B0049FE1B /* Connect Four */ = {
+			isa = PBXGroup;
+			children = (
+				0AFC4A351422A9C80049FE1B /* GCConnectFour.h */,
+				0AFC4A361422A9C80049FE1B /* GCConnectFour.m */,
+			);
+			name = "Connect Four";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		0A39717114180752003CACF9 /* iGamesman */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0A39718A14180752003CACF9 /* Build configuration list for PBXNativeTarget "iGamesman" */;
+			buildPhases = (
+				0A39716E14180752003CACF9 /* Sources */,
+				0A39716F14180752003CACF9 /* Frameworks */,
+				0A39717014180752003CACF9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = iGamesman;
+			productName = iGamesman;
+			productReference = 0A39717214180752003CACF9 /* iGamesman.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0A39716914180752003CACF9 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				ORGANIZATIONNAME = "Kevin Jorgensen";
+			};
+			buildConfigurationList = 0A39716C14180752003CACF9 /* Build configuration list for PBXProject "iGamesman" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 0A39716714180752003CACF9;
+			productRefGroup = 0A39717314180752003CACF9 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				0A39717114180752003CACF9 /* iGamesman */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		0A39717014180752003CACF9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0A39718114180752003CACF9 /* InfoPlist.strings in Resources */,
+				0AFC4A15142172030049FE1B /* Default.png in Resources */,
+				0AFC4A17142172060049FE1B /* Default@2x.png in Resources */,
+				0AFC4A191421723A0049FE1B /* Icon~ipad.png in Resources */,
+				0AFC4A1B1421723D0049FE1B /* Icon.png in Resources */,
+				0AFC4A1D142172410049FE1B /* Icon@2x.png in Resources */,
+				0A6CB3A01427DF6D0072B2B6 /* GCSetupGameView~ipad.xib in Resources */,
+				0A6CB3A5142825160072B2B6 /* GCSetupGameView~iphone.xib in Resources */,
+				0A33960E14313E7D00B04884 /* game0.gif in Resources */,
+				0A33960F14313E7D00B04884 /* game1.gif in Resources */,
+				0A33961014313E7D00B04884 /* game2.gif in Resources */,
+				0A33961114313E7D00B04884 /* game3.gif in Resources */,
+				0A33961214313E7D00B04884 /* game4.gif in Resources */,
+				0A33961614313FC600B04884 /* Patchwork.png in Resources */,
+				0A33961714313FC600B04884 /* Patchwork@2x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0A39716E14180752003CACF9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0A39718314180752003CACF9 /* main.m in Sources */,
+				0A39718714180752003CACF9 /* iGamesmanAppDelegate.m in Sources */,
+				0AFC4A371422A9C80049FE1B /* GCConnectFour.m in Sources */,
+				0A6CB3A8142827340072B2B6 /* GCSetupGameViewController.m in Sources */,
+				0A5D6209142D304A00B8BE28 /* GCCoverFlowViewController.m in Sources */,
+				0A50E9311433BD3B00B8BD49 /* GCPlayer.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		0A39717F14180752003CACF9 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0A39718014180752003CACF9 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		0A39718814180752003CACF9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = NO;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		0A39718914180752003CACF9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = NO;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		0A39718B14180752003CACF9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "iGamesman/iGamesman-Prefix.pch";
+				INFOPLIST_FILE = "iGamesman/iGamesman-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		0A39718C14180752003CACF9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "iGamesman/iGamesman-Prefix.pch";
+				INFOPLIST_FILE = "iGamesman/iGamesman-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0A39716C14180752003CACF9 /* Build configuration list for PBXProject "iGamesman" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0A39718814180752003CACF9 /* Debug */,
+				0A39718914180752003CACF9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0A39718A14180752003CACF9 /* Build configuration list for PBXNativeTarget "iGamesman" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0A39718B14180752003CACF9 /* Debug */,
+				0A39718C14180752003CACF9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0A39716914180752003CACF9 /* Project object */;
+}
