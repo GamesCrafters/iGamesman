@@ -92,10 +92,7 @@
 		D73A26D014365CB1009E855C /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				0A3C3226143A45360080BCA9 /* GCQuarto.h */,
-				0A3C3227143A45360080BCA9 /* GCQuarto.m */,
-				D73A26D114365CB1009E855C /* GCConnectFour.h */,
-				D73A26D214365CB1009E855C /* GCConnectFour.m */,
+				D7F8BF8D143A4C6A0010F767 /* Games */,
 				D73A26D314365CB1009E855C /* GCCoverFlowViewController.h */,
 				D73A26D414365CB1009E855C /* GCCoverFlowViewController.m */,
 				D73A26D514365CB1009E855C /* GCGame.h */,
@@ -186,6 +183,33 @@
 				D7A6719314365AF900659C6E /* iGamesman-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D7F8BF8B143A4C560010F767 /* Quarto */ = {
+			isa = PBXGroup;
+			children = (
+				0A3C3226143A45360080BCA9 /* GCQuarto.h */,
+				0A3C3227143A45360080BCA9 /* GCQuarto.m */,
+			);
+			name = Quarto;
+			sourceTree = "<group>";
+		};
+		D7F8BF8C143A4C5F0010F767 /* Connect 4 */ = {
+			isa = PBXGroup;
+			children = (
+				D73A26D114365CB1009E855C /* GCConnectFour.h */,
+				D73A26D214365CB1009E855C /* GCConnectFour.m */,
+			);
+			name = "Connect 4";
+			sourceTree = "<group>";
+		};
+		D7F8BF8D143A4C6A0010F767 /* Games */ = {
+			isa = PBXGroup;
+			children = (
+				D7F8BF8B143A4C560010F767 /* Quarto */,
+				D7F8BF8C143A4C5F0010F767 /* Connect 4 */,
+			);
+			name = Games;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
