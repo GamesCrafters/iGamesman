@@ -53,9 +53,13 @@
 
 
 
+#pragma mark -
+
 @implementation GCQuarto
 
-- (id)init
+#pragma mark - Memory lifecycle
+
+- (id) init
 {
     self = [super init];
     if (self) {
@@ -74,11 +78,17 @@
             [pieces addObject: piece];
             [piece release];
         }
-        
-        NSLog(@"%@", pieces);
     }
     
     return self;
+}
+
+
+- (void) dealloc
+{
+    [pieces release];
+    
+    [super dealloc];
 }
 
 @end
