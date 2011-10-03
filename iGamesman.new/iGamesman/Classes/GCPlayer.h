@@ -11,6 +11,11 @@
 typedef enum { HUMAN, COMPUTER } PlayerType;
 
 @interface GCPlayer : NSObject
+{
+    NSString *_name;
+    PlayerType _type;
+    CGFloat _percentPerfect;
+}
 
 - (NSString *) name;
 - (void) setName: (NSString *) name;
