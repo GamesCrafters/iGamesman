@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A3C3228143A45370080BCA9 /* GCQuarto.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A3C3227143A45360080BCA9 /* GCQuarto.m */; };
 		D707701714366079006C56F6 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = D707701214366079006C56F6 /* Default.png */; };
 		D707701814366079006C56F6 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D707701314366079006C56F6 /* Default@2x.png */; };
 		D707701914366079006C56F6 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D707701414366079006C56F6 /* Icon.png */; };
@@ -35,6 +36,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0A3C3226143A45360080BCA9 /* GCQuarto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCQuarto.h; sourceTree = "<group>"; };
+		0A3C3227143A45360080BCA9 /* GCQuarto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCQuarto.m; sourceTree = "<group>"; };
 		D707701214366079006C56F6 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = SOURCE_ROOT; };
 		D707701314366079006C56F6 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = SOURCE_ROOT; };
 		D707701414366079006C56F6 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = SOURCE_ROOT; };
@@ -89,6 +92,8 @@
 		D73A26D014365CB1009E855C /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				0A3C3226143A45360080BCA9 /* GCQuarto.h */,
+				0A3C3227143A45360080BCA9 /* GCQuarto.m */,
 				D73A26D114365CB1009E855C /* GCConnectFour.h */,
 				D73A26D214365CB1009E855C /* GCConnectFour.m */,
 				D73A26D314365CB1009E855C /* GCCoverFlowViewController.h */,
@@ -262,6 +267,7 @@
 				D73A26E114365CB1009E855C /* GCSetupGameViewController.m in Sources */,
 				D73A26E214365CB1009E855C /* iGamesmanAppDelegate.m in Sources */,
 				D73A26E314365CB1009E855C /* iGamesmanViewController.m in Sources */,
+				0A3C3228143A45370080BCA9 /* GCQuarto.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
