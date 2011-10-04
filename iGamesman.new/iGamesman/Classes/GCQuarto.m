@@ -10,7 +10,7 @@
 
 
 
-@interface GCQuartoPiece : NSObject
+@interface GCQuartoPiece : NSObject <NSCopying>
 {
     BOOL _tall, _light, _square, _hollow;
 }
@@ -44,9 +44,16 @@
 }
 
 
+- (id) copyWithZone:(NSZone *)zone
+{
+    [self retain];
+    return self;
+}
+
+
 - (NSString *) description
 {
-    return [NSString stringWithFormat: @"%c%c%c%c", (_tall ? 'T' : 's'), (_light ? 'L' : 'd'), (_square ? 'Q' : 'c'), (_hollow ? 'H' : 'f')];
+    return [NSString stringWithFormat: @"%c%c%c%c", (_tall ? 'T' : 't'), (_light ? 'L' : 'l'), (_square ? 'S' : 's'), (_hollow ? 'H' : 'h')];
 }
 
 @end
@@ -56,6 +63,34 @@
 #pragma mark -
 
 @implementation GCQuarto
+
+#pragma mark - GCGame protocol
+
+- (NSArray *) doMove: (NSString *) move fromPosition: (NSArray *) fromPos
+{
+    BOOL tall =   ([move characterAtIndex: 0] == 'T');
+    BOOL light =  ([move characterAtIndex: 1] == 'L');
+    BOOL square = ([move characterAtIndex: 2] == 'S');
+    BOOL hollow = ([move characterAtIndex: 3] == 'H');
+    
+    int slot = [[move substringFromIndex: 4] intValue];
+    
+    GCQuartoPiece *piece;
+    for (GCQuartoPiece *availablePiece in pieces)
+    {
+        if ((availablePiece.tall == tall) && (availablePiece.light == light) && (availablePiece.square == square) && (availablePiece.hollow == hollow))
+        {
+            piece = availablePiece;
+            break;
+        }
+    }
+    
+    [board replaceObjectAtIndex: slot withObject: piece];
+    [pieces removeObject: piece];
+    
+    return board;
+}
+
 
 #pragma mark - Memory lifecycle
 
@@ -77,6 +112,8 @@
             GCQuartoPiece *piece = [[GCQuartoPiece alloc] initWithTall: tall light: light square: square hollow: hollow];
             [pieces addObject: piece];
             [piece release];
+            
+            [board addObject: @"-"];
         }
     }
     

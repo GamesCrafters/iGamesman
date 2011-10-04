@@ -25,29 +25,27 @@ typedef enum { PLAYER_LEFT, PLAYER_RIGHT } PlayerSide;
 
 /**
  * Return the position that result by making the move MOVE
- *  from the position FROMPOS. The underlying game object
- *  may choose to keep a position in its local state and modify
+ *  from the current. The underlying game object
+ *  needs to keep a position in its local state and modify
  *  that position for each doMove call. Note that the game may
  *  choose whatever objects it likes to represent moves and positions,
  *  but those types must conform to the NSCopying protocol.
  *
  * @param move The move to be made. Guaranteed to be a legal move.
- * @param fromPos The position from which to make the move. This will always be the "current" position.
  *
- * @return The position that results by making MOVE from FROMPOS.
+ * @return The position that results by making MOVE from the current position.
  */
-- (Position) doMove: (Move) move fromPosition: (Position) fromPos;
+- (Position) doMove: (Move) move;
 
 
 /**
- * Undo the move MOVE from the position FROMPOS such that the new
+ * Undo the move MOVE from the current position such that the new
  *  current position is TOPOS (the position before MOVE was made).
  * 
  * @param move The move to undo. Guaranteed to be the move that led to the current position.
- * @param fromPos The position from which to undo. This will always be the "current" position.
  * @param toPos The position that results from undoing MOVE. Guaranteed to be the position before MOVE was made.
  */
-- (void) undoMove: (Move) move fromPosition: (Position) fromPos toPosition: (Position) toPos;
+- (void) undoMove: (Move) move toPosition: (Position) toPos;
 
 
 /**
