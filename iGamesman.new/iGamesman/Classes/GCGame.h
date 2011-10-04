@@ -38,6 +38,7 @@ typedef enum { PLAYER_LEFT, PLAYER_RIGHT } PlayerSide;
  */
 - (Position) doMove: (Move) move fromPosition: (Position) fromPos;
 
+
 /**
  * Undo the move MOVE from the position FROMPOS such that the new
  *  current position is TOPOS (the position before MOVE was made).
@@ -48,6 +49,7 @@ typedef enum { PLAYER_LEFT, PLAYER_RIGHT } PlayerSide;
  */
 - (void) undoMove: (Move) move fromPosition: (Position) fromPos toPosition: (Position) toPos;
 
+
 /**
  * Return the value of the position POS.
  *
@@ -56,6 +58,7 @@ typedef enum { PLAYER_LEFT, PLAYER_RIGHT } PlayerSide;
  * @return The value of the requested position (WIN, LOSE, TIE, or DRAW if primitive, NONPRIMITIVE if not)
  */
 - (GameValue) primitive: (Position) pos;
+
 
 /**
  * Return the legal moves for the position POS.
@@ -72,18 +75,63 @@ typedef enum { PLAYER_LEFT, PLAYER_RIGHT } PlayerSide;
                      right: (GCPlayer *) rightPlayer
            andPlaySettings: (NSDictionary *) settingsDict;
 
-/* Accessors for the players and “meta-game” settings */
+/**
+ * Return the left player.
+ *
+ * @return The game's left player.
+ */
 - (GCPlayer *) leftPlayer;
+
+
+/**
+ * Assign the left player.
+ *
+ * @param left The new left player.
+ */
 - (void) setLeftPlayer: (GCPlayer *) left;
+
+
+/**
+ * Return the right player.
+ *
+ * @return The game's right player.
+ */
 - (GCPlayer *) rightPlayer;
+
+
+/**
+ * Assign the right player.
+ *
+ * @param right The new right player.
+ */
 - (void) setRightPlayer: (GCPlayer *) right;
+
+
 - (NSDictionary *) playSettings;
 - (void) setPlaySettings: (NSDictionary *) settingsDict;
 
+
+/**
+ * Return the view that displays this game's interface.
+ *
+ * @return The view managed by this game that displays the game's interface.
+ */
 - (UIView *) view;
 
+
+/**
+ * Wait for the user to make a move, then return that move back through the completion handler.
+ *
+ * @param completionHandler The callback handler to be called with the user's move as argument.
+ */
 - (void) waitForHumanMoveWithCompletion: (void (^) (Move move)) completionHandler;
 
+
+/**
+ * Return a view for changing the game's variants (rules).
+ *
+ * @return The view managed by this game that displays the game's rule-changing interface.
+ */
 - (UIView *) variantsView;
 
 /* Accessors for misere */
