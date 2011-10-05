@@ -9,7 +9,25 @@
 #import <Foundation/Foundation.h>
 
 #import "GCGame.h"
+#import "GCJSONService.h"
+#import "GCConnectFourPosition.h"
 
-@interface GCConnectFour <GCGame>
+
+@interface GCConnectFour : NSObject <GCGame> {
+//    GCConnectFourViewController *c4view;
+	GCJSONService				*service;
+    GCConnectFourPosition       *position;
+    //	BOOL						p1Turn;     // position.p1Turn
+    //	NSMutableArray				*board;     // position.board
+	NSString					*player1Name, *player2Name;
+	PlayerType					player1Type, player2Type;
+	int							width, height, pieces;
+	BOOL						predictions, moveValues;
+	BOOL						misere;
+	PlayMode					gameMode;
+	NSString					*humanMove;
+    NSMutableArray				*serverHistoryStack;
+	NSMutableArray				*serverUndoStack;
+}
 
 @end
