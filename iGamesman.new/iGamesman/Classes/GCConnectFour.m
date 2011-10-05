@@ -49,17 +49,16 @@
 {
 	//[c4view doMove: move];    // FIXME
     NSMutableArray *board = position.board;
-    BOOL p1Turn = position.p1Turn;
     
 	int slot = [moveObject intValue] - 1;
 	while (slot < width * height) {
 		if ([[board objectAtIndex: slot] isEqual: BLANK]) {
-			[board replaceObjectAtIndex: slot withObject: (p1Turn ? @"X" : @"O")];
+			[board replaceObjectAtIndex: slot withObject: (position.p1Turn ? @"X" : @"O")];
 			break;
 		}
 		slot += width;
 	}
-	p1Turn = !p1Turn;
+	position.p1Turn = !position.p1Turn;
 	
 	if (gameMode == ONLINE_SOLVED) {
 		// Peek at the top of the undo stack
@@ -90,6 +89,8 @@
 	if (gameMode != ONLINE_SOLVED) {
 //		[c4view updateLabels];  // FIXME
     }
+    
+    return position;
 }
 
 
