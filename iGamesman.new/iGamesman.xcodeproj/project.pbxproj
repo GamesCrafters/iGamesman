@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0A3C3228143A45370080BCA9 /* GCQuarto.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A3C3227143A45360080BCA9 /* GCQuarto.m */; };
+		21D786C1143F8C73008E8B17 /* GCConnections.m in Sources */ = {isa = PBXBuildFile; fileRef = 21D786C0143F8C73008E8B17 /* GCConnections.m */; };
 		D707701714366079006C56F6 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = D707701214366079006C56F6 /* Default.png */; };
 		D707701814366079006C56F6 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D707701314366079006C56F6 /* Default@2x.png */; };
 		D707701914366079006C56F6 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D707701414366079006C56F6 /* Icon.png */; };
@@ -46,6 +47,8 @@
 /* Begin PBXFileReference section */
 		0A3C3226143A45360080BCA9 /* GCQuarto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCQuarto.h; sourceTree = "<group>"; };
 		0A3C3227143A45360080BCA9 /* GCQuarto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCQuarto.m; sourceTree = "<group>"; };
+		21D786BF143F8C73008E8B17 /* GCConnections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCConnections.h; sourceTree = "<group>"; };
+		21D786C0143F8C73008E8B17 /* GCConnections.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCConnections.m; sourceTree = "<group>"; };
 		D707701214366079006C56F6 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = SOURCE_ROOT; };
 		D707701314366079006C56F6 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = SOURCE_ROOT; };
 		D707701414366079006C56F6 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = SOURCE_ROOT; };
@@ -114,6 +117,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		21D78682143F8290008E8B17 /* Connections */ = {
+			isa = PBXGroup;
+			children = (
+				21D786BF143F8C73008E8B17 /* GCConnections.h */,
+				21D786C0143F8C73008E8B17 /* GCConnections.m */,
+			);
+			name = Connections;
+			sourceTree = "<group>";
+		};
 		D73A26D014365CB1009E855C /* Classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -258,6 +270,7 @@
 			children = (
 				D7F8BF8B143A4C560010F767 /* Quarto */,
 				D7F8BF8C143A4C5F0010F767 /* Connect 4 */,
+				21D78682143F8290008E8B17 /* Connections */,
 			);
 			name = Games;
 			sourceTree = "<group>";
@@ -350,6 +363,7 @@
 				D784DB3D143CFB76008ADB9F /* SBJsonBase.m in Sources */,
 				D784DB3E143CFB76008ADB9F /* SBJsonParser.m in Sources */,
 				D784DB3F143CFB76008ADB9F /* SBJsonWriter.m in Sources */,
+				21D786C1143F8C73008E8B17 /* GCConnections.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
