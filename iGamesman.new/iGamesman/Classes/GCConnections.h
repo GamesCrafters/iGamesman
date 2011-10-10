@@ -9,18 +9,20 @@
 #import <Foundation/Foundation.h>
 
 #import "GCGame.h"
+#import "GCPlayer.h"
+#import "GCConnectionsPosition.h"
 
 @interface GCConnections : NSObject <GCGame>
 {
 	//GCConnectionsViewController *conView;
 	NSMutableArray *board;
     NSMutableArray *pieces;
-	GCPlayer player1, player2;
-	//Size of board: sizexsize
-	int size;
-	BOOL p1Turn;
+	GCPlayer *player1, *player2;
+	NSDictionary *settings;
+	
+	GCConnectionsPosition *position;
+	
 	//NSNumber *humanMove;
-	//PlayMode gameMode; // possibly Get from player
 	BOOL misere;
 	BOOL predictions, moveValues;
 	BOOL circling;
@@ -28,9 +30,6 @@
 	//NSThread *waiter;
 }
 
-
-@property (nonatomic, assign) int size;
-@property (nonatomic, assign) BOOL p1Turn;
 @property (nonatomic, assign, getter=isMisere) BOOL misere;
 @property (nonatomic, assign) BOOL predictions, moveValues;
 @property (nonatomic, assign) BOOL circling;
@@ -43,8 +42,5 @@
 //- (void) decrementVertices: (NSMutableArray *) vertices 
 //				   inArray: (NSMutableArray *) loop;
 - (NSString *) stringForBoard: (NSArray *) _board;
-
-@end
-
 
 @end
