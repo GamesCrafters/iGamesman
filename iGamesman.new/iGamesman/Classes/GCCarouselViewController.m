@@ -58,22 +58,15 @@
 }
 
 
-- (void) scrollViewDidEndDecelerating: (UIScrollView *) scrollView
+- (void) scrollViewWillEndDragging: (UIScrollView *) scrollView withVelocity: (CGPoint) velocity targetContentOffset: (inout CGPoint *) targetContentOffset
 {
     CGFloat width = self.view.bounds.size.width;
     CGFloat centeredOffset = scrollView.contentSize.width / 3.0f;
-    CGFloat offsetFromCenter = scrollView.contentOffset.x - centeredOffset;
+    CGFloat offsetFromCenter = targetContentOffset->x - centeredOffset;
     
     int slot = (int) round(offsetFromCenter / (1.25f * (width / 3.0f)));
     
-    [UIView animateWithDuration: 0.25f
-                          delay: 0
-                        options: UIViewAnimationOptionCurveEaseInOut
-                     animations: ^(void)
-     {
-         [scrollView setContentOffset: CGPointMake(centeredOffset + (1.25f * slot * (width / 3.0f)), 0) animated: NO];
-     }
-                     completion: nil];
+    targetContentOffset->x = centeredOffset + (1.25f * slot * (width / 3.0f));
 }
 
 
