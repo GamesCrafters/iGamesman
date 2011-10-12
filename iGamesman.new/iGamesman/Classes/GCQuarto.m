@@ -66,7 +66,7 @@
 
 #pragma mark - GCGame protocol
 
-- (NSArray *) doMove: (NSString *) move fromPosition: (NSArray *) fromPos
+- (NSArray *) doMove: (NSString *) move
 {
     BOOL tall =   ([move characterAtIndex: 0] == 'T');
     BOOL light =  ([move characterAtIndex: 1] == 'L');
@@ -89,6 +89,80 @@
     [pieces removeObject: piece];
     
     return board;
+}
+
+
+- (void) undoMove: (NSString *) move toPosition: (NSArray *) toPos
+{
+    int slot = [[move substringFromIndex: 4] intValue];
+    
+    GCQuartoPiece *piece = [board objectAtIndex: slot];
+    [pieces addObject: piece];
+    
+    [board replaceObjectAtIndex: slot withObject: @"-"];
+}
+
+
+- (GameValue) primitive: (NSArray *) pos
+{
+    /* Check the horizontal rows */
+    for (int row = 0; row < 4; row += 1)
+    {
+        int bits = 0xF;
+        for (int col = 0; col < 4; col += 1)
+        {
+            GCQuartoPiece *piece = [pos objectAtIndex: 4 * row + col];
+            int pieceBits = (piece.tall) + (piece.light << 1) + (piece.square << 2) + (piece.hollow << 3);
+            bits &= pieceBits;
+        }
+        
+        if (bits != 0)
+            return LOSE;
+    }
+    
+    /* Check the vertical columns */
+    for (int col = 0; col < 4; col += 1)
+    {
+        int bits = 0xF;
+        for (int row = 0; row < 4; row += 1)
+        {
+            GCQuartoPiece *piece = [pos objectAtIndex: 4 * row + col];
+            int pieceBits = (piece.tall) + (piece.light << 1) + (piece.square << 2) + (piece.hollow << 3);
+            bits &= pieceBits;
+        }
+        if (bits != 0)
+            return LOSE;
+    }
+    
+    /* Check the main diagonal */
+    int bits = 0xF;
+    for (int i = 0; i < 4; i += 1)
+    {
+        GCQuartoPiece *piece = [pos objectAtIndex: 4 * i + i];
+        int pieceBits = (piece.tall) + (piece.light << 1) + (piece.square << 2) + (piece.hollow << 3);
+        bits &= pieceBits;
+    }
+    if (bits != 0)
+        return LOSE;
+    
+    /* Check the other diagonal */
+    bits = 0xF;
+    for (int i = 0; i < 4; i += 1)
+    {
+        GCQuartoPiece *piece = [pos objectAtIndex: 4 * i + (4 - i)];
+        int pieceBits = (piece.tall) + (piece.light << 1) + (piece.square << 2) + (piece.hollow << 3);
+        bits &= pieceBits;
+    }
+    if (bits != 0)
+        return LOSE;
+    
+    return NONPRIMITIVE;
+}
+
+
+- (NSArray *) generateMoves: (Position) pos
+{
+    
 }
 
 
