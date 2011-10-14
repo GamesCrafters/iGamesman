@@ -11,6 +11,8 @@
 @interface GCCarouselViewController : UIViewController <UIScrollViewDelegate>
 {
     NSMutableArray *views, *labels;
+    
+    NSArray *gameData;
 }
 
 @end

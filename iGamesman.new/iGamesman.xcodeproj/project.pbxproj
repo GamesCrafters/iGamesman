@@ -8,11 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		0A3C3228143A45370080BCA9 /* GCQuarto.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A3C3227143A45360080BCA9 /* GCQuarto.m */; };
-		0A5DC4F01444E55D0040FC1E /* game0.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A5DC4EB1444E55D0040FC1E /* game0.png */; };
-		0A5DC4F11444E55D0040FC1E /* game1.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A5DC4EC1444E55D0040FC1E /* game1.png */; };
-		0A5DC4F21444E55D0040FC1E /* game2.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A5DC4ED1444E55D0040FC1E /* game2.png */; };
-		0A5DC4F31444E55D0040FC1E /* game3.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A5DC4EE1444E55D0040FC1E /* game3.png */; };
-		0A5DC4F41444E55D0040FC1E /* game4.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A5DC4EF1444E55D0040FC1E /* game4.png */; };
+		0A4C7D231448D52100305C9C /* Games.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0A4C7D221448D52100305C9C /* Games.plist */; };
+		0A5DC4F01444E55D0040FC1E /* achi.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A5DC4EB1444E55D0040FC1E /* achi.png */; };
+		0A5DC4F11444E55D0040FC1E /* asalto.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A5DC4EC1444E55D0040FC1E /* asalto.png */; };
+		0A5DC4F21444E55D0040FC1E /* change.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A5DC4ED1444E55D0040FC1E /* change.png */; };
+		0A5DC4F31444E55D0040FC1E /* chungtoi.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A5DC4EE1444E55D0040FC1E /* chungtoi.png */; };
+		0A5DC4F41444E55D0040FC1E /* connections.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A5DC4EF1444E55D0040FC1E /* connections.png */; };
 		0AD56E15144387980034EF53 /* GCCarouselViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AD56E13144387980034EF53 /* GCCarouselViewController.m */; };
 		21D786C1143F8C73008E8B17 /* GCConnections.m in Sources */ = {isa = PBXBuildFile; fileRef = 21D786C0143F8C73008E8B17 /* GCConnections.m */; };
 		21DA8EF4144457E800C5B4EE /* GCConnectionsPosition.m in Sources */ = {isa = PBXBuildFile; fileRef = 21DA8EF3144457E800C5B4EE /* GCConnectionsPosition.m */; };
@@ -51,11 +52,12 @@
 /* Begin PBXFileReference section */
 		0A3C3226143A45360080BCA9 /* GCQuarto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCQuarto.h; sourceTree = "<group>"; };
 		0A3C3227143A45360080BCA9 /* GCQuarto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCQuarto.m; sourceTree = "<group>"; };
-		0A5DC4EB1444E55D0040FC1E /* game0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = game0.png; sourceTree = "<group>"; };
-		0A5DC4EC1444E55D0040FC1E /* game1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = game1.png; sourceTree = "<group>"; };
-		0A5DC4ED1444E55D0040FC1E /* game2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = game2.png; sourceTree = "<group>"; };
-		0A5DC4EE1444E55D0040FC1E /* game3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = game3.png; sourceTree = "<group>"; };
-		0A5DC4EF1444E55D0040FC1E /* game4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = game4.png; sourceTree = "<group>"; };
+		0A4C7D221448D52100305C9C /* Games.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Games.plist; sourceTree = "<group>"; };
+		0A5DC4EB1444E55D0040FC1E /* achi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = achi.png; sourceTree = "<group>"; };
+		0A5DC4EC1444E55D0040FC1E /* asalto.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = asalto.png; sourceTree = "<group>"; };
+		0A5DC4ED1444E55D0040FC1E /* change.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = change.png; sourceTree = "<group>"; };
+		0A5DC4EE1444E55D0040FC1E /* chungtoi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chungtoi.png; sourceTree = "<group>"; };
+		0A5DC4EF1444E55D0040FC1E /* connections.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = connections.png; sourceTree = "<group>"; };
 		0AD56E13144387980034EF53 /* GCCarouselViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCCarouselViewController.m; sourceTree = "<group>"; };
 		0AD56E14144387980034EF53 /* GCCarouselViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCCarouselViewController.h; sourceTree = "<group>"; };
 		21D786BF143F8C73008E8B17 /* GCConnections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCConnections.h; sourceTree = "<group>"; };
@@ -185,11 +187,11 @@
 		D780F9C314365ECB00922ECC /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				0A5DC4EB1444E55D0040FC1E /* game0.png */,
-				0A5DC4EC1444E55D0040FC1E /* game1.png */,
-				0A5DC4ED1444E55D0040FC1E /* game2.png */,
-				0A5DC4EE1444E55D0040FC1E /* game3.png */,
-				0A5DC4EF1444E55D0040FC1E /* game4.png */,
+				0A5DC4EB1444E55D0040FC1E /* achi.png */,
+				0A5DC4EC1444E55D0040FC1E /* asalto.png */,
+				0A5DC4ED1444E55D0040FC1E /* change.png */,
+				0A5DC4EE1444E55D0040FC1E /* chungtoi.png */,
+				0A5DC4EF1444E55D0040FC1E /* connections.png */,
 				D780F9C914365ECB00922ECC /* Patchwork.png */,
 				D780F9CA14365ECB00922ECC /* Patchwork@2x.png */,
 			);
@@ -264,6 +266,7 @@
 				D707701414366079006C56F6 /* Icon.png */,
 				D707701514366079006C56F6 /* Icon@2x.png */,
 				D707701614366079006C56F6 /* Icon~ipad.png */,
+				0A4C7D221448D52100305C9C /* Games.plist */,
 				D7A6718D14365AF900659C6E /* iGamesman-Info.plist */,
 				D7A6718E14365AF900659C6E /* InfoPlist.strings */,
 				D7A6719114365AF900659C6E /* main.m */,
@@ -360,11 +363,12 @@
 				D707701914366079006C56F6 /* Icon.png in Resources */,
 				D707701A14366079006C56F6 /* Icon@2x.png in Resources */,
 				D707701B14366079006C56F6 /* Icon~ipad.png in Resources */,
-				0A5DC4F01444E55D0040FC1E /* game0.png in Resources */,
-				0A5DC4F11444E55D0040FC1E /* game1.png in Resources */,
-				0A5DC4F21444E55D0040FC1E /* game2.png in Resources */,
-				0A5DC4F31444E55D0040FC1E /* game3.png in Resources */,
-				0A5DC4F41444E55D0040FC1E /* game4.png in Resources */,
+				0A5DC4F01444E55D0040FC1E /* achi.png in Resources */,
+				0A5DC4F11444E55D0040FC1E /* asalto.png in Resources */,
+				0A5DC4F21444E55D0040FC1E /* change.png in Resources */,
+				0A5DC4F31444E55D0040FC1E /* chungtoi.png in Resources */,
+				0A5DC4F41444E55D0040FC1E /* connections.png in Resources */,
+				0A4C7D231448D52100305C9C /* Games.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

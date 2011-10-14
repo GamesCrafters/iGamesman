@@ -21,6 +21,12 @@
     {
         views = [[NSMutableArray alloc] init];
         labels = [[NSMutableArray alloc] init];
+        
+        NSBundle *mainBundle = [NSBundle mainBundle];
+        NSString *gameInfoPath = [mainBundle pathForResource: @"Games" ofType: @"plist"];
+        
+        gameData = [[NSArray alloc] initWithContentsOfFile: gameInfoPath];
+        NSLog(@"%@", gameData);
     }
     return self;
 }
@@ -92,6 +98,16 @@
 }
 
 
+#pragma mark - Button action
+
+- (void) buttonTapped: (UIButton *) sender
+{
+    int index = sender.tag - 1000;
+    
+    NSLog(@"%@", [[gameData objectAtIndex: index] objectForKey: @"class"]);
+}
+
+
 #pragma mark - View lifecycle
 
 - (void) loadView
@@ -120,8 +136,11 @@
     {
         CGRect frame = CGRectMake(scroller.bounds.size.width + width / 3.0f + 1.25f * (i - 2) * (width / 3.0f), height - (height / 4.0f) - (width / 3.0f), width / 3.0f, width / 3.0f);
         
-        UIImageView *imageView = [[UIImageView alloc] initWithImage: [UIImage imageNamed: [NSString stringWithFormat: @"game%d.png", i]]];
-        imageView.frame = frame;
+        UIButton *imageView = [[UIButton alloc] initWithFrame: frame];
+        NSString *imageName = [[gameData objectAtIndex: i] objectForKey: @"image"];
+        [imageView setBackgroundImage: [UIImage imageNamed: imageName] forState: UIControlStateNormal];
+        [imageView addTarget: self action: @selector(buttonTapped:) forControlEvents: UIControlEventTouchUpInside];
+        imageView.tag = 1000 + i;
         
         CGFloat offset = CGRectGetMidX(frame) - width / 2.0f - scroller.contentOffset.x;
         CGFloat alpha = 1 - fabs(1.5f * offset / width);
@@ -137,7 +156,7 @@
         CGRect labelFrame = CGRectMake(scroller.bounds.size.width + width / 3.0f + 1.25f * (i - 2) * (width / 3.0f), height - (height / 4.0f), width / 3.0f, height / 6.0f);
         
         UILabel *label = [[UILabel alloc] initWithFrame: labelFrame];
-        label.text = [[NSArray arrayWithObjects: @"Achi", @"Asalto", @"Change!", @"Chung-Toi", @"Connections", nil] objectAtIndex: i];
+        label.text = [[gameData objectAtIndex: i] objectForKey: @"name"];
         label.textAlignment = UITextAlignmentCenter;
         label.backgroundColor = [UIColor clearColor];
         label.textColor = [UIColor whiteColor];

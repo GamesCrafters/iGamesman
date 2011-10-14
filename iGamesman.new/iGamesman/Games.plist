@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>name</key>
+		<string>Achi</string>
+		<key>image</key>
+		<string>achi.png</string>
+		<key>class</key>
+		<string>GCAchi</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Asalto</string>
+		<key>image</key>
+		<string>asalto.png</string>
+		<key>class</key>
+		<string>GCAsalto</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Change!</string>
+		<key>image</key>
+		<string>change.png</string>
+		<key>class</key>
+		<string>GCChangeBang</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Chung-Toi</string>
+		<key>image</key>
+		<string>chungtoi.png</string>
+		<key>class</key>
+		<string>GCChungToi</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Connections</string>
+		<key>image</key>
+		<string>connections.png</string>
+		<key>class</key>
+		<string>GCConnections</string>
+	</dict>
+</array>
+</plist>
