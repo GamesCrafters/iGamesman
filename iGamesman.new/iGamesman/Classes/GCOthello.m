@@ -7,8 +7,6 @@
 //
 
 #import "GCOthello.h"
-#import "GCOthelloOptionMenu.h"
-#import "GCOthelloViewController.h"
 
 #define BLANK @"+"
 #define LEFTPLAYERPIECE @"X"
@@ -36,6 +34,7 @@
 		leftPlayerPieces = 2;
 		rightPlayerPieces = 2;
 		autoPass = NO;
+		othView = nil;
 		
 		board = [[NSMutableArray alloc] initWithCapacity: rows * cols];
 		for (int i = 0; i < rows * cols; i += 1) {
@@ -60,13 +59,13 @@
 		[oldBoard addObject:[NSNumber numberWithInt:rightPlayerPieces]];
 		[myOldMoves addObject:oldBoard];
 		NSArray *flips = [self getFlips:[move intValue]];
-		NSString *myPiece = p1Turn ? LEFTPLAYERPIECE : RIGHTPLAYERPIECE;
+		NSString *myPiece = leftPlayerTurn ? LEFTPLAYERPIECE : RIGHTPLAYERPIECE;
 		for (NSNumber *x in flips) {		
 			[board replaceObjectAtIndex:[x intValue] withObject:myPiece];
 		}
 		[board replaceObjectAtIndex:[move intValue] withObject:myPiece];
 		int changedPieces = [flips count];
-		if (p1Turn) {
+		if (leftPlayerTurn) {
 			leftPlayerPieces += changedPieces + 1;
 			rightPlayerPieces -= changedPieces;
 		} else {
@@ -142,27 +141,25 @@
 	return moves;
 }
 
-- (void) startGameWithLeft: (GCPlayer *) leftPlayer
-                     right: (GCPlayer *) rightPlayer
+- (void) startGameWithLeft: (GCPlayer *) leftGCPlayer
+                     right: (GCPlayer *) rightGCPlayer
            andPlaySettings: (NSDictionary *) settingsDict{
-	[self setLeftPlayer: leftPlayer];
-	[self setRightPlayer: rightPlayer];
+	[self setLeftPlayer: leftGCPlayer];
+	[self setRightPlayer: rightGCPlayer];
 	
-	gameMode = [settingsDict objectForKey:@"GameMode"];
+	gameMode = ONLINE_SOLVED;
 	leftPlayerTurn = YES;
 	if (!othView)
 		[othView release];
-	othView = [[GCOthelloViewController alloc] initWithGame: self];
     
-    if (mode == OFFLINE_UNSOLVED) {
+    if (gameMode == OFFLINE_UNSOLVED) {
         predictions = NO;
         moveValues = NO;
     }
-	if (mode == ONLINE_SOLVED) {
+	if (gameMode == ONLINE_SOLVED) {
 		service = [[GCJSONService alloc] init];
 		[othView updateServerDataWithService: service];
 	}
-}
 }
 
 /* Accessors for the players and “meta-game” settings */
@@ -182,25 +179,34 @@
 	rightPlayer = right;
 }
 
-- (NSDictionary *) playSettings;
-
-- (void) setPlaySettings: (NSDictionary *) settingsDict;
-
-- (UIView *) view{
+- (NSDictionary *) playSettings{
+	return nil;
 }
 
-- (void) waitForHumanMoveWithCompletion: (void (^) (Move move)) completionHandler;
+- (void) setPlaySettings: (NSDictionary *) settingsDict{
+}
 
-- (UIView *) variantsView;
+- (UIView *) view{
+	return nil;
+}
+
+- (void) waitForHumanMoveWithCompletion: (void (^) (Move move)) completionHandler{
+}
+
+- (UIView *) variantsView{
+	return nil;
+}
 
 /* Accessors for misere */
 //Unnecessary as misere is a property
 
 /* Pause any ongoing tasks (such as server requests) */
-- (void) pause;
+- (void) pause{
+}
 
 /* Resume any tasks paused by -pause */
-- (void) resume;
+- (void) resume{
+}
 
 /* Report the play modes supported by the game */
 - (BOOL) supportsPlayMode: (PlayMode) mode{
@@ -214,8 +220,10 @@
 }
 
 /* Show/hide move values and predictions */
-- (void) showPredictions: (BOOL) predictions;
-- (void) showMoveValues: (BOOL) moveValues;
+- (void) showPredictions: (BOOL) predictions{
+}
+- (void) showMoveValues: (BOOL) moveValues{
+}
 
 /* Report whose turn it is (left or right) */
 - (PlayerSide) currentPlayer {
@@ -247,7 +255,7 @@
 - (NSArray *) getFlips: (int) loc {
 	NSMutableArray *flips = [[NSMutableArray alloc] initWithCapacity:rows*cols];
 	if ([[board objectAtIndex:loc] isEqualToString:BLANK]) {			
-		NSString *myPiece = p1Turn ? LEFTPLAYERPIECE : RIGHTPLAYERPIECE;
+		NSString *myPiece = leftPlayerTurn ? LEFTPLAYERPIECE : RIGHTPLAYERPIECE;
 		int offsets[8] = {1,-1,cols,-cols,cols+1,cols-1,-cols+1,-cols-1};
 		for (int i=0; i<8; i+=1) {
 			int offset = offsets[i];

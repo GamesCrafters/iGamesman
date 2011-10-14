@@ -12,9 +12,9 @@
 #import "GCJSONService.h"
 
 @interface GCOthello : NSObject <GCGame> {
-	GCOthelloViewController *othView;
 	PlayMode gameMode;
 	int rows, cols;
+	id othView;
 	BOOL misere, autoPass;
 	NSMutableArray *board;
 	BOOL leftPlayerTurn;
@@ -26,12 +26,11 @@
 @property (nonatomic, assign) GCPlayer *leftPlayer;
 @property (nonatomic, assign) GCPlayer *rightPlayer;
 @property (nonatomic, assign) BOOL autoPass;
-@property (nonatomic, assign) BOOL autoPass;
 @property (nonatomic, assign, getter=isMisere) BOOL misere;
 @property (nonatomic, assign) int rows, cols;
-@property (nonatomic, assign) BOOL p1Turn;
+@property (nonatomic, assign) BOOL leftPlayerTurn;
 @property (nonatomic, retain) NSMutableArray *myOldMoves, *board;
-@property (nonatomic, assign) int p1pieces, p2pieces;
+@property (nonatomic, assign) int leftPlayerPieces, rightPlayerPieces;
 @property (nonatomic, assign) BOOL predictions, moveValues;
 
 - (void) resetBoard;
@@ -41,5 +40,8 @@
 + (NSString *) stringForBoard: (NSArray *) _board;
 - (void) postReady;
 - (void) postProblem;
+- (void) startGameWithLeft: (GCPlayer *) leftGCPlayer
+                     right: (GCPlayer *) rightGCPlayer
+           andPlaySettings: (NSDictionary *) settingsDict;
 
 @end
