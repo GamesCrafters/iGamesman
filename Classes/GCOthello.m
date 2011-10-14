@@ -149,7 +149,6 @@
 			}
 		}
 	}
-	
 	return flips;
 }
 
@@ -198,8 +197,6 @@
     } else {
         [othView updateServerDataWithService: service];
     }
-		
-	
 }
 
 - (void) undoMove:(id)move {
@@ -257,17 +254,13 @@
 - (void) askUserForInput {
 	if([[[self legalMoves] objectAtIndex: 0] isEqual: @"PASS"]) {
 		if(!autoPass) {
-			
 			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Legal Moves" 
 															message:@"Click OK to pass"
 														   delegate:self
 												  cancelButtonTitle:@"OK" 
 												  otherButtonTitles: nil];
 			[alert show];
-			[alert release];
-			 
-			
-			
+			[alert release]; 
 		} else {
 			[self postHumanMove: [NSNumber numberWithInt: -1]];
 		}
@@ -389,7 +382,6 @@
         row  = 2;
     }
     
-	
 	NSString *serverMove = [NSString stringWithFormat: @"%c%d", 'a' + [move intValue] % cols,  row];
     NSString * value = [service getValueAfterMove: serverMove];
     if ([value isEqualToString:@"win"]){
