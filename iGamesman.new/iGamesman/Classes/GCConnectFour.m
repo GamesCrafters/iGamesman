@@ -136,9 +136,65 @@
  *
  * @return The value of the requested position (WIN, LOSE, TIE, or DRAW if primitive, NONPRIMITIVE if not)
  */
-- (GameValue) primitive: (Position) pos
+- (GameValue) primitive: (GCConnectFourPosition *) pos
 {
+    NSMutableArray *board = pos.board;
     
+	for (int i = 0; i < width * height; i += 1) {
+		NSString *piece = [board objectAtIndex: i];
+		if ([piece isEqual: BLANK])
+			continue;
+		
+		// Check the horizontal case
+		BOOL case1 = YES;
+		for (int j = i; j < i + pieces; j += 1) {
+			if (j >= width * height || i % width > j % width || ![[board objectAtIndex: j] isEqual: piece]) {
+				case1 = NO;
+				break;
+			}
+		}
+		
+		// Check the vertical case
+		BOOL case2 = YES;
+		for (int j = i; j < i + width * pieces; j += width) {
+			if ( j >= width * height || ![[board objectAtIndex: j] isEqual: piece] ) {
+				case2 = NO;
+				break;
+			}
+		}
+		
+		// Check the diagonal case (positive slope)
+		BOOL case3 = YES;
+		for (int j = i; j < i + pieces + width * pieces; j += (width + 1) ) {
+			if ( j >= width * height || (i % width > j % width) || ![[board objectAtIndex: j] isEqual: piece] ) {
+				case3 = NO;
+				break;
+			}
+		}
+		
+		// Check the diagonal case (negative slope)
+		BOOL case4 = YES;
+		for (int j = i; j < i + width * pieces - pieces; j += (width - 1) ) {
+			if ( j >= width * height || (i % width < j % width) || ![[board objectAtIndex: j] isEqual: piece] ) {
+				case4 = NO;
+				break;
+			}
+		}		
+		if (case1 || case2 || case3 || case4)
+			return [piece isEqual: (pos.p1Turn ? @"X" : @"O")] ? (misere ? LOSE : WIN) : (misere ? WIN : LOSE);
+	}
+	
+	// Finally, check if the board is full
+	BOOL full = YES;
+	for (int i = 0; i < width * height; i += 1) {
+		if ([[board objectAtIndex: i] isEqual: BLANK]) {
+			full = NO;
+			break;
+		}
+	}
+	if (full) return TIE;
+	
+	return NONPRIMITIVE;
 }
 
 
