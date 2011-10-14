@@ -17,6 +17,7 @@
 		21D786C1143F8C73008E8B17 /* GCConnections.m in Sources */ = {isa = PBXBuildFile; fileRef = 21D786C0143F8C73008E8B17 /* GCConnections.m */; };
 		21DA8EF4144457E800C5B4EE /* GCConnectionsPosition.m in Sources */ = {isa = PBXBuildFile; fileRef = 21DA8EF3144457E800C5B4EE /* GCConnectionsPosition.m */; };
 		21ED19F6144378D2008DD7FD /* ConnectionsIntegerQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 21ED19F5144378D2008DD7FD /* ConnectionsIntegerQueue.m */; };
+		81B929B81448D0E6005D5A03 /* GCOthello.m in Sources */ = {isa = PBXBuildFile; fileRef = 81B929B71448D0E6005D5A03 /* GCOthello.m */; };
 		D707701714366079006C56F6 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = D707701214366079006C56F6 /* Default.png */; };
 		D707701814366079006C56F6 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D707701314366079006C56F6 /* Default@2x.png */; };
 		D707701914366079006C56F6 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D707701414366079006C56F6 /* Icon.png */; };
@@ -63,6 +64,8 @@
 		21DA8EF3144457E800C5B4EE /* GCConnectionsPosition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCConnectionsPosition.m; sourceTree = "<group>"; };
 		21ED19F4144378D2008DD7FD /* ConnectionsIntegerQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectionsIntegerQueue.h; sourceTree = "<group>"; };
 		21ED19F5144378D2008DD7FD /* ConnectionsIntegerQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectionsIntegerQueue.m; sourceTree = "<group>"; };
+		81B929B61448D0E6005D5A03 /* GCOthello.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCOthello.h; sourceTree = "<group>"; };
+		81B929B71448D0E6005D5A03 /* GCOthello.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCOthello.m; sourceTree = "<group>"; };
 		D707701214366079006C56F6 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = SOURCE_ROOT; };
 		D707701314366079006C56F6 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = SOURCE_ROOT; };
 		D707701414366079006C56F6 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = SOURCE_ROOT; };
@@ -137,6 +140,15 @@
 				21DA8EF3144457E800C5B4EE /* GCConnectionsPosition.m */,
 			);
 			name = Connections;
+			sourceTree = "<group>";
+		};
+		81B929A41448D058005D5A03 /* Othello */ = {
+			isa = PBXGroup;
+			children = (
+				81B929B61448D0E6005D5A03 /* GCOthello.h */,
+				81B929B71448D0E6005D5A03 /* GCOthello.m */,
+			);
+			name = Othello;
 			sourceTree = "<group>";
 		};
 		D73A26D014365CB1009E855C /* Classes */ = {
@@ -283,6 +295,7 @@
 		D7F8BF8D143A4C6A0010F767 /* Games */ = {
 			isa = PBXGroup;
 			children = (
+				81B929A41448D058005D5A03 /* Othello */,
 				D7F8BF8B143A4C560010F767 /* Quarto */,
 				D7F8BF8C143A4C5F0010F767 /* Connect 4 */,
 				21D78682143F8290008E8B17 /* Connections */,
@@ -382,6 +395,7 @@
 				21DA8EF4144457E800C5B4EE /* GCConnectionsPosition.m in Sources */,
 				21ED19F6144378D2008DD7FD /* ConnectionsIntegerQueue.m in Sources */,
 				0AD56E15144387980034EF53 /* GCCarouselViewController.m in Sources */,
+				81B929B81448D0E6005D5A03 /* GCOthello.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
