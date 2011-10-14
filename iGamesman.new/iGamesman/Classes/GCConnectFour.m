@@ -35,101 +35,8 @@
 	return self;
 }
 
-/**
- * Return the position that result by making the move MOVE
- *  from the current. The underlying game object
- *  needs to keep a position in its local state and modify
- *  that position for each doMove call. Note that the game may
- *  choose whatever objects it likes to represent moves and positions,
- *  but those types must conform to the NSCopying protocol.
- *
- * @param move NSNumber representing the move to be made. Guaranteed to be a legal move.
- *
- * @return The position that results by making MOVE from the current position.
- */
-- (Position) doMove: (NSNumber *) moveObject
-{
-	//[c4view doMove: move];    // FIXME
-    NSMutableArray *board = position.board;
-    
-	int slot = [moveObject intValue] - 1;
-	while (slot < width * height) {
-		if ([[board objectAtIndex: slot] isEqual: BLANK]) {
-			[board replaceObjectAtIndex: slot withObject: (position.p1Turn ? @"X" : @"O")];
-			break;
-		}
-		slot += width;
-	}
-	position.p1Turn = !position.p1Turn;
-	
-	if (gameMode == ONLINE_SOLVED) {
-		// Peek at the top of the undo stack
-		NSDictionary *undoEntry = [serverUndoStack lastObject];
-		if ([[undoEntry objectForKey: @"board"] isEqual: board]) {
-			// Pop it off the undo stack
-			[undoEntry retain];
-			[serverUndoStack removeLastObject];
-			
-			// Push it onto the history stack
-			[serverHistoryStack addObject: undoEntry];
-			[undoEntry release];
-//			[c4view updateLabels];  // FIXME
-//			[self postReady];   // FIXME
-		} else {
-			// Wipe the undo stack
-			[serverUndoStack release];
-			serverUndoStack = [[NSMutableArray alloc] init];
-			
-			// Wipe the service object
-			[service release];
-			service = [[GCJSONService alloc] init];
-			
-//			[c4view updateServerDataWithService: service];  // FIXME
-		}
-	}
-	
-	if (gameMode != ONLINE_SOLVED) {
-//		[c4view updateLabels];  // FIXME
-    }
-    
-    return position;
-}
 
-
-/**
- * Undo the move MOVE from the current position such that the new
- *  current position is TOPOS (the position before MOVE was made).
- * 
- * @param move The move to undo. Guaranteed to be the move that led to the current position.
- * @param toPos The position that results from undoing MOVE. Guaranteed to be the position before MOVE was made.
- */
-- (void) undoMove: (NSNumber *) move toPosition: (Position) toPos
-{
-//	[c4view undoMove: move];    // FIXME
-    NSMutableArray *board = position.board;
-	
-	int slot = [move integerValue] - 1 + width * (height - 1);
-	while (slot >= 0) {
-		if (![[board objectAtIndex: slot] isEqualToString: BLANK]) {
-			[board replaceObjectAtIndex: slot withObject: BLANK];
-			break;
-		}
-		slot -= width;
-	}
-	position.p1Turn = !position.p1Turn;
-	
-	if (gameMode == ONLINE_SOLVED) {
-		// Pop the entry off the history stack
-		NSDictionary *entry = [[serverHistoryStack lastObject] retain];
-		[serverHistoryStack removeLastObject];
-		
-		// Push the entry onto the undo stack
-		[serverUndoStack addObject: entry];
-		[entry release];
-	}
-//	[c4view updateLabels];  // FIXME
-}
-
+#pragma mark Move/position methods.
 
 /**
  * Return the value of the position POS.
@@ -199,6 +106,99 @@
 	return NONPRIMITIVE;
 }
 
+/**
+ * Return the position that result by making the move MOVE
+ *  from the current. The underlying game object
+ *  needs to keep a position in its local state and modify
+ *  that position for each doMove call. Note that the game may
+ *  choose whatever objects it likes to represent moves and positions,
+ *  but those types must conform to the NSCopying protocol.
+ *
+ * @param move NSNumber representing the move to be made. Guaranteed to be a legal move.
+ *
+ * @return The position that results by making MOVE from the current position.
+ */
+- (Position) doMove: (NSNumber *) moveObject
+{
+	//[c4view doMove: move];    // FIXME
+    NSMutableArray *board = position.board;
+    
+	int slot = [moveObject intValue] - 1;
+	while (slot < width * height) {
+		if ([[board objectAtIndex: slot] isEqual: BLANK]) {
+			[board replaceObjectAtIndex: slot withObject: (position.p1Turn ? @"X" : @"O")];
+			break;
+		}
+		slot += width;
+	}
+	position.p1Turn = !position.p1Turn;
+	
+	if (gameMode == ONLINE_SOLVED) {
+		// Peek at the top of the undo stack
+		NSDictionary *undoEntry = [serverUndoStack lastObject];
+		if ([[undoEntry objectForKey: @"board"] isEqual: board]) {
+			// Pop it off the undo stack
+			[undoEntry retain];
+			[serverUndoStack removeLastObject];
+			
+			// Push it onto the history stack
+			[serverHistoryStack addObject: undoEntry];
+			[undoEntry release];
+//			[c4view updateLabels];  // FIXME
+//			[self postReady];   // FIXME
+		} else {
+			// Wipe the undo stack
+			[serverUndoStack release];
+			serverUndoStack = [[NSMutableArray alloc] init];
+			
+			// Wipe the service object
+			[service release];
+			service = [[GCJSONService alloc] init];
+			
+//			[c4view updateServerDataWithService: service];  // FIXME
+		}
+	}
+	
+	if (gameMode != ONLINE_SOLVED) {
+//		[c4view updateLabels];  // FIXME
+    }
+    
+    return position;
+}
+
+/**
+ * Undo the move MOVE from the current position such that the new
+ *  current position is TOPOS (the position before MOVE was made).
+ * 
+ * @param move The move to undo. Guaranteed to be the move that led to the current position.
+ * @param toPos The position that results from undoing MOVE. Guaranteed to be the position before MOVE was made.
+ */
+- (void) undoMove: (NSNumber *) move toPosition: (Position) toPos
+{
+//	[c4view undoMove: move];    // FIXME
+    NSMutableArray *board = position.board;
+	
+	int slot = [move integerValue] - 1 + width * (height - 1);
+	while (slot >= 0) {
+		if (![[board objectAtIndex: slot] isEqualToString: BLANK]) {
+			[board replaceObjectAtIndex: slot withObject: BLANK];
+			break;
+		}
+		slot -= width;
+	}
+	position.p1Turn = !position.p1Turn;
+	
+	if (gameMode == ONLINE_SOLVED) {
+		// Pop the entry off the history stack
+		NSDictionary *entry = [[serverHistoryStack lastObject] retain];
+		[serverHistoryStack removeLastObject];
+		
+		// Push the entry onto the undo stack
+		[serverUndoStack addObject: entry];
+		[entry release];
+	}
+//	[c4view updateLabels];  // FIXME
+}
 
 /**
  * Return the legal moves for the position POS.
@@ -223,6 +223,8 @@
 }
 
 
+#pragma mark Run methods.
+
 - (void) startGameWithLeft: (GCPlayer *) leftPlayer
                      right: (GCPlayer *) rightPlayer
            andPlaySettings: (NSDictionary *) settingsDict
@@ -230,27 +232,12 @@
     
 }
 
-
-
-
-
 /**
  * Wait for the user to make a move, then return that move back through the completion handler.
  *
  * @param completionHandler The callback handler to be called with the user's move as argument.
  */
 - (void) waitForHumanMoveWithCompletion: (void (^) (Move move)) completionHandler
-{
-    
-}
-
-
-/**
- * Return a view for changing the game's variants (rules).
- *
- * @return The view managed by this game that displays the game's rule-changing interface.
- */
-- (UIView *) variantsView
 {
     
 }
@@ -266,11 +253,8 @@
     
 }
 
-/* Report the play modes supported by the game */
-- (BOOL) supportsPlayMode: (PlayMode) mode
-{
-    
-}
+
+#pragma mark View options.
 
 /* Show/hide move values and predictions */
 - (void) showPredictions: (BOOL) predictions
@@ -282,12 +266,24 @@
     
 }
 
+
+#pragma mark Status reporting.
+
 /* Report whose turn it is (left or right) */
 - (PlayerSide) currentPlayer
 {
     // FIXME:  this is a compatibility hack for the original GCConnectFour code
     return position.p1Turn ? PLAYER_LEFT : PLAYER_RIGHT;
 }
+
+/* Report the play modes supported by the game */
+- (BOOL) supportsPlayMode: (PlayMode) mode
+{
+    if (mode == OFFLINE_UNSOLVED || mode == ONLINE_SOLVED)
+        return YES;
+    return NO;
+}
+
 
 #pragma mark Properties.
 
@@ -335,6 +331,16 @@
 - (UIView *) view
 {
     //    return c4view;    // FIXME
+}
+
+/**
+ * Return a view for changing the game's variants (rules).
+ *
+ * @return The view managed by this game that displays the game's rule-changing interface.
+ */
+- (UIView *) variantsView
+{
+    // FIXME
 }
 
 
