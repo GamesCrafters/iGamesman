@@ -19,8 +19,8 @@
     GCConnectFourPosition       *position;
     //	BOOL						p1Turn;     // position.p1Turn
     //	NSMutableArray				*board;     // position.board
-	NSString					*player1Name, *player2Name;
-	PlayerType					player1Type, player2Type;
+    GCPlayer                    *leftPlayer, *rightPlayer;
+    NSDictionary                *playSettings;
 	int							width, height, pieces;
 	BOOL						predictions, moveValues;
 	BOOL						misere;

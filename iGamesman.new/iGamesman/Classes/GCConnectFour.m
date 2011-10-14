@@ -14,11 +14,13 @@
 
 - (id) init {
 	if (self = [super init]) {
-		player1Name = @"Player 1";
-		player2Name = @"Player 2";
-		
-		player1Type = HUMAN;
-		player2Type = HUMAN;
+        leftPlayer = [[GCPlayer alloc] init];
+        leftPlayer.name = @"Player 1";
+        leftPlayer.type = HUMAN;
+        
+        rightPlayer = [[GCPlayer alloc] init];
+        rightPlayer.name = @"Player 2";
+        rightPlayer.type = HUMAN;
 		
 		width = 7;
 		height = 6;
@@ -208,7 +210,16 @@
  */
 - (NSArray *) generateMoves: (Position) pos
 {
-    
+	NSMutableArray *moves = [[NSMutableArray alloc] initWithCapacity: width];
+	
+	int col = 1;
+	for (int i = width * (height - 1); i < width * height; i += 1) {
+		if ([[position.board objectAtIndex: i] isEqual: BLANK])
+			[moves addObject: [NSString stringWithFormat: @"%d", col]];
+		col += 1;
+	}
+	
+	return moves;
 }
 
 
@@ -226,7 +237,7 @@
  */
 - (GCPlayer *) leftPlayer
 {
-    
+    return leftPlayer;
 }
 
 
@@ -237,7 +248,7 @@
  */
 - (void) setLeftPlayer: (GCPlayer *) left
 {
-    
+    leftPlayer = [left retain];
 }
 
 
@@ -248,7 +259,7 @@
  */
 - (GCPlayer *) rightPlayer
 {
-    
+    return rightPlayer;
 }
 
 
@@ -259,17 +270,18 @@
  */
 - (void) setRightPlayer: (GCPlayer *) right
 {
-    
+    rightPlayer = [right retain];
 }
 
 
 - (NSDictionary *) playSettings
 {
-    
+    return playSettings;
 }
+
 - (void) setPlaySettings: (NSDictionary *) settingsDict
 {
-    
+    playSettings = [settingsDict retain];
 }
 
 
@@ -280,7 +292,7 @@
  */
 - (UIView *) view
 {
-    
+//    return c4view;    // FIXME
 }
 
 
