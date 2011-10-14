@@ -101,9 +101,31 @@
  * @param move The move to undo. Guaranteed to be the move that led to the current position.
  * @param toPos The position that results from undoing MOVE. Guaranteed to be the position before MOVE was made.
  */
-- (void) undoMove: (Move) move toPosition: (Position) toPos
+- (void) undoMove: (NSNumber *) move toPosition: (Position) toPos
 {
-    
+//	[c4view undoMove: move];    // FIXME
+    NSMutableArray *board = position.board;
+	
+	int slot = [move integerValue] - 1 + width * (height - 1);
+	while (slot >= 0) {
+		if (![[board objectAtIndex: slot] isEqualToString: BLANK]) {
+			[board replaceObjectAtIndex: slot withObject: BLANK];
+			break;
+		}
+		slot -= width;
+	}
+	position.p1Turn = !position.p1Turn;
+	
+	if (gameMode == ONLINE_SOLVED) {
+		// Pop the entry off the history stack
+		NSDictionary *entry = [[serverHistoryStack lastObject] retain];
+		[serverHistoryStack removeLastObject];
+		
+		// Push the entry onto the undo stack
+		[serverUndoStack addObject: entry];
+		[entry release];
+	}
+//	[c4view updateLabels];  // FIXME
 }
 
 
