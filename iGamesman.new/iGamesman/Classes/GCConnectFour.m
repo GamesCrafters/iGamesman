@@ -230,70 +230,8 @@
     
 }
 
-/**
- * Return the left player.
- *
- * @return The game's left player.
- */
-- (GCPlayer *) leftPlayer
-{
-    return leftPlayer;
-}
 
 
-/**
- * Assign the left player.
- *
- * @param left The new left player.
- */
-- (void) setLeftPlayer: (GCPlayer *) left
-{
-    leftPlayer = [left retain];
-}
-
-
-/**
- * Return the right player.
- *
- * @return The game's right player.
- */
-- (GCPlayer *) rightPlayer
-{
-    return rightPlayer;
-}
-
-
-/**
- * Assign the right player.
- *
- * @param right The new right player.
- */
-- (void) setRightPlayer: (GCPlayer *) right
-{
-    rightPlayer = [right retain];
-}
-
-
-- (NSDictionary *) playSettings
-{
-    return playSettings;
-}
-
-- (void) setPlaySettings: (NSDictionary *) settingsDict
-{
-    playSettings = [settingsDict retain];
-}
-
-
-/**
- * Return the view that displays this game's interface.
- *
- * @return The view managed by this game that displays the game's interface.
- */
-- (UIView *) view
-{
-//    return c4view;    // FIXME
-}
 
 
 /**
@@ -313,16 +251,6 @@
  * @return The view managed by this game that displays the game's rule-changing interface.
  */
 - (UIView *) variantsView
-{
-    
-}
-
-/* Accessors for misere */
-- (BOOL) isMisere
-{
-    
-}
-- (void) setMisere: (BOOL) misere
 {
     
 }
@@ -357,7 +285,56 @@
 /* Report whose turn it is (left or right) */
 - (PlayerSide) currentPlayer
 {
-    
+    // FIXME:  this is a compatibility hack for the original GCConnectFour code
+    return position.p1Turn ? PLAYER_LEFT : PLAYER_RIGHT;
+}
+
+#pragma mark Properties.
+
+- (GCPlayer *) leftPlayer
+{
+    return leftPlayer;
+}
+- (void) setLeftPlayer: (GCPlayer *) left
+{
+    leftPlayer = [left retain];
+}
+
+- (GCPlayer *) rightPlayer
+{
+    return rightPlayer;
+}
+- (void) setRightPlayer: (GCPlayer *) right
+{
+    rightPlayer = [right retain];
+}
+
+- (NSDictionary *) playSettings
+{
+    return playSettings;
+}
+- (void) setPlaySettings: (NSDictionary *) settingsDict
+{
+    playSettings = [settingsDict retain];
+}
+
+- (BOOL) isMisere
+{
+    return misere;
+}
+- (void) setMisere: (BOOL) newMisere
+{
+    misere = newMisere;
+}
+
+/**
+ * Return the view that displays this game's interface.
+ *
+ * @return The view managed by this game that displays the game's interface.
+ */
+- (UIView *) view
+{
+    //    return c4view;    // FIXME
 }
 
 
