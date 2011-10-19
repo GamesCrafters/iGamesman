@@ -104,7 +104,8 @@
 {
     int index = sender.tag - 1000;
     
-    NSLog(@"%@", [[gameData objectAtIndex: index] objectForKey: @"class"]);
+    NSString *className = [[gameData objectAtIndex: index] objectForKey: @"class"];
+    Class class = NSClassFromString(className);
 }
 
 

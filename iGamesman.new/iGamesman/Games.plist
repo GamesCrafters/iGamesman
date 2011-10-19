@@ -4,35 +4,27 @@
 <array>
 	<dict>
 		<key>name</key>
-		<string>Achi</string>
+		<string>Tic-Tac-Toe</string>
 		<key>image</key>
-		<string>achi.png</string>
+		<string>tictactoe.png</string>
 		<key>class</key>
-		<string>GCAchi</string>
+		<string>GCTicTacToe</string>
 	</dict>
 	<dict>
 		<key>name</key>
-		<string>Asalto</string>
+		<string>Y</string>
 		<key>image</key>
-		<string>asalto.png</string>
+		<string>y.png</string>
 		<key>class</key>
-		<string>GCAsalto</string>
+		<string>GCYGame</string>
 	</dict>
-	<dict>
+    <dict>
 		<key>name</key>
-		<string>Change!</string>
+		<string>Connect-4</string>
 		<key>image</key>
-		<string>change.png</string>
+		<string>connect4.png</string>
 		<key>class</key>
-		<string>GCChangeBang</string>
-	</dict>
-	<dict>
-		<key>name</key>
-		<string>Chung-Toi</string>
-		<key>image</key>
-		<string>chungtoi.png</string>
-		<key>class</key>
-		<string>GCChungToi</string>
+		<string>GCConnectFour</string>
 	</dict>
 	<dict>
 		<key>name</key>
@@ -41,6 +33,14 @@
 		<string>connections.png</string>
 		<key>class</key>
 		<string>GCConnections</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Othello</string>
+		<key>image</key>
+		<string>othello.png</string>
+		<key>class</key>
+		<string>GCOthello</string>
 	</dict>
 </array>
 </plist>
