@@ -8,17 +8,17 @@
 
 #import <Foundation/Foundation.h>
 
+@class GCConnectFourViewController, GCConnectFourPosition;
+
 #import "GCGame.h"
 #import "GCJSONService.h"
 #import "GCConnectFourPosition.h"
-
+#import "GCConnectFourViewController.h"
 
 @interface GCConnectFour : NSObject <GCGame> {
-//    GCConnectFourViewController *c4view;
+    GCConnectFourViewController *c4view;
 	GCJSONService				*service;
     GCConnectFourPosition       *position;
-    //	BOOL						p1Turn;     // position.p1Turn
-    //	NSMutableArray				*board;     // position.board
     GCPlayer                    *leftPlayer, *rightPlayer;
     NSDictionary                *playSettings;
 	int							width, height, pieces;

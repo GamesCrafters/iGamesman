@@ -8,7 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "GCConnectFour.h"
+#import "GCConnectFourPosition.h"
 #import "GCJSONService.h"
+
+@class GCConnectFour;
 
 @interface GCConnectFourViewController : UIViewController {
 	UIActivityIndicatorView *spinner;
@@ -38,8 +41,8 @@
 - (void) timedOut: (NSTimer *) theTimer;
 - (void) updateLabels;
 - (void) displayPrimitive;
-- (void) doMove: (NSString *) move;
-- (void) undoMove: (NSString *) move;
+- (void) doMove: (NSNumber *) move;
+- (void) undoMove: (NSNumber *) move;
 //- (void) disableButtons;
 //- (void) enableButtons;
 - (void) stop;

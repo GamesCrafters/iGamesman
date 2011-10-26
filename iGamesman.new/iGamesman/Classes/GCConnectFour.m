@@ -122,7 +122,7 @@
  */
 - (Position) doMove: (NSNumber *) moveObject
 {
-	//[c4view doMove: move];    // FIXME
+	[c4view doMove: moveObject];
     NSMutableArray *board = position.board;
     
 	int slot = [moveObject intValue] - 1;
@@ -146,7 +146,7 @@
 			// Push it onto the history stack
 			[serverHistoryStack addObject: undoEntry];
 			[undoEntry release];
-//			[c4view updateLabels];  // FIXME
+			[c4view updateLabels];
 //			[self postReady];   // FIXME
 		} else {
 			// Wipe the undo stack
@@ -157,12 +157,12 @@
 			[service release];
 			service = [[GCJSONService alloc] init];
 			
-//			[c4view updateServerDataWithService: service];  // FIXME
+			[c4view updateServerDataWithService: service];
 		}
 	}
 	
 	if (gameMode != ONLINE_SOLVED) {
-//		[c4view updateLabels];  // FIXME
+		[c4view updateLabels];
     }
     
     return position;
@@ -177,7 +177,7 @@
  */
 - (void) undoMove: (NSNumber *) move toPosition: (Position) toPos
 {
-//	[c4view undoMove: move];    // FIXME
+	[c4view undoMove: move];
     NSMutableArray *board = position.board;
 	
 	int slot = [move integerValue] - 1 + width * (height - 1);
@@ -199,7 +199,7 @@
 		[serverUndoStack addObject: entry];
 		[entry release];
 	}
-//	[c4view updateLabels];  // FIXME
+	[c4view updateLabels];
 }
 
 /**
@@ -347,7 +347,7 @@
  */
 - (UIView *) view
 {
-    //    return c4view;    // FIXME
+    return [c4view view];
 }
 
 /**
@@ -357,7 +357,7 @@
  */
 - (UIView *) variantsView
 {
-    // FIXME
+    return nil;     // FIXME
 }
 
 

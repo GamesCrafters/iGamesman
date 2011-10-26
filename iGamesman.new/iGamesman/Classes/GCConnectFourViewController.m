@@ -211,7 +211,7 @@
 }
 
 
-- (void) doMove: (NSString *) move {
+- (void) doMove: (NSNumber *) move {
 	int col = [move integerValue];
 	if (col == 0) col = width;
 	if ([[game legalMoves] containsObject: move]) {		
@@ -250,7 +250,7 @@
 }
 
 
-- (void) undoMove: (NSString *) move {
+- (void) undoMove: (NSNumber *) move {
 	int tag = [move integerValue];
 	if (tag == 0) tag = width;
 	tag += width * (height - 1);
