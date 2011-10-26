@@ -12,13 +12,16 @@
 
 @implementation GCConnectFourPosition
 
-@synthesize p1Turn = _p1Turn, board = _board;
+@synthesize p1Turn = _p1Turn, board = _board, width = _width, height = _height, pieces = _pieces;
 
-- (id)initWithWidth:(int)width height:(int)height
+- (id)initWithWidth:(int)width height:(int)height pieces:(int)pieces
 {
     self = [super init];
     if (self) {
         _p1Turn = YES;
+        _width = width;
+        _height = height;
+        _pieces = pieces;
 		_board = [[NSMutableArray alloc] initWithCapacity: width * height];
 		for (int i = 0; i < width * height; i += 1)
 			[_board addObject: BLANK];
@@ -34,7 +37,5 @@
     copy.board = [_board copy];
     return copy;
 }
-
-
 
 @end

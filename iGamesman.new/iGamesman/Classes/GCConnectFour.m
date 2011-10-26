@@ -12,6 +12,8 @@
 
 @implementation GCConnectFour
 
+@synthesize position, gameMode;
+
 - (id) init {
 	if (self = [super init]) {
         leftPlayer = [[GCPlayer alloc] init];
@@ -26,7 +28,7 @@
 		height = 6;
 		pieces = 4;
 		
-        position = [[GCConnectFourPosition alloc] initWithWidth:width height:height];
+        position = [[GCConnectFourPosition alloc] initWithWidth:width height:height pieces:pieces];
 		
 		predictions = NO;
 		moveValues = NO;
@@ -221,6 +223,10 @@
 	
 	return moves;
 }
+- (NSArray *) legalMoves
+{
+    return [self generateMoves:position];
+}
 
 
 #pragma mark Run methods.
@@ -286,6 +292,17 @@
 
 
 #pragma mark Properties.
+
+- (NSString *) boardString
+{
+    NSString *boardString = @"";
+    for (NSString *piece in position.board) {
+        if ([piece isEqualToString:@"+"])
+            piece = @" ";
+        boardString = [boardString stringByAppendingString:piece];
+    }
+    return boardString;
+}
 
 - (GCPlayer *) leftPlayer
 {

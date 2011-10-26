@@ -30,4 +30,10 @@
 	NSMutableArray				*serverUndoStack;
 }
 
+- (NSArray *) legalMoves;       // Convenience method -- calls -generateMoves: with current position.
+- (NSString *) boardString;     // Generate board string for the current position.
+
+@property (readonly) GCConnectFourPosition  *position;
+@property (readonly) PlayMode               gameMode;
+
 @end
