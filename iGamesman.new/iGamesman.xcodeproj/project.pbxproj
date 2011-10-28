@@ -336,6 +336,9 @@
 /* Begin PBXProject section */
 		D7A6717814365AF900659C6E /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+			};
 			buildConfigurationList = D7A6717B14365AF900659C6E /* Build configuration list for PBXProject "iGamesman" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;

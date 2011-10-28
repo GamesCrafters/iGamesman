@@ -231,11 +231,37 @@
 
 #pragma mark Run methods.
 
-- (void) startGameWithLeft: (GCPlayer *) leftPlayer
-                     right: (GCPlayer *) rightPlayer
+- (void) startGameWithLeft: (GCPlayer *) lp
+                     right: (GCPlayer *) rp
            andPlaySettings: (NSDictionary *) settingsDict
 {
+    leftPlayer = lp;
+    rightPlayer = rp;
+    playSettings = settingsDict;
     
+    [position resetBoard];
+	
+	gameMode = ONLINE_SOLVED;       // FIXME extract this from playSettings
+	
+	if (gameMode == OFFLINE_UNSOLVED) {
+		predictions = NO;
+		moveValues = NO;
+	}
+	
+	if (!c4view)
+		[c4view release];
+	c4view = [[GCConnectFourViewController alloc] initWithGame: self];
+	
+	PlayerType current = [self currentPlayer] == PLAYER_LEFT ? [leftPlayer type] : [rightPlayer type];
+	if (current == HUMAN)
+		c4view.touchesEnabled = YES;		
+	
+	if (gameMode == ONLINE_SOLVED) {
+		service = [[GCJSONService alloc] init];
+		serverHistoryStack = [[NSMutableArray alloc] init];
+		serverUndoStack    = [[NSMutableArray alloc] init];
+		[c4view updateServerDataWithService: service];
+	}
 }
 
 /**

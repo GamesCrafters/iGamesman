@@ -15,6 +15,7 @@
 }
 
 - (id)initWithWidth:(int)width height:(int)height pieces:(int)pieces;
+- (void) resetBoard;
 
 @property (nonatomic, assign) BOOL              p1Turn;
 @property (nonatomic, assign) NSMutableArray    *board;

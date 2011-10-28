@@ -38,4 +38,15 @@
     return copy;
 }
 
+- (void) resetBoard {
+	if (_board != nil) {
+		[_board release];
+		_board = nil;
+	}
+	
+	_board = [[NSMutableArray alloc] initWithCapacity: _width * _height];
+	for (int i = 0; i < _width * _height; i += 1)
+		[_board addObject: BLANK];
+}
+
 @end
