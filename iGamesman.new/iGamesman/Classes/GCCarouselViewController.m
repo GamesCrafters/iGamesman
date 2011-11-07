@@ -8,6 +8,9 @@
 
 #import "GCCarouselViewController.h"
 
+#import "GCGame.h"
+#import "GCGameViewController.h"
+
 
 @implementation GCCarouselViewController
 
@@ -106,6 +109,18 @@
     
     NSString *className = [[gameData objectAtIndex: index] objectForKey: @"class"];
     Class class = NSClassFromString(className);
+    
+    id<GCGame> game = [[class alloc] init];
+    
+    GCGameViewController *gameViewController = [[GCGameViewController alloc] initWithGame: game];
+    
+    [gameViewController setModalTransitionStyle: UIModalTransitionStyleFlipHorizontal];
+    
+    [self presentModalViewController: gameViewController animated: YES];
+    
+    [gameViewController release];
+    
+    //[game release];
 }
 
 

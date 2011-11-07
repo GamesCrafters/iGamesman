@@ -9,6 +9,24 @@
 /* Begin PBXBuildFile section */
 		0A3C3228143A45370080BCA9 /* GCQuarto.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A3C3227143A45360080BCA9 /* GCQuarto.m */; };
 		0A4C7D231448D52100305C9C /* Games.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0A4C7D221448D52100305C9C /* Games.plist */; };
+		0A6646A11468823700CC955A /* GCGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A6646A01468823700CC955A /* GCGameViewController.m */; };
+		0A6646B1146887C200CC955A /* redo.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A6646AD146887C200CC955A /* redo.png */; };
+		0A6646B2146887C200CC955A /* redo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A6646AE146887C200CC955A /* redo@2x.png */; };
+		0A6646B3146887C200CC955A /* undo.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A6646AF146887C200CC955A /* undo.png */; };
+		0A6646B4146887C200CC955A /* undo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A6646B0146887C200CC955A /* undo@2x.png */; };
+		0A6646B71468885400CC955A /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A6646B51468885400CC955A /* settings.png */; };
+		0A6646B81468885400CC955A /* settings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A6646B61468885400CC955A /* settings@2x.png */; };
+		0A6646BB1468888300CC955A /* vvh.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A6646B91468888200CC955A /* vvh.png */; };
+		0A6646BC1468888300CC955A /* vvh@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A6646BA1468888300CC955A /* vvh@2x.png */; };
+		0A6646BF1468899100CC955A /* variants.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A6646BD1468899100CC955A /* variants.png */; };
+		0A6646C01468899100CC955A /* variants@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A6646BE1468899100CC955A /* variants@2x.png */; };
+		0A6646C3146889F300CC955A /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A6646C1146889F300CC955A /* home.png */; };
+		0A6646C4146889F300CC955A /* home@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A6646C2146889F300CC955A /* home@2x.png */; };
+		0A6646C714688AD200CC955A /* GCSidebarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A6646C614688AD100CC955A /* GCSidebarView.m */; };
+		0A6646CE1468923D00CC955A /* players.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A6646CC1468923D00CC955A /* players.png */; };
+		0A6646CF1468923D00CC955A /* players@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A6646CD1468923D00CC955A /* players@2x.png */; };
+		0A6646D31468955900CC955A /* values.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A6646D11468955900CC955A /* values.png */; };
+		0A6646D41468955900CC955A /* values@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A6646D21468955900CC955A /* values@2x.png */; };
 		0A899010144F6A2700CC9D2F /* connect4.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A89900F144F6A2700CC9D2F /* connect4.png */; };
 		0A899013144F6BA400CC9D2F /* connections.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A899012144F6BA400CC9D2F /* connections.png */; };
 		0A899015144F6D0800CC9D2F /* othello.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A899014144F6D0800CC9D2F /* othello.png */; };
@@ -54,6 +72,26 @@
 		0A3C3226143A45360080BCA9 /* GCQuarto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCQuarto.h; sourceTree = "<group>"; };
 		0A3C3227143A45360080BCA9 /* GCQuarto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCQuarto.m; sourceTree = "<group>"; };
 		0A4C7D221448D52100305C9C /* Games.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Games.plist; sourceTree = "<group>"; };
+		0A66469F1468823700CC955A /* GCGameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCGameViewController.h; sourceTree = "<group>"; };
+		0A6646A01468823700CC955A /* GCGameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCGameViewController.m; sourceTree = "<group>"; };
+		0A6646AD146887C200CC955A /* redo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redo.png; sourceTree = "<group>"; };
+		0A6646AE146887C200CC955A /* redo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "redo@2x.png"; sourceTree = "<group>"; };
+		0A6646AF146887C200CC955A /* undo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = undo.png; sourceTree = "<group>"; };
+		0A6646B0146887C200CC955A /* undo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "undo@2x.png"; sourceTree = "<group>"; };
+		0A6646B51468885400CC955A /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
+		0A6646B61468885400CC955A /* settings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settings@2x.png"; sourceTree = "<group>"; };
+		0A6646B91468888200CC955A /* vvh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vvh.png; sourceTree = "<group>"; };
+		0A6646BA1468888300CC955A /* vvh@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "vvh@2x.png"; sourceTree = "<group>"; };
+		0A6646BD1468899100CC955A /* variants.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = variants.png; sourceTree = "<group>"; };
+		0A6646BE1468899100CC955A /* variants@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "variants@2x.png"; sourceTree = "<group>"; };
+		0A6646C1146889F300CC955A /* home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home.png; sourceTree = "<group>"; };
+		0A6646C2146889F300CC955A /* home@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "home@2x.png"; sourceTree = "<group>"; };
+		0A6646C514688AD100CC955A /* GCSidebarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCSidebarView.h; sourceTree = "<group>"; };
+		0A6646C614688AD100CC955A /* GCSidebarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCSidebarView.m; sourceTree = "<group>"; };
+		0A6646CC1468923D00CC955A /* players.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = players.png; sourceTree = "<group>"; };
+		0A6646CD1468923D00CC955A /* players@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "players@2x.png"; sourceTree = "<group>"; };
+		0A6646D11468955900CC955A /* values.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = values.png; sourceTree = "<group>"; };
+		0A6646D21468955900CC955A /* values@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "values@2x.png"; sourceTree = "<group>"; };
 		0A89900F144F6A2700CC9D2F /* connect4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = connect4.png; sourceTree = "<group>"; };
 		0A899012144F6BA400CC9D2F /* connections.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = connections.png; sourceTree = "<group>"; };
 		0A899014144F6D0800CC9D2F /* othello.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = othello.png; sourceTree = "<group>"; };
@@ -134,6 +172,41 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0A6646A31468872A00CC955A /* Sidebar */ = {
+			isa = PBXGroup;
+			children = (
+				0A6646C1146889F300CC955A /* home.png */,
+				0A6646C2146889F300CC955A /* home@2x.png */,
+				0A6646CC1468923D00CC955A /* players.png */,
+				0A6646CD1468923D00CC955A /* players@2x.png */,
+				0A6646AD146887C200CC955A /* redo.png */,
+				0A6646AE146887C200CC955A /* redo@2x.png */,
+				0A6646B51468885400CC955A /* settings.png */,
+				0A6646B61468885400CC955A /* settings@2x.png */,
+				0A6646AF146887C200CC955A /* undo.png */,
+				0A6646B0146887C200CC955A /* undo@2x.png */,
+				0A6646D11468955900CC955A /* values.png */,
+				0A6646D21468955900CC955A /* values@2x.png */,
+				0A6646BD1468899100CC955A /* variants.png */,
+				0A6646BE1468899100CC955A /* variants@2x.png */,
+				0A6646B91468888200CC955A /* vvh.png */,
+				0A6646BA1468888300CC955A /* vvh@2x.png */,
+			);
+			name = Sidebar;
+			sourceTree = "<group>";
+		};
+		0A6646A41468873800CC955A /* Games */ = {
+			isa = PBXGroup;
+			children = (
+				0A89900F144F6A2700CC9D2F /* connect4.png */,
+				0A899012144F6BA400CC9D2F /* connections.png */,
+				0A899014144F6D0800CC9D2F /* othello.png */,
+				0A899016144F6DF500CC9D2F /* tictactoe.png */,
+				0A899018144F6F0B00CC9D2F /* y.png */,
+			);
+			name = Games;
+			sourceTree = "<group>";
+		};
 		21D78682143F8290008E8B17 /* Connections */ = {
 			isa = PBXGroup;
 			children = (
@@ -166,10 +239,14 @@
 				D73A26D314365CB1009E855C /* GCCoverFlowViewController.h */,
 				D73A26D414365CB1009E855C /* GCCoverFlowViewController.m */,
 				D73A26D514365CB1009E855C /* GCGame.h */,
+				0A66469F1468823700CC955A /* GCGameViewController.h */,
+				0A6646A01468823700CC955A /* GCGameViewController.m */,
 				D73A26D614365CB1009E855C /* GCPlayer.h */,
 				D73A26D714365CB1009E855C /* GCPlayer.m */,
 				D73A26D814365CB1009E855C /* GCSetupGameViewController.h */,
 				D73A26D914365CB1009E855C /* GCSetupGameViewController.m */,
+				0A6646C514688AD100CC955A /* GCSidebarView.h */,
+				0A6646C614688AD100CC955A /* GCSidebarView.m */,
 				D73A26DA14365CB1009E855C /* iGamesmanAppDelegate.h */,
 				D73A26DB14365CB1009E855C /* iGamesmanAppDelegate.m */,
 				D73A26DC14365CB1009E855C /* iGamesmanViewController.h */,
@@ -190,11 +267,8 @@
 		D780F9C314365ECB00922ECC /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				0A89900F144F6A2700CC9D2F /* connect4.png */,
-				0A899012144F6BA400CC9D2F /* connections.png */,
-				0A899014144F6D0800CC9D2F /* othello.png */,
-				0A899016144F6DF500CC9D2F /* tictactoe.png */,
-				0A899018144F6F0B00CC9D2F /* y.png */,
+				0A6646A31468872A00CC955A /* Sidebar */,
+				0A6646A41468873800CC955A /* Games */,
 				D780F9C914365ECB00922ECC /* Patchwork.png */,
 				D780F9CA14365ECB00922ECC /* Patchwork@2x.png */,
 			);
@@ -377,6 +451,22 @@
 				0A899015144F6D0800CC9D2F /* othello.png in Resources */,
 				0A899017144F6DF500CC9D2F /* tictactoe.png in Resources */,
 				0A899019144F6F0B00CC9D2F /* y.png in Resources */,
+				0A6646B1146887C200CC955A /* redo.png in Resources */,
+				0A6646B2146887C200CC955A /* redo@2x.png in Resources */,
+				0A6646B3146887C200CC955A /* undo.png in Resources */,
+				0A6646B4146887C200CC955A /* undo@2x.png in Resources */,
+				0A6646B71468885400CC955A /* settings.png in Resources */,
+				0A6646B81468885400CC955A /* settings@2x.png in Resources */,
+				0A6646BB1468888300CC955A /* vvh.png in Resources */,
+				0A6646BC1468888300CC955A /* vvh@2x.png in Resources */,
+				0A6646BF1468899100CC955A /* variants.png in Resources */,
+				0A6646C01468899100CC955A /* variants@2x.png in Resources */,
+				0A6646C3146889F300CC955A /* home.png in Resources */,
+				0A6646C4146889F300CC955A /* home@2x.png in Resources */,
+				0A6646CE1468923D00CC955A /* players.png in Resources */,
+				0A6646CF1468923D00CC955A /* players@2x.png in Resources */,
+				0A6646D31468955900CC955A /* values.png in Resources */,
+				0A6646D41468955900CC955A /* values@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -409,6 +499,8 @@
 				0AD56E15144387980034EF53 /* GCCarouselViewController.m in Sources */,
 				81B929B81448D0E6005D5A03 /* GCOthello.m in Sources */,
 				D729934514589B3800176A66 /* GCConnectFourViewController.m in Sources */,
+				0A6646A11468823700CC955A /* GCGameViewController.m in Sources */,
+				0A6646C714688AD200CC955A /* GCSidebarView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
