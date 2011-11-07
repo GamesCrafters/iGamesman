@@ -31,12 +31,21 @@
 }
 
 - (NSArray *) legalMoves;       // Convenience method -- calls -generateMoves: with current position.
+- (GameValue) primitive;        // Convenience method -- calls -primitive: with current position.
 - (NSString *) boardString;     // Generate board string for the current position.
 
+- (NSString *) getValue;
+- (NSInteger) getRemoteness;
+- (NSString *) getValueOfMove: (NSString *) move;
+- (NSInteger) getRemotenessOfMove: (NSString *) move;
+
+- (void) postHumanMove: (NSString *) move;
 - (void) postReady;
+- (void) postProblem;
 
 @property (readonly) GCConnectFourPosition  *position;
 @property (readonly) PlayMode               gameMode;
 @property (nonatomic, retain) NSMutableArray *serverHistoryStack;
+@property (nonatomic, assign) BOOL predictions, moveValues;
 
 @end

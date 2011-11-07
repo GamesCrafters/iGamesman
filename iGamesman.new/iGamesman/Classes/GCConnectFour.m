@@ -12,7 +12,7 @@
 
 @implementation GCConnectFour
 
-@synthesize position, gameMode, serverHistoryStack;
+@synthesize position, gameMode, serverHistoryStack, predictions, moveValues;
 
 - (id) init {
 	if (self = [super init]) {
@@ -106,6 +106,10 @@
 	if (full) return TIE;
 	
 	return NONPRIMITIVE;
+}
+- (GameValue) primitive
+{
+    return [self primitive:position];
 }
 
 /**
@@ -285,12 +289,19 @@
     
 }
 
-/* Legacy method */
+/* Legacy methods */
+- (void) postHumanMove: (NSString *) move
+{
+    NSLog(@"GCConnectFour's postHumanMove:%@ called.", move);
+}
 - (void) postReady
 {
-    NSLog(@"postReady called!");
+    NSLog(@"GCConnectFour's postReady called.");
 }
-
+- (void) postProblem
+{
+    NSLog(@"GCConnectFour's postProblem called.");
+}
 
 #pragma mark View options.
 
@@ -320,6 +331,39 @@
     if (mode == OFFLINE_UNSOLVED || mode == ONLINE_SOLVED)
         return YES;
     return NO;
+}
+
+
+#pragma mark Server history stack.
+
+- (NSString *) getValue {
+	NSDictionary *entry = (NSDictionary *) [serverHistoryStack lastObject];
+	NSString *value = [[entry objectForKey: @"value"] uppercaseString];
+	if ([value isEqual: @"UNAVAILABLE"]) value = nil;
+	return value;
+}
+
+- (NSInteger) getRemoteness {
+	NSDictionary *entry = (NSDictionary *) [serverHistoryStack lastObject];
+	return [[entry objectForKey: @"remoteness"] integerValue];
+}
+
+- (NSString *) getValueOfMove: (NSString *) move {
+	NSString *s = [[NSString alloc] initWithFormat: @"%d", [move intValue] - 1];
+	NSDictionary *entry = (NSDictionary *) [serverHistoryStack lastObject];
+	NSDictionary *children = (NSDictionary *) [entry objectForKey: @"children"];
+	NSDictionary *moveEntry = (NSDictionary *) [children objectForKey: s];
+	NSString *value = [[moveEntry objectForKey: @"value"] uppercaseString];
+	if ([value isEqual: @"UNAVAILABLE"]) value = nil;
+	return value;
+}
+
+- (NSInteger) getRemotenessOfMove: (NSString *) move {
+	NSString *s = [[NSString alloc] initWithFormat: @"%d", [move intValue] - 1];
+	NSDictionary *entry = (NSDictionary *) [serverHistoryStack lastObject];
+	NSDictionary *children = (NSDictionary *) [entry objectForKey: @"children"];
+	NSDictionary *moveEntry = (NSDictionary *) [children objectForKey: s];
+	return [[moveEntry objectForKey: @"remoteness"] integerValue];
 }
 
 

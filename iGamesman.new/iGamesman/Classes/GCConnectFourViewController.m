@@ -193,13 +193,13 @@
 
 
 - (void) displayPrimitive {
-	NSString *value = [game primitive];
+	GameValue value = [game primitive];
 	NSString *winner;
 	NSString *color;
-	if ([value isEqualToString: @"TIE"])
+	if (value == TIE)
 		message.text = @"It's a tie!";
 	else {
-		if ([value isEqualToString: @"WIN"]) {
+		if (value == WIN) {
             winner = ([game currentPlayer] == PLAYER_LEFT) ? game.leftPlayer.name : game.rightPlayer.name;
             color = ([game currentPlayer] == PLAYER_LEFT) ? @"Red" : @"Blue";
 		} else {
@@ -218,7 +218,7 @@
 		// Update the view. Perform the animation
 		int tag = col;
 		while (tag < width * height + 1) {
-			if ([[[game board] objectAtIndex: tag - 1] isEqual: @"+"])
+			if ([[[[game position] board] objectAtIndex: tag - 1] isEqual: @"+"])
 				break;
 			tag += width;
 		}
@@ -255,7 +255,7 @@
 	if (tag == 0) tag = width;
 	tag += width * (height - 1);
 	while (tag > 0) {
-		if (![[[game board] objectAtIndex: tag - 1] isEqual: @"+"])
+		if (![[[[game position] board] objectAtIndex: tag - 1] isEqual: @"+"])
 			break;
 		tag -= width;
 	}
