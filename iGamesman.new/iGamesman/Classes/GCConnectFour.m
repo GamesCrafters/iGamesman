@@ -12,7 +12,7 @@
 
 @implementation GCConnectFour
 
-@synthesize position, gameMode;
+@synthesize position, gameMode, serverHistoryStack;
 
 - (id) init {
 	if (self = [super init]) {
@@ -147,7 +147,7 @@
 			[serverHistoryStack addObject: undoEntry];
 			[undoEntry release];
 			[c4view updateLabels];
-//			[self postReady];   // FIXME
+			[self postReady];
 		} else {
 			// Wipe the undo stack
 			[serverUndoStack release];
@@ -283,6 +283,12 @@
 - (void) resume
 {
     
+}
+
+/* Legacy method */
+- (void) postReady
+{
+    NSLog(@"postReady called!");
 }
 
 

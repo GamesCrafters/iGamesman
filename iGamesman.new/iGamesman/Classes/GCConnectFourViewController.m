@@ -91,11 +91,11 @@
 		[values release];
 		[keys release];
 		
-		// Push the new entry onto the history stack        // FIXME
-		/*NSDictionary *last = [game.serverHistoryStack lastObject];
+		// Push the new entry onto the history stack
+		NSDictionary *last = [game.serverHistoryStack lastObject];
 		if ([[last objectForKey: @"board"] isEqual: [entry objectForKey: @"board"]])
 			[game.serverHistoryStack removeLastObject];
-		[game.serverHistoryStack addObject: entry];*/
+		[game.serverHistoryStack addObject: entry];
 		
 		[game postReady];
 	}
