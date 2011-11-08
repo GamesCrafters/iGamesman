@@ -8,6 +8,10 @@
 
 #import "GCSidebarView.h"
 
+#define OUTER_RADIUS  (10)
+#define INNER_RADIUS  (8)
+#define OUTLINE_WIDTH (3)
+
 @implementation GCSidebarView
 
 - (id)initWithFrame: (CGRect) frame
@@ -31,10 +35,11 @@
     
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     
+    /* Draw the outline */
     CGContextMoveToPoint(ctx, maxX, minY);
     CGContextAddLineToPoint(ctx, maxX, maxY);
-    CGContextAddArcToPoint(ctx, minX, maxY, minX, maxY - 10, 10);
-    CGContextAddArcToPoint(ctx, minX, minY, minX + 10, minY, 10);
+    CGContextAddArcToPoint(ctx, minX, maxY, minX, maxY - OUTER_RADIUS, OUTER_RADIUS);
+    CGContextAddArcToPoint(ctx, minX, minY, minX + OUTER_RADIUS, minY, OUTER_RADIUS);
     CGContextAddLineToPoint(ctx, maxX, minY);
     CGContextClosePath(ctx);
     
@@ -42,11 +47,12 @@
     
     CGContextFillPath(ctx);
     
-    CGContextMoveToPoint(ctx, maxX, minY + 3);
-    CGContextAddLineToPoint(ctx, maxX, maxY - 3);
-    CGContextAddArcToPoint(ctx, minX + 3, maxY - 3, minX + 3, maxY - 13, 10);
-    CGContextAddArcToPoint(ctx, minX + 3, minY + 3, minX + 13, minY + 3, 10);
-    CGContextAddLineToPoint(ctx, maxX, minY + 3);
+    /* Draw the background */
+    CGContextMoveToPoint(ctx, maxX, minY + OUTLINE_WIDTH);
+    CGContextAddLineToPoint(ctx, maxX, maxY - OUTLINE_WIDTH);
+    CGContextAddArcToPoint(ctx, minX + OUTLINE_WIDTH, maxY - OUTLINE_WIDTH, minX + OUTLINE_WIDTH, maxY - OUTLINE_WIDTH - INNER_RADIUS, INNER_RADIUS);
+    CGContextAddArcToPoint(ctx, minX + OUTLINE_WIDTH, minY + OUTLINE_WIDTH, minX + OUTLINE_WIDTH + INNER_RADIUS, minY + OUTLINE_WIDTH, INNER_RADIUS);
+    CGContextAddLineToPoint(ctx, maxX, minY + OUTLINE_WIDTH);
     CGContextClosePath(ctx);
     
     CGContextSetRGBFillColor(ctx, 0, 0, 0, 1);

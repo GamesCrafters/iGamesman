@@ -8,6 +8,7 @@
 
 #import "GCGameViewController.h"
 
+#import "GCDrawerView.h"
 #import "GCSidebarView.h"
 
 @implementation GCGameViewController
@@ -30,6 +31,11 @@
     if (sender.tag == 1007)
     {
         [self dismissModalViewControllerAnimated: YES];
+    }
+    else if (1002 <= sender.tag && sender.tag <= 1006)
+    {
+        GCDrawerView *drawer = (GCDrawerView *) [self.view viewWithTag: sender.tag + 1000];
+        [drawer slideIn];
     }
 }
 
@@ -65,7 +71,6 @@
     for (int i = 0; i < 8; i += 1)
     {
         UIButton *button = [UIButton buttonWithType: UIButtonTypeCustom];
-        //[button setTitle: [NSString stringWithFormat: @"%d", i] forState: UIControlStateNormal];
         [button setImage: [UIImage imageNamed: [imageNames objectAtIndex: i]] forState: UIControlStateNormal];
         [button setFrame: CGRectMake(0, 4 + (4 + buttonHeight) * i, 44, buttonHeight)];
         [button addTarget: self action: @selector(sidebarButtonTapped:) forControlEvents: UIControlEventTouchUpInside];
@@ -77,6 +82,15 @@
     [self.view addSubview: sideBar];
     
     [sideBar release];
+    
+    CGFloat drawerWidths[] = { 450, 200, 300, 150, 300 };
+    for (int i = 2; i <= 6; i += 1)
+    {
+        GCDrawerView *drawer = [[GCDrawerView alloc] initWithFrame: CGRectMake(width - drawerWidths[i-2], sideBarRect.origin.y, drawerWidths[i-2], sideBarRect.size.height) startOffscreen: YES];
+        drawer.tag = 2000 + i;
+        [self.view addSubview: drawer];
+        [drawer release];
+    }
 }
 
 

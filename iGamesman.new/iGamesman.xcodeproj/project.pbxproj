@@ -27,6 +27,9 @@
 		0A6646CF1468923D00CC955A /* players@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A6646CD1468923D00CC955A /* players@2x.png */; };
 		0A6646D31468955900CC955A /* values.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A6646D11468955900CC955A /* values.png */; };
 		0A6646D41468955900CC955A /* values@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A6646D21468955900CC955A /* values@2x.png */; };
+		0A6646D71468ADBC00CC955A /* GCDrawerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A6646D61468ADBC00CC955A /* GCDrawerView.m */; };
+		0A6646DE1468B0C400CC955A /* CloseButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A6646DC1468B0C400CC955A /* CloseButton.png */; };
+		0A6646DF1468B0C400CC955A /* CloseButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A6646DD1468B0C400CC955A /* CloseButton@2x.png */; };
 		0A899010144F6A2700CC9D2F /* connect4.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A89900F144F6A2700CC9D2F /* connect4.png */; };
 		0A899013144F6BA400CC9D2F /* connections.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A899012144F6BA400CC9D2F /* connections.png */; };
 		0A899015144F6D0800CC9D2F /* othello.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A899014144F6D0800CC9D2F /* othello.png */; };
@@ -92,6 +95,10 @@
 		0A6646CD1468923D00CC955A /* players@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "players@2x.png"; sourceTree = "<group>"; };
 		0A6646D11468955900CC955A /* values.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = values.png; sourceTree = "<group>"; };
 		0A6646D21468955900CC955A /* values@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "values@2x.png"; sourceTree = "<group>"; };
+		0A6646D51468ADBC00CC955A /* GCDrawerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDrawerView.h; sourceTree = "<group>"; };
+		0A6646D61468ADBC00CC955A /* GCDrawerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDrawerView.m; sourceTree = "<group>"; };
+		0A6646DC1468B0C400CC955A /* CloseButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseButton.png; sourceTree = "<group>"; };
+		0A6646DD1468B0C400CC955A /* CloseButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CloseButton@2x.png"; sourceTree = "<group>"; };
 		0A89900F144F6A2700CC9D2F /* connect4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = connect4.png; sourceTree = "<group>"; };
 		0A899012144F6BA400CC9D2F /* connections.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = connections.png; sourceTree = "<group>"; };
 		0A899014144F6D0800CC9D2F /* othello.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = othello.png; sourceTree = "<group>"; };
@@ -238,6 +245,8 @@
 				0AD56E13144387980034EF53 /* GCCarouselViewController.m */,
 				D73A26D314365CB1009E855C /* GCCoverFlowViewController.h */,
 				D73A26D414365CB1009E855C /* GCCoverFlowViewController.m */,
+				0A6646D51468ADBC00CC955A /* GCDrawerView.h */,
+				0A6646D61468ADBC00CC955A /* GCDrawerView.m */,
 				D73A26D514365CB1009E855C /* GCGame.h */,
 				0A66469F1468823700CC955A /* GCGameViewController.h */,
 				0A6646A01468823700CC955A /* GCGameViewController.m */,
@@ -271,6 +280,8 @@
 				0A6646A41468873800CC955A /* Games */,
 				D780F9C914365ECB00922ECC /* Patchwork.png */,
 				D780F9CA14365ECB00922ECC /* Patchwork@2x.png */,
+				0A6646DC1468B0C400CC955A /* CloseButton.png */,
+				0A6646DD1468B0C400CC955A /* CloseButton@2x.png */,
 			);
 			path = Images;
 			sourceTree = "<group>";
@@ -467,6 +478,8 @@
 				0A6646CF1468923D00CC955A /* players@2x.png in Resources */,
 				0A6646D31468955900CC955A /* values.png in Resources */,
 				0A6646D41468955900CC955A /* values@2x.png in Resources */,
+				0A6646DE1468B0C400CC955A /* CloseButton.png in Resources */,
+				0A6646DF1468B0C400CC955A /* CloseButton@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -501,6 +514,7 @@
 				D729934514589B3800176A66 /* GCConnectFourViewController.m in Sources */,
 				0A6646A11468823700CC955A /* GCGameViewController.m in Sources */,
 				0A6646C714688AD200CC955A /* GCSidebarView.m in Sources */,
+				0A6646D71468ADBC00CC955A /* GCDrawerView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
