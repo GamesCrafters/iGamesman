@@ -59,7 +59,13 @@
     CGFloat width = self.view.bounds.size.width;
     CGFloat height = self.view.bounds.size.height;
     
-    CGRect sideBarRect = CGRectMake(width - 44, 20, 44, height - 40);
+    CGRect sideBarRect;
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+        sideBarRect = CGRectMake(width - 44, 20, 44, height - 40);
+    else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        sideBarRect = CGRectMake(width - 44, (height - 480) / 2.0f, 44, 480);
+    else
+        sideBarRect = CGRectZero;
     
     GCSidebarView *sideBar = [[GCSidebarView alloc] initWithFrame: sideBarRect];
     
@@ -83,7 +89,7 @@
     
     [sideBar release];
     
-    CGFloat drawerWidths[] = { 450, 200, 300, 150, 300 };
+    CGFloat drawerWidths[] = { 460, 200, 300, 150, 300 };
     for (int i = 2; i <= 6; i += 1)
     {
         GCDrawerView *drawer = [[GCDrawerView alloc] initWithFrame: CGRectMake(width - drawerWidths[i-2], sideBarRect.origin.y, drawerWidths[i-2], sideBarRect.size.height) startOffscreen: YES];

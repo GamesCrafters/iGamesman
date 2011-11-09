@@ -98,7 +98,7 @@
     CGContextAddLineToPoint(ctx, maxX, minY);
     CGContextClosePath(ctx);
     
-    CGContextSetRGBFillColor(ctx, 0, 0, 0, 1);
+    CGContextSetRGBFillColor(ctx, 0, 0, 0, 0.9f);
     
     CGContextFillPath(ctx);
 }
