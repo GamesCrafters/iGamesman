@@ -36,6 +36,10 @@
 		0A899017144F6DF500CC9D2F /* tictactoe.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A899016144F6DF500CC9D2F /* tictactoe.png */; };
 		0A899019144F6F0B00CC9D2F /* y.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A899018144F6F0B00CC9D2F /* y.png */; };
 		0AD56E15144387980034EF53 /* GCCarouselViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AD56E13144387980034EF53 /* GCCarouselViewController.m */; };
+		0ADFA73D14745DBE00967792 /* quarto.png in Resources */ = {isa = PBXBuildFile; fileRef = 0ADFA73C14745DBE00967792 /* quarto.png */; };
+		0ADFA74114745FBB00967792 /* GCQuartoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ADFA74014745FBB00967792 /* GCQuartoView.m */; };
+		0ADFA7451474608A00967792 /* quartoPlatform.png in Resources */ = {isa = PBXBuildFile; fileRef = 0ADFA7431474608A00967792 /* quartoPlatform.png */; };
+		0ADFA74814746FB900967792 /* quartoBoard.png in Resources */ = {isa = PBXBuildFile; fileRef = 0ADFA74714746FB900967792 /* quartoBoard.png */; };
 		21D786C1143F8C73008E8B17 /* GCConnections.m in Sources */ = {isa = PBXBuildFile; fileRef = 21D786C0143F8C73008E8B17 /* GCConnections.m */; };
 		21DA8EF4144457E800C5B4EE /* GCConnectionsPosition.m in Sources */ = {isa = PBXBuildFile; fileRef = 21DA8EF3144457E800C5B4EE /* GCConnectionsPosition.m */; };
 		21ED19F6144378D2008DD7FD /* ConnectionsIntegerQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 21ED19F5144378D2008DD7FD /* ConnectionsIntegerQueue.m */; };
@@ -106,6 +110,11 @@
 		0A899018144F6F0B00CC9D2F /* y.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = y.png; sourceTree = "<group>"; };
 		0AD56E13144387980034EF53 /* GCCarouselViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCCarouselViewController.m; sourceTree = "<group>"; };
 		0AD56E14144387980034EF53 /* GCCarouselViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCCarouselViewController.h; sourceTree = "<group>"; };
+		0ADFA73C14745DBE00967792 /* quarto.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = quarto.png; sourceTree = "<group>"; };
+		0ADFA73F14745FBB00967792 /* GCQuartoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCQuartoView.h; sourceTree = "<group>"; };
+		0ADFA74014745FBB00967792 /* GCQuartoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCQuartoView.m; sourceTree = "<group>"; };
+		0ADFA7431474608A00967792 /* quartoPlatform.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = quartoPlatform.png; sourceTree = "<group>"; };
+		0ADFA74714746FB900967792 /* quartoBoard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = quartoBoard.png; sourceTree = "<group>"; };
 		21D786BF143F8C73008E8B17 /* GCConnections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCConnections.h; sourceTree = "<group>"; };
 		21D786C0143F8C73008E8B17 /* GCConnections.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCConnections.m; sourceTree = "<group>"; };
 		21DA8EF2144457E800C5B4EE /* GCConnectionsPosition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCConnectionsPosition.h; sourceTree = "<group>"; };
@@ -205,13 +214,24 @@
 		0A6646A41468873800CC955A /* Games */ = {
 			isa = PBXGroup;
 			children = (
+				0ADFA7421474606700967792 /* Quarto */,
 				0A89900F144F6A2700CC9D2F /* connect4.png */,
 				0A899012144F6BA400CC9D2F /* connections.png */,
 				0A899014144F6D0800CC9D2F /* othello.png */,
+				0ADFA73C14745DBE00967792 /* quarto.png */,
 				0A899016144F6DF500CC9D2F /* tictactoe.png */,
 				0A899018144F6F0B00CC9D2F /* y.png */,
 			);
 			name = Games;
+			sourceTree = "<group>";
+		};
+		0ADFA7421474606700967792 /* Quarto */ = {
+			isa = PBXGroup;
+			children = (
+				0ADFA7431474608A00967792 /* quartoPlatform.png */,
+				0ADFA74714746FB900967792 /* quartoBoard.png */,
+			);
+			name = Quarto;
 			sourceTree = "<group>";
 		};
 		21D78682143F8290008E8B17 /* Connections */ = {
@@ -368,6 +388,8 @@
 			children = (
 				0A3C3226143A45360080BCA9 /* GCQuarto.h */,
 				0A3C3227143A45360080BCA9 /* GCQuarto.m */,
+				0ADFA73F14745FBB00967792 /* GCQuartoView.h */,
+				0ADFA74014745FBB00967792 /* GCQuartoView.m */,
 			);
 			name = Quarto;
 			sourceTree = "<group>";
@@ -480,6 +502,9 @@
 				0A6646D41468955900CC955A /* values@2x.png in Resources */,
 				0A6646DE1468B0C400CC955A /* CloseButton.png in Resources */,
 				0A6646DF1468B0C400CC955A /* CloseButton@2x.png in Resources */,
+				0ADFA73D14745DBE00967792 /* quarto.png in Resources */,
+				0ADFA7451474608A00967792 /* quartoPlatform.png in Resources */,
+				0ADFA74814746FB900967792 /* quartoBoard.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -515,6 +540,7 @@
 				0A6646A11468823700CC955A /* GCGameViewController.m in Sources */,
 				0A6646C714688AD200CC955A /* GCSidebarView.m in Sources */,
 				0A6646D71468ADBC00CC955A /* GCDrawerView.m in Sources */,
+				0ADFA74114745FBB00967792 /* GCQuartoView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -537,6 +563,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Kevin Jorgensen (7S7PEXSPJP)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -552,6 +579,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				PROVISIONING_PROFILE = "61177985-8BAC-4C6F-8D49-38C0D83C7F09";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -561,6 +589,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Kevin Jorgensen (7S7PEXSPJP)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -570,6 +599,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "61177985-8BAC-4C6F-8D49-38C0D83C7F09";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};

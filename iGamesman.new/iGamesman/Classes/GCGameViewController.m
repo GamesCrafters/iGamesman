@@ -8,8 +8,18 @@
 
 #import "GCGameViewController.h"
 
+#import "GCGame.h"
+
 #import "GCDrawerView.h"
 #import "GCSidebarView.h"
+
+
+@interface GCGameViewController ()
+
+- (void) addSidebarInRect: (CGRect) sideBarRect;
+
+@end
+
 
 @implementation GCGameViewController
 
@@ -19,7 +29,8 @@
     
     if (self)
     {
-        
+        _game = game;
+        [(NSObject *) _game retain];
     }
     
     return self;
@@ -55,18 +66,35 @@
     self.view = mainView;
     [mainView release];
     
-    
     CGFloat width = self.view.bounds.size.width;
     CGFloat height = self.view.bounds.size.height;
     
     CGRect sideBarRect;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
-        sideBarRect = CGRectMake(width - 44, 20, 44, height - 40);
+        sideBarRect = CGRectMake(0, 20, 44, height - 40);
     else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-        sideBarRect = CGRectMake(width - 44, (height - 480) / 2.0f, 44, 480);
+        sideBarRect = CGRectMake(0, (height - 480) / 2.0f, 44, 480);
     else
         sideBarRect = CGRectZero;
     
+    [self addSidebarInRect: sideBarRect];
+    
+    
+    CGRect gameRect = CGRectMake(sideBarRect.size.width + 20, 30, width - sideBarRect.size.width - 20 - 30, height - 60);
+    
+    UIView *gameView = [_game viewWithFrame: gameRect];
+    
+    [self.view addSubview: gameView];
+    
+    
+    UIButton *infoButton = [UIButton buttonWithType: UIButtonTypeInfoLight];
+    infoButton.center = CGPointMake(width - 15, height - 15);
+    [self.view addSubview: infoButton];
+}
+
+
+- (void) addSidebarInRect: (CGRect) sideBarRect;
+{
     GCSidebarView *sideBar = [[GCSidebarView alloc] initWithFrame: sideBarRect];
     
     
@@ -92,7 +120,7 @@
     CGFloat drawerWidths[] = { 460, 200, 300, 150, 300 };
     for (int i = 2; i <= 6; i += 1)
     {
-        GCDrawerView *drawer = [[GCDrawerView alloc] initWithFrame: CGRectMake(width - drawerWidths[i-2], sideBarRect.origin.y, drawerWidths[i-2], sideBarRect.size.height) startOffscreen: YES];
+        GCDrawerView *drawer = [[GCDrawerView alloc] initWithFrame: CGRectMake(0, sideBarRect.origin.y, drawerWidths[i-2], sideBarRect.size.height) startOffscreen: YES];
         drawer.tag = 2000 + i;
         [self.view addSubview: drawer];
         [drawer release];

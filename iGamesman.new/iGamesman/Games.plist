@@ -4,6 +4,14 @@
 <array>
 	<dict>
 		<key>name</key>
+		<string>Quarto</string>
+		<key>image</key>
+		<string>quarto.png</string>
+		<key>class</key>
+		<string>GCQuarto</string>
+	</dict>
+	<dict>
+		<key>name</key>
 		<string>Tic-Tac-Toe</string>
 		<key>image</key>
 		<string>tictactoe.png</string>
@@ -11,14 +19,6 @@
 		<string>GCTicTacToe</string>
 	</dict>
 	<dict>
-		<key>name</key>
-		<string>Y</string>
-		<key>image</key>
-		<string>y.png</string>
-		<key>class</key>
-		<string>GCYGame</string>
-	</dict>
-    <dict>
 		<key>name</key>
 		<string>Connect-4</string>
 		<key>image</key>

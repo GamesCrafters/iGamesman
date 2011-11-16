@@ -29,7 +29,6 @@
         NSString *gameInfoPath = [mainBundle pathForResource: @"Games" ofType: @"plist"];
         
         gameData = [[NSArray alloc] initWithContentsOfFile: gameInfoPath];
-        NSLog(@"%@", gameData);
     }
     return self;
 }
@@ -39,6 +38,8 @@
 {
     [views release];
     [labels release];
+    
+    [gameData release];
     
     [super dealloc];
 }
@@ -120,7 +121,7 @@
     
     [gameViewController release];
     
-    //[game release];
+    [(NSObject *) game release];
 }
 
 

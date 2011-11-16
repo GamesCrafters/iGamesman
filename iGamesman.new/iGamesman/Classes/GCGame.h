@@ -113,8 +113,19 @@ typedef enum { PLAYER_LEFT, PLAYER_RIGHT } PlayerSide;
  * Return the view that displays this game's interface.
  *
  * @return The view managed by this game that displays the game's interface.
+ * @deprecated Use viewWithFrame: instead.
  */
 - (UIView *) view;
+
+
+/**
+ * Return the view (with frame rectangle FRAME) that displays this game's interface.
+ *
+ * @param frame The frame rectangle this game's
+ *
+ * @return The view managed by this game that displays the game's interface.
+ */
+- (UIView *) viewWithFrame: (CGRect) frame;
 
 
 /**

@@ -36,11 +36,11 @@
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     
     /* Draw the outline */
-    CGContextMoveToPoint(ctx, maxX, minY);
-    CGContextAddLineToPoint(ctx, maxX, maxY);
-    CGContextAddArcToPoint(ctx, minX, maxY, minX, maxY - OUTER_RADIUS, OUTER_RADIUS);
-    CGContextAddArcToPoint(ctx, minX, minY, minX + OUTER_RADIUS, minY, OUTER_RADIUS);
-    CGContextAddLineToPoint(ctx, maxX, minY);
+    CGContextMoveToPoint(ctx, minX, minY);
+    CGContextAddLineToPoint(ctx, minX, maxY);
+    CGContextAddArcToPoint(ctx, maxX, maxY, maxX, maxY - OUTER_RADIUS, OUTER_RADIUS);
+    CGContextAddArcToPoint(ctx, maxX, minY, maxX - OUTER_RADIUS, minY, OUTER_RADIUS);
+    CGContextAddLineToPoint(ctx, minX, minY);
     CGContextClosePath(ctx);
     
     CGContextSetRGBFillColor(ctx, 1, 1, 1, 1);
@@ -48,11 +48,11 @@
     CGContextFillPath(ctx);
     
     /* Draw the background */
-    CGContextMoveToPoint(ctx, maxX, minY + OUTLINE_WIDTH);
-    CGContextAddLineToPoint(ctx, maxX, maxY - OUTLINE_WIDTH);
-    CGContextAddArcToPoint(ctx, minX + OUTLINE_WIDTH, maxY - OUTLINE_WIDTH, minX + OUTLINE_WIDTH, maxY - OUTLINE_WIDTH - INNER_RADIUS, INNER_RADIUS);
-    CGContextAddArcToPoint(ctx, minX + OUTLINE_WIDTH, minY + OUTLINE_WIDTH, minX + OUTLINE_WIDTH + INNER_RADIUS, minY + OUTLINE_WIDTH, INNER_RADIUS);
-    CGContextAddLineToPoint(ctx, maxX, minY + OUTLINE_WIDTH);
+    CGContextMoveToPoint(ctx, minX, minY + OUTLINE_WIDTH);
+    CGContextAddLineToPoint(ctx, minX, maxY - OUTLINE_WIDTH);
+    CGContextAddArcToPoint(ctx, maxX - OUTLINE_WIDTH, maxY - OUTLINE_WIDTH, maxX - OUTLINE_WIDTH, maxY - OUTLINE_WIDTH - INNER_RADIUS, INNER_RADIUS);
+    CGContextAddArcToPoint(ctx, maxX - OUTLINE_WIDTH, minY + OUTLINE_WIDTH, maxX - OUTLINE_WIDTH - INNER_RADIUS, minY + OUTLINE_WIDTH, INNER_RADIUS);
+    CGContextAddLineToPoint(ctx, minX, minY + OUTLINE_WIDTH);
     CGContextClosePath(ctx);
     
     CGContextSetRGBFillColor(ctx, 0, 0, 0, 1);

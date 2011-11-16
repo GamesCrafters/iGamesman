@@ -11,9 +11,5 @@
 #import "GCGame.h"
 
 @interface GCQuarto : NSObject <GCGame>
-{
-    NSMutableArray *board;
-    NSMutableArray *pieces;
-}
 
 @end
