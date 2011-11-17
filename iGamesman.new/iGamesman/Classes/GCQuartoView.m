@@ -3,20 +3,12 @@
 //  iGamesman
 //
 //  Created by Kevin Jorgensen on 11/16/11.
-//  Copyright (c) 2011 Kevin Jorgensen. All rights reserved.
+//  Copyright (c) 2011 GamesCrafters. All rights reserved.
 //
 
 #import "GCQuartoView.h"
 
 #define GRID_SPACING (5)
-
-
-@interface GCQuartoView ()
-
-- (void) drawPhoneInterfaceIntoContext: (CGContextRef) ctx;
-- (void) drawPadInterfaceIntoContext: (CGContextRef) ctx;
-
-@end
 
 
 @implementation GCQuartoView
@@ -31,43 +23,11 @@
         CGPoint topLeft = self.bounds.origin;
         CGPoint bottomRight = CGPointMake(topLeft.x + width, topLeft.y + height);
         
-        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
-        {
-            boardFrame = CGRectMake(bottomRight.x - ((5.0f / 6.0f) * height), height / 6.0f, (5.0f / 6.0f) * height, (5.0f / 6.0f) * height);
-        }
-        else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-        {
-            boardFrame = CGRectMake(bottomRight.x - ((3.0f / 4.0f) * height), height / 4.0f, (3.0f / 4.0f) * height, (3.0f / 4.0f) * height);
-        }
-        else
-        {
-            NSAssert(false, @"Invalid User Interface Idiom! (Should never get here!)");
-        }
+        boardFrame = CGRectMake(bottomRight.x - ((4.0f / 5.0f) * height), height / 5.0f, (4.0f / 5.0f) * height, (4.0f / 5.0f) * height);
         
         self.opaque = NO;
     }
     return self;
-}
-
-
-- (void) drawRect: (CGRect) rect
-{
-    CGContextRef ctx = UIGraphicsGetCurrentContext();
-    
-    UIUserInterfaceIdiom idiom = UI_USER_INTERFACE_IDIOM();
-    
-    if (idiom == UIUserInterfaceIdiomPhone)
-    {
-        [self drawPhoneInterfaceIntoContext: ctx];
-    }
-    else if (idiom == UIUserInterfaceIdiomPad)
-    {
-        [self drawPadInterfaceIntoContext: ctx];
-    }
-    else
-    {
-        NSAssert(false, @"Invalid User Interface Idiom! (Should never get here!)");
-    }
 }
 
 
@@ -97,12 +57,6 @@
         
         CGContextDrawImage(ctx, cellFrame, image);
     }
-}
-
-
-- (void) drawPhoneInterfaceIntoContext: (CGContextRef) ctx
-{
-    [self drawBoardIntoContext: ctx];
     
     CGImageRef platformImage = [[UIImage imageNamed: @"quartoPlatform"] CGImage];
     CGFloat width = self.bounds.size.width;
@@ -110,21 +64,15 @@
     CGPoint topLeft = self.bounds.origin;
     CGPoint bottomRight = CGPointMake(topLeft.x + width, topLeft.y + height);
     
-    CGContextDrawImage(ctx, CGRectMake(bottomRight.x - boardFrame.size.width - height / 6.0f, 0, height / 6.0f, height / 6.0f), platformImage);
+    CGContextDrawImage(ctx, CGRectMake(bottomRight.x - boardWidth - height / 5.0f, 0, height / 5.0f, height / 5.0f), platformImage);
 }
 
 
-- (void) drawPadInterfaceIntoContext: (CGContextRef) ctx
+- (void) drawRect: (CGRect) rect
 {
+    CGContextRef ctx = UIGraphicsGetCurrentContext();
+    
     [self drawBoardIntoContext: ctx];
-    
-    CGImageRef platformImage = [[UIImage imageNamed: @"quartoPlatform"] CGImage];
-    CGFloat width = self.bounds.size.width;
-    CGFloat height = self.bounds.size.height;
-    CGPoint topLeft = self.bounds.origin;
-    CGPoint bottomRight = CGPointMake(topLeft.x + width, topLeft.y + height);
-    
-    CGContextDrawImage(ctx, CGRectMake(bottomRight.x - boardFrame.size.width - height / 4.0f, 0, height / 4.0f, height / 4.0f), platformImage);
 }
 
 @end
