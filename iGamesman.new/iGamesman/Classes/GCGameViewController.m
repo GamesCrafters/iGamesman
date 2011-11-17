@@ -46,6 +46,7 @@
     else if (1002 <= sender.tag && sender.tag <= 1006)
     {
         GCDrawerView *drawer = (GCDrawerView *) [self.view viewWithTag: sender.tag + 1000];
+        [self.view bringSubviewToFront: drawer];
         [drawer slideIn];
     }
 }

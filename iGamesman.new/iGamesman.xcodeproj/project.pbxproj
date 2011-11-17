@@ -40,6 +40,22 @@
 		0ADFA74114745FBB00967792 /* GCQuartoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ADFA74014745FBB00967792 /* GCQuartoView.m */; };
 		0ADFA7451474608A00967792 /* quartoPlatform.png in Resources */ = {isa = PBXBuildFile; fileRef = 0ADFA7431474608A00967792 /* quartoPlatform.png */; };
 		0ADFA74814746FB900967792 /* quartoBoard.png in Resources */ = {isa = PBXBuildFile; fileRef = 0ADFA74714746FB900967792 /* quartoBoard.png */; };
+		0ADFA759147471DC00967792 /* quartoSquare0.png in Resources */ = {isa = PBXBuildFile; fileRef = 0ADFA749147471DC00967792 /* quartoSquare0.png */; };
+		0ADFA75A147471DC00967792 /* quartoSquare1.png in Resources */ = {isa = PBXBuildFile; fileRef = 0ADFA74A147471DC00967792 /* quartoSquare1.png */; };
+		0ADFA75B147471DC00967792 /* quartoSquare2.png in Resources */ = {isa = PBXBuildFile; fileRef = 0ADFA74B147471DC00967792 /* quartoSquare2.png */; };
+		0ADFA75C147471DC00967792 /* quartoSquare3.png in Resources */ = {isa = PBXBuildFile; fileRef = 0ADFA74C147471DC00967792 /* quartoSquare3.png */; };
+		0ADFA75D147471DC00967792 /* quartoSquare4.png in Resources */ = {isa = PBXBuildFile; fileRef = 0ADFA74D147471DC00967792 /* quartoSquare4.png */; };
+		0ADFA75E147471DC00967792 /* quartoSquare5.png in Resources */ = {isa = PBXBuildFile; fileRef = 0ADFA74E147471DC00967792 /* quartoSquare5.png */; };
+		0ADFA75F147471DC00967792 /* quartoSquare6.png in Resources */ = {isa = PBXBuildFile; fileRef = 0ADFA74F147471DC00967792 /* quartoSquare6.png */; };
+		0ADFA760147471DC00967792 /* quartoSquare7.png in Resources */ = {isa = PBXBuildFile; fileRef = 0ADFA750147471DC00967792 /* quartoSquare7.png */; };
+		0ADFA761147471DC00967792 /* quartoSquare8.png in Resources */ = {isa = PBXBuildFile; fileRef = 0ADFA751147471DC00967792 /* quartoSquare8.png */; };
+		0ADFA762147471DC00967792 /* quartoSquare9.png in Resources */ = {isa = PBXBuildFile; fileRef = 0ADFA752147471DC00967792 /* quartoSquare9.png */; };
+		0ADFA763147471DC00967792 /* quartoSquare10.png in Resources */ = {isa = PBXBuildFile; fileRef = 0ADFA753147471DC00967792 /* quartoSquare10.png */; };
+		0ADFA764147471DC00967792 /* quartoSquare11.png in Resources */ = {isa = PBXBuildFile; fileRef = 0ADFA754147471DC00967792 /* quartoSquare11.png */; };
+		0ADFA765147471DC00967792 /* quartoSquare12.png in Resources */ = {isa = PBXBuildFile; fileRef = 0ADFA755147471DC00967792 /* quartoSquare12.png */; };
+		0ADFA766147471DC00967792 /* quartoSquare13.png in Resources */ = {isa = PBXBuildFile; fileRef = 0ADFA756147471DC00967792 /* quartoSquare13.png */; };
+		0ADFA767147471DC00967792 /* quartoSquare14.png in Resources */ = {isa = PBXBuildFile; fileRef = 0ADFA757147471DC00967792 /* quartoSquare14.png */; };
+		0ADFA768147471DC00967792 /* quartoSquare15.png in Resources */ = {isa = PBXBuildFile; fileRef = 0ADFA758147471DC00967792 /* quartoSquare15.png */; };
 		21D786C1143F8C73008E8B17 /* GCConnections.m in Sources */ = {isa = PBXBuildFile; fileRef = 21D786C0143F8C73008E8B17 /* GCConnections.m */; };
 		21DA8EF4144457E800C5B4EE /* GCConnectionsPosition.m in Sources */ = {isa = PBXBuildFile; fileRef = 21DA8EF3144457E800C5B4EE /* GCConnectionsPosition.m */; };
 		21ED19F6144378D2008DD7FD /* ConnectionsIntegerQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 21ED19F5144378D2008DD7FD /* ConnectionsIntegerQueue.m */; };
@@ -115,6 +131,22 @@
 		0ADFA74014745FBB00967792 /* GCQuartoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCQuartoView.m; sourceTree = "<group>"; };
 		0ADFA7431474608A00967792 /* quartoPlatform.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = quartoPlatform.png; sourceTree = "<group>"; };
 		0ADFA74714746FB900967792 /* quartoBoard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = quartoBoard.png; sourceTree = "<group>"; };
+		0ADFA749147471DC00967792 /* quartoSquare0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = quartoSquare0.png; sourceTree = "<group>"; };
+		0ADFA74A147471DC00967792 /* quartoSquare1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = quartoSquare1.png; sourceTree = "<group>"; };
+		0ADFA74B147471DC00967792 /* quartoSquare2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = quartoSquare2.png; sourceTree = "<group>"; };
+		0ADFA74C147471DC00967792 /* quartoSquare3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = quartoSquare3.png; sourceTree = "<group>"; };
+		0ADFA74D147471DC00967792 /* quartoSquare4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = quartoSquare4.png; sourceTree = "<group>"; };
+		0ADFA74E147471DC00967792 /* quartoSquare5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = quartoSquare5.png; sourceTree = "<group>"; };
+		0ADFA74F147471DC00967792 /* quartoSquare6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = quartoSquare6.png; sourceTree = "<group>"; };
+		0ADFA750147471DC00967792 /* quartoSquare7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = quartoSquare7.png; sourceTree = "<group>"; };
+		0ADFA751147471DC00967792 /* quartoSquare8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = quartoSquare8.png; sourceTree = "<group>"; };
+		0ADFA752147471DC00967792 /* quartoSquare9.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = quartoSquare9.png; sourceTree = "<group>"; };
+		0ADFA753147471DC00967792 /* quartoSquare10.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = quartoSquare10.png; sourceTree = "<group>"; };
+		0ADFA754147471DC00967792 /* quartoSquare11.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = quartoSquare11.png; sourceTree = "<group>"; };
+		0ADFA755147471DC00967792 /* quartoSquare12.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = quartoSquare12.png; sourceTree = "<group>"; };
+		0ADFA756147471DC00967792 /* quartoSquare13.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = quartoSquare13.png; sourceTree = "<group>"; };
+		0ADFA757147471DC00967792 /* quartoSquare14.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = quartoSquare14.png; sourceTree = "<group>"; };
+		0ADFA758147471DC00967792 /* quartoSquare15.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = quartoSquare15.png; sourceTree = "<group>"; };
 		21D786BF143F8C73008E8B17 /* GCConnections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCConnections.h; sourceTree = "<group>"; };
 		21D786C0143F8C73008E8B17 /* GCConnections.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCConnections.m; sourceTree = "<group>"; };
 		21DA8EF2144457E800C5B4EE /* GCConnectionsPosition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCConnectionsPosition.h; sourceTree = "<group>"; };
@@ -228,8 +260,24 @@
 		0ADFA7421474606700967792 /* Quarto */ = {
 			isa = PBXGroup;
 			children = (
-				0ADFA7431474608A00967792 /* quartoPlatform.png */,
 				0ADFA74714746FB900967792 /* quartoBoard.png */,
+				0ADFA7431474608A00967792 /* quartoPlatform.png */,
+				0ADFA749147471DC00967792 /* quartoSquare0.png */,
+				0ADFA74A147471DC00967792 /* quartoSquare1.png */,
+				0ADFA74B147471DC00967792 /* quartoSquare2.png */,
+				0ADFA74C147471DC00967792 /* quartoSquare3.png */,
+				0ADFA74D147471DC00967792 /* quartoSquare4.png */,
+				0ADFA74E147471DC00967792 /* quartoSquare5.png */,
+				0ADFA74F147471DC00967792 /* quartoSquare6.png */,
+				0ADFA750147471DC00967792 /* quartoSquare7.png */,
+				0ADFA751147471DC00967792 /* quartoSquare8.png */,
+				0ADFA752147471DC00967792 /* quartoSquare9.png */,
+				0ADFA753147471DC00967792 /* quartoSquare10.png */,
+				0ADFA754147471DC00967792 /* quartoSquare11.png */,
+				0ADFA755147471DC00967792 /* quartoSquare12.png */,
+				0ADFA756147471DC00967792 /* quartoSquare13.png */,
+				0ADFA757147471DC00967792 /* quartoSquare14.png */,
+				0ADFA758147471DC00967792 /* quartoSquare15.png */,
 			);
 			name = Quarto;
 			sourceTree = "<group>";
@@ -505,6 +553,22 @@
 				0ADFA73D14745DBE00967792 /* quarto.png in Resources */,
 				0ADFA7451474608A00967792 /* quartoPlatform.png in Resources */,
 				0ADFA74814746FB900967792 /* quartoBoard.png in Resources */,
+				0ADFA759147471DC00967792 /* quartoSquare0.png in Resources */,
+				0ADFA75A147471DC00967792 /* quartoSquare1.png in Resources */,
+				0ADFA75B147471DC00967792 /* quartoSquare2.png in Resources */,
+				0ADFA75C147471DC00967792 /* quartoSquare3.png in Resources */,
+				0ADFA75D147471DC00967792 /* quartoSquare4.png in Resources */,
+				0ADFA75E147471DC00967792 /* quartoSquare5.png in Resources */,
+				0ADFA75F147471DC00967792 /* quartoSquare6.png in Resources */,
+				0ADFA760147471DC00967792 /* quartoSquare7.png in Resources */,
+				0ADFA761147471DC00967792 /* quartoSquare8.png in Resources */,
+				0ADFA762147471DC00967792 /* quartoSquare9.png in Resources */,
+				0ADFA763147471DC00967792 /* quartoSquare10.png in Resources */,
+				0ADFA764147471DC00967792 /* quartoSquare11.png in Resources */,
+				0ADFA765147471DC00967792 /* quartoSquare12.png in Resources */,
+				0ADFA766147471DC00967792 /* quartoSquare13.png in Resources */,
+				0ADFA767147471DC00967792 /* quartoSquare14.png in Resources */,
+				0ADFA768147471DC00967792 /* quartoSquare15.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
