@@ -37,4 +37,29 @@
 - (NSArray *) availablePieces;
 
 
+/**
+ * Add a piece to the board in the ROWth row and COLUMNth column.
+ * Removes the placed piece from the array of available pieces.
+ *
+ * @param piece The piece to be added to the board
+ * @param row The row number in the range [0,3]
+ * @param column The column number in the range [0,3]
+ *
+ * @return YES is placement was successful, NO if not
+ */
+- (BOOL) placePiece: (GCQuartoPiece *) piece atRow: (NSUInteger) row andColumn: (NSUInteger) column;
+
+
+/**
+ * Remove the piece in the ROWth row and COLUMNth column from the board.
+ * Adds the removed piece to the array of available pieces.
+ * 
+ * @param row The row number in the range [0,3]
+ * @param column The column number in the range [0,3]
+ *
+ * @return The piece that was removed, or nil if there was no piece there.
+ */
+- (GCQuartoPiece *) removePieceAtRow: (NSUInteger) row andColumn: (NSUInteger) column;
+
+
 @end

@@ -31,7 +31,52 @@
 @end
 
 
+#pragma mark -
+
 @implementation GCQuartoBoard
+
+#pragma mark -
+
+- (GCQuartoPiece *) pieceAtRow: (NSUInteger) row andColumn: (NSUInteger) column
+{
+    GCQuartoPiece *piece = [board objectAtIndex: (row * 4) + column];
+    return piece;
+}
+
+
+- (NSArray *) availablePieces
+{
+    return remainingPieces;
+}
+
+
+- (BOOL) placePiece: (GCQuartoPiece *) piece atRow: (NSUInteger) row andColumn: (NSUInteger) column
+{
+    if (![remainingPieces containsObject: piece])
+        return NO;
+    
+    [board replaceObjectAtIndex: (row * 4) + column withObject: piece];
+    [remainingPieces removeObject: piece];
+    
+    return YES;
+}
+
+
+- (GCQuartoPiece *) removePieceAtRow: (NSUInteger) row andColumn: (NSUInteger) column
+{
+    GCQuartoPiece *piece = [board objectAtIndex: (row * 4) + column];
+    if ([piece isBlank])
+        return nil;
+    
+    [board replaceObjectAtIndex: (row * 4) + column withObject: [GCQuartoPiece blankPiece]];
+    [remainingPieces addObject: piece];
+    
+    return piece;
+}
+
+
+#pragma mark -
+#pragma mark Memory lifecycle
 
 - (id) init
 {
@@ -64,6 +109,18 @@
 }
 
 
+- (void) dealloc
+{
+    [board release];
+    [remainingPieces release];
+    
+    [super dealloc];
+}
+
+
+#pragma mark -
+#pragma mark Private accessors for copy purposes
+
 - (void) setBoard: (NSMutableArray *) aBoard
 {
     /* Release the old board */
@@ -83,6 +140,9 @@
     remainingPieces = [pieces retain];
 }
 
+
+#pragma mark -
+#pragma mark NSCopying
 
 - (id) copyWithZone: (NSZone *) zone
 {
