@@ -10,12 +10,24 @@
 
 @interface GCDrawerView : UIView
 {
+@private
     UIButton *closeButton;
 }
 
+/**
+ * Initialize the view with the desired frame.
+ *
+ * @param frame The frame for the drawer when it is/will be visible
+ * @param offscreen YES if the drawer starts offscreen (and will later be slid to frame), NO if not
+ *
+ * @return The drawer view
+ */
 - (id) initWithFrame: (CGRect) frame startOffscreen: (BOOL) offscreen;
 
+/* Slide the drawer in from offscreen */
 - (void) slideIn;
+
+/* Slide the drawer offscreen */
 - (void) slideOut;
 
 @end

@@ -18,29 +18,38 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
+    /* Create the background image */
     UIImageView *backgroundView;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
         backgroundView = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"Patchwork@2x.png"]];
-    else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
-        backgroundView = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"Patchwork.png"]];
-    else
-        backgroundView = nil;
-    
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
-        backgroundView.frame = CGRectMake(0, 0, 320, 480);
-    else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
         backgroundView.frame = CGRectMake(0, 0, 768, 1024);
+    }
+    else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+    {
+        backgroundView = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"Patchwork.png"]];
+        backgroundView.frame = CGRectMake(0, 0, 320, 480);
+    }
+    else
+    {
+        backgroundView = nil;
+    }
     
+    
+    /* Add it to the window so it appears everywhere in the app */
     [self.window addSubview: backgroundView];
     [backgroundView release];
     
+    
+    /* Create the root view controller and add its view to the window */
     GCCarouselViewController *carouselViewController = [[GCCarouselViewController alloc] init];
     
     [self.window addSubview: carouselViewController.view];
+    
+#warning TODO: Stop leaking the view controller
         
-    // Override point for customization after application launch.
-    self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    
     return YES;
 }
 

@@ -10,6 +10,12 @@
 
 #import "GCGame.h"
 
+
+@class GCQuartoPosition;
+
 @interface GCQuarto : NSObject <GCGame>
+{
+    GCQuartoPosition *board;
+}
 
 @end

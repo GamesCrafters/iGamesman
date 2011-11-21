@@ -11,7 +11,7 @@
 
 @class GCQuartoPiece;
 
-@interface GCQuartoBoard : NSObject <NSCopying>
+@interface GCQuartoPosition : NSObject <NSCopying>
 {
     NSMutableArray *board;
     NSMutableArray *remainingPieces;

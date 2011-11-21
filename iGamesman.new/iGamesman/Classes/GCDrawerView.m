@@ -10,7 +10,13 @@
 
 #define OUTER_RADIUS (10)
 
+
+#pragma mark -
+
 @implementation GCDrawerView
+
+#pragma mark -
+#pragma mark Memory lifecycle
 
 - (id) initWithFrame: (CGRect) frame startOffscreen: (BOOL) offscreen;
 {
@@ -49,6 +55,9 @@
 }
 
 
+#pragma mark -
+#pragma mark Sliding animations
+
 - (void) slideIn
 {
     void (^slideBlock) (void) = ^(void)
@@ -75,11 +84,16 @@
 }
 
 
+#pragma mark -
+
 - (void) closeTapped
 {
     [self slideOut];
 }
 
+
+#pragma mark -
+#pragma mark Drawing
 
 - (void) drawRect: (CGRect) rect
 {
@@ -90,7 +104,7 @@
     
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     
-    /* Draw the outline */
+    /* Draw the background rectangle */
     CGContextMoveToPoint(ctx, minX, minY);
     CGContextAddLineToPoint(ctx, minX, maxY);
     CGContextAddArcToPoint(ctx, maxX, maxY, maxX, maxY - OUTER_RADIUS, OUTER_RADIUS);

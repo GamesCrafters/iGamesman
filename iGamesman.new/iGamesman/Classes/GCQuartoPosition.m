@@ -6,12 +6,12 @@
 //  Copyright (c) 2011 GamesCrafters. All rights reserved.
 //
 
-#import "GCQuartoBoard.h"
+#import "GCQuartoPosition.h"
 
 #import "GCQuartoPiece.h"
 
 
-@interface GCQuartoBoard ()
+@interface GCQuartoPosition ()
 
 /**
  * Set a new board
@@ -33,47 +33,7 @@
 
 #pragma mark -
 
-@implementation GCQuartoBoard
-
-#pragma mark -
-
-- (GCQuartoPiece *) pieceAtRow: (NSUInteger) row andColumn: (NSUInteger) column
-{
-    GCQuartoPiece *piece = [board objectAtIndex: (row * 4) + column];
-    return piece;
-}
-
-
-- (NSArray *) availablePieces
-{
-    return remainingPieces;
-}
-
-
-- (BOOL) placePiece: (GCQuartoPiece *) piece atRow: (NSUInteger) row andColumn: (NSUInteger) column
-{
-    if (![remainingPieces containsObject: piece])
-        return NO;
-    
-    [board replaceObjectAtIndex: (row * 4) + column withObject: piece];
-    [remainingPieces removeObject: piece];
-    
-    return YES;
-}
-
-
-- (GCQuartoPiece *) removePieceAtRow: (NSUInteger) row andColumn: (NSUInteger) column
-{
-    GCQuartoPiece *piece = [board objectAtIndex: (row * 4) + column];
-    if ([piece isBlank])
-        return nil;
-    
-    [board replaceObjectAtIndex: (row * 4) + column withObject: [GCQuartoPiece blankPiece]];
-    [remainingPieces addObject: piece];
-    
-    return piece;
-}
-
+@implementation GCQuartoPosition
 
 #pragma mark -
 #pragma mark Memory lifecycle
@@ -119,6 +79,46 @@
 
 
 #pragma mark -
+
+- (GCQuartoPiece *) pieceAtRow: (NSUInteger) row andColumn: (NSUInteger) column
+{
+    GCQuartoPiece *piece = [board objectAtIndex: (row * 4) + column];
+    return piece;
+}
+
+
+- (NSArray *) availablePieces
+{
+    return remainingPieces;
+}
+
+
+- (BOOL) placePiece: (GCQuartoPiece *) piece atRow: (NSUInteger) row andColumn: (NSUInteger) column
+{
+    if (![remainingPieces containsObject: piece])
+        return NO;
+    
+    [board replaceObjectAtIndex: (row * 4) + column withObject: piece];
+    [remainingPieces removeObject: piece];
+    
+    return YES;
+}
+
+
+- (GCQuartoPiece *) removePieceAtRow: (NSUInteger) row andColumn: (NSUInteger) column
+{
+    GCQuartoPiece *piece = [board objectAtIndex: (row * 4) + column];
+    if ([piece isBlank])
+        return nil;
+    
+    [board replaceObjectAtIndex: (row * 4) + column withObject: [GCQuartoPiece blankPiece]];
+    [remainingPieces addObject: piece];
+    
+    return piece;
+}
+
+
+#pragma mark -
 #pragma mark Private accessors for copy purposes
 
 - (void) setBoard: (NSMutableArray *) aBoard
@@ -146,7 +146,7 @@
 
 - (id) copyWithZone: (NSZone *) zone
 {
-    GCQuartoBoard *copy = [[GCQuartoBoard allocWithZone: zone] init];
+    GCQuartoPosition *copy = [[GCQuartoPosition allocWithZone: zone] init];
     
     NSMutableArray *boardCopy = [board mutableCopy];
     NSMutableArray *piecesCopy = [remainingPieces mutableCopy];

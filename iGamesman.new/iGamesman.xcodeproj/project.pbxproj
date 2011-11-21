@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A18EDAD147713C600E99653 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A18EDAC147713C500E99653 /* QuartzCore.framework */; };
 		0A3C3228143A45370080BCA9 /* GCQuarto.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A3C3227143A45360080BCA9 /* GCQuarto.m */; };
 		0A4C7D231448D52100305C9C /* Games.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0A4C7D221448D52100305C9C /* Games.plist */; };
 		0A6646A11468823700CC955A /* GCGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A6646A01468823700CC955A /* GCGameViewController.m */; };
@@ -30,7 +31,7 @@
 		0A6646D71468ADBC00CC955A /* GCDrawerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A6646D61468ADBC00CC955A /* GCDrawerView.m */; };
 		0A6646DE1468B0C400CC955A /* CloseButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A6646DC1468B0C400CC955A /* CloseButton.png */; };
 		0A6646DF1468B0C400CC955A /* CloseButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A6646DD1468B0C400CC955A /* CloseButton@2x.png */; };
-		0A78031A1474A51C004F0036 /* GCQuartoBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A7803191474A51C004F0036 /* GCQuartoBoard.m */; };
+		0A78031A1474A51C004F0036 /* GCQuartoPosition.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A7803191474A51C004F0036 /* GCQuartoPosition.m */; };
 		0A78031E1474A9B2004F0036 /* GCQuartoPiece.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A78031D1474A9B2004F0036 /* GCQuartoPiece.m */; };
 		0A899010144F6A2700CC9D2F /* connect4.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A89900F144F6A2700CC9D2F /* connect4.png */; };
 		0A899013144F6BA400CC9D2F /* connections.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A899012144F6BA400CC9D2F /* connections.png */; };
@@ -71,7 +72,6 @@
 		D72EB4A1143CF76E007B46CF /* GCJSONService.m in Sources */ = {isa = PBXBuildFile; fileRef = D72EB4A0143CF76E007B46CF /* GCJSONService.m */; };
 		D72EB4A5143CF918007B46CF /* GCConnectFourPosition.m in Sources */ = {isa = PBXBuildFile; fileRef = D72EB4A4143CF918007B46CF /* GCConnectFourPosition.m */; };
 		D73A26DE14365CB1009E855C /* GCConnectFour.m in Sources */ = {isa = PBXBuildFile; fileRef = D73A26D214365CB1009E855C /* GCConnectFour.m */; };
-		D73A26DF14365CB1009E855C /* GCCoverFlowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D73A26D414365CB1009E855C /* GCCoverFlowViewController.m */; };
 		D73A26E014365CB1009E855C /* GCPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = D73A26D714365CB1009E855C /* GCPlayer.m */; };
 		D73A26E114365CB1009E855C /* GCSetupGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D73A26D914365CB1009E855C /* GCSetupGameViewController.m */; };
 		D73A26E214365CB1009E855C /* iGamesmanAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D73A26DB14365CB1009E855C /* iGamesmanAppDelegate.m */; };
@@ -94,6 +94,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0A18EDAC147713C500E99653 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		0A3C3226143A45360080BCA9 /* GCQuarto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCQuarto.h; sourceTree = "<group>"; };
 		0A3C3227143A45360080BCA9 /* GCQuarto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCQuarto.m; sourceTree = "<group>"; };
 		0A4C7D221448D52100305C9C /* Games.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Games.plist; sourceTree = "<group>"; };
@@ -121,8 +122,8 @@
 		0A6646D61468ADBC00CC955A /* GCDrawerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDrawerView.m; sourceTree = "<group>"; };
 		0A6646DC1468B0C400CC955A /* CloseButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseButton.png; sourceTree = "<group>"; };
 		0A6646DD1468B0C400CC955A /* CloseButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CloseButton@2x.png"; sourceTree = "<group>"; };
-		0A7803181474A51C004F0036 /* GCQuartoBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCQuartoBoard.h; sourceTree = "<group>"; };
-		0A7803191474A51C004F0036 /* GCQuartoBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCQuartoBoard.m; sourceTree = "<group>"; };
+		0A7803181474A51C004F0036 /* GCQuartoPosition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCQuartoPosition.h; sourceTree = "<group>"; };
+		0A7803191474A51C004F0036 /* GCQuartoPosition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCQuartoPosition.m; sourceTree = "<group>"; };
 		0A78031C1474A9B2004F0036 /* GCQuartoPiece.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCQuartoPiece.h; sourceTree = "<group>"; };
 		0A78031D1474A9B2004F0036 /* GCQuartoPiece.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCQuartoPiece.m; sourceTree = "<group>"; };
 		0A89900F144F6A2700CC9D2F /* connect4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = connect4.png; sourceTree = "<group>"; };
@@ -174,8 +175,6 @@
 		D72EB4A4143CF918007B46CF /* GCConnectFourPosition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCConnectFourPosition.m; sourceTree = "<group>"; };
 		D73A26D114365CB1009E855C /* GCConnectFour.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCConnectFour.h; sourceTree = "<group>"; };
 		D73A26D214365CB1009E855C /* GCConnectFour.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCConnectFour.m; sourceTree = "<group>"; };
-		D73A26D314365CB1009E855C /* GCCoverFlowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCCoverFlowViewController.h; sourceTree = "<group>"; };
-		D73A26D414365CB1009E855C /* GCCoverFlowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCCoverFlowViewController.m; sourceTree = "<group>"; };
 		D73A26D514365CB1009E855C /* GCGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCGame.h; sourceTree = "<group>"; };
 		D73A26D614365CB1009E855C /* GCPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCPlayer.h; sourceTree = "<group>"; };
 		D73A26D714365CB1009E855C /* GCPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCPlayer.m; sourceTree = "<group>"; };
@@ -217,6 +216,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A18EDAD147713C600E99653 /* QuartzCore.framework in Frameworks */,
 				D7A6718614365AF900659C6E /* UIKit.framework in Frameworks */,
 				D7A6718814365AF900659C6E /* Foundation.framework in Frameworks */,
 				D7A6718A14365AF900659C6E /* CoreGraphics.framework in Frameworks */,
@@ -317,8 +317,6 @@
 				D7F8BF8D143A4C6A0010F767 /* Games */,
 				0AD56E14144387980034EF53 /* GCCarouselViewController.h */,
 				0AD56E13144387980034EF53 /* GCCarouselViewController.m */,
-				D73A26D314365CB1009E855C /* GCCoverFlowViewController.h */,
-				D73A26D414365CB1009E855C /* GCCoverFlowViewController.m */,
 				0A6646D51468ADBC00CC955A /* GCDrawerView.h */,
 				0A6646D61468ADBC00CC955A /* GCDrawerView.m */,
 				D73A26D514365CB1009E855C /* GCGame.h */,
@@ -402,6 +400,7 @@
 		D7A6718414365AF900659C6E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0A18EDAC147713C500E99653 /* QuartzCore.framework */,
 				D7A6718514365AF900659C6E /* UIKit.framework */,
 				D7A6718714365AF900659C6E /* Foundation.framework */,
 				D7A6718914365AF900659C6E /* CoreGraphics.framework */,
@@ -442,8 +441,8 @@
 			children = (
 				0A3C3226143A45360080BCA9 /* GCQuarto.h */,
 				0A3C3227143A45360080BCA9 /* GCQuarto.m */,
-				0A7803181474A51C004F0036 /* GCQuartoBoard.h */,
-				0A7803191474A51C004F0036 /* GCQuartoBoard.m */,
+				0A7803181474A51C004F0036 /* GCQuartoPosition.h */,
+				0A7803191474A51C004F0036 /* GCQuartoPosition.m */,
 				0A78031C1474A9B2004F0036 /* GCQuartoPiece.h */,
 				0A78031D1474A9B2004F0036 /* GCQuartoPiece.m */,
 				0ADFA73F14745FBB00967792 /* GCQuartoView.h */,
@@ -592,7 +591,6 @@
 			files = (
 				D7A6719214365AF900659C6E /* main.m in Sources */,
 				D73A26DE14365CB1009E855C /* GCConnectFour.m in Sources */,
-				D73A26DF14365CB1009E855C /* GCCoverFlowViewController.m in Sources */,
 				D73A26E014365CB1009E855C /* GCPlayer.m in Sources */,
 				D73A26E114365CB1009E855C /* GCSetupGameViewController.m in Sources */,
 				D73A26E214365CB1009E855C /* iGamesmanAppDelegate.m in Sources */,
@@ -616,7 +614,7 @@
 				0A6646C714688AD200CC955A /* GCSidebarView.m in Sources */,
 				0A6646D71468ADBC00CC955A /* GCDrawerView.m in Sources */,
 				0ADFA74114745FBB00967792 /* GCQuartoView.m in Sources */,
-				0A78031A1474A51C004F0036 /* GCQuartoBoard.m in Sources */,
+				0A78031A1474A51C004F0036 /* GCQuartoPosition.m in Sources */,
 				0A78031E1474A9B2004F0036 /* GCQuartoPiece.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -688,6 +686,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iGamesman/iGamesman-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				INFOPLIST_FILE = "iGamesman/iGamesman-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -703,6 +702,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iGamesman/iGamesman-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				INFOPLIST_FILE = "iGamesman/iGamesman-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
