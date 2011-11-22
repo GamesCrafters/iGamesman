@@ -35,7 +35,7 @@
 	return self;
 }
 
-- (Position) doMove: (Move) move {
+- (Position) doMove: (NSNumber *) move {
 	//[conView doMove: move];
 	
 	int slot = [move integerValue] - 1;
@@ -44,7 +44,7 @@
 	return position;
 }
 
-- (void) undoMove: (Move) move toPosition: (GCConnectionsPosition *) toPos {
+- (void) undoMove: (NSNumber *) move toPosition: (GCConnectionsPosition *) toPos {
 	//[conView undoMove: move];
 	
 	int slot = [move intValue] - 1;
@@ -252,6 +252,7 @@
 	player1 = leftPlayer;
 	player2 = rightPlayer;
 	settings = settingsDict;
+	//allocate view
 }
 
 - (GCPlayer *) leftPlayer {
@@ -282,11 +283,18 @@
 }
 
 - (UIView *) view {
-	//UI elements not yet defined
+	//Assumes frame of standard size,
+	//Use vewWithFrame to have adjustable size
+	return [[[GCConnectionsView alloc] initWithFrame: CGRectMake(0, 0, 320, 480)] autorelease];
+}
+
+- (UIView *) viewWithFrame: (CGRect) frame
+{
+	return [[[GCConnectionsView alloc] initWithFrame: frame] autorelease];
 }
 
 - (void) waitForHumanMoveWithCompletion: (void (^) (Move move)) completionHandler {
-	//Need clarification
+	//Run loop
 }
 
 
@@ -334,6 +342,335 @@
 - (PlayerSide) currentPlayer{
 	return position.p1Turn ? PLAYER_LEFT : PLAYER_RIGHT;
 }
+
+- (NSString *) stringForBoard: (NSArray *) _board{
+	NSString * result = @"";
+	NSInteger size = position.size;
+	for(int row = size - 2; row > 0; row -= 2){
+		for(int col = 1; col < size - 1; col += 2){
+			NSString * piece = (NSString *) [_board objectAtIndex: row*size + col];
+			if([piece isEqual: BLANK]){
+				result = [result stringByAppendingString: @" "];
+			}
+			else
+				result = [result stringByAppendingString: piece];
+		}
+	}
+	
+	for(int row = size - 3; row > 0; row -= 2){
+		for(int col = 2; col < size - 1; col += 2){
+			NSString * piece = (NSString *) [_board objectAtIndex: row*size + col];
+			if([piece isEqual: BLANK]){
+				result = [result stringByAppendingString: @" "];
+			}
+			else
+				result = [result stringByAppendingString: piece];
+		}
+	}
+	return result;
+}
+
+- (void) chainDecrement: (NSMutableArray*) loop
+				  given: (NSMutableArray *) decrementedVerts{
+	int num = 0;
+	NSInteger size = position.size;
+	while (num < [decrementedVerts count]) {
+		int connectorPos = [[decrementedVerts objectAtIndex: num] intValue];
+		num += 1;
+		if([[loop objectAtIndex: connectorPos] intValue] == 1){
+			[loop replaceObjectAtIndex: connectorPos withObject: [NSNumber numberWithInt: -1]];
+			int val = 0;
+			int secondConnectorPos = 0;
+			int left = connectorPos - 2;
+			int right = connectorPos + 2;
+			int above = connectorPos - 2*size;
+			int below = connectorPos + 2*size;
+			
+			//decrement the connecting connector
+			BOOL checkL = NO, checkR = NO, checkU = NO, checkD = NO;
+			//if we are at the left most column for red or for blue, don't check left
+			if(connectorPos % size > 1){
+				checkL = YES;
+			}
+			//if we are at the right most column for red or for blue, don't check right
+			if(connectorPos % size <= size - 3){
+				checkR = YES;
+			}
+			//if we are at the top most row for red or for blue, don't check up
+			if(connectorPos / size >= 2){
+				checkU = YES;
+			}
+			//if we are at the bottom most row for red or for blue, don't check down
+			if(connectorPos / size <= size - 3){
+				checkD = YES;
+			}
+			
+			if(checkL){
+				if([[loop objectAtIndex: left] intValue] > 0){
+					val = [[loop objectAtIndex: left] intValue] - 1;
+					[loop replaceObjectAtIndex: left withObject: [NSNumber numberWithInt: val]];
+					secondConnectorPos = left;
+				}
+			}
+			if(checkR){
+				if([[loop objectAtIndex: right] intValue] > 0){
+					val = [[loop objectAtIndex: right] intValue] - 1;
+					[loop replaceObjectAtIndex: right withObject: [NSNumber numberWithInt: val]];
+					secondConnectorPos = right;
+				}
+			}
+			if(checkU){
+				if([[loop objectAtIndex: above] intValue] > 0){
+					val = [[loop objectAtIndex: above] intValue] - 1;
+					[loop replaceObjectAtIndex: above withObject: [NSNumber numberWithInt: val]];
+					secondConnectorPos = above;
+				}
+			}
+			if(checkD){
+				if([[loop objectAtIndex: below] intValue] > 0){
+					val = [[loop objectAtIndex: below] intValue] - 1;
+					[loop replaceObjectAtIndex: below withObject: [NSNumber numberWithInt: val]];
+					secondConnectorPos = below;
+				}
+			}
+			
+			[decrementedVerts addObject: [NSNumber numberWithInt: secondConnectorPos]];
+		}
+	}
+	
+}
+
+
+- (void) decrementVerticesIn: (NSMutableArray *) loop{
+	NSMutableArray * decrementedVerts = [[NSMutableArray alloc] init];
+	int secondConnectorPos = 0;
+	int row = 0, rowLimit = 0, col = 0, colLimit = 0;
+	NSInteger size = position.size;
+	if(!position.p1Turn){
+		row = 0;
+		rowLimit = size - 1; 
+		col = 1; 
+		colLimit = size - 2;
+	}
+	else{
+		row = 1;
+		rowLimit = size - 2;
+		col = 0;
+		colLimit = size - 1;
+	}
+	for(; row <= rowLimit; row+=2 ){
+		for(;col <= colLimit; col +=2 ){
+			int connectorPos = row*size + col;
+			//find vertex with degree one and decrement it and its connecting vertex
+			if([[loop objectAtIndex: connectorPos] intValue] == 1){
+				[loop replaceObjectAtIndex: connectorPos withObject: [NSNumber numberWithInt: -1]];
+				
+				int val = 0;
+				
+				int left = connectorPos - 2;
+				int right = connectorPos + 2;
+				int above = connectorPos - 2*size;
+				int below = connectorPos + 2*size;
+				BOOL checkL = NO, checkR = NO, checkU = NO, checkD = NO;
+				//if we are at the left most column for red or for blue, don't check left
+				if(col > 1){
+					checkL = YES;
+				}
+				//if we are at the right most column for red or for blue, don't check right
+				if(col <= size - 3){
+					checkR = YES;
+				}
+				//if we are at the top most row for red or for blue, don't check up
+				if(row >= 2){
+					checkU = YES;
+				}
+				//if we are at the bottom most row for red or for blue, don't check down
+				if(row <= size - 3){
+					checkD = YES;
+				}
+				
+				if(checkL){
+					if([[loop objectAtIndex: left] intValue] > 0){
+						val = [[loop objectAtIndex: left] intValue] - 1;
+						[loop replaceObjectAtIndex: left withObject: [NSNumber numberWithInt: val]];
+						secondConnectorPos = left;
+					}
+				}
+				if(checkR){
+					if([[loop objectAtIndex: right] intValue] > 0){
+						val = [[loop objectAtIndex: right] intValue] - 1;
+						[loop replaceObjectAtIndex: right withObject: [NSNumber numberWithInt: val]];
+						secondConnectorPos = right;
+					}
+				}
+				if(checkU){
+					if([[loop objectAtIndex: above] intValue] > 0){
+						val = [[loop objectAtIndex: above] intValue] - 1;
+						[loop replaceObjectAtIndex: above withObject: [NSNumber numberWithInt: val]];
+						secondConnectorPos = above;
+					}
+				}
+				if(checkD){
+					if([[loop objectAtIndex: below] intValue] > 0){
+						val = [[loop objectAtIndex: below] intValue] - 1;
+						[loop replaceObjectAtIndex: below withObject: [NSNumber numberWithInt: val]];
+						secondConnectorPos = below;
+					}
+				}
+				
+				[decrementedVerts addObject: [NSNumber numberWithInt: secondConnectorPos]];
+			}
+		}
+	}
+	[self chainDecrement: loop given: decrementedVerts];
+	[decrementedVerts release];
+}
+
+
+- (BOOL) encircled: (NSArray *) theBoard {
+	NSInteger size = position.size;
+	NSMutableArray * loop = [[NSMutableArray alloc] initWithCapacity: size*size];
+	
+	for(int i = 0; i < size*size; i += 1){
+		[loop addObject: [NSNumber numberWithInt: -1]];
+	}
+	
+	int row = 0, rowLimit = 0, col = 0, colLimit = 0;
+	
+	if(!position.p1Turn){
+		row = 0;
+		rowLimit = size - 1; 
+		col = 1; 
+		colLimit = size - 2;
+	}
+	else{
+		row = 1;
+		rowLimit = size - 2;
+		col = 0;
+		colLimit = size - 1;
+	}
+	for(; row <= rowLimit; row+=2 ){
+		for(;col <= colLimit; col +=2 ){
+			int connectorPos = row*size + col;
+			int edge = 0;
+			BOOL checkRight = NO;
+			BOOL checkDown = NO;
+			//don't do any checking;
+			if(row = rowLimit && col == colLimit){}
+			
+			//in last row, only look right
+			else if(row == rowLimit){
+				checkRight = YES;
+			}
+			
+			//in last col, only look down
+			else if(col == colLimit){
+				checkDown = YES;
+			}
+			
+			//can look right and down
+			else{
+				checkRight = YES;
+				checkDown = YES;
+			}
+			
+			if(checkRight){
+				edge = connectorPos + 1;
+				if([[theBoard objectAtIndex: edge] isEqual: BLANK]){}
+				else{
+					int val = 0;
+					int deg = [[loop objectAtIndex: connectorPos] intValue];
+					//first connector
+					if(deg > 0){
+						val = deg;
+					}
+					val += 1;
+					NSNumber * newDegree = [NSNumber numberWithInt: val];
+					[loop replaceObjectAtIndex: connectorPos withObject: newDegree];
+					
+					//second connector
+					val = 0;
+					deg = [[loop objectAtIndex: connectorPos + 2] intValue];
+					if(deg > 0){
+						val = deg;
+					}
+					val += 1;
+					NSNumber * newDegree2 = [NSNumber numberWithInt: val];
+					[loop replaceObjectAtIndex: connectorPos + 2 withObject: newDegree2];
+				}
+			}
+			
+			if(checkDown){
+				edge = connectorPos + size;
+				if([[theBoard objectAtIndex: edge] isEqual: BLANK]){}
+				else{
+					//first connector
+					int val = 0;
+					int deg = [[loop objectAtIndex: connectorPos] intValue];
+					if(deg > 0){
+						val = deg;
+					}
+					val += 1;
+					NSNumber * newDegree = [NSNumber numberWithInt: val];
+					[loop replaceObjectAtIndex: connectorPos withObject: newDegree];
+					
+					//second connector
+					val = 0;
+					deg = [[loop objectAtIndex: connectorPos + 2*size] intValue];
+					if(deg > 0){
+						val = deg;
+					}
+					val += 1;
+					NSNumber * newDegree2 = [NSNumber numberWithInt: val];
+					[loop replaceObjectAtIndex: connectorPos + 2*size withObject: newDegree2];
+				}
+			}
+			
+		}
+	}
+	[self decrementVerticesIn: (NSMutableArray *) loop];
+	
+	int total = 0;
+	for(int i = 1; i < size*size; i += 2){
+		if([[loop objectAtIndex: i] intValue] > 0)
+			total += 1;
+		//NSLog(@"degrees of vertexes: %d", [[loop objectAtIndex: i] intValue]);
+	}
+	//NSLog(@"number of connections: %d", total);
+	[loop release];
+	if(total >= 4){
+		//[loop dealloc];
+		//[vertices dealloc];
+		return YES;
+	}
+	else{
+		//[loop dealloc];
+		//[vertices dealloc];
+		return NO;
+	}
+}
+
+- (void) resetBoard {
+	if(position.board){
+		[position.board release];
+	}
+	NSInteger size = position.size;
+	position.board = [[NSMutableArray alloc] initWithCapacity: size * size];
+	for (int j = 0; j < size; j += 1) {
+		for (int i = 0; i < size; i += 1) {
+			if(i % 2 == j % 2){
+				[position.board addObject:BLANK];
+			}
+			else if(i % 2 == 0){
+				[position.board addObject: OCON];
+			}
+			else {
+				[position.board addObject: XCON];
+			}
+		}
+	}
+}
+
 
 
 @end

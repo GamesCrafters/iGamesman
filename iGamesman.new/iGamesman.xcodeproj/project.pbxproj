@@ -59,6 +59,9 @@
 		0ADFA766147471DC00967792 /* quartoSquare13.png in Resources */ = {isa = PBXBuildFile; fileRef = 0ADFA756147471DC00967792 /* quartoSquare13.png */; };
 		0ADFA767147471DC00967792 /* quartoSquare14.png in Resources */ = {isa = PBXBuildFile; fileRef = 0ADFA757147471DC00967792 /* quartoSquare14.png */; };
 		0ADFA768147471DC00967792 /* quartoSquare15.png in Resources */ = {isa = PBXBuildFile; fileRef = 0ADFA758147471DC00967792 /* quartoSquare15.png */; };
+		21323A86147AEA8400BCB4EF /* GCConnectionsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 21323A85147AEA8400BCB4EF /* GCConnectionsView.m */; };
+		21D43F24147B27470050BF1B /* ConO.png in Resources */ = {isa = PBXBuildFile; fileRef = 21D43F22147B27470050BF1B /* ConO.png */; };
+		21D43F25147B27470050BF1B /* ConX.png in Resources */ = {isa = PBXBuildFile; fileRef = 21D43F23147B27470050BF1B /* ConX.png */; };
 		21D786C1143F8C73008E8B17 /* GCConnections.m in Sources */ = {isa = PBXBuildFile; fileRef = 21D786C0143F8C73008E8B17 /* GCConnections.m */; };
 		21DA8EF4144457E800C5B4EE /* GCConnectionsPosition.m in Sources */ = {isa = PBXBuildFile; fileRef = 21DA8EF3144457E800C5B4EE /* GCConnectionsPosition.m */; };
 		21ED19F6144378D2008DD7FD /* ConnectionsIntegerQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 21ED19F5144378D2008DD7FD /* ConnectionsIntegerQueue.m */; };
@@ -154,6 +157,10 @@
 		0ADFA756147471DC00967792 /* quartoSquare13.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = quartoSquare13.png; sourceTree = "<group>"; };
 		0ADFA757147471DC00967792 /* quartoSquare14.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = quartoSquare14.png; sourceTree = "<group>"; };
 		0ADFA758147471DC00967792 /* quartoSquare15.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = quartoSquare15.png; sourceTree = "<group>"; };
+		21323A84147AEA8400BCB4EF /* GCConnectionsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCConnectionsView.h; sourceTree = "<group>"; };
+		21323A85147AEA8400BCB4EF /* GCConnectionsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCConnectionsView.m; sourceTree = "<group>"; };
+		21D43F22147B27470050BF1B /* ConO.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ConO.png; sourceTree = "<group>"; };
+		21D43F23147B27470050BF1B /* ConX.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ConX.png; sourceTree = "<group>"; };
 		21D786BF143F8C73008E8B17 /* GCConnections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCConnections.h; sourceTree = "<group>"; };
 		21D786C0143F8C73008E8B17 /* GCConnections.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCConnections.m; sourceTree = "<group>"; };
 		21DA8EF2144457E800C5B4EE /* GCConnectionsPosition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCConnectionsPosition.h; sourceTree = "<group>"; };
@@ -205,7 +212,7 @@
 		D7A6718514365AF900659C6E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		D7A6718714365AF900659C6E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D7A6718914365AF900659C6E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		D7A6718D14365AF900659C6E /* iGamesman-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "iGamesman-Info.plist"; sourceTree = "<group>"; };
+		D7A6718D14365AF900659C6E /* iGamesman-Info.plist */ = {isa = PBXFileReference; explicitFileType = text.plist.xml; path = "iGamesman-Info.plist"; sourceTree = "<group>"; };
 		D7A6718F14365AF900659C6E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D7A6719114365AF900659C6E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D7A6719314365AF900659C6E /* iGamesman-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iGamesman-Prefix.pch"; sourceTree = "<group>"; };
@@ -252,6 +259,7 @@
 		0A6646A41468873800CC955A /* Games */ = {
 			isa = PBXGroup;
 			children = (
+				21D43F26147B274A0050BF1B /* Connections */,
 				0ADFA7421474606700967792 /* Quarto */,
 				0A89900F144F6A2700CC9D2F /* connect4.png */,
 				0A899012144F6BA400CC9D2F /* connections.png */,
@@ -288,6 +296,15 @@
 			name = Quarto;
 			sourceTree = "<group>";
 		};
+		21D43F26147B274A0050BF1B /* Connections */ = {
+			isa = PBXGroup;
+			children = (
+				21D43F22147B27470050BF1B /* ConO.png */,
+				21D43F23147B27470050BF1B /* ConX.png */,
+			);
+			name = Connections;
+			sourceTree = "<group>";
+		};
 		21D78682143F8290008E8B17 /* Connections */ = {
 			isa = PBXGroup;
 			children = (
@@ -297,6 +314,8 @@
 				21D786C0143F8C73008E8B17 /* GCConnections.m */,
 				21DA8EF2144457E800C5B4EE /* GCConnectionsPosition.h */,
 				21DA8EF3144457E800C5B4EE /* GCConnectionsPosition.m */,
+				21323A84147AEA8400BCB4EF /* GCConnectionsView.h */,
+				21323A85147AEA8400BCB4EF /* GCConnectionsView.m */,
 			);
 			name = Connections;
 			sourceTree = "<group>";
@@ -579,6 +598,8 @@
 				0ADFA766147471DC00967792 /* quartoSquare13.png in Resources */,
 				0ADFA767147471DC00967792 /* quartoSquare14.png in Resources */,
 				0ADFA768147471DC00967792 /* quartoSquare15.png in Resources */,
+				21D43F24147B27470050BF1B /* ConO.png in Resources */,
+				21D43F25147B27470050BF1B /* ConX.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -616,6 +637,7 @@
 				0ADFA74114745FBB00967792 /* GCQuartoView.m in Sources */,
 				0A78031A1474A51C004F0036 /* GCQuartoPosition.m in Sources */,
 				0A78031E1474A9B2004F0036 /* GCQuartoPiece.m in Sources */,
+				21323A86147AEA8400BCB4EF /* GCConnectionsView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

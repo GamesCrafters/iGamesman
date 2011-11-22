@@ -11,6 +11,7 @@
 #import "GCGame.h"
 #import "GCPlayer.h"
 #import "GCConnectionsPosition.h"
+#import "GCConnectionsView.h"
 
 @interface GCConnections : NSObject <GCGame>
 {
