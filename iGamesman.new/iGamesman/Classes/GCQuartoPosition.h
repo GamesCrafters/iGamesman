@@ -8,6 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
+#import "GCGame.h"
+
+
+typedef enum { GC_QUARTO_CHOOSE, GC_QUARTO_PLACE } GCQuartoMovePhase;
+
 
 @class GCQuartoPiece;
 
@@ -15,7 +20,13 @@
 {
     NSMutableArray *board;
     NSMutableArray *remainingPieces;
+    GCQuartoPiece *platformPiece;
+    PlayerSide currentPlayer;
+    GCQuartoMovePhase turnPhase;
 }
+
+
+- (id) initWithStartingPlayer: (PlayerSide) playerSide;
 
 
 /**
@@ -30,6 +41,14 @@
 
 
 /**
+ * Get the piece currently on the platform, waiting to be placed.
+ *
+ * @return The piece on the platform
+ */
+- (GCQuartoPiece *) pieceOnPlatform;
+
+
+/**
  * Return an array of the currently unplaced pieces.
  *
  * @return The remaining unplaced pieces
@@ -38,26 +57,59 @@
 
 
 /**
- * Add a piece to the board in the ROWth row and COLUMNth column.
- * Removes the placed piece from the array of available pieces.
+ * Return the player whose turn it is.
  *
- * @param piece The piece to be added to the board
- * @param row The row number in the range [0,3]
- * @param column The column number in the range [0,3]
- *
- * @return YES is placement was successful, NO if not
+ * @return The player to make the next move
  */
-- (BOOL) placePiece: (GCQuartoPiece *) piece atRow: (NSUInteger) row andColumn: (NSUInteger) column;
+- (PlayerSide) currentPlayer;
 
 
 /**
- * Remove the piece in the ROWth row and COLUMNth column from the board.
- * Adds the removed piece to the array of available pieces.
+ * Return the phase of the current player's turn (placing or choosing).
+ *
+ * @return The phase of the current turn
+ */
+- (GCQuartoMovePhase) currentTurnPhase;
+
+
+/**
+ * Place one of the available pieces on the platform.
+ * Removes the piece from the available pieces.
+ *
+ * @param piece The piece to move to the platform
+ *
+ * @return YES is successful, NO if not
+ */
+- (BOOL) movePieceToPlatform: (GCQuartoPiece *) piece;
+
+
+/**
+ * Put the piece on the platform back in the bag of available pieces.
+ * Replaces the piece among the available pieces.
  * 
+ * @return The piece that was removed from the platform, or nil if there was no piece there
+ */
+- (GCQuartoPiece *) removePieceFromPlatform;
+
+
+/**
+ * Place the piece on the platform on the board.
+ *
  * @param row The row number in the range [0,3]
  * @param column The column number in the range [0,3]
  *
- * @return The piece that was removed, or nil if there was no piece there.
+ * @return YES if successful, NO if not
+ */
+- (BOOL) placePlatformPieceAtRow: (NSUInteger) row andColumn: (NSUInteger) column;
+
+
+/**
+ * Remove a piece from the board and put it back on the platform.
+ *
+ * @param row The row number in the range [0,3]
+ * @param column The column number in the range [0,3]
+ *
+ * @return The piece that was removed from the platform, or nil if there was no piece there
  */
 - (GCQuartoPiece *) removePieceAtRow: (NSUInteger) row andColumn: (NSUInteger) column;
 

@@ -8,6 +8,7 @@
 
 #import "GCQuarto.h"
 
+#import "GCQuartoPiece.h"
 #import "GCQuartoPosition.h"
 #import "GCQuartoView.h"
 
@@ -23,7 +24,7 @@
     
     if (self)
     {
-        board = [[GCQuartoPosition alloc] init];
+        position = [[GCQuartoPosition alloc] init];
     }
     
     return self;
@@ -32,7 +33,7 @@
 
 - (void) dealloc
 {
-    [board release];
+    [position release];
     
     [super dealloc];
 }
@@ -43,7 +44,30 @@
 
 - (UIView *) viewWithFrame: (CGRect) frame
 {
-    return [[[GCQuartoView alloc] initWithFrame: frame] autorelease];
+    GCQuartoView *quartoView = [[[GCQuartoView alloc] initWithFrame: frame] autorelease];
+    quartoView.delegate = self;
+    return quartoView;
+}
+
+
+- (void) startGameWithLeft: (GCPlayer *) _leftPlayer right: (GCPlayer *) _rightPlayer andPlaySettings: (NSDictionary *) settingsDict
+{
+    leftPlayer  = [_leftPlayer retain];
+    rightPlayer = [_rightPlayer retain];
+    
+    if ([settingsDict objectForKey: GCGameModeKey] == GCGameModeOfflineUnsolved)
+        mode = OFFLINE_UNSOLVED;
+    else if ([settingsDict objectForKey: GCGameModeOnlineSolved])
+        mode = ONLINE_SOLVED;
+}
+
+
+#pragma mark -
+#pragma mark GCQuartoViewDelegate
+
+- (GCQuartoPosition *) currentPosition
+{
+    return position;
 }
 
 @end

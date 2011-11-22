@@ -11,6 +11,7 @@
 #import "GCGame.h"
 
 #import "GCDrawerView.h"
+#import "GCPlayer.h"
 #import "GCSidebarView.h"
 
 
@@ -53,6 +54,28 @@
 
 
 #pragma mark - View lifecycle
+
+- (void) viewDidLoad
+{
+    [super viewDidLoad];
+    
+    GCPlayer *left = [[GCPlayer alloc] init];
+    [left setName: @"Player 1"];
+    [left setType: HUMAN];
+    [left setPercentPerfect: 0];
+    
+    GCPlayer *right = [[GCPlayer alloc] init];
+    [right setName: @"Player 2"];
+    [right setType: HUMAN];
+    [right setPercentPerfect: 0];
+    
+    NSDictionary *settings = [NSDictionary dictionaryWithObjectsAndKeys: GCGameModeOfflineUnsolved, GCGameModeKey, nil];
+    
+    [_game startGameWithLeft: left
+                       right: right
+             andPlaySettings: settings];
+}
+
 
 - (void) loadView
 {

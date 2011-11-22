@@ -50,7 +50,9 @@
         [piece release];
     }
     
-    pieces = [temp autorelease];
+#warning Figure out why this autorelease is failing
+    //pieces = [temp autorelease];
+    pieces = temp;
     
     return [pieces objectAtIndex: number];
 }

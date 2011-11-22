@@ -9,13 +9,19 @@
 #import <Foundation/Foundation.h>
 
 #import "GCGame.h"
+#import "GCQuartoView.h"
 
 
+@class GCPlayer;
 @class GCQuartoPosition;
 
-@interface GCQuarto : NSObject <GCGame>
+@interface GCQuarto : NSObject <GCGame, GCQuartoViewDelegate>
 {
-    GCQuartoPosition *board;
+    GCQuartoPosition *position;
+    
+    GCPlayer *leftPlayer, *rightPlayer;
+    
+    PlayMode mode;
 }
 
 @end

@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		0A18EDAD147713C600E99653 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A18EDAC147713C500E99653 /* QuartzCore.framework */; };
+		0A18EDB9147B191800E99653 /* GCConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A18EDB8147B191000E99653 /* GCConstants.m */; };
+		0A18EDCF147B35D400E99653 /* GCTicTacToe.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A18EDCE147B35D400E99653 /* GCTicTacToe.m */; };
+		0A18EDD2147B36A400E99653 /* GCTicTacToePosition.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A18EDD1147B36A400E99653 /* GCTicTacToePosition.m */; };
+		0A18EDD8147B3E6500E99653 /* GCTicTacToeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A18EDD7147B3E6300E99653 /* GCTicTacToeView.m */; };
 		0A3C3228143A45370080BCA9 /* GCQuarto.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A3C3227143A45360080BCA9 /* GCQuarto.m */; };
 		0A4C7D231448D52100305C9C /* Games.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0A4C7D221448D52100305C9C /* Games.plist */; };
 		0A6646A11468823700CC955A /* GCGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A6646A01468823700CC955A /* GCGameViewController.m */; };
@@ -98,6 +102,14 @@
 
 /* Begin PBXFileReference section */
 		0A18EDAC147713C500E99653 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		0A18EDB7147B190D00E99653 /* GCConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCConstants.h; sourceTree = "<group>"; };
+		0A18EDB8147B191000E99653 /* GCConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCConstants.m; sourceTree = "<group>"; };
+		0A18EDCD147B35D400E99653 /* GCTicTacToe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCTicTacToe.h; sourceTree = "<group>"; };
+		0A18EDCE147B35D400E99653 /* GCTicTacToe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCTicTacToe.m; sourceTree = "<group>"; };
+		0A18EDD0147B36A400E99653 /* GCTicTacToePosition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCTicTacToePosition.h; sourceTree = "<group>"; };
+		0A18EDD1147B36A400E99653 /* GCTicTacToePosition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCTicTacToePosition.m; sourceTree = "<group>"; };
+		0A18EDD6147B3E6300E99653 /* GCTicTacToeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCTicTacToeView.h; sourceTree = "<group>"; };
+		0A18EDD7147B3E6300E99653 /* GCTicTacToeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCTicTacToeView.m; sourceTree = "<group>"; };
 		0A3C3226143A45360080BCA9 /* GCQuarto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCQuarto.h; sourceTree = "<group>"; };
 		0A3C3227143A45360080BCA9 /* GCQuarto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCQuarto.m; sourceTree = "<group>"; };
 		0A4C7D221448D52100305C9C /* Games.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Games.plist; sourceTree = "<group>"; };
@@ -233,6 +245,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0A18EDCC147B35C000E99653 /* Tic-Tac-Toe */ = {
+			isa = PBXGroup;
+			children = (
+				0A18EDCD147B35D400E99653 /* GCTicTacToe.h */,
+				0A18EDCE147B35D400E99653 /* GCTicTacToe.m */,
+				0A18EDD0147B36A400E99653 /* GCTicTacToePosition.h */,
+				0A18EDD1147B36A400E99653 /* GCTicTacToePosition.m */,
+				0A18EDD6147B3E6300E99653 /* GCTicTacToeView.h */,
+				0A18EDD7147B3E6300E99653 /* GCTicTacToeView.m */,
+			);
+			name = "Tic-Tac-Toe";
+			sourceTree = "<group>";
+		};
 		0A6646A31468872A00CC955A /* Sidebar */ = {
 			isa = PBXGroup;
 			children = (
@@ -339,6 +364,8 @@
 				0A6646D51468ADBC00CC955A /* GCDrawerView.h */,
 				0A6646D61468ADBC00CC955A /* GCDrawerView.m */,
 				D73A26D514365CB1009E855C /* GCGame.h */,
+				0A18EDB7147B190D00E99653 /* GCConstants.h */,
+				0A18EDB8147B191000E99653 /* GCConstants.m */,
 				0A66469F1468823700CC955A /* GCGameViewController.h */,
 				0A6646A01468823700CC955A /* GCGameViewController.m */,
 				D73A26D614365CB1009E855C /* GCPlayer.h */,
@@ -486,6 +513,7 @@
 		D7F8BF8D143A4C6A0010F767 /* Games */ = {
 			isa = PBXGroup;
 			children = (
+				0A18EDCC147B35C000E99653 /* Tic-Tac-Toe */,
 				81B929A41448D058005D5A03 /* Othello */,
 				D7F8BF8B143A4C560010F767 /* Quarto */,
 				D7F8BF8C143A4C5F0010F767 /* Connect 4 */,

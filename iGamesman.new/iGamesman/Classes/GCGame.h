@@ -8,21 +8,25 @@
 
 #import <Foundation/Foundation.h>
 
+#import "GCConstants.h"
+
 #import "GCPlayer.h"
+
 
 typedef id<NSCopying> Position;
 typedef id<NSCopying> Move;
 
 typedef enum { WIN, LOSE, TIE, DRAW, NONPRIMITIVE, UNKNOWN } GameValue;
-typedef enum { ONLINE_SOLVED, OFFLINE_UNSOLVED } PlayMode;
+typedef enum { ONLINE_SOLVED = 0, OFFLINE_UNSOLVED } PlayMode;
 typedef enum { PLAYER_LEFT, PLAYER_RIGHT } PlayerSide;
 
 
 /** 
  * The protocol that all games must adhere to to cooperate with the system framework.
  */
-@protocol GCGame 
+@protocol GCGame
 
+@optional
 /**
  * Return the position that result by making the move MOVE
  *  from the current. The underlying game object
@@ -69,10 +73,12 @@ typedef enum { PLAYER_LEFT, PLAYER_RIGHT } PlayerSide;
 - (NSArray *) generateMoves: (Position) pos;
 
 
+@required
 - (void) startGameWithLeft: (GCPlayer *) leftPlayer
                      right: (GCPlayer *) rightPlayer
            andPlaySettings: (NSDictionary *) settingsDict;
 
+@optional
 /**
  * Return the left player.
  *
@@ -118,6 +124,7 @@ typedef enum { PLAYER_LEFT, PLAYER_RIGHT } PlayerSide;
 - (UIView *) view;
 
 
+@required
 /**
  * Return the view (with frame rectangle FRAME) that displays this game's interface.
  *
@@ -128,6 +135,7 @@ typedef enum { PLAYER_LEFT, PLAYER_RIGHT } PlayerSide;
 - (UIView *) viewWithFrame: (CGRect) frame;
 
 
+@optional
 /**
  * Wait for the user to make a move, then return that move back through the completion handler.
  *

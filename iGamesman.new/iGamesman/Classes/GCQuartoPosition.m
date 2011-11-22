@@ -10,6 +10,8 @@
 
 #import "GCQuartoPiece.h"
 
+#define FLIP_PLAYER(p) ((p == PLAYER_LEFT) ? PLAYER_RIGHT : PLAYER_LEFT)
+
 
 @interface GCQuartoPosition ()
 
@@ -38,12 +40,17 @@
 #pragma mark -
 #pragma mark Memory lifecycle
 
-- (id) init
+- (id) initWithStartingPlayer: (PlayerSide) playerSide
 {
     self = [super init];
     
     if (self)
     {
+        currentPlayer = playerSide;
+        turnPhase = GC_QUARTO_CHOOSE;
+        
+        platformPiece = [GCQuartoPiece blankPiece];
+        
         board = [[NSMutableArray alloc] initWithCapacity: 16];
         remainingPieces = [[NSMutableArray alloc] initWithCapacity: 16];
         
@@ -87,19 +94,78 @@
 }
 
 
+- (GCQuartoPiece *) pieceOnPlatform
+{
+    return platformPiece;
+}
+
+
 - (NSArray *) availablePieces
 {
     return remainingPieces;
 }
 
 
-- (BOOL) placePiece: (GCQuartoPiece *) piece atRow: (NSUInteger) row andColumn: (NSUInteger) column
+- (PlayerSide) currentPlayer
 {
+    return currentPlayer;
+}
+
+
+- (GCQuartoMovePhase) currentTurnPhase
+{
+    return turnPhase;
+}
+
+
+- (BOOL) movePieceToPlatform: (GCQuartoPiece *) piece
+{
+    if (turnPhase != GC_QUARTO_CHOOSE)
+        return NO;
+    
     if (![remainingPieces containsObject: piece])
         return NO;
     
-    [board replaceObjectAtIndex: (row * 4) + column withObject: piece];
     [remainingPieces removeObject: piece];
+    platformPiece = piece;
+    
+    turnPhase = GC_QUARTO_PLACE;
+    currentPlayer = FLIP_PLAYER(currentPlayer);
+
+    return YES;
+}
+
+
+- (GCQuartoPiece *) removePieceFromPlatform
+{
+    if (turnPhase != GC_QUARTO_PLACE)
+        return nil;
+    
+    GCQuartoPiece *piece = platformPiece;
+    [remainingPieces addObject: piece];
+    
+    platformPiece = [GCQuartoPiece blankPiece];
+    
+    turnPhase = GC_QUARTO_CHOOSE;
+    currentPlayer = FLIP_PLAYER(currentPlayer);
+    
+    return piece;
+}
+
+
+- (BOOL) placePlatformPieceAtRow: (NSUInteger) row andColumn: (NSUInteger) column
+{
+    if (turnPhase != GC_QUARTO_PLACE)
+        return NO;
+    
+    if ([platformPiece isBlank])
+        return NO;
+    
+    [board replaceObjectAtIndex: (row * 4) + column withObject: platformPiece];
+
+    platformPiece = nil;
+    
+    turnPhase = GC_QUARTO_CHOOSE;
     
     return YES;
 }
@@ -107,12 +173,19 @@
 
 - (GCQuartoPiece *) removePieceAtRow: (NSUInteger) row andColumn: (NSUInteger) column
 {
+    if (turnPhase != GC_QUARTO_CHOOSE)
+        return nil;
+    
     GCQuartoPiece *piece = [board objectAtIndex: (row * 4) + column];
+    
     if ([piece isBlank])
         return nil;
     
     [board replaceObjectAtIndex: (row * 4) + column withObject: [GCQuartoPiece blankPiece]];
-    [remainingPieces addObject: piece];
+    
+    platformPiece = piece;
+    
+    turnPhase = GC_QUARTO_PLACE;
     
     return piece;
 }
@@ -146,6 +219,7 @@
 
 - (id) copyWithZone: (NSZone *) zone
 {
+#warning Update Me!
     GCQuartoPosition *copy = [[GCQuartoPosition allocWithZone: zone] init];
     
     NSMutableArray *boardCopy = [board mutableCopy];

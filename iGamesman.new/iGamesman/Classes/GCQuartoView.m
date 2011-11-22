@@ -8,10 +8,16 @@
 
 #import "GCQuartoView.h"
 
+#import "GCQuartoPiece.h"
+#import "GCQuartoPosition.h"
+
 #define GRID_SPACING (5)
 
 
 @implementation GCQuartoView
+
+@synthesize delegate;
+
 
 - (id) initWithFrame: (CGRect) frame
 {
@@ -68,11 +74,91 @@
 }
 
 
+- (void) drawPiece: (GCQuartoPiece *) piece intoContext: (CGContextRef) ctx inRect: (CGRect) rect
+{
+    CGFloat alpha = ([piece isSolid] ? 1.0f : 0.5f);
+    
+    if ([piece isWhite])
+        CGContextSetRGBFillColor(ctx, 1, 1, 1, alpha);
+    else
+        CGContextSetRGBFillColor(ctx, 0, 0, 0, alpha);
+    
+    CGRect pieceRect = CGRectInset(rect, rect.size.width * 0.2f, rect.size.height * 0.2f);
+    
+    if ([piece isSquare])
+    {
+        CGMutablePathRef path = CGPathCreateMutable();
+        
+        CGPathAddRect(path, NULL, pieceRect);
+        CGPathCloseSubpath(path);
+        
+        if (![piece isTall])
+        {
+            CGPathAddRect(path, NULL, CGRectInset(pieceRect, pieceRect.size.width * 0.3f, pieceRect.size.height * 0.3f));
+            CGPathCloseSubpath(path);
+        }
+        
+        CGContextAddPath(ctx, path);
+        
+        CGContextEOFillPath(ctx);
+    }
+    else
+    {
+        CGMutablePathRef path = CGPathCreateMutable();
+        
+        CGPathAddEllipseInRect(path, NULL, pieceRect);
+        CGPathCloseSubpath(path);
+        
+        if (![piece isTall])
+        {
+            CGPathAddEllipseInRect(path, NULL, CGRectInset(pieceRect, pieceRect.size.width * 0.3f, pieceRect.size.height * 0.3f));
+            CGPathCloseSubpath(path);
+        }
+        
+        CGContextAddPath(ctx, path);
+        
+        CGContextEOFillPath(ctx);
+    }
+}
+
+
+- (void) drawPosition: (GCQuartoPosition *) position intoContext: (CGContextRef) ctx
+{
+    CGRect piecesRect = CGRectMake(self.bounds.origin.x, boardFrame.origin.y + 20, self.bounds.size.width - boardFrame.size.width - 20, self.bounds.size.width - boardFrame.size.width - 20);
+    CGPoint piecesOrigin = piecesRect.origin;
+    CGSize piecesSize = piecesRect.size;
+    CGFloat cellWidth = piecesSize.width / 4.0f;
+    CGFloat cellHeight = piecesSize.height / 4.0f;
+    
+    for (int i = 0; i < 16; i += 1)
+    {
+        BOOL square = (i >> 0) & 1;
+        BOOL solid  = (i >> 1) & 1;
+        BOOL tall   = (i >> 2) & 1;
+        BOOL white  = (i >> 3) & 1;
+        
+        int row = i / 4;
+        int column = i % 4;
+        
+        GCQuartoPiece *piece = [GCQuartoPiece pieceWithSquare: square solid: solid tall: tall white: white];
+        if ([[position availablePieces] containsObject: piece])
+        {
+            [self drawPiece: piece intoContext: ctx inRect: CGRectMake(piecesOrigin.x + column * cellWidth,
+                                                                       piecesOrigin.y + row * cellHeight,
+                                                                       cellWidth,
+                                                                       cellHeight)];
+        }
+    }
+}
+
+
 - (void) drawRect: (CGRect) rect
 {
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     
     [self drawBoardIntoContext: ctx];
+    
+    [self drawPosition: [delegate currentPosition] intoContext: ctx];
 }
 
 @end

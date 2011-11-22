@@ -8,9 +8,27 @@
 
 #import <UIKit/UIKit.h>
 
+
+@protocol GCQuartoViewDelegate;
+
+
 @interface GCQuartoView : UIView
 {
+    id<GCQuartoViewDelegate> delegate;
+    
     CGRect boardFrame;
 }
+
+@property (nonatomic, assign) id<GCQuartoViewDelegate> delegate;
+
+@end
+
+
+
+@class GCQuartoPosition;
+
+@protocol GCQuartoViewDelegate
+
+- (GCQuartoPosition *) currentPosition;
 
 @end
