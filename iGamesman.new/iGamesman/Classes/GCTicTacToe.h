@@ -10,6 +10,7 @@
 
 #import "GCGame.h"
 
+#import "GCPlayer.h"
 #import "GCTicTacToePosition.h"
 #import "GCTicTacToeView.h"
 
@@ -17,6 +18,8 @@
 @interface GCTicTacToe : NSObject <GCGame, GCTicTacToeViewDelegate>
 {
     GCTicTacToePosition *position;
+    
+    GCPlayer *leftPlayer, *rightPlayer;
 }
 
 @end

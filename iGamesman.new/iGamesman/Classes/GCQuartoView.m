@@ -100,6 +100,8 @@
         
         CGContextAddPath(ctx, path);
         
+        CGPathRelease(path);
+        
         CGContextEOFillPath(ctx);
     }
     else
@@ -116,6 +118,8 @@
         }
         
         CGContextAddPath(ctx, path);
+        
+        CGPathRelease(path);
         
         CGContextEOFillPath(ctx);
     }

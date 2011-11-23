@@ -48,11 +48,12 @@
 }
 
 
-- (void) startGameWithLeft: (GCPlayer *) leftPlayer
-                     right: (GCPlayer *) rightPlayer
+- (void) startGameWithLeft: (GCPlayer *) left
+                     right: (GCPlayer *) right
            andPlaySettings: (NSDictionary *) settingsDict
 {
-    
+    leftPlayer = [left retain];
+    rightPlayer = [right retain];
 }
 
 

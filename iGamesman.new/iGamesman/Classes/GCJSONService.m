@@ -170,6 +170,7 @@
 				previous = nil;
 			}
 			[parser release];
+            [result release];
 		} else
 			previous = current;
 		
@@ -190,6 +191,7 @@
 		} else
 			connected = NO;
 		[parser release];
+        [result release];
 	}
 }
 
