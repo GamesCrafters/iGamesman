@@ -21,8 +21,62 @@
     if (self)
     {
         self.opaque = NO;
+        
+        acceptingTouches = NO;
     }
     return self;
+}
+
+
+- (void) startReceivingTouches
+{
+    acceptingTouches = YES;
+}
+
+
+- (void) stopReceivingTouches
+{
+    acceptingTouches = NO;
+}
+
+
+- (void) touchesBegan: (NSSet *) touches withEvent: (UIEvent *) event
+{
+    if (!acceptingTouches)
+        return;
+    
+    
+    CGPoint location = [[touches anyObject] locationInView: self];
+    
+    CGFloat width = self.bounds.size.width;
+    CGFloat height = self.bounds.size.height;
+    
+    GCTicTacToePosition *position = [delegate currentPosition];
+    
+    CGFloat maxCellWidth = width / position.columns;
+    CGFloat maxCellHeight = height / position.rows;
+    
+    CGFloat cellSize = MIN(maxCellWidth, maxCellHeight);
+    
+    CGFloat minX = CGRectGetMinX(self.bounds);
+    CGFloat minY = CGRectGetMinY(self.bounds);
+    
+    for (int row = 0; row < position.rows; row += 1)
+    {
+        for (int column = 0; column < position.columns; column += 1)
+        {
+            CGRect cellRect = CGRectMake(minX + column * cellSize,
+                                         minY + row * cellSize,
+                                         cellSize,
+                                         cellSize);
+            if (CGRectContainsPoint(cellRect, location))
+            {
+                NSNumber *slotNumber = [NSNumber numberWithInt: row * position.columns + column];
+                NSLog(@"slotNumber: %@", slotNumber);
+                [delegate userChoseMove: slotNumber];
+            }
+        }
+    }
 }
 
 

@@ -10,9 +10,13 @@
 
 @protocol GCGame;
 
+@class GCGameController;
+
 @interface GCGameViewController : UIViewController
 {
     id<GCGame> _game;
+    
+    GCGameController *gameController;
 }
 
 - (id) initWithGame: (id<GCGame>) game;

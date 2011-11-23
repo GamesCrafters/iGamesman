@@ -11,6 +11,7 @@
 #import "GCGame.h"
 
 #import "GCDrawerView.h"
+#import "GCGameController.h"
 #import "GCPlayer.h"
 #import "GCSidebarView.h"
 
@@ -74,6 +75,13 @@
     [_game startGameWithLeft: left
                        right: right
              andPlaySettings: settings];
+    
+    [left release];
+    [right release];
+    
+    gameController = [[GCGameController alloc] initWithGame: _game];
+    
+    [gameController go];
 }
 
 
@@ -114,6 +122,14 @@
     UIButton *infoButton = [UIButton buttonWithType: UIButtonTypeInfoLight];
     infoButton.center = CGPointMake(width - 15, height - 15);
     [self.view addSubview: infoButton];
+}
+
+
+- (void) viewDidUnload
+{
+    [super viewDidUnload];
+    
+    [gameController release];
 }
 
 

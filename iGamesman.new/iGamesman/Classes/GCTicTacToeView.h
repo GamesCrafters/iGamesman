@@ -14,9 +14,13 @@
 @interface GCTicTacToeView : UIView
 {
     id<GCTicTacToeViewDelegate> delegate;
+    BOOL acceptingTouches;
 }
 
 @property (nonatomic, assign) id<GCTicTacToeViewDelegate> delegate;
+
+- (void) startReceivingTouches;
+- (void) stopReceivingTouches;
 
 @end
 
@@ -27,5 +31,6 @@
 @protocol GCTicTacToeViewDelegate
 
 - (GCTicTacToePosition *) currentPosition;
+- (void) userChoseMove: (NSNumber *) slot;
 
 @end

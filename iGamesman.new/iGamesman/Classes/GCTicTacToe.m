@@ -21,8 +21,7 @@
     
     if (self)
     {
-        position = [[GCTicTacToePosition alloc] initWithWidth: 3 height: 3 toWin: 3];
-        position.leftTurn = YES;
+        
     }
     
     return self;
@@ -42,9 +41,9 @@
 
 - (UIView *) viewWithFrame: (CGRect) frame
 {
-    GCTicTacToeView *tttView = [[GCTicTacToeView alloc] initWithFrame: frame];
+    tttView = [[GCTicTacToeView alloc] initWithFrame: frame];
     tttView.delegate = self;
-    return [tttView autorelease];
+    return tttView;
 }
 
 
@@ -54,6 +53,225 @@
 {
     leftPlayer = [left retain];
     rightPlayer = [right retain];
+    
+    if ([settingsDict objectForKey: GCGameModeKey] == GCGameModeOfflineUnsolved)
+        mode = OFFLINE_UNSOLVED;
+    else if ([settingsDict objectForKey: GCGameModeKey] == GCGameModeOnlineSolved)
+        mode = ONLINE_SOLVED;
+    
+    position = [[GCTicTacToePosition alloc] initWithWidth: 3 height: 3 toWin: 3];
+    position.leftTurn = YES;
+}
+
+
+- (GCPlayer *) leftPlayer
+{
+    return leftPlayer;
+}
+
+
+- (GCPlayer *) rightPlayer
+{
+    return rightPlayer;
+}
+
+
+- (GameValue) primitive: (Position) pos
+{
+    GCTicTacToePosition *thePosition = (GCTicTacToePosition *) pos;
+    
+//    for (int i = 0; i < thePosition.rows * thePosition.columns; i += 1)
+//    {
+//		NSString *piece = [thePosition.board objectAtIndex: i];
+//		if ([piece isEqualToString: GCTTTBlankPiece])
+//			continue;
+//		
+//		// Check the horizontal case
+//		BOOL case1 = YES;
+//		for (int j = i; j < i + thePosition.toWin; j += 1)
+//        {
+//			if (j >= cols * rows || i % cols > j % cols || ![[board objectAtIndex: j] isEqual: piece]) {
+//				case1 = NO;
+//				break;
+//			}
+//		}
+//		
+//		// Check the vertical case
+//		BOOL case2 = YES;
+//		for (int j = i; j < i + cols * inarow; j += cols) {
+//			if ( j >= cols * rows || ![[board objectAtIndex: j] isEqual: piece] ) {
+//				case2 = NO;
+//				break;
+//			}
+//		}
+//		
+//		// Check the diagonal case (positive slope)
+//		BOOL case3 = YES;
+//		for (int j = i; j < i + inarow + cols * inarow; j += (cols + 1) ) {
+//			if ( j >= cols * rows || (i % cols > j % cols) || ![[board objectAtIndex: j] isEqual: piece] ) {
+//				case3 = NO;
+//				break;
+//			}
+//		}
+//		
+//		// Check the diagonal case (negative slope)
+//		BOOL case4 = YES;
+//		for (int j = i; j < i + cols * inarow - inarow; j += (cols - 1) ) {
+//			if ( j >= cols * rows || (i % cols < j % cols) || ![[board objectAtIndex: j] isEqual: piece] ) {
+//				case4 = NO;
+//				break;
+//			}
+//		}		
+//		if (case1 || case2 || case3 || case4)
+//			return [piece isEqual: (p1Turn ? @"X" : @"O")] ? (misere ? @"LOSE" : @"WIN") : (misere ? @"WIN" : @"LOSE");
+//	}
+//	
+//	// Finally, check if the board is full
+//	BOOL full = YES;
+//	for (int i = 0; i < cols * rows; i += 1) {
+//		if ([[board objectAtIndex: i] isEqual: BLANK]) {
+//			full = NO;
+//			break;
+//		}
+//	}
+//	if (full) return @"TIE";
+//	
+//	return nil;
+    
+    NSUInteger rows = thePosition.rows;
+    NSUInteger columns = thePosition.columns;
+    NSUInteger toWin = thePosition.toWin;
+    
+    for (int i = 0; i < rows * columns; i += 1)
+    {
+        NSString *piece = [thePosition.board objectAtIndex: i];
+        
+        if ([piece isEqualToString: GCTTTBlankPiece])
+            continue;
+        
+        /* Horizontal case */
+        BOOL horizontal = YES;
+        for (int j = i; j < i + toWin; j += 1)
+        {
+            if ((j >= columns * rows) || ((i % columns) > (j % columns)) || ![[thePosition.board objectAtIndex: j] isEqual: piece])
+            {
+                horizontal = NO;
+                break;
+            }
+        }
+        
+        
+        /* Vertical case */
+        BOOL vertical = YES;
+		for (int j = i; j < i + columns * toWin; j += columns)
+        {
+			if ((j >= columns * rows) || ![[thePosition.board objectAtIndex: j] isEqual: piece])
+            {
+				vertical = NO;
+				break;
+			}
+		}
+
+        
+        /* Positive diagonal case */
+        BOOL positiveDiagonal = YES;
+		for (int j = i; j < i + toWin + columns * toWin; j += (columns + 1) )
+        {
+			if ((j >= columns * rows) || ((i % columns) > (j % columns)) || ![[thePosition.board objectAtIndex: j] isEqual: piece])
+            {
+				positiveDiagonal = NO;
+				break;
+			}
+		}
+
+        
+        /* Negative diagonal case */
+        BOOL negativeDiagonal = YES;
+		for (int j = i; j < i + columns * toWin - toWin; j += (columns - 1))
+        {
+			if ((j >= columns * rows) || ((i % columns) < (j % columns)) || ![[thePosition.board objectAtIndex: j] isEqual: piece])
+            {
+				negativeDiagonal = NO;
+				break;
+			}
+		}
+        
+        if (horizontal || vertical || positiveDiagonal || negativeDiagonal)
+            return [piece isEqual: (thePosition.leftTurn ? @"X" : @"O")] ? WIN : LOSE;
+    }
+    
+    NSUInteger numBlanks = 0;
+    for (int i = 0; i < [thePosition.board count]; i += 1)
+    {
+        if ([[thePosition.board objectAtIndex: i] isEqualToString: GCTTTBlankPiece])
+            numBlanks += 1;
+    }
+    if (numBlanks == 0)
+        return TIE;
+    
+    return NONPRIMITIVE;
+}
+
+
+- (PlayerSide) currentPlayer
+{
+    if (position.leftTurn)
+        return PLAYER_LEFT;
+    else
+        return PLAYER_RIGHT;
+}
+
+
+- (void) waitForHumanMoveWithCompletion: (GCMoveCompletionHandler) completionHandler
+{
+    moveHandler = Block_copy(completionHandler);
+    [tttView startReceivingTouches];
+}
+
+
+- (Position) doMove: (NSNumber *) move
+{
+    
+    if (position.leftTurn)
+    {
+        [position.board replaceObjectAtIndex: [move unsignedIntegerValue] withObject: GCTTTXPiece];
+    }
+    else
+    {
+        [position.board replaceObjectAtIndex: [move unsignedIntegerValue] withObject: GCTTTOPiece];
+    }
+    
+    position.leftTurn = !position.leftTurn;
+    
+    [tttView setNeedsDisplay];
+    
+    return position;
+}
+
+
+- (void) undoMove: (NSNumber *) move toPosition: (Position) toPos
+{
+    [position.board replaceObjectAtIndex: [move unsignedIntegerValue] withObject: GCTTTBlankPiece];
+    
+    position.leftTurn = !position.leftTurn;
+    
+    [tttView setNeedsDisplay];
+}
+
+
+- (NSArray *) generateMoves: (Position) pos
+{
+    GCTicTacToePosition *thePosition = (GCTicTacToePosition *) pos;
+    
+    NSMutableArray *legalMoves = [[NSMutableArray alloc] initWithCapacity: thePosition.rows * thePosition.columns];
+    
+    for (int i = 0; i < [thePosition.board count]; i += 1)
+    {
+        if ([[thePosition.board objectAtIndex: i] isEqualToString: GCTTTBlankPiece])
+            [legalMoves addObject: [NSNumber numberWithInt: i]];
+    }
+    
+    return [legalMoves autorelease];
 }
 
 
@@ -63,6 +281,12 @@
 - (GCTicTacToePosition *) currentPosition
 {
     return position;
+}
+
+- (void) userChoseMove: (NSNumber *) slot
+{
+    [tttView stopReceivingTouches];
+    moveHandler(slot);
 }
 
 @end

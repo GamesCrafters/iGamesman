@@ -20,6 +20,12 @@
     GCTicTacToePosition *position;
     
     GCPlayer *leftPlayer, *rightPlayer;
+    
+    PlayMode mode;
+    
+    GCMoveCompletionHandler moveHandler;
+    
+    GCTicTacToeView *tttView;
 }
 
 @end

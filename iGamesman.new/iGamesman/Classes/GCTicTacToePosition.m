@@ -61,7 +61,9 @@ GCTTTPiece const GCTTTOPiece     = @"O";
     GCTicTacToePosition *copy = [[GCTicTacToePosition alloc] initWithWidth: columns height: rows toWin: toWin];
     
     copy.leftTurn = leftTurn;
-    copy.board = [board copy];
+    NSMutableArray *boardCopy = [board copy];
+    copy.board = boardCopy;
+    [boardCopy release];
     
     return copy;
 }

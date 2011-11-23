@@ -57,7 +57,7 @@
     
     if ([settingsDict objectForKey: GCGameModeKey] == GCGameModeOfflineUnsolved)
         mode = OFFLINE_UNSOLVED;
-    else if ([settingsDict objectForKey: GCGameModeOnlineSolved])
+    else if ([settingsDict objectForKey: GCGameModeKey] == GCGameModeOnlineSolved)
         mode = ONLINE_SOLVED;
 }
 

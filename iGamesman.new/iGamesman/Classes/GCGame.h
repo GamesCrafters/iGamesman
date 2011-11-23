@@ -75,6 +75,9 @@ typedef enum { PLAYER_LEFT, PLAYER_RIGHT } PlayerSide;
 - (NSArray *) generateMoves: (Position) pos;
 
 
+- (Position) currentPosition;
+
+
 @required
 - (void) startGameWithLeft: (GCPlayer *) leftPlayer
                      right: (GCPlayer *) rightPlayer
@@ -138,12 +141,15 @@ typedef enum { PLAYER_LEFT, PLAYER_RIGHT } PlayerSide;
 
 
 @optional
+
+typedef void (^GCMoveCompletionHandler) (Move move);
+
 /**
  * Wait for the user to make a move, then return that move back through the completion handler.
  *
  * @param completionHandler The callback handler to be called with the user's move as argument.
  */
-- (void) waitForHumanMoveWithCompletion: (void (^) (Move move)) completionHandler;
+- (void) waitForHumanMoveWithCompletion: (GCMoveCompletionHandler) completionHandler;
 
 
 /**
