@@ -8,9 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-#import "GCConstants.h"
-
 #import "GCPlayer.h"
+
+#define GCGameModeKey @"GCGamePlayMode"
+#define GCGameModeOfflineUnsolved @"OFFLINE_UNSOLVED"
+#define GCGameModeOnlineSolved @"ONLINE_SOLVED"
 
 
 typedef id<NSCopying> Position;
