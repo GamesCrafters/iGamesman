@@ -83,7 +83,7 @@
 - (void) drawXInRect: (CGRect) rect intoContext: (CGContextRef) ctx
 {
     CGContextSetRGBStrokeColor(ctx, 0, 0, 1, 1);
-    CGContextSetLineWidth(ctx, 10);
+    CGContextSetLineWidth(ctx, rect.size.width * 0.1f);
     
     CGFloat insetX = rect.size.width * 0.15f;
     CGFloat insetY = rect.size.height * 0.15f;
@@ -108,7 +108,7 @@
 - (void) drawOInRect: (CGRect) rect intoContext: (CGContextRef) ctx
 {
     CGContextSetRGBStrokeColor(ctx, 1, 0, 0, 1);
-    CGContextSetLineWidth(ctx, 10);
+    CGContextSetLineWidth(ctx, rect.size.width * 0.1f);
     
     CGFloat insetX = rect.size.width * 0.15f;
     CGFloat insetY = rect.size.height * 0.15f;
@@ -147,7 +147,7 @@
     }
     
     CGContextSetRGBStrokeColor(ctx, 1, 1, 1, 1);
-    CGContextSetLineWidth(ctx, 4);
+    CGContextSetLineWidth(ctx, width * 0.01f);
     CGContextStrokePath(ctx);
     
     
