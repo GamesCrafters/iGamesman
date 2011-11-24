@@ -51,6 +51,27 @@
         [self.view bringSubviewToFront: drawer];
         [drawer slideIn];
     }
+    else if (sender.tag == 1000)
+        [gameController undo];
+    else if (sender.tag == 1001)
+        [gameController redo];
+}
+
+
+#pragma mark -
+#pragma mark GCGameControllerDelegate
+
+- (void) setUndoButtonEnabled: (BOOL) enabled
+{
+    UIButton *undoButton = (UIButton *) [self.view viewWithTag: 1000];
+    undoButton.enabled = enabled;
+}
+
+
+- (void) setRedoButtonEnabled: (BOOL) enabled
+{
+    UIButton *redoButton = (UIButton *) [self.view viewWithTag: 1001];
+    redoButton.enabled = enabled;
 }
 
 
@@ -79,7 +100,7 @@
     [left release];
     [right release];
     
-    gameController = [[GCGameController alloc] initWithGame: _game];
+    gameController = [[GCGameController alloc] initWithGame: _game andDelegate: self];
     
     [gameController go];
 }
@@ -151,6 +172,9 @@
         [button setTag: 1000 + i];
         
         [sideBar addSubview: button];
+        
+        if ((i == 0) || (i == 1))
+            button.enabled = NO;
     }
     
     [self.view addSubview: sideBar];

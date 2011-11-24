@@ -9,10 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @protocol GCGame;
+@protocol GCGameControllerDelegate;
 
 @class GCGameController;
 
-@interface GCGameViewController : UIViewController
+@interface GCGameViewController : UIViewController <GCGameControllerDelegate>
 {
     id<GCGame> _game;
     

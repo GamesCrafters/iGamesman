@@ -80,64 +80,6 @@
 {
     GCTicTacToePosition *thePosition = (GCTicTacToePosition *) pos;
     
-//    for (int i = 0; i < thePosition.rows * thePosition.columns; i += 1)
-//    {
-//		NSString *piece = [thePosition.board objectAtIndex: i];
-//		if ([piece isEqualToString: GCTTTBlankPiece])
-//			continue;
-//		
-//		// Check the horizontal case
-//		BOOL case1 = YES;
-//		for (int j = i; j < i + thePosition.toWin; j += 1)
-//        {
-//			if (j >= cols * rows || i % cols > j % cols || ![[board objectAtIndex: j] isEqual: piece]) {
-//				case1 = NO;
-//				break;
-//			}
-//		}
-//		
-//		// Check the vertical case
-//		BOOL case2 = YES;
-//		for (int j = i; j < i + cols * inarow; j += cols) {
-//			if ( j >= cols * rows || ![[board objectAtIndex: j] isEqual: piece] ) {
-//				case2 = NO;
-//				break;
-//			}
-//		}
-//		
-//		// Check the diagonal case (positive slope)
-//		BOOL case3 = YES;
-//		for (int j = i; j < i + inarow + cols * inarow; j += (cols + 1) ) {
-//			if ( j >= cols * rows || (i % cols > j % cols) || ![[board objectAtIndex: j] isEqual: piece] ) {
-//				case3 = NO;
-//				break;
-//			}
-//		}
-//		
-//		// Check the diagonal case (negative slope)
-//		BOOL case4 = YES;
-//		for (int j = i; j < i + cols * inarow - inarow; j += (cols - 1) ) {
-//			if ( j >= cols * rows || (i % cols < j % cols) || ![[board objectAtIndex: j] isEqual: piece] ) {
-//				case4 = NO;
-//				break;
-//			}
-//		}		
-//		if (case1 || case2 || case3 || case4)
-//			return [piece isEqual: (p1Turn ? @"X" : @"O")] ? (misere ? @"LOSE" : @"WIN") : (misere ? @"WIN" : @"LOSE");
-//	}
-//	
-//	// Finally, check if the board is full
-//	BOOL full = YES;
-//	for (int i = 0; i < cols * rows; i += 1) {
-//		if ([[board objectAtIndex: i] isEqual: BLANK]) {
-//			full = NO;
-//			break;
-//		}
-//	}
-//	if (full) return @"TIE";
-//	
-//	return nil;
-    
     NSUInteger rows = thePosition.rows;
     NSUInteger columns = thePosition.columns;
     NSUInteger toWin = thePosition.toWin;

@@ -24,8 +24,6 @@
 		0A6646C3146889F300CC955A /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A6646C1146889F300CC955A /* home.png */; };
 		0A6646C4146889F300CC955A /* home@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A6646C2146889F300CC955A /* home@2x.png */; };
 		0A6646C714688AD200CC955A /* GCSidebarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A6646C614688AD100CC955A /* GCSidebarView.m */; };
-		0A6646CE1468923D00CC955A /* players.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A6646CC1468923D00CC955A /* players.png */; };
-		0A6646CF1468923D00CC955A /* players@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A6646CD1468923D00CC955A /* players@2x.png */; };
 		0A6646D31468955900CC955A /* values.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A6646D11468955900CC955A /* values.png */; };
 		0A6646D41468955900CC955A /* values@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A6646D21468955900CC955A /* values@2x.png */; };
 		0A6646D71468ADBC00CC955A /* GCDrawerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A6646D61468ADBC00CC955A /* GCDrawerView.m */; };
@@ -42,6 +40,10 @@
 		0A899015144F6D0800CC9D2F /* othello.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A899014144F6D0800CC9D2F /* othello.png */; };
 		0A899017144F6DF500CC9D2F /* tictactoe.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A899016144F6DF500CC9D2F /* tictactoe.png */; };
 		0A899019144F6F0B00CC9D2F /* y.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A899018144F6F0B00CC9D2F /* y.png */; };
+		0ACFED68147DA0F500DBDD5A /* GCStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ACFED67147DA0F500DBDD5A /* GCStack.m */; };
+		0ACFED70147DE0F400DBDD5A /* players.png in Resources */ = {isa = PBXBuildFile; fileRef = 0ACFED6E147DE0F300DBDD5A /* players.png */; };
+		0ACFED71147DE0F400DBDD5A /* players@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0ACFED6F147DE0F300DBDD5A /* players@2x.png */; };
+		0ACFED74147DE70A00DBDD5A /* GCGameHistoryItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ACFED73147DE70A00DBDD5A /* GCGameHistoryItem.m */; };
 		0AD56E15144387980034EF53 /* GCCarouselViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AD56E13144387980034EF53 /* GCCarouselViewController.m */; };
 		0ADFA73D14745DBE00967792 /* quarto.png in Resources */ = {isa = PBXBuildFile; fileRef = 0ADFA73C14745DBE00967792 /* quarto.png */; };
 		0ADFA74114745FBB00967792 /* GCQuartoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ADFA74014745FBB00967792 /* GCQuartoView.m */; };
@@ -127,8 +129,6 @@
 		0A6646C2146889F300CC955A /* home@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "home@2x.png"; sourceTree = "<group>"; };
 		0A6646C514688AD100CC955A /* GCSidebarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCSidebarView.h; sourceTree = "<group>"; };
 		0A6646C614688AD100CC955A /* GCSidebarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCSidebarView.m; sourceTree = "<group>"; };
-		0A6646CC1468923D00CC955A /* players.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = players.png; sourceTree = "<group>"; };
-		0A6646CD1468923D00CC955A /* players@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "players@2x.png"; sourceTree = "<group>"; };
 		0A6646D11468955900CC955A /* values.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = values.png; sourceTree = "<group>"; };
 		0A6646D21468955900CC955A /* values@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "values@2x.png"; sourceTree = "<group>"; };
 		0A6646D51468ADBC00CC955A /* GCDrawerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDrawerView.h; sourceTree = "<group>"; };
@@ -146,6 +146,12 @@
 		0A899014144F6D0800CC9D2F /* othello.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = othello.png; sourceTree = "<group>"; };
 		0A899016144F6DF500CC9D2F /* tictactoe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tictactoe.png; sourceTree = "<group>"; };
 		0A899018144F6F0B00CC9D2F /* y.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = y.png; sourceTree = "<group>"; };
+		0ACFED66147DA0F500DBDD5A /* GCStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCStack.h; sourceTree = "<group>"; };
+		0ACFED67147DA0F500DBDD5A /* GCStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCStack.m; sourceTree = "<group>"; };
+		0ACFED6E147DE0F300DBDD5A /* players.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = players.png; sourceTree = "<group>"; };
+		0ACFED6F147DE0F300DBDD5A /* players@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "players@2x.png"; sourceTree = "<group>"; };
+		0ACFED72147DE70A00DBDD5A /* GCGameHistoryItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCGameHistoryItem.h; sourceTree = "<group>"; };
+		0ACFED73147DE70A00DBDD5A /* GCGameHistoryItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCGameHistoryItem.m; sourceTree = "<group>"; };
 		0AD56E13144387980034EF53 /* GCCarouselViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCCarouselViewController.m; sourceTree = "<group>"; };
 		0AD56E14144387980034EF53 /* GCCarouselViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCCarouselViewController.h; sourceTree = "<group>"; };
 		0ADFA73C14745DBE00967792 /* quarto.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = quarto.png; sourceTree = "<group>"; };
@@ -263,8 +269,8 @@
 			children = (
 				0A6646C1146889F300CC955A /* home.png */,
 				0A6646C2146889F300CC955A /* home@2x.png */,
-				0A6646CC1468923D00CC955A /* players.png */,
-				0A6646CD1468923D00CC955A /* players@2x.png */,
+				0ACFED6E147DE0F300DBDD5A /* players.png */,
+				0ACFED6F147DE0F300DBDD5A /* players@2x.png */,
 				0A6646AD146887C200CC955A /* redo.png */,
 				0A6646AE146887C200CC955A /* redo@2x.png */,
 				0A6646B51468885400CC955A /* settings.png */,
@@ -366,6 +372,8 @@
 				D73A26D514365CB1009E855C /* GCGame.h */,
 				0A897648147C805A0087BA2F /* GCGameController.h */,
 				0A897649147C805B0087BA2F /* GCGameController.m */,
+				0ACFED72147DE70A00DBDD5A /* GCGameHistoryItem.h */,
+				0ACFED73147DE70A00DBDD5A /* GCGameHistoryItem.m */,
 				0A66469F1468823700CC955A /* GCGameViewController.h */,
 				0A6646A01468823700CC955A /* GCGameViewController.m */,
 				D73A26D614365CB1009E855C /* GCPlayer.h */,
@@ -374,6 +382,8 @@
 				D73A26D914365CB1009E855C /* GCSetupGameViewController.m */,
 				0A6646C514688AD100CC955A /* GCSidebarView.h */,
 				0A6646C614688AD100CC955A /* GCSidebarView.m */,
+				0ACFED66147DA0F500DBDD5A /* GCStack.h */,
+				0ACFED67147DA0F500DBDD5A /* GCStack.m */,
 				D73A26DA14365CB1009E855C /* iGamesmanAppDelegate.h */,
 				D73A26DB14365CB1009E855C /* iGamesmanAppDelegate.m */,
 				D73A26DC14365CB1009E855C /* iGamesmanViewController.h */,
@@ -601,8 +611,6 @@
 				0A6646C01468899100CC955A /* variants@2x.png in Resources */,
 				0A6646C3146889F300CC955A /* home.png in Resources */,
 				0A6646C4146889F300CC955A /* home@2x.png in Resources */,
-				0A6646CE1468923D00CC955A /* players.png in Resources */,
-				0A6646CF1468923D00CC955A /* players@2x.png in Resources */,
 				0A6646D31468955900CC955A /* values.png in Resources */,
 				0A6646D41468955900CC955A /* values@2x.png in Resources */,
 				0A6646DE1468B0C400CC955A /* CloseButton.png in Resources */,
@@ -628,6 +636,8 @@
 				0ADFA768147471DC00967792 /* quartoSquare15.png in Resources */,
 				21D43F24147B27470050BF1B /* ConO.png in Resources */,
 				21D43F25147B27470050BF1B /* ConX.png in Resources */,
+				0ACFED70147DE0F400DBDD5A /* players.png in Resources */,
+				0ACFED71147DE0F400DBDD5A /* players@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -670,6 +680,8 @@
 				0A897643147C7C200087BA2F /* GCTicTacToePosition.m in Sources */,
 				0A897644147C7C240087BA2F /* GCTicTacToe.m in Sources */,
 				0A89764A147C805B0087BA2F /* GCGameController.m in Sources */,
+				0ACFED68147DA0F500DBDD5A /* GCStack.m in Sources */,
+				0ACFED74147DE70A00DBDD5A /* GCGameHistoryItem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

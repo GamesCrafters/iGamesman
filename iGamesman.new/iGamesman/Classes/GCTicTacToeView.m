@@ -72,8 +72,8 @@
             if (CGRectContainsPoint(cellRect, location))
             {
                 NSNumber *slotNumber = [NSNumber numberWithInt: row * position.columns + column];
-                NSLog(@"slotNumber: %@", slotNumber);
-                [delegate userChoseMove: slotNumber];
+                if ([[position.board objectAtIndex: slotNumber.unsignedIntegerValue] isEqualToString: GCTTTBlankPiece])
+                    [delegate userChoseMove: slotNumber];
             }
         }
     }

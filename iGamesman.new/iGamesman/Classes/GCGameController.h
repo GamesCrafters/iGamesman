@@ -9,14 +9,32 @@
 #import <Foundation/Foundation.h>
 
 @protocol GCGame;
+@protocol GCGameControllerDelegate;
+@class GCStack;
 
 @interface GCGameController : NSObject
 {
     id<GCGame> game;
+    id<GCGameControllerDelegate> delegate;
+    
+    GCStack *historyStack;
+    GCStack *undoStack;
 }
 
-- (id) initWithGame: (id<GCGame>) game;
+- (id) initWithGame: (id<GCGame>) game andDelegate: (id<GCGameControllerDelegate>) delegate;
 
 - (void) go;
+
+- (void) undo;
+- (void) redo;
+
+@end
+
+
+
+@protocol GCGameControllerDelegate
+
+- (void) setUndoButtonEnabled: (BOOL) enabled;
+- (void) setRedoButtonEnabled: (BOOL) enabled;
 
 @end
