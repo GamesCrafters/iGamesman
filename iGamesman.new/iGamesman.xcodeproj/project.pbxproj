@@ -73,7 +73,18 @@
 		21D786C1143F8C73008E8B17 /* GCConnections.m in Sources */ = {isa = PBXBuildFile; fileRef = 21D786C0143F8C73008E8B17 /* GCConnections.m */; };
 		21DA8EF4144457E800C5B4EE /* GCConnectionsPosition.m in Sources */ = {isa = PBXBuildFile; fileRef = 21DA8EF3144457E800C5B4EE /* GCConnectionsPosition.m */; };
 		21ED19F6144378D2008DD7FD /* ConnectionsIntegerQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 21ED19F5144378D2008DD7FD /* ConnectionsIntegerQueue.m */; };
-		81B929B81448D0E6005D5A03 /* GCOthello.m in Sources */ = {isa = PBXBuildFile; fileRef = 81B929B71448D0E6005D5A03 /* GCOthello.m */; };
+		816816231483E93A0097F101 /* othfelt.png in Resources */ = {isa = PBXBuildFile; fileRef = 8168161A1483E93A0097F101 /* othfelt.png */; };
+		816816241483E93A0097F101 /* othfelt2.png in Resources */ = {isa = PBXBuildFile; fileRef = 8168161B1483E93A0097F101 /* othfelt2.png */; };
+		816816251483E93A0097F101 /* othlose.png in Resources */ = {isa = PBXBuildFile; fileRef = 8168161C1483E93A0097F101 /* othlose.png */; };
+		816816261483E93A0097F101 /* othrec.png in Resources */ = {isa = PBXBuildFile; fileRef = 8168161D1483E93A0097F101 /* othrec.png */; };
+		816816271483E93A0097F101 /* othsimpleblack.png in Resources */ = {isa = PBXBuildFile; fileRef = 8168161E1483E93A0097F101 /* othsimpleblack.png */; };
+		816816281483E93A0097F101 /* othsimplewhite.png in Resources */ = {isa = PBXBuildFile; fileRef = 8168161F1483E93A0097F101 /* othsimplewhite.png */; };
+		816816291483E93A0097F101 /* othtie.png in Resources */ = {isa = PBXBuildFile; fileRef = 816816201483E93A0097F101 /* othtie.png */; };
+		8168162A1483E93A0097F101 /* othwhitebar.png in Resources */ = {isa = PBXBuildFile; fileRef = 816816211483E93A0097F101 /* othwhitebar.png */; };
+		8168162B1483E93A0097F101 /* othwin.png in Resources */ = {isa = PBXBuildFile; fileRef = 816816221483E93A0097F101 /* othwin.png */; };
+		816816321483E9620097F101 /* GCOthello.m in Sources */ = {isa = PBXBuildFile; fileRef = 8168162D1483E9620097F101 /* GCOthello.m */; };
+		816816331483E9620097F101 /* GCOthelloView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8168162F1483E9620097F101 /* GCOthelloView.m */; };
+		816816341483E9620097F101 /* GCOthelloViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 816816311483E9620097F101 /* GCOthelloViewController.m */; };
 		D707701714366079006C56F6 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = D707701214366079006C56F6 /* Default.png */; };
 		D707701814366079006C56F6 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D707701314366079006C56F6 /* Default@2x.png */; };
 		D707701914366079006C56F6 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D707701414366079006C56F6 /* Icon.png */; };
@@ -189,8 +200,21 @@
 		21DA8EF3144457E800C5B4EE /* GCConnectionsPosition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCConnectionsPosition.m; sourceTree = "<group>"; };
 		21ED19F4144378D2008DD7FD /* ConnectionsIntegerQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectionsIntegerQueue.h; sourceTree = "<group>"; };
 		21ED19F5144378D2008DD7FD /* ConnectionsIntegerQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectionsIntegerQueue.m; sourceTree = "<group>"; };
-		81B929B61448D0E6005D5A03 /* GCOthello.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCOthello.h; sourceTree = "<group>"; };
-		81B929B71448D0E6005D5A03 /* GCOthello.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCOthello.m; sourceTree = "<group>"; };
+		8168161A1483E93A0097F101 /* othfelt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = othfelt.png; sourceTree = "<group>"; };
+		8168161B1483E93A0097F101 /* othfelt2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = othfelt2.png; sourceTree = "<group>"; };
+		8168161C1483E93A0097F101 /* othlose.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = othlose.png; sourceTree = "<group>"; };
+		8168161D1483E93A0097F101 /* othrec.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = othrec.png; sourceTree = "<group>"; };
+		8168161E1483E93A0097F101 /* othsimpleblack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = othsimpleblack.png; sourceTree = "<group>"; };
+		8168161F1483E93A0097F101 /* othsimplewhite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = othsimplewhite.png; sourceTree = "<group>"; };
+		816816201483E93A0097F101 /* othtie.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = othtie.png; sourceTree = "<group>"; };
+		816816211483E93A0097F101 /* othwhitebar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = othwhitebar.png; sourceTree = "<group>"; };
+		816816221483E93A0097F101 /* othwin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = othwin.png; sourceTree = "<group>"; };
+		8168162C1483E9620097F101 /* GCOthello.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCOthello.h; sourceTree = "<group>"; };
+		8168162D1483E9620097F101 /* GCOthello.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCOthello.m; sourceTree = "<group>"; };
+		8168162E1483E9620097F101 /* GCOthelloView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCOthelloView.h; sourceTree = "<group>"; };
+		8168162F1483E9620097F101 /* GCOthelloView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCOthelloView.m; sourceTree = "<group>"; };
+		816816301483E9620097F101 /* GCOthelloViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCOthelloViewController.h; sourceTree = "<group>"; };
+		816816311483E9620097F101 /* GCOthelloViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCOthelloViewController.m; sourceTree = "<group>"; };
 		D707701214366079006C56F6 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = SOURCE_ROOT; };
 		D707701314366079006C56F6 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = SOURCE_ROOT; };
 		D707701414366079006C56F6 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = SOURCE_ROOT; };
@@ -294,6 +318,7 @@
 		0A6646A41468873800CC955A /* Games */ = {
 			isa = PBXGroup;
 			children = (
+				816816171483E91D0097F101 /* Othello */,
 				21D43F26147B274A0050BF1B /* Connections */,
 				0ADFA7421474606700967792 /* Quarto */,
 				0A89900F144F6A2700CC9D2F /* connect4.png */,
@@ -357,11 +382,31 @@
 			name = Connections;
 			sourceTree = "<group>";
 		};
+		816816171483E91D0097F101 /* Othello */ = {
+			isa = PBXGroup;
+			children = (
+				8168161A1483E93A0097F101 /* othfelt.png */,
+				8168161B1483E93A0097F101 /* othfelt2.png */,
+				8168161C1483E93A0097F101 /* othlose.png */,
+				8168161D1483E93A0097F101 /* othrec.png */,
+				8168161E1483E93A0097F101 /* othsimpleblack.png */,
+				8168161F1483E93A0097F101 /* othsimplewhite.png */,
+				816816201483E93A0097F101 /* othtie.png */,
+				816816211483E93A0097F101 /* othwhitebar.png */,
+				816816221483E93A0097F101 /* othwin.png */,
+			);
+			name = Othello;
+			sourceTree = "<group>";
+		};
 		81B929A41448D058005D5A03 /* Othello */ = {
 			isa = PBXGroup;
 			children = (
-				81B929B61448D0E6005D5A03 /* GCOthello.h */,
-				81B929B71448D0E6005D5A03 /* GCOthello.m */,
+				8168162C1483E9620097F101 /* GCOthello.h */,
+				8168162D1483E9620097F101 /* GCOthello.m */,
+				8168162E1483E9620097F101 /* GCOthelloView.h */,
+				8168162F1483E9620097F101 /* GCOthelloView.m */,
+				816816301483E9620097F101 /* GCOthelloViewController.h */,
+				816816311483E9620097F101 /* GCOthelloViewController.m */,
 			);
 			name = Othello;
 			sourceTree = "<group>";
@@ -646,6 +691,15 @@
 				0ACFED71147DE0F400DBDD5A /* players@2x.png in Resources */,
 				21CBACC2148340D000A475FD /* ConOBar.png in Resources */,
 				21CBACC3148340D000A475FD /* ConXBar.png in Resources */,
+				816816231483E93A0097F101 /* othfelt.png in Resources */,
+				816816241483E93A0097F101 /* othfelt2.png in Resources */,
+				816816251483E93A0097F101 /* othlose.png in Resources */,
+				816816261483E93A0097F101 /* othrec.png in Resources */,
+				816816271483E93A0097F101 /* othsimpleblack.png in Resources */,
+				816816281483E93A0097F101 /* othsimplewhite.png in Resources */,
+				816816291483E93A0097F101 /* othtie.png in Resources */,
+				8168162A1483E93A0097F101 /* othwhitebar.png in Resources */,
+				8168162B1483E93A0097F101 /* othwin.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -675,7 +729,6 @@
 				21DA8EF4144457E800C5B4EE /* GCConnectionsPosition.m in Sources */,
 				21ED19F6144378D2008DD7FD /* ConnectionsIntegerQueue.m in Sources */,
 				0AD56E15144387980034EF53 /* GCCarouselViewController.m in Sources */,
-				81B929B81448D0E6005D5A03 /* GCOthello.m in Sources */,
 				D729934514589B3800176A66 /* GCConnectFourViewController.m in Sources */,
 				0A6646A11468823700CC955A /* GCGameViewController.m in Sources */,
 				0A6646C714688AD200CC955A /* GCSidebarView.m in Sources */,
@@ -690,6 +743,9 @@
 				0A89764A147C805B0087BA2F /* GCGameController.m in Sources */,
 				0ACFED68147DA0F500DBDD5A /* GCStack.m in Sources */,
 				0ACFED74147DE70A00DBDD5A /* GCGameHistoryItem.m in Sources */,
+				816816321483E9620097F101 /* GCOthello.m in Sources */,
+				816816331483E9620097F101 /* GCOthelloView.m in Sources */,
+				816816341483E9620097F101 /* GCOthelloViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
