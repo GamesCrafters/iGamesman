@@ -13,17 +13,19 @@
 #import "GCConnectionsPosition.h"
 #import "GCConnectionsView.h"
 
-@interface GCConnections : NSObject <GCGame>
+@interface GCConnections : NSObject <GCGame, GCConnectionsViewDelegate>
 {
-	//GCConnectionsViewController *conView;
-	NSMutableArray *board;
-    NSMutableArray *pieces;
-	GCPlayer *player1, *player2;
+
+    //NSMutableArray *pieces;
+	GCPlayer *leftPlayer, *rightPlayer;
 	NSDictionary *settings;
+	
+	GCMoveCompletionHandler moveHandler;
 	
 	GCConnectionsPosition *position;
 	
-	//NSNumber *humanMove;
+	GCConnectionsView* view;
+	
 	BOOL misere;
 	BOOL predictions, moveValues;
 	BOOL circling;

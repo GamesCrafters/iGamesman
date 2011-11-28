@@ -10,13 +10,13 @@
 
 
 @interface GCConnectionsPosition : NSObject<NSCopying> {
-	BOOL p1Turn;
+	BOOL leftTurn;
 	NSMutableArray *board;
 	int size;
 }
 
 @property (nonatomic, assign) int size;
-@property (nonatomic, assign) BOOL p1Turn;
+@property (nonatomic, assign) BOOL leftTurn;
 @property (nonatomic, assign) NSMutableArray *board;
 
 - (id)initWithSize:(int)sideLength;

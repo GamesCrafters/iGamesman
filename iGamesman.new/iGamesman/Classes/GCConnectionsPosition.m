@@ -14,7 +14,7 @@
 
 @implementation GCConnectionsPosition
 
-@synthesize p1Turn;
+@synthesize leftTurn;
 @synthesize board;
 @synthesize size;
 
@@ -23,7 +23,7 @@
     self = [super init];
     if (self) {
 		size = sideLength;
-        p1Turn = YES;
+        leftTurn = YES;
 		board = [[NSMutableArray alloc] initWithCapacity: size * size];
 		for (int j = 0; j < size; j += 1) {
 			for (int i = 0; i < size; i += 1) {
@@ -46,7 +46,7 @@
 - (id)copyWithZone:(NSZone *)zone
 {
     GCConnectionsPosition *copy = [[GCConnectionsPosition allocWithZone:zone] init];
-    copy.p1Turn = p1Turn;
+    copy.leftTurn = leftTurn;
     copy.board = [board copy];
 	copy.size = size;
     return copy;

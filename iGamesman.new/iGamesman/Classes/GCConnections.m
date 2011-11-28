@@ -24,35 +24,54 @@
 - (id) init {
 	if (self = [super init]) {
 		
-		position = [[GCConnectionsPosition alloc] initWithSize: 7];
-		
+		// Shouldn't need with dictionary settings
 		misere = NO;
 		circling = NO;
-		
-		board = position.board;
 		}
 	
 	return self;
 }
 
+- (void) dealloc
+{
+    [position release];
+    
+    [super dealloc];
+}
+
+
+- (void) startGameWithLeft: (GCPlayer *) left
+                     right: (GCPlayer *) right
+           andPlaySettings: (NSDictionary *) settingsDict {
+	
+	position = [[GCConnectionsPosition alloc] initWithSize: 7];
+	position.leftTurn = TRUE;
+	leftPlayer = [left retain];
+	rightPlayer = [right retain];
+	settings = settingsDict;
+}
+
 - (Position) doMove: (NSNumber *) move {
-	//[conView doMove: move];
 	
 	int slot = [move integerValue] - 1;
-	[board replaceObjectAtIndex: slot withObject: (position.p1Turn ? X : O)]; //Keep board? just use position.
-	position.board = board;
+	NSLog(@"Slot: %d. Replace with %@",slot, position.leftTurn ? X : O);
+	[position.board replaceObjectAtIndex: slot withObject: (position.leftTurn ? X : O)];
+	position.leftTurn = !position.leftTurn;
+	[view setNeedsDisplay];
 	return position;
 }
 
 - (void) undoMove: (NSNumber *) move toPosition: (GCConnectionsPosition *) toPos {
-	//[conView undoMove: move];
 	
 	int slot = [move intValue] - 1;
-	[board replaceObjectAtIndex: slot withObject: BLANK];
-	position.p1Turn = !position.p1Turn;
-	position = toPos;
-	
-	//[conView updateLabels];
+	[position.board replaceObjectAtIndex: slot withObject: BLANK];
+	position.leftTurn = !position.leftTurn;
+    [view setNeedsDisplay];
+}
+
+- (GCConnectionsPosition *) currentPosition
+{
+    return position;
 }
 
 - (GameValue) primitive: (GCConnectionsPosition *) pos {
@@ -61,7 +80,7 @@
 	int neighborPosition;
 	int size = pos.size;
 	
-	board = pos.board;
+	NSMutableArray* board = pos.board;
 	
 	if(circling){
 		if([self encircled: board]){
@@ -75,7 +94,7 @@
 	}
 	
 	//////////////////p1 turn finished/////////////////////////
-	if (!pos.p1Turn){ 
+	if (!pos.leftTurn){ 
 		
 		//add in initial positions, starting with the position directly below the top left connector
 		for (int i = size + 1; i < size * 2 - 1; i += 2){
@@ -224,13 +243,12 @@
 	}
 	
 	[queue release];
-	board = position.board;
 	return NONPRIMITIVE;
 }
 
 - (NSArray *) generateMoves: (GCConnectionsPosition *) pos {
 	NSMutableArray *moves = [[NSMutableArray alloc] init];
-	board = pos.board;
+	NSMutableArray *board = pos.board;
 	int size = pos.size;
 	
 	for (int j = 0; j < size; j += 1) {
@@ -241,37 +259,26 @@
 			}
 		}
 	}
-	board = position.board; //Need board?
-	return moves;
-}
-
-
-- (void) startGameWithLeft: (GCPlayer *) leftPlayer
-                     right: (GCPlayer *) rightPlayer
-           andPlaySettings: (NSDictionary *) settingsDict {
-	player1 = leftPlayer;
-	player2 = rightPlayer;
-	settings = settingsDict;
-	//allocate view
+	return [moves autorelease];
 }
 
 - (GCPlayer *) leftPlayer {
-	return player1;
+	return leftPlayer;
 }
 
 
 - (void) setLeftPlayer: (GCPlayer *) left {
-	player1 = left;
+	leftPlayer = left;
 }
 
 
 - (GCPlayer *) rightPlayer {
-	return player2;
+	return rightPlayer;
 }
 
 
 - (void) setRightPlayer: (GCPlayer *) right {
-	player2 = right;
+	rightPlayer = right;
 }
 
 - (NSDictionary *) playSettings {
@@ -283,23 +290,21 @@
 }
 
 - (UIView *) view {
-	//Assumes frame of standard size,
-	//Use vewWithFrame to have adjustable size
-	return [[[GCConnectionsView alloc] initWithFrame: CGRectMake(0, 0, 320, 480)] autorelease];
+	view = [[GCConnectionsView alloc] initWithFrame: CGRectMake(0, 0, 320, 480)];
+	view.delegate = self;
+	return view;
 }
 
 - (UIView *) viewWithFrame: (CGRect) frame
 {
-	return [[[GCConnectionsView alloc] initWithFrame: frame] autorelease];
+	view = [[GCConnectionsView alloc] initWithFrame: frame];
+	view.delegate = self;
+	return view;
 }
-
-- (void) waitForHumanMoveWithCompletion: (void (^) (Move move)) completionHandler {
-	//Run loop
-}
-
 
 - (UIView *) variantsView {
 	//UI elements not yet defined
+	return nil;
 }
 
 - (BOOL) isMisere {
@@ -340,7 +345,18 @@
 
 
 - (PlayerSide) currentPlayer{
-	return position.p1Turn ? PLAYER_LEFT : PLAYER_RIGHT;
+	return position.leftTurn ? PLAYER_LEFT : PLAYER_RIGHT;
+}
+
+- (void) waitForHumanMoveWithCompletion: (void (^) (Move move)) completionHandler {
+	moveHandler = Block_copy(completionHandler);
+    [view startReceivingTouches];
+}
+
+- (void) userChoseMove: (NSNumber *) slot
+{
+    [view stopReceivingTouches];
+    moveHandler(slot);
 }
 
 - (NSString *) stringForBoard: (NSArray *) _board{
@@ -446,7 +462,7 @@
 	int secondConnectorPos = 0;
 	int row = 0, rowLimit = 0, col = 0, colLimit = 0;
 	NSInteger size = position.size;
-	if(!position.p1Turn){
+	if(!position.leftTurn){
 		row = 0;
 		rowLimit = size - 1; 
 		col = 1; 
@@ -537,7 +553,7 @@
 	
 	int row = 0, rowLimit = 0, col = 0, colLimit = 0;
 	
-	if(!position.p1Turn){
+	if(!position.leftTurn){
 		row = 0;
 		rowLimit = size - 1; 
 		col = 1; 
@@ -670,7 +686,5 @@
 		}
 	}
 }
-
-
 
 @end

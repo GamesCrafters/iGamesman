@@ -8,12 +8,29 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol GCConnectionsViewDelegate;
 
 @interface GCConnectionsView : UIView {
 
-	int _sizeGame;
 	UIView* _board;
 	UILabel *message;
+	id<GCConnectionsViewDelegate> delegate;
+    BOOL acceptingTouches;
 }
+
+@property (nonatomic, assign) id<GCConnectionsViewDelegate> delegate;
+
+- (void) startReceivingTouches;
+- (void) stopReceivingTouches;
+
+@end
+
+
+@class GCConnectionsPosition;
+
+@protocol GCConnectionsViewDelegate
+
+- (GCConnectionsPosition *) currentPosition;
+- (void) userChoseMove: (NSNumber *) slot;
 
 @end

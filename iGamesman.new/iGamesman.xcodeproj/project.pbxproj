@@ -66,6 +66,8 @@
 		0ADFA767147471DC00967792 /* quartoSquare14.png in Resources */ = {isa = PBXBuildFile; fileRef = 0ADFA757147471DC00967792 /* quartoSquare14.png */; };
 		0ADFA768147471DC00967792 /* quartoSquare15.png in Resources */ = {isa = PBXBuildFile; fileRef = 0ADFA758147471DC00967792 /* quartoSquare15.png */; };
 		21323A86147AEA8400BCB4EF /* GCConnectionsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 21323A85147AEA8400BCB4EF /* GCConnectionsView.m */; };
+		21CBACC2148340D000A475FD /* ConOBar.png in Resources */ = {isa = PBXBuildFile; fileRef = 21CBACC0148340D000A475FD /* ConOBar.png */; };
+		21CBACC3148340D000A475FD /* ConXBar.png in Resources */ = {isa = PBXBuildFile; fileRef = 21CBACC1148340D000A475FD /* ConXBar.png */; };
 		21D43F24147B27470050BF1B /* ConO.png in Resources */ = {isa = PBXBuildFile; fileRef = 21D43F22147B27470050BF1B /* ConO.png */; };
 		21D43F25147B27470050BF1B /* ConX.png in Resources */ = {isa = PBXBuildFile; fileRef = 21D43F23147B27470050BF1B /* ConX.png */; };
 		21D786C1143F8C73008E8B17 /* GCConnections.m in Sources */ = {isa = PBXBuildFile; fileRef = 21D786C0143F8C73008E8B17 /* GCConnections.m */; };
@@ -177,6 +179,8 @@
 		0ADFA758147471DC00967792 /* quartoSquare15.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = quartoSquare15.png; sourceTree = "<group>"; };
 		21323A84147AEA8400BCB4EF /* GCConnectionsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCConnectionsView.h; sourceTree = "<group>"; };
 		21323A85147AEA8400BCB4EF /* GCConnectionsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCConnectionsView.m; sourceTree = "<group>"; };
+		21CBACC0148340D000A475FD /* ConOBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ConOBar.png; sourceTree = "<group>"; };
+		21CBACC1148340D000A475FD /* ConXBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ConXBar.png; sourceTree = "<group>"; };
 		21D43F22147B27470050BF1B /* ConO.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ConO.png; sourceTree = "<group>"; };
 		21D43F23147B27470050BF1B /* ConX.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ConX.png; sourceTree = "<group>"; };
 		21D786BF143F8C73008E8B17 /* GCConnections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCConnections.h; sourceTree = "<group>"; };
@@ -330,6 +334,8 @@
 		21D43F26147B274A0050BF1B /* Connections */ = {
 			isa = PBXGroup;
 			children = (
+				21CBACC0148340D000A475FD /* ConOBar.png */,
+				21CBACC1148340D000A475FD /* ConXBar.png */,
 				21D43F22147B27470050BF1B /* ConO.png */,
 				21D43F23147B27470050BF1B /* ConX.png */,
 			);
@@ -638,6 +644,8 @@
 				21D43F25147B27470050BF1B /* ConX.png in Resources */,
 				0ACFED70147DE0F400DBDD5A /* players.png in Resources */,
 				0ACFED71147DE0F400DBDD5A /* players@2x.png in Resources */,
+				21CBACC2148340D000A475FD /* ConOBar.png in Resources */,
+				21CBACC3148340D000A475FD /* ConXBar.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
