@@ -52,7 +52,7 @@
 - (UIView *) viewWithFrame: (CGRect) frame
 {
 	othView = [[GCOthelloViewController alloc] initWithGame: self];
-	[othView loadView];
+	[othView loadView: frame];
     return othView.view;
 }
 

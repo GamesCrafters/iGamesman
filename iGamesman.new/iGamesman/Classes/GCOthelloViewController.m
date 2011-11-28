@@ -312,9 +312,10 @@
 }
 
 // Implement loadView to create a view hierarchy programmatically, without using a nib.
-- (void)loadView {
-	self.view = [[GCOthelloView alloc] initWithFrame: CGRectMake(0, 0, 320, 416) andRows: game.rows andCols: game.cols];
-	
+- (void)loadView: (CGRect) frame{
+	self.view = [[GCOthelloView alloc] initWithFrame: CGRectMake(125, 5, 245, 320) andRows: game.rows andCols: game.cols];
+	//self.view = [[GCOthelloView alloc] initWithFrame: frame andRows: game.rows andCols: game.cols];
+	//CGRectMake(0, 0, 320, 416)
 	CGFloat w = self.view.bounds.size.width;
 	CGFloat h = self.view.bounds.size.height;
 	

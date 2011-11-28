@@ -15,13 +15,15 @@
 	if ((self = [super initWithFrame:frame])) {
 		rows = r;
 		cols = c;
+		
 		self.opaque = NO;
-		self.backgroundColor = [UIColor colorWithRed: 0 green: 0 blue: 102.0/256.0 alpha: 1];
+		self.backgroundColor = [UIColor colorWithRed: 0 green: 0 blue: 102.0/256.0 alpha: 0];
 	}
 	return self;
 }
 
 - (void)drawRect:(CGRect) rect {
+	
 	CGFloat w = self.bounds.size.width;
 	CGFloat h = self.bounds.size.height;
 	
