@@ -7,6 +7,7 @@
 //
 
 #import "GCOthello.h"
+#import "GCOthelloViewController.h"
 
 #define BLANK @"+"
 #define LEFTPLAYERPIECE @"X"
@@ -15,7 +16,6 @@
 #define PASS @"PASS"
 
 @implementation GCOthello
-@synthesize leftPlayer, rightPlayer;
 @synthesize rows, cols;
 @synthesize misere;
 @synthesize autoPass;
@@ -34,7 +34,6 @@
 		leftPlayerPieces = 2;
 		rightPlayerPieces = 2;
 		autoPass = NO;
-		othView = nil;
 		
 		board = [[NSMutableArray alloc] initWithCapacity: rows * cols];
 		for (int i = 0; i < rows * cols; i += 1) {
@@ -48,6 +47,17 @@
 		[board replaceObjectAtIndex:1+col+(row+1)*cols withObject:LEFTPLAYERPIECE];
 	}
 	return self;
+}
+
+- (UIView *) viewWithFrame: (CGRect) frame
+{
+	othView = [[GCOthelloViewController alloc] initWithGame: self];
+	[othView loadView];
+    return othView.view;
+}
+
+- (void) userChoseMove: (NSNumber *) move{
+	moveHandler(move);
 }
 
 - (Position) doMove: (Move) move{
@@ -72,7 +82,7 @@
 			rightPlayerPieces += changedPieces + 1;
 			leftPlayerPieces -= changedPieces;
 		}
-	} 
+	}
 	leftPlayerTurn = !leftPlayerTurn;
     if (gameMode == OFFLINE_UNSOLVED) {
         [othView updateLegalMoves];
@@ -80,6 +90,7 @@
     } else {
         [othView updateServerDataWithService: service];
     }
+	return board;
 }
 
 - (void) undoMove: (Move) move toPosition: (Position) toPos{
@@ -100,10 +111,10 @@
 	}
 }
 
-- (GameValue) primitive: (Position) pos{
-	if ([[[self generateMoves: nil] objectAtIndex:0] isEqual:PASS]) {
+- (GameValue) primitive{
+	if ([[[self generateMoves] objectAtIndex:0] isEqual:PASS]) {
 		leftPlayerTurn = !leftPlayerTurn;
-		if ([[[self generateMoves: nil] objectAtIndex:0] isEqual:PASS]) {
+		if ([[[self generateMoves] objectAtIndex:0] isEqual:PASS]) {
 			leftPlayerTurn = !leftPlayerTurn;
 			if (leftPlayerPieces > rightPlayerPieces) {
 				if (leftPlayerTurn) {
@@ -127,7 +138,13 @@
 	return NONPRIMITIVE;
 }
 
-- (NSArray *) generateMoves: (Position) pos{
+- (GameValue) primitive: (Position) pos{
+	NSLog(@"happens");
+	return [self primitive];
+}
+
+
+- (NSArray *) generateMoves{
 	NSMutableArray *moves = [[NSMutableArray alloc] initWithCapacity:rows*cols];
 	for (int i=0; i < rows*cols; i += 1) {
 		if ([[board objectAtIndex:i] isEqualToString:BLANK]) {
@@ -141,13 +158,19 @@
 	return moves;
 }
 
+- (Position) currentPosition{
+	return board;
+}
+
 - (void) startGameWithLeft: (GCPlayer *) leftGCPlayer
                      right: (GCPlayer *) rightGCPlayer
            andPlaySettings: (NSDictionary *) settingsDict{
-	[self setLeftPlayer: leftGCPlayer];
-	[self setRightPlayer: rightGCPlayer];
 	
-	gameMode = ONLINE_SOLVED;
+	gameSettings = settingsDict;
+	leftPlayer = [leftGCPlayer retain];
+	rightPlayer = [rightGCPlayer retain];
+	
+	gameMode = (PlayMode) [settingsDict objectForKey:@"GameMode"];
 	leftPlayerTurn = YES;
 	if (!othView)
 		[othView release];
@@ -167,17 +190,11 @@
 	return leftPlayer;
 }
 
-- (void) setLeftPlayer: (GCPlayer *) left{
-	leftPlayer = left;
-}
-
 - (GCPlayer *) rightPlayer{
 	return rightPlayer;
 }
 
-- (void) setRightPlayer: (GCPlayer *) right{
-	rightPlayer = right;
-}
+// LeftPlayer / RightPlayer are properties
 
 - (NSDictionary *) playSettings{
 	return nil;
@@ -187,10 +204,31 @@
 }
 
 - (UIView *) view{
-	return nil;
+	return othView;
 }
 
 - (void) waitForHumanMoveWithCompletion: (void (^) (Move move)) completionHandler{
+	if([[[self generateMoves] objectAtIndex: 0] isEqual: @"PASS"]) {
+		if(!autoPass) {
+			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Legal Moves" 
+															message:@"Click OK to pass"
+														   delegate:self
+												  cancelButtonTitle:@"OK" 
+												  otherButtonTitles: nil];
+			[alert show];
+			[alert release]; 
+		}
+		completionHandler([NSNumber numberWithInt: -1]);
+	} else {
+		othView.touchesEnabled = YES;
+		leftPlayerTurn;
+		moveHandler = Block_copy(completionHandler);
+	}
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+	//Do nothing at the moment
+	//completionHandler([NSNumber numberWithInt: -1]);
 }
 
 - (UIView *) variantsView{
@@ -220,9 +258,13 @@
 }
 
 /* Show/hide move values and predictions */
-- (void) showPredictions: (BOOL) predictions{
+- (void) showPredictions: (BOOL) pred{
+	predictions = pred;
+	[othView updateLabels];
 }
-- (void) showMoveValues: (BOOL) moveValues{
+- (void) showMoveValues: (BOOL) move{
+	moveValues = move;
+	[othView updateLegalMoves];
 }
 
 /* Report whose turn it is (left or right) */
@@ -233,6 +275,40 @@
 /*******************************************************
  Helper functions not in the protocol
 *******************************************************/
+
+- (NSString *) getValue {	
+	return [service getValue];
+}
+
+- (NSInteger) getRemoteness {
+	return [service getRemoteness];
+}
+
+- (NSString *) getValueOfMove: (NSNumber *) move {
+    int row = [move intValue] / cols + 1;
+    if (row==4) {
+        row = 1;
+    } else if (row==1) {
+        row =4;
+    } else if (row==2){
+        row = 3;
+    } else {
+        row  = 2;
+    }
+	NSString *serverMove = [NSString stringWithFormat: @"%c%d", 'a' + [move intValue] % cols,  row];
+    NSString * value = [service getValueAfterMove: serverMove];
+    if ([value isEqualToString:@"win"]){
+        value = @"lose";
+    } else if ([value isEqualToString:@"lose"]) {
+        value = @"win";
+    }
+	return value;
+}
+
+- (NSInteger) getRemotenessOfMove: (NSNumber *) move {
+	NSString *serverMove = [NSString stringWithFormat: @"%c%d", 'A' + [move intValue] % cols, 1 + [move intValue] / cols];
+	return [service getRemotenessAfterMove: serverMove];
+}
 
 - (PlayMode) playMode {
 	return gameMode;
@@ -256,6 +332,8 @@
 	NSMutableArray *flips = [[NSMutableArray alloc] initWithCapacity:rows*cols];
 	if ([[board objectAtIndex:loc] isEqualToString:BLANK]) {			
 		NSString *myPiece = leftPlayerTurn ? LEFTPLAYERPIECE : RIGHTPLAYERPIECE;
+		if(leftPlayerTurn) NSLog(@"LeftPlayerTurn");
+		else NSLog(@"RightPlayerTurn");
 		int offsets[8] = {1,-1,cols,-cols,cols+1,cols-1,-cols+1,-cols-1};
 		for (int i=0; i<8; i+=1) {
 			int offset = offsets[i];
