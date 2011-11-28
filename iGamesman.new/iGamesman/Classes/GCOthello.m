@@ -88,6 +88,8 @@
         [othView updateLegalMoves];
         [othView updateLabels];
     } else {
+		[othView updateLegalMoves];
+        [othView updateLabels];
         [othView updateServerDataWithService: service];
     }
 	return board;

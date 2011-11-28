@@ -256,8 +256,6 @@
 		
 		[UIView commitAnimations];
 	} 
-	
-	
 }
 
 - (void) undoMove:(NSNumber *)move {
