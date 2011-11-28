@@ -8,19 +8,34 @@
 
 #import <Foundation/Foundation.h>
 
-#import "GCPlayer.h"
-
 #define GCGameModeKey @"GCGamePlayMode"
 #define GCGameModeOfflineUnsolved @"OFFLINE_UNSOLVED"
 #define GCGameModeOnlineSolved @"ONLINE_SOLVED"
 
 
+/* Deprecated. Use GCPosition and GCMove instead */
 typedef id<NSCopying> Position;
 typedef id<NSCopying> Move;
 
+typedef NSObject<NSCopying> GCPosition;
+typedef NSObject<NSCopying> GCMove;
+
+
+typedef NSString GCGameValue;
+#define GCGameValueWin     @"VALUE_WIN"
+#define GCGameValueLose    @"VALUE_LOSE"
+#define GCGameValueTie     @"VALUE_TIE"
+#define GCGameValueDraw    @"VALUE_DRAW"
+#define GCGameValueUnknown @"VALUE_UNKNOWN"
+
+/* Deprecated. Use GCGameValue instead */
 typedef enum { WIN, LOSE, TIE, DRAW, NONPRIMITIVE, UNKNOWN } GameValue;
+
 typedef enum { ONLINE_SOLVED = 0, OFFLINE_UNSOLVED } PlayMode;
 typedef enum { PLAYER_LEFT, PLAYER_RIGHT } PlayerSide;
+
+
+@class GCPlayer;
 
 
 /** 
@@ -28,62 +43,110 @@ typedef enum { PLAYER_LEFT, PLAYER_RIGHT } PlayerSide;
  */
 @protocol GCGame
 
-@optional
-/**
- * Return the position that result by making the move MOVE
- *  from the current. The underlying game object
- *  needs to keep a position in its local state and modify
- *  that position for each doMove call. Note that the game may
- *  choose whatever objects it likes to represent moves and positions,
- *  but those types must conform to the NSCopying protocol.
- *
- * @param move The move to be made. Guaranteed to be a legal move.
- *
- * @return The position that results by making MOVE from the current position.
- */
-- (Position) doMove: (Move) move;
-
-
-/**
- * Undo the move MOVE from the current position such that the new
- *  current position is TOPOS (the position before MOVE was made).
- * 
- * @param move The move to undo. Guaranteed to be the move that led to the current position.
- * @param toPos The position that results from undoing MOVE. Guaranteed to be the position before MOVE was made.
- */
-- (void) undoMove: (Move) move toPosition: (Position) toPos;
-
-
-/**
- * Return the value of the position POS.
- *
- * @param pos The position in question.
- *
- * @return The value of the requested position (WIN, LOSE, TIE, or DRAW if primitive, NONPRIMITIVE if not)
- */
-- (GameValue) primitive: (Position) pos;
-
-
-/**
- * Return the legal moves for the position POS.
- *
- * @param pos The position in question.
- *
- * @return An NSArray of Move objects, representing all of the moves that are legal from POS.
- *  If there are no legal moves, return an empty array - NOT nil.
- */
-- (NSArray *) generateMoves: (Position) pos;
-
-
-- (Position) currentPosition;
+/***************************************************************\
+ *                           NEW API                           *
+\***************************************************************/
 
 
 @required
+/**
+ * Make the move MOVE from the current position.
+ *
+ * @param move The move to be made. Guaranteed to be a legal move.
+ */
+- (void) doMove: (GCMove *) move;
+
+
+/**
+ * Undo the move MOVE from the current position such that the current
+ * position is changed to PREVIOUSPOSITION (the position before MOVE was made).
+ *
+ * @param move The move to undo. Guaranteed to be the move that led to the current position.
+ * @param previousPosition The position before MOVE was made.
+ */
+- (void) undoMove: (GCMove *) move toPosition: (GCPosition *) previousPosition;
+
+
+/**
+ * Return the value of the current position.
+ *
+ * @return The value of the current position (WIN, LOSE, TIE, or DRAW if primitive, nil if not)
+ */
+- (GCGameValue *) primitive;
+
+
+/**
+ * Return the legal moves that can be made from the current position.
+ *
+ * @return An array of GCMove objects, representing all of the moves that are legal from 
+ * the current position. If there are no legal moves, return an empty array - NOT nil.
+ */
+- (NSArray *) generateMoves;
+
+
+/**
+ * Return the current position.
+ *
+ * @return The current position
+ */
+- (GCPosition *) currentPosition;
+
+
+/**
+ * Report whose turn it is (left or right).
+ * 
+ * @return The side of the player whose turn it is
+ */
+- (PlayerSide) currentPlayer;
+
+
+/**
+ * Return the view (with frame rectangle FRAME) that displays this game's interface.
+ *
+ * @param frame The frame rectangle this game's
+ *
+ * @return The view managed by this game that displays the game's interface.
+ */
+- (UIView *) viewWithFrame: (CGRect) frame;
+
+
+
+typedef void (^GCMoveCompletionHandler) (GCMove *move);
+
+/**
+ * Wait for the user to make a move, then return that move back through the completion handler.
+ *
+ * @param completionHandler The callback handler to be called with the user's move as argument.
+ */
+- (void) waitForHumanMoveWithCompletion: (GCMoveCompletionHandler) completionHandler;
+
+
+
+
+/***************************************************************\
+ *                     DEPRECATED: OLD API                     *
+\***************************************************************/
+
+@optional
+//- (Position) doMove: (Move) move;
+
+
+//- (void) undoMove: (Move) move toPosition: (Position) toPos;
+
+
+//- (GameValue) primitive: (Position) pos;
+
+
+//- (NSArray *) generateMoves: (Position) pos;
+
+
+//- (Position) currentPosition;
+
+
 - (void) startGameWithLeft: (GCPlayer *) leftPlayer
                      right: (GCPlayer *) rightPlayer
            andPlaySettings: (NSDictionary *) settingsDict;
 
-@optional
 /**
  * Return the left player.
  *
@@ -129,29 +192,6 @@ typedef enum { PLAYER_LEFT, PLAYER_RIGHT } PlayerSide;
 - (UIView *) view;
 
 
-@required
-/**
- * Return the view (with frame rectangle FRAME) that displays this game's interface.
- *
- * @param frame The frame rectangle this game's
- *
- * @return The view managed by this game that displays the game's interface.
- */
-- (UIView *) viewWithFrame: (CGRect) frame;
-
-
-@optional
-
-typedef void (^GCMoveCompletionHandler) (Move move);
-
-/**
- * Wait for the user to make a move, then return that move back through the completion handler.
- *
- * @param completionHandler The callback handler to be called with the user's move as argument.
- */
-- (void) waitForHumanMoveWithCompletion: (GCMoveCompletionHandler) completionHandler;
-
-
 /**
  * Return a view for changing the game's variants (rules).
  *
@@ -174,9 +214,6 @@ typedef void (^GCMoveCompletionHandler) (Move move);
 /* Show/hide move values and predictions */
 - (void) showPredictions: (BOOL) predictions;
 - (void) showMoveValues: (BOOL) moveValues;
-
-/* Report whose turn it is (left or right) */
-- (PlayerSide) currentPlayer;
 
 
 @end

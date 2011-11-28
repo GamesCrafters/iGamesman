@@ -10,17 +10,15 @@
 
 @implementation GCGameHistoryItem
 
-- (id) initWithPosition: (Position) _position
-                andMove: (Move) _move
+- (id) initWithPosition: (GCPosition *) _position
+                andMove: (GCMove *) _move
 {
     self = [super init];
     
     if (self)
     {
-        [(NSObject *) _position retain];
-        [(NSObject *) _move retain];
-        position = _position;
-        move = _move;
+        position = [_position retain];
+        move = [_move retain];
     }
     
     return self;
@@ -29,19 +27,19 @@
 
 - (void) dealloc
 {
-    [(NSObject *) position release];
-    [(NSObject *) move release];
+    [position release];
+    [move release];
     
     [super dealloc];
 }
 
-- (Position) position
+- (GCPosition *) position
 {
     return position;
 }
 
 
-- (Move) move
+- (GCMove *) move
 {
     return move;
 }

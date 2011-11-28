@@ -8,6 +8,8 @@
 
 #import "GCConnectFour.h"
 
+#import "GCPlayer.h"
+
 #define BLANK @"+"
 
 @implementation GCConnectFour

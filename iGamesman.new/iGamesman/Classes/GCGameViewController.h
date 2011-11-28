@@ -7,11 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GCGameController.h"
 
 @protocol GCGame;
-@protocol GCGameControllerDelegate;
-
-@class GCGameController;
 
 @interface GCGameViewController : UIViewController <GCGameControllerDelegate>
 {

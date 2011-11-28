@@ -348,7 +348,7 @@
 	return position.leftTurn ? PLAYER_LEFT : PLAYER_RIGHT;
 }
 
-- (void) waitForHumanMoveWithCompletion: (void (^) (Move move)) completionHandler {
+- (void) waitForHumanMoveWithCompletion: (GCMoveCompletionHandler) completionHandler {
 	moveHandler = Block_copy(completionHandler);
     [view startReceivingTouches];
 }

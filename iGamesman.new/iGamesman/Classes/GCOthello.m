@@ -209,7 +209,7 @@
 	return othView;
 }
 
-- (void) waitForHumanMoveWithCompletion: (void (^) (Move move)) completionHandler{
+- (void) waitForHumanMoveWithCompletion: (GCMoveCompletionHandler) completionHandler{
 	if([[[self generateMoves] objectAtIndex: 0] isEqual: @"PASS"]) {
 		if(!autoPass) {
 			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Legal Moves" 

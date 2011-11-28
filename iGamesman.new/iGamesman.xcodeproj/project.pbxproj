@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		0A18EDAD147713C600E99653 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A18EDAC147713C500E99653 /* QuartzCore.framework */; };
 		0A3C3228143A45370080BCA9 /* GCQuarto.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A3C3227143A45360080BCA9 /* GCQuarto.m */; };
+		0A4AB36A1484252D00B23709 /* GamesCrafters@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A4AB3681484252D00B23709 /* GamesCrafters@2x.png */; };
+		0A4AB36B1484252D00B23709 /* GamesCrafters.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A4AB3691484252D00B23709 /* GamesCrafters.png */; };
 		0A4C7D231448D52100305C9C /* Games.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0A4C7D221448D52100305C9C /* Games.plist */; };
 		0A6646A11468823700CC955A /* GCGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A6646A01468823700CC955A /* GCGameViewController.m */; };
 		0A6646B1146887C200CC955A /* redo.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A6646AD146887C200CC955A /* redo.png */; };
@@ -125,6 +127,8 @@
 		0A18EDD7147B3E6300E99653 /* GCTicTacToeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCTicTacToeView.m; sourceTree = "<group>"; };
 		0A3C3226143A45360080BCA9 /* GCQuarto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCQuarto.h; sourceTree = "<group>"; };
 		0A3C3227143A45360080BCA9 /* GCQuarto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCQuarto.m; sourceTree = "<group>"; };
+		0A4AB3681484252D00B23709 /* GamesCrafters@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GamesCrafters@2x.png"; sourceTree = "<group>"; };
+		0A4AB3691484252D00B23709 /* GamesCrafters.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GamesCrafters.png; sourceTree = "<group>"; };
 		0A4C7D221448D52100305C9C /* Games.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Games.plist; sourceTree = "<group>"; };
 		0A66469F1468823700CC955A /* GCGameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCGameViewController.h; sourceTree = "<group>"; };
 		0A6646A01468823700CC955A /* GCGameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCGameViewController.m; sourceTree = "<group>"; };
@@ -461,6 +465,8 @@
 				D780F9CA14365ECB00922ECC /* Patchwork@2x.png */,
 				0A6646DC1468B0C400CC955A /* CloseButton.png */,
 				0A6646DD1468B0C400CC955A /* CloseButton@2x.png */,
+				0A4AB3681484252D00B23709 /* GamesCrafters@2x.png */,
+				0A4AB3691484252D00B23709 /* GamesCrafters.png */,
 			);
 			path = Images;
 			sourceTree = "<group>";
@@ -700,6 +706,8 @@
 				816816291483E93A0097F101 /* othtie.png in Resources */,
 				8168162A1483E93A0097F101 /* othwhitebar.png in Resources */,
 				8168162B1483E93A0097F101 /* othwin.png in Resources */,
+				0A4AB36A1484252D00B23709 /* GamesCrafters@2x.png in Resources */,
+				0A4AB36B1484252D00B23709 /* GamesCrafters.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

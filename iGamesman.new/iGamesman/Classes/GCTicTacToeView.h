@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "GCGame.h"
+
 
 @protocol GCTicTacToeViewDelegate;
 
@@ -15,6 +17,8 @@
 {
     id<GCTicTacToeViewDelegate> delegate;
     BOOL acceptingTouches;
+    
+    UILabel *messageLabel;
 }
 
 @property (nonatomic, assign) id<GCTicTacToeViewDelegate> delegate;
@@ -27,10 +31,14 @@
 
 
 @class GCTicTacToePosition;
+@class GCPlayer;
 
 @protocol GCTicTacToeViewDelegate
 
-- (GCTicTacToePosition *) currentPosition;
+- (GCTicTacToePosition *) position;
+- (GCGameValue *) primitive;
+- (GCPlayer *) leftPlayer;
+- (GCPlayer *) rightPlayer;
 - (void) userChoseMove: (NSNumber *) slot;
 
 @end

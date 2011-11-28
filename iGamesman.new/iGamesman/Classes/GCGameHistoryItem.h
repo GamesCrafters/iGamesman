@@ -12,14 +12,14 @@
 
 @interface GCGameHistoryItem : NSObject
 {
-    Position position;
-    Move move;
+    GCPosition *position;
+    GCMove *move;
 }
 
-- (id) initWithPosition: (Position) position
-                andMove: (Move) move;
+- (id) initWithPosition: (GCPosition *) position
+                andMove: (GCMove *) move;
 
-- (Position) position;
-- (Move) move;
+- (GCPosition *) position;
+- (GCMove *) move;
 
 @end

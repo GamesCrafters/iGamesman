@@ -151,7 +151,7 @@
     
     for (int i = 0; i < 5; i += 1)
     {
-        CGRect frame = CGRectMake(scroller.bounds.size.width + width / 3.0f + 1.25f * (i - 2) * (width / 3.0f), height - (height / 4.0f) - (width / 3.0f), width / 3.0f, width / 3.0f);
+        CGRect frame = CGRectMake(scroller.bounds.size.width + width / 3.0f + 1.25f * (i - 2) * (width / 3.0f), height - (height / 5.0f) - (width / 3.0f), width / 3.0f, width / 3.0f);
         
         UIButton *imageView = [[UIButton alloc] initWithFrame: frame];
         NSString *imageName = [[gameData objectAtIndex: i] objectForKey: @"image"];
@@ -170,7 +170,7 @@
         [imageView release];
         
         
-        CGRect labelFrame = CGRectMake(scroller.bounds.size.width + width / 3.0f + 1.25f * (i - 2) * (width / 3.0f), height - (height / 4.0f), width / 3.0f, height / 6.0f);
+        CGRect labelFrame = CGRectMake(scroller.bounds.size.width + width / 3.0f + 1.25f * (i - 2) * (width / 3.0f), height - (height / 5.0f), width / 3.0f, height / 6.0f);
         
         UILabel *label = [[UILabel alloc] initWithFrame: labelFrame];
         label.text = [[gameData objectAtIndex: i] objectForKey: @"name"];
@@ -188,6 +188,21 @@
     [self.view addSubview: scroller];
     
     [scroller release];
+    
+    
+    UIButton *aboutButton = [UIButton buttonWithType: UIButtonTypeCustom];
+//    [aboutButton setTitle: @"About Gamesman" forState: UIControlStateNormal];
+    [aboutButton setImage: [UIImage imageNamed: @"GamesCrafters"] forState: UIControlStateNormal];
+    aboutButton.frame = CGRectMake(20, 20, 60, 60);
+    
+    [self.view addSubview: aboutButton];
+    
+    
+    UIButton *gameInfoButton = [UIButton buttonWithType: UIButtonTypeRoundedRect];
+    [gameInfoButton setTitle: @"About Game" forState: UIControlStateNormal];
+    gameInfoButton.frame = CGRectMake(width - 140, 20, 120, 40);
+    
+    [self.view addSubview: gameInfoButton];
 }
 
 

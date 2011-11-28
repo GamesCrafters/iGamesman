@@ -76,17 +76,15 @@
 }
 
 
-- (GameValue) primitive: (Position) pos
+- (GCGameValue *) primitive
 {
-    GCTicTacToePosition *thePosition = (GCTicTacToePosition *) pos;
-    
-    NSUInteger rows = thePosition.rows;
-    NSUInteger columns = thePosition.columns;
-    NSUInteger toWin = thePosition.toWin;
+    NSUInteger rows = position.rows;
+    NSUInteger columns = position.columns;
+    NSUInteger toWin = position.toWin;
     
     for (int i = 0; i < rows * columns; i += 1)
     {
-        NSString *piece = [thePosition.board objectAtIndex: i];
+        NSString *piece = [position.board objectAtIndex: i];
         
         if ([piece isEqualToString: GCTTTBlankPiece])
             continue;
@@ -95,7 +93,7 @@
         BOOL horizontal = YES;
         for (int j = i; j < i + toWin; j += 1)
         {
-            if ((j >= columns * rows) || ((i % columns) > (j % columns)) || ![[thePosition.board objectAtIndex: j] isEqual: piece])
+            if ((j >= columns * rows) || ((i % columns) > (j % columns)) || ![[position.board objectAtIndex: j] isEqual: piece])
             {
                 horizontal = NO;
                 break;
@@ -107,7 +105,7 @@
         BOOL vertical = YES;
 		for (int j = i; j < i + columns * toWin; j += columns)
         {
-			if ((j >= columns * rows) || ![[thePosition.board objectAtIndex: j] isEqual: piece])
+			if ((j >= columns * rows) || ![[position.board objectAtIndex: j] isEqual: piece])
             {
 				vertical = NO;
 				break;
@@ -119,7 +117,7 @@
         BOOL positiveDiagonal = YES;
 		for (int j = i; j < i + toWin + columns * toWin; j += (columns + 1) )
         {
-			if ((j >= columns * rows) || ((i % columns) > (j % columns)) || ![[thePosition.board objectAtIndex: j] isEqual: piece])
+			if ((j >= columns * rows) || ((i % columns) > (j % columns)) || ![[position.board objectAtIndex: j] isEqual: piece])
             {
 				positiveDiagonal = NO;
 				break;
@@ -131,7 +129,7 @@
         BOOL negativeDiagonal = YES;
 		for (int j = i; j < i + columns * toWin - toWin; j += (columns - 1))
         {
-			if ((j >= columns * rows) || ((i % columns) < (j % columns)) || ![[thePosition.board objectAtIndex: j] isEqual: piece])
+			if ((j >= columns * rows) || ((i % columns) < (j % columns)) || ![[position.board objectAtIndex: j] isEqual: piece])
             {
 				negativeDiagonal = NO;
 				break;
@@ -139,19 +137,19 @@
 		}
         
         if (horizontal || vertical || positiveDiagonal || negativeDiagonal)
-            return [piece isEqual: (thePosition.leftTurn ? @"X" : @"O")] ? WIN : LOSE;
+            return [piece isEqual: (position.leftTurn ? @"X" : @"O")] ? GCGameValueWin : GCGameValueLose;
     }
     
     NSUInteger numBlanks = 0;
-    for (int i = 0; i < [thePosition.board count]; i += 1)
+    for (int i = 0; i < [position.board count]; i += 1)
     {
-        if ([[thePosition.board objectAtIndex: i] isEqualToString: GCTTTBlankPiece])
+        if ([[position.board objectAtIndex: i] isEqualToString: GCTTTBlankPiece])
             numBlanks += 1;
     }
     if (numBlanks == 0)
-        return TIE;
+        return GCGameValueTie;
     
-    return NONPRIMITIVE;
+    return nil;
 }
 
 
@@ -166,12 +164,13 @@
 
 - (void) waitForHumanMoveWithCompletion: (GCMoveCompletionHandler) completionHandler
 {
+    Block_release(moveHandler);
     moveHandler = Block_copy(completionHandler);
     [tttView startReceivingTouches];
 }
 
 
-- (Position) doMove: (NSNumber *) move
+- (void) doMove: (NSNumber *) move
 {
     
     if (position.leftTurn)
@@ -186,12 +185,10 @@
     position.leftTurn = !position.leftTurn;
     
     [tttView setNeedsDisplay];
-    
-    return position;
 }
 
 
-- (void) undoMove: (NSNumber *) move toPosition: (Position) toPos
+- (void) undoMove: (NSNumber *) move toPosition: (GCTicTacToePosition *) previousPosition
 {
     [position.board replaceObjectAtIndex: [move unsignedIntegerValue] withObject: GCTTTBlankPiece];
     
@@ -201,26 +198,29 @@
 }
 
 
-- (NSArray *) generateMoves: (Position) pos
+- (NSArray *) generateMoves
 {
-    GCTicTacToePosition *thePosition = (GCTicTacToePosition *) pos;
+    NSMutableArray *legalMoves = [[NSMutableArray alloc] initWithCapacity: position.rows * position.columns];
     
-    NSMutableArray *legalMoves = [[NSMutableArray alloc] initWithCapacity: thePosition.rows * thePosition.columns];
-    
-    for (int i = 0; i < [thePosition.board count]; i += 1)
+    for (int i = 0; i < [position.board count]; i += 1)
     {
-        if ([[thePosition.board objectAtIndex: i] isEqualToString: GCTTTBlankPiece])
+        if ([[position.board objectAtIndex: i] isEqualToString: GCTTTBlankPiece])
             [legalMoves addObject: [NSNumber numberWithInt: i]];
     }
     
     return [legalMoves autorelease];
 }
 
+- (GCPosition *) currentPosition
+{
+    return position;
+}
+
 
 #pragma mark -
 #pragma mark GCTicTacToeViewDelegate
 
-- (GCTicTacToePosition *) currentPosition
+- (GCTicTacToePosition *) position
 {
     return position;
 }

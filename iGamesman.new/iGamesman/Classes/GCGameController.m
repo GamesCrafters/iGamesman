@@ -48,10 +48,10 @@
 }
 
 
-- (void) processHumanMove: (Move) move
+- (void) processHumanMove: (GCMove *) move
 {
-    id position = [[game currentPosition] copyWithZone: nil];
-    id moveCopy = [move copyWithZone: nil];
+    GCPosition *position = [[game currentPosition] copy];
+    GCMove *moveCopy = [move copy];
     
     GCGameHistoryItem *historyItem = [[GCGameHistoryItem alloc] initWithPosition: position andMove: moveCopy];
     [historyStack push: historyItem];
@@ -82,13 +82,13 @@
         currentPlayer = [game rightPlayer];
     
     
-    void (^moveCompletion) (Move) = ^(Move move)
+    void (^moveCompletion) (GCMove *) = ^(GCMove *move)
     {
         [self processHumanMove: move];
     };
     
     
-    if ([game primitive: [game currentPosition]] == NONPRIMITIVE)
+    if ([game primitive] == nil)
     {
         if ([currentPlayer type] == HUMAN)
         {
@@ -106,8 +106,8 @@
 {
     GCGameHistoryItem *historyItem = [historyStack peek];
     
-    id pastPosition = [(NSObject *) [historyItem position] retain];
-    id pastMove = [(NSObject *) [historyItem move] retain];
+    GCPosition *pastPosition = [[historyItem position] retain];
+    GCMove *pastMove = [[historyItem move] retain];
     
     [undoStack push: historyItem];
     
@@ -124,6 +124,8 @@
     
     [pastPosition release];
     [pastMove release];
+    
+    [self go];
 }
 
 
@@ -131,7 +133,7 @@
 {
     GCGameHistoryItem *historyItem = [undoStack peek];
     
-    id nextMove = [(NSObject *) [historyItem move] retain];
+    GCMove *nextMove = [[historyItem move] retain];
     
     [historyStack push: historyItem];
     [undoStack pop];
@@ -146,6 +148,8 @@
     [game doMove: nextMove];
     
     [nextMove release];
+    
+    [self go];
 }
 
 @end

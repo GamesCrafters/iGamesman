@@ -8,6 +8,7 @@
 
 #import "GCTicTacToeView.h"
 
+#import "GCPlayer.h"
 #import "GCTicTacToePosition.h"
 
 @implementation GCTicTacToeView
@@ -23,8 +24,31 @@
         self.opaque = NO;
         
         acceptingTouches = NO;
+        
+        CGFloat width = self.bounds.size.width;
+        CGFloat height = self.bounds.size.height;
+        CGFloat labelHeight = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) ? 30 : 60;
+        
+        UIFont *font = [UIFont systemFontOfSize: (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) ? 16 : 24];
+        
+        messageLabel = [[UILabel alloc] initWithFrame: CGRectMake(0, height - labelHeight, width, labelHeight)];
+        messageLabel.backgroundColor = [UIColor clearColor];
+        messageLabel.textAlignment = UITextAlignmentCenter;
+        messageLabel.font = font;
+        messageLabel.textColor = [UIColor whiteColor];
+        messageLabel.text = @"";
+        
+        [self addSubview: messageLabel];
     }
     return self;
+}
+
+
+- (void) dealloc
+{
+    [messageLabel release];
+    
+    [super dealloc];
 }
 
 
@@ -51,7 +75,12 @@
     CGFloat width = self.bounds.size.width;
     CGFloat height = self.bounds.size.height;
     
-    GCTicTacToePosition *position = [delegate currentPosition];
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+        height -= 30;
+    else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        height -= 60;
+    
+    GCTicTacToePosition *position = [delegate position];
     
     CGFloat maxCellWidth = width / position.columns;
     CGFloat maxCellHeight = height / position.rows;
@@ -60,6 +89,8 @@
     
     CGFloat minX = CGRectGetMinX(self.bounds);
     CGFloat minY = CGRectGetMinY(self.bounds);
+    
+    minX += ((width - (position.columns * cellSize)) / 2.0f);
     
     for (int row = 0; row < position.rows; row += 1)
     {
@@ -121,10 +152,15 @@
 {
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     
-    GCTicTacToePosition *position = [delegate currentPosition];
+    GCTicTacToePosition *position = [delegate position];
     
     CGFloat width = self.bounds.size.width;
     CGFloat height = self.bounds.size.height;
+    
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+        height -= 30;
+    else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        height -= 60;
     
     CGFloat maxCellWidth = width / position.columns;
     CGFloat maxCellHeight = height / position.rows;
@@ -133,6 +169,8 @@
     
     CGFloat minX = CGRectGetMinX(self.bounds);
     CGFloat minY = CGRectGetMinY(self.bounds);
+    
+    minX += ((width - (position.columns * cellSize)) / 2.0f);
     
     for (int i = 1; i < position.columns; i += 1)
     {
@@ -164,6 +202,53 @@
             [self drawXInRect: cellRect intoContext: ctx];
         else if (piece == GCTTTOPiece)
             [self drawOInRect: cellRect intoContext: ctx];
+    }
+    
+    
+    /* Update the label */
+    NSString *playerName, *otherPlayerName;
+    NSString *playerColor, *otherPlayerColor;
+    if (position.leftTurn)
+    {
+        playerName = [[delegate leftPlayer] name];
+        playerColor = @"X";
+        
+        otherPlayerName = [[delegate rightPlayer] name];
+        otherPlayerColor = @"O";
+    }
+    else
+    {
+        playerName = [[delegate rightPlayer] name];
+        playerColor = @"O";
+        
+        otherPlayerName = [[delegate leftPlayer] name];
+        otherPlayerColor = @"X";
+    }
+    
+    
+    GCGameValue *value = [delegate primitive];
+    if (value != nil)
+    {
+        NSString *winner, *winnerColor;
+        if ([value isEqualToString: GCGameValueWin])
+        {
+            winner = playerName;
+            winnerColor = playerColor;
+        }
+        else if ([value isEqualToString: GCGameValueLose])
+        {
+            winner = otherPlayerName;
+            winnerColor = otherPlayerColor;
+        }
+        
+        if ([value isEqualToString: GCGameValueTie])
+            messageLabel.text = @"It's a tie!";
+        else
+            messageLabel.text = [NSString stringWithFormat: @"%@ (%@) wins!", winner, winnerColor];
+    }
+    else
+    {
+        messageLabel.text = [NSString stringWithFormat: @"%@ (%@)'s turn", playerName, playerColor];
     }
 }
 
