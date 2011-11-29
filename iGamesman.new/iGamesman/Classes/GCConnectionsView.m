@@ -7,6 +7,8 @@
 //
 
 #import "GCConnectionsView.h"
+
+#import "GCPlayer.h"
 #import "GCConnectionsPosition.h"
 
 #define X @"X"
@@ -146,9 +148,26 @@
 	for (UIView* section in oldViews)
 		[section removeFromSuperview];
 	GCConnectionsPosition *position = [delegate currentPosition];
-	NSString* player = position.leftTurn ? @"Left" : @"Right";
-	NSString* color = position.leftTurn ? @"Red" : @"Blue";
-	message.text = [NSString stringWithFormat: @"%@ player (%@)'s turn!", player, color]; //Create Winning condition
+	NSString *player, *otherPlayer;
+	NSString *color, *otherColor;
+	if (position.leftTurn) {
+		player = [[delegate leftPlayer] name];
+		color = @"Red";
+		otherPlayer = [[delegate rightPlayer] name];
+		otherColor = @"Blue";
+	} else {
+		player = [[delegate rightPlayer] name];
+		color = @"Blue";
+		otherPlayer = [[delegate leftPlayer] name];
+		otherColor = @"Red";
+	}
+	
+	GCGameValue *gameCond = [delegate primitive];
+	if ([gameCond isEqualToString: GCGameValueLose]) {
+		message.text = [NSString stringWithFormat: @"%@ (%@) wins!", otherPlayer, otherColor];
+	} else {
+		message.text = [NSString stringWithFormat: @"%@ (%@)'s turn!", player, color];
+	}
 	NSMutableArray* board = position.board;
 	int size = position.size;
 	float squareSize = self.frame.size.height * (0.9375) / size;

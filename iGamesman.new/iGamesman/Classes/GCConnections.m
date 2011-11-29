@@ -74,27 +74,27 @@
     return position;
 }
 
-- (GameValue) primitive: (GCConnectionsPosition *) pos {
+- (GCGameValue *) primitive {
 	ConnectionsIntegerQueue * queue = [[ConnectionsIntegerQueue alloc] init];
 	int positionNum;
 	int neighborPosition;
-	int size = pos.size;
+	int size = position.size;
 	
-	NSMutableArray* board = pos.board;
+	NSMutableArray* board = position.board;
 	
 	if(circling){
 		if([self encircled: board]){
-			board = position.board;
-			return misere ? WIN : LOSE;
+			[queue release];
+			return misere ? GCGameValueWin : GCGameValueLose;
 		}
 	}
-	if ([[self generateMoves: pos] count] == 0){
-		board = position.board;
-		return misere ? WIN : LOSE;
+	if ([[self generateMoves] count] == 0){
+		[queue release];
+		return misere ? GCGameValueWin : GCGameValueLose;
 	}
 	
 	//////////////////p1 turn finished/////////////////////////
-	if (!pos.leftTurn){ 
+	if (!position.leftTurn){ 
 		
 		//add in initial positions, starting with the position directly below the top left connector
 		for (int i = size + 1; i < size * 2 - 1; i += 2){
@@ -108,8 +108,7 @@
 			//Check to see if we are at the end of our path
 			if (positionNum/size >= size - 2){
 				[queue release];
-				board = position.board;
-				return misere ? WIN : LOSE;
+				return misere ? GCGameValueWin : GCGameValueLose;
 			}
 			
 			//add neighbors to the fringe
@@ -180,13 +179,11 @@
 		//check player
 		while ([queue notEmpty]){
 			positionNum = [queue pop];
-		    //NSLog(@"X queue not empty: %d", positionNum);
 			
 			//Check to see if we are at the end of our path
 			if (positionNum % size >= size - 2){
 				[queue release];
-				board = position.board;
-				return misere ? WIN : LOSE;
+				return misere ? GCGameValueWin : GCGameValueLose;
 			}
 			
 			//////////////odd case///////////////
@@ -243,19 +240,19 @@
 	}
 	
 	[queue release];
-	return NONPRIMITIVE;
+	return nil;
 }
 
-- (NSArray *) generateMoves: (GCConnectionsPosition *) pos {
+- (NSArray *) generateMoves {
 	NSMutableArray *moves = [[NSMutableArray alloc] init];
-	NSMutableArray *board = pos.board;
-	int size = pos.size;
+	NSMutableArray *board = position.board;
+	int size = position.size;
 	
 	for (int j = 0; j < size; j += 1) {
 		for (int i = 0; i < size; i += 1) {
 			if ([[board objectAtIndex: i + j * size] isEqual: BLANK]) {
 				if (i != 0 && i != size - 1 && j != 0 && j != size - 1)
-					[moves addObject: [NSNumber numberWithInt: i + j * pos.size + 1]];
+					[moves addObject: [NSNumber numberWithInt: i + j * size + 1]];
 			}
 		}
 	}

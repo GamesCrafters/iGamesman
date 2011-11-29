@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "GCGame.h"
+
 @protocol GCConnectionsViewDelegate;
 
 @interface GCConnectionsView : UIView {
@@ -31,6 +33,9 @@
 @protocol GCConnectionsViewDelegate
 
 - (GCConnectionsPosition *) currentPosition;
+- (GCGameValue *) primitive;
+- (GCPlayer *) leftPlayer;
+- (GCPlayer *) rightPlayer;
 - (void) userChoseMove: (NSNumber *) slot;
 
 @end
