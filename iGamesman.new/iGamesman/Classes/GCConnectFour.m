@@ -14,7 +14,7 @@
 
 @implementation GCConnectFour
 
-@synthesize position, gameMode, serverHistoryStack, predictions, moveValues;
+@synthesize currentPosition, gameMode, serverHistoryStack, predictions, moveValues;
 
 - (id) init {
 	if (self = [super init]) {
@@ -30,7 +30,7 @@
 		height = 6;
 		pieces = 4;
 		
-        position = [[GCConnectFourPosition alloc] initWithWidth:width height:height pieces:pieces];
+        currentPosition = [[GCConnectFourPosition alloc] initWithWidth:width height:height pieces:pieces];
 		
 		predictions = NO;
 		moveValues = NO;
@@ -111,35 +111,28 @@
 }
 - (GameValue) primitive
 {
-    return [self primitive:position];
+    return [self primitive:currentPosition];
 }
 
 /**
- * Return the position that result by making the move MOVE
- *  from the current. The underlying game object
- *  needs to keep a position in its local state and modify
- *  that position for each doMove call. Note that the game may
- *  choose whatever objects it likes to represent moves and positions,
- *  but those types must conform to the NSCopying protocol.
+ * Make the move MOVE from the current position.
  *
- * @param move NSNumber representing the move to be made. Guaranteed to be a legal move.
- *
- * @return The position that results by making MOVE from the current position.
+ * @param move The move to be made. Guaranteed to be a legal move.
  */
-- (Position) doMove: (NSNumber *) moveObject
+- (void) doMove: (NSNumber *) moveObject
 {
 	[c4view doMove: moveObject];
-    NSMutableArray *board = position.board;
+    NSMutableArray *board = currentPosition.board;
     
 	int slot = [moveObject intValue] - 1;
 	while (slot < width * height) {
 		if ([[board objectAtIndex: slot] isEqual: BLANK]) {
-			[board replaceObjectAtIndex: slot withObject: (position.p1Turn ? @"X" : @"O")];
+			[board replaceObjectAtIndex: slot withObject: (currentPosition.p1Turn ? @"X" : @"O")];
 			break;
 		}
 		slot += width;
 	}
-	position.p1Turn = !position.p1Turn;
+	currentPosition.p1Turn = !currentPosition.p1Turn;
 	
 	if (gameMode == ONLINE_SOLVED) {
 		// Peek at the top of the undo stack
@@ -170,21 +163,19 @@
 	if (gameMode != ONLINE_SOLVED) {
 		[c4view updateLabels];
     }
-    
-    return position;
 }
 
 /**
- * Undo the move MOVE from the current position such that the new
- *  current position is TOPOS (the position before MOVE was made).
- * 
+ * Undo the move MOVE from the current position such that the current
+ * position is changed to PREVIOUSPOSITION (the position before MOVE was made).
+ *
  * @param move The move to undo. Guaranteed to be the move that led to the current position.
- * @param toPos The position that results from undoing MOVE. Guaranteed to be the position before MOVE was made.
+ * @param previousPosition The position before MOVE was made.
  */
-- (void) undoMove: (NSNumber *) move toPosition: (Position) toPos
+- (void) undoMove: (NSNumber *) move toPosition: (Position) previousPosition
 {
 	[c4view undoMove: move];
-    NSMutableArray *board = position.board;
+    NSMutableArray *board = currentPosition.board;
 	
 	int slot = [move integerValue] - 1 + width * (height - 1);
 	while (slot >= 0) {
@@ -194,7 +185,7 @@
 		}
 		slot -= width;
 	}
-	position.p1Turn = !position.p1Turn;
+	currentPosition.p1Turn = !currentPosition.p1Turn;
 	
 	if (gameMode == ONLINE_SOLVED) {
 		// Pop the entry off the history stack
@@ -222,16 +213,16 @@
 	
 	int col = 1;
 	for (int i = width * (height - 1); i < width * height; i += 1) {
-		if ([[position.board objectAtIndex: i] isEqual: BLANK])
+		if ([[currentPosition.board objectAtIndex: i] isEqual: BLANK])
 			[moves addObject: [NSString stringWithFormat: @"%d", col]];
 		col += 1;
 	}
 	
 	return moves;
 }
-- (NSArray *) legalMoves
+- (NSArray *) generateMoves
 {
-    return [self generateMoves:position];
+    return [self generateMoves:currentPosition];
 }
 
 
@@ -245,7 +236,7 @@
     rightPlayer = rp;
     playSettings = settingsDict;
     
-    [position resetBoard];
+    [currentPosition resetBoard];
 	
 	gameMode = ONLINE_SOLVED;       // FIXME extract this from playSettings
 	
@@ -273,11 +264,15 @@
 /**
  * Wait for the user to make a move, then return that move back through the completion handler.
  *
+ * Note:  typedef void (^GCMoveCompletionHandler) (GCMove *move)
+ *
  * @param completionHandler The callback handler to be called with the user's move as argument.
  */
-- (void) waitForHumanMoveWithCompletion: (void (^) (Move move)) completionHandler
+- (void) waitForHumanMoveWithCompletion: (GCMoveCompletionHandler) completionHandler
 {
-    
+    Block_release(moveHandler);
+    moveHandler = Block_copy(completionHandler);
+    [c4view startReceivingTouches];
 }
 
 /* Pause any ongoing tasks (such as server requests) */
@@ -324,7 +319,7 @@
 - (PlayerSide) currentPlayer
 {
     // FIXME:  this is a compatibility hack for the original GCConnectFour code
-    return position.p1Turn ? PLAYER_LEFT : PLAYER_RIGHT;
+    return currentPosition.p1Turn ? PLAYER_LEFT : PLAYER_RIGHT;
 }
 
 /* Report the play modes supported by the game */
@@ -374,7 +369,7 @@
 - (NSString *) boardString
 {
     NSString *boardString = @"";
-    for (NSString *piece in position.board) {
+    for (NSString *piece in currentPosition.board) {
         if ([piece isEqualToString:@"+"])
             piece = @" ";
         boardString = [boardString stringByAppendingString:piece];
@@ -425,6 +420,19 @@
  */
 - (UIView *) view
 {
+    return [c4view view];
+}
+
+/**
+ * Return the view (with frame rectangle FRAME) that displays this game's interface.
+ *
+ * @param frame The frame rectangle this game's
+ *
+ * @return The view managed by this game that displays the game's interface.
+ */
+- (UIView *) viewWithFrame: (CGRect) frame
+{
+    [[c4view view] setFrame:frame];
     return [c4view view];
 }
 

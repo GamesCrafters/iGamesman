@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "GCConnectFour.h"
 #import "GCConnectFourPosition.h"
+#import "GCPlayer.h"
 #import "GCJSONService.h"
 
 @class GCConnectFour;

@@ -22,9 +22,9 @@
 - (id) initWithGame: (GCConnectFour *) _game {
 	if (self = [super init]) {
         game = _game;
-        width = game.position.width;
-        height = game.position.height;
-        pieces = game.position.pieces;
+        width = game.currentPosition.width;
+        height = game.currentPosition.height;
+        pieces = game.currentPosition.pieces;
 		
 		touchesEnabled = NO;
 		
@@ -38,7 +38,7 @@
 	int col = sender.tag % width;
 	if (col == 0) col = width;
     NSNumber *move = [NSNumber numberWithInt:col];
-	if ([[game legalMoves] containsObject: move])
+	if ([[game generateMoves] containsObject: move])
 		[game doMove: move];
 }
 
@@ -77,7 +77,7 @@
 		// Create the new data entry
 		NSArray *keys = [[NSArray alloc] initWithObjects: @"board", @"value", @"remoteness", @"children", nil];
 		NSMutableDictionary *children = [[NSMutableDictionary alloc] init];
-		for (NSString *move in [game legalMoves]) {
+		for (NSString *move in [game generateMoves]) {
 			move = [NSString stringWithFormat: @"%d", [move integerValue] - 1];
 			NSDictionary *moveDict = [[NSDictionary alloc] initWithObjectsAndKeys: [[service getValueAfterMove: move] lowercaseString], @"value",
 									  [NSNumber numberWithInteger: [service getRemotenessAfterMove: move]], @"remoteness", nil];
@@ -85,7 +85,7 @@
 		}
 		NSString *val = [service getValue];
 		if (!val) val = @"UNAVAILABLE";
-		NSArray *values = [[NSArray alloc] initWithObjects: [game.position.board copy], val, [NSNumber numberWithInteger: [service getRemoteness]], children, nil];
+		NSArray *values = [[NSArray alloc] initWithObjects: [game.currentPosition.board copy], val, [NSNumber numberWithInteger: [service getRemoteness]], children, nil];
 		[children release];
 		NSDictionary *entry = [[NSDictionary alloc] initWithObjects: values forKeys: keys];
 		[values release];
@@ -214,11 +214,11 @@
 - (void) doMove: (NSNumber *) move {
 	int col = [move integerValue];
 	if (col == 0) col = width;
-	if ([[game legalMoves] containsObject: move]) {		
+	if ([[game generateMoves] containsObject: move]) {		
 		// Update the view. Perform the animation
 		int tag = col;
 		while (tag < width * height + 1) {
-			if ([[[[game position] board] objectAtIndex: tag - 1] isEqual: @"+"])
+			if ([[[[game currentPosition] board] objectAtIndex: tag - 1] isEqual: @"+"])
 				break;
 			tag += width;
 		}
@@ -255,7 +255,7 @@
 	if (tag == 0) tag = width;
 	tag += width * (height - 1);
 	while (tag > 0) {
-		if (![[[[game position] board] objectAtIndex: tag - 1] isEqual: @"+"])
+		if (![[[[game currentPosition] board] objectAtIndex: tag - 1] isEqual: @"+"])
 			break;
 		tag -= width;
 	}
@@ -279,9 +279,9 @@
 		int col = (int) (tapX - (10 + width/2.0) ) / w;
 		if (col >= width) col = width - 1;
 		if (col < 0) col = 0;
-		if (![[game legalMoves] containsObject: [NSString stringWithFormat: @"%d", col + 1]]) {
+		if (![[game generateMoves] containsObject: [NSString stringWithFormat: @"%d", col + 1]]) {
 			int minOffset = width + 1;
-			for (NSString *move in [game legalMoves]) {
+			for (NSString *move in [game generateMoves]) {
 				minOffset = abs(minOffset) < abs([move intValue] - 1 - col) ? minOffset : [move intValue] - 1 - col;
 			}
 			col += minOffset;
@@ -308,7 +308,7 @@
 			if (col >= width) col = width - 1;
 			if (col < 0) col = 0;
 			float newX = 10 + width/2.0 + col * (w - 1);
-			if ([[game legalMoves] containsObject: [NSString stringWithFormat: @"%d", col + 1]]) {
+			if ([[game generateMoves] containsObject: [NSString stringWithFormat: @"%d", col + 1]]) {
 				[UIView beginAnimations: @"Slide" context: NULL];
 				[pieceView setFrame: CGRectMake(newX, pieceView.frame.origin.y, w, h)];
 				[UIView commitAnimations];
@@ -334,7 +334,7 @@
 				move = @"1";
 		}
 		[[self.view viewWithTag: 55555] removeFromSuperview];
-		if (move && [[game legalMoves] containsObject: move])
+		if (move && [[game generateMoves] containsObject: move])
 			[game postHumanMove: move];
 	}
 }

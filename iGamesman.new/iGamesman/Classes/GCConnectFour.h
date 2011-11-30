@@ -18,7 +18,8 @@
 @interface GCConnectFour : NSObject <GCGame> {
     GCConnectFourViewController *c4view;
 	GCJSONService				*service;
-    GCConnectFourPosition       *position;
+    GCMoveCompletionHandler     moveHandler;
+    GCConnectFourPosition       *currentPosition;
     GCPlayer                    *leftPlayer, *rightPlayer;
     NSDictionary                *playSettings;
 	int							width, height, pieces;
@@ -30,7 +31,7 @@
 	NSMutableArray				*serverUndoStack;
 }
 
-- (NSArray *) legalMoves;       // Convenience method -- calls -generateMoves: with current position.
+- (NSArray *) generateMoves;    // Convenience method -- calls -generateMoves: with current position.
 - (GameValue) primitive;        // Convenience method -- calls -primitive: with current position.
 - (NSString *) boardString;     // Generate board string for the current position.
 
@@ -43,7 +44,7 @@
 - (void) postReady;
 - (void) postProblem;
 
-@property (readonly) GCConnectFourPosition  *position;
+@property (readonly) GCConnectFourPosition  *currentPosition;
 @property (readonly) PlayMode               gameMode;
 @property (nonatomic, retain) NSMutableArray *serverHistoryStack;
 @property (nonatomic, assign) BOOL predictions, moveValues;
