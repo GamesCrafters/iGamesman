@@ -2,8 +2,8 @@
 //  GCOthello.m
 //  iGamesman
 //
-//  Created by Luca Weihs on 10/2/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
+//  Created by Class Account on 10/2/11.
+//  Copyright 2011 GamesCrafters. All rights reserved.
 //
 
 #import "GCOthello.h"
@@ -60,7 +60,7 @@
 	moveHandler(move);
 }
 
-- (Position) doMove: (Move) move{
+- (Position) doMove: (GCMove *) move{
 	[othView doMove:move];
 	if  ([move intValue] != -1) {
 		NSMutableArray *oldBoard = [[NSMutableArray alloc] initWithCapacity: 3];
@@ -92,10 +92,9 @@
         [othView updateLabels];
         [othView updateServerDataWithService: service];
     }
-	return board;
 }
 
-- (void) undoMove: (Move) move toPosition: (Position) toPos{
+- (void) undoMove: (GCMove *) move toPosition: (GCPosition *) previousPosition{
 	[othView undoMove:move];
 	NSArray *b = [[myOldMoves lastObject] retain];
 	[myOldMoves removeLastObject];
@@ -106,42 +105,41 @@
 		leftPlayerTurn = !leftPlayerTurn;
 	} 
 	if (gameMode == OFFLINE_UNSOLVED) {
-		[othView updategenerateMoves];
+		[othView updateLegalMoves];
 		[othView updateLabels];
 	} else {
 		[othView updateServerDataWithService: service];
 	}
 }
 
-- (GameValue) primitive{
+- (GCGameValue *) primitive{
 	if ([[[self generateMoves] objectAtIndex:0] isEqual:PASS]) {
 		leftPlayerTurn = !leftPlayerTurn;
 		if ([[[self generateMoves] objectAtIndex:0] isEqual:PASS]) {
 			leftPlayerTurn = !leftPlayerTurn;
 			if (leftPlayerPieces > rightPlayerPieces) {
 				if (leftPlayerTurn) {
-					return WIN;
+					return GCGameValueWin;
 				} else{
-					return LOSE;
+					return GCGameValueLose;
 				}
 			}
 			else if (rightPlayerPieces > leftPlayerPieces) {
 				if (leftPlayerTurn ) {
-					return LOSE;
+					return GCGameValueLose;
 				} else {
-					return WIN;
+					return GCGameValueWin;
 				}
 			} else {
-				return TIE;
+				return GCGameValueTie;
 			}
 		}
 		leftPlayerTurn = !leftPlayerTurn;
 	}
-	return NONPRIMITIVE;
+	return nil;
 }
 
-- (GameValue) primitive: (Position) pos{
-	NSLog(@"happens");
+- (GCGameValue *) primitive: (Position) pos{
 	return [self primitive];
 }
 
@@ -160,7 +158,7 @@
 	return moves;
 }
 
-- (Position) currentPosition{
+- (GCPosition *) currentPosition{
 	return board;
 }
 
@@ -203,10 +201,6 @@
 }
 
 - (void) setPlaySettings: (NSDictionary *) settingsDict{
-}
-
-- (UIView *) view{
-	return othView;
 }
 
 - (void) waitForHumanMoveWithCompletion: (GCMoveCompletionHandler) completionHandler{
@@ -334,8 +328,6 @@
 	NSMutableArray *flips = [[NSMutableArray alloc] initWithCapacity:rows*cols];
 	if ([[board objectAtIndex:loc] isEqualToString:BLANK]) {			
 		NSString *myPiece = leftPlayerTurn ? LEFTPLAYERPIECE : RIGHTPLAYERPIECE;
-		if(leftPlayerTurn) NSLog(@"LeftPlayerTurn");
-		else NSLog(@"RightPlayerTurn");
 		int offsets[8] = {1,-1,cols,-cols,cols+1,cols-1,-cols+1,-cols-1};
 		for (int i=0; i<8; i+=1) {
 			int offset = offsets[i];

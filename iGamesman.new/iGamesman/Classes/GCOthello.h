@@ -2,8 +2,8 @@
 //  GCOthello.h
 //  iGamesman
 //
-//  Created by Luca Weihs on 10/2/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
+//  Created by Class Account on 10/2/11.
+//  Copyright 2011 GamesCrafters. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -52,8 +52,8 @@
 - (NSString *) getValueOfMove:		(NSNumber *) move;
 - (NSInteger) getRemotenessOfMove:	(NSNumber *) move;
 - (void) userChoseMove: (NSNumber *) move;
-- (GameValue) primitive;
-- (GameValue) primitive: (Position) pos;
+- (GCGameValue *) primitive;
+- (GCGameValue *) primitive: (Position) pos;
 - (NSArray *) generateMoves;
 
 @end

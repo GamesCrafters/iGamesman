@@ -32,7 +32,7 @@
 	[self.view bringSubviewToFront: spinner];
 	waiter = [[NSThread alloc] initWithTarget: self selector: @selector(fetchNewData:) object: [NSNumber numberWithBool:touchesEnabled]];
 	[waiter start];
-	timer = [[NSTimer scheduledTimerWithTimeInterval: 5 target: self selector: @selector(timedOut:) userInfo: nil repeats: NO] retain];
+	timer = [[NSTimer scheduledTimerWithTimeInterval: 10 target: self selector: @selector(timedOut:) userInfo: nil repeats: NO] retain];
 }
 
 - (void) fetchNewData: (BOOL) buttonsOn {
@@ -59,12 +59,13 @@
 		[spinner stopAnimating];
 		[timer invalidate];
 	}
-	if (![service connected] || ![service status])
+	if (![service connected] || ![service status]){
 		NSLog(@"Problem");
+		[self updateLabels];
+		[self updateLegalMoves];
 		//[game postProblem];
+	}
 	else {
-		
-		[game postReady];
 		[self updateLabels];
 		[self updateLegalMoves];
 	}
@@ -84,7 +85,6 @@
 
 
 - (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-
 	if (touchesEnabled) {		
 		CGFloat w = self.view.bounds.size.width;
 		CGFloat h = self.view.bounds.size.height;
@@ -167,35 +167,30 @@
 - (void) updateLabels {
     //display turn
     NSString *player = game.leftPlayerTurn ? [[game leftPlayer] name] : [[game rightPlayer] name];
-    GameValue prim = [game primitive];
+    GCGameValue *prim = [game primitive];
     UILabel *textLabel = (UILabel *) [self.view viewWithTag:2000];
     if (prim != nil) {
-        if (prim == TIE) {
+        if (prim == GCGameValueTie) {
             textLabel.text = @"Tie Game";
-			NSLog(@"HAPPENS1");
-        } else if (prim == WIN) {
+        } else if (prim == GCGameValueWin) {
             if (game.leftPlayerTurn) {
                 textLabel.text = [NSString stringWithFormat: @"Black, %@ wins!!", player];
             } else {
 				textLabel.text = [NSString stringWithFormat: @"White, %@ wins!!", player];
             }
-			NSLog(@"HAPPENS2");
-            
-        } else if (prim == LOSE) {
+        } else if (prim == GCGameValueLose) {
             if (game.leftPlayerTurn) {
                 textLabel.text = [NSString stringWithFormat: @"White, %@ wins!!", player];
             } else {
                 textLabel.text = [NSString stringWithFormat: @"Black, %@ wins!!", player];
             }
-			NSLog(@"HAPPENS3");
         }
     } else {
         if ([game playMode] == ONLINE_SOLVED && game.predictions) {
             textLabel.text = [NSString stringWithFormat: @"%@ should %@",player,  [game getValue], [game getRemoteness]];
         } else {
-            textLabel.text = [NSString stringWithFormat: @"%@", player];
+            textLabel.text = [NSString stringWithFormat: @"%@'s turn", player];
         }
-		NSLog(@"HAPPENS4");
     }
 	
 	UIImageView *image = (UIImageView *)[self.view viewWithTag:999];
@@ -259,6 +254,8 @@
 }
 
 - (void) undoMove:(NSNumber *)move {
+	[self updateLegalMoves];
+	[self updateLabels];
 	NSArray *myOldMoves = game.myOldMoves;
 	NSArray *myLastBoard = [[myOldMoves lastObject] objectAtIndex:0];
 	for (int i = 0; i< game.rows*game.cols; i++) {
@@ -306,9 +303,7 @@
 	
 	[UIView commitAnimations];
 	[UIView commitAnimations];
-	
-	
-	
+
 }
 
 // Implement loadView to create a view hierarchy programmatically, without using a nib.
@@ -322,7 +317,6 @@
 	CGFloat size = MIN((w - PADDING*2)/game.cols, (h - (80+ PADDING))/game.rows);
 	int col = game.cols/2 -1;
 	int row = game.rows/2 -1;
-	
 	
 	UIImageView *piece1 = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"othsimpleblack.png"]];
 	UIImageView *piece2 = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"othsimplewhite.png"]];
@@ -400,9 +394,8 @@
 	blackbar.tag = 10000;
 	[self.view addSubview:blackbar];
 	
+	[self updateLegalMoves];
 	[self updateLabels];
-    [self updateLegalMoves];
-	
 }
 
 

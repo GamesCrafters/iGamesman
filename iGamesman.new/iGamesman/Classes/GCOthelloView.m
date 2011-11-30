@@ -3,7 +3,7 @@
 //  iGamesman
 //
 //  Created by Class Account on 10/24/10.
-//  Copyright 2010 GamesCrafters. All rights reserved.
+//  Copyright 2011 GamesCrafters. All rights reserved.
 //
 
 #import "GCOthelloView.h"
