@@ -7,7 +7,7 @@
 //
 
 #import "GCOthelloView.h"
-#define PADDING 1
+#define PADDING 0
 
 @implementation GCOthelloView
 
@@ -28,12 +28,14 @@
 	CGFloat h = self.bounds.size.height;
 	
 	CGFloat size = MIN((w-(2*PADDING))/cols, (h- (80+PADDING))/rows);
+	int boardWidth = size*rows;
+	CGFloat xOffset = (w - boardWidth)/2.0;
 	
 	CGContextRef ctx = UIGraphicsGetCurrentContext();
 	
 	//Making Green Rectangle Background
 	UIImage *bg = [UIImage imageNamed: @"othfelt.png"];
-	[bg drawInRect:CGRectMake(PADDING, PADDING, cols*size, rows*size)];
+	[bg drawInRect:CGRectMake(xOffset + PADDING, PADDING, cols*size, rows*size)];
 	
 	//Draw lines within Rectangle
 	
@@ -41,13 +43,13 @@
 	CGContextSetRGBStrokeColor(ctx, 0, .1, 0, 0.7);
 	
 	for (int i = 0; i <= cols; i += 1) {
-		CGContextMoveToPoint(ctx, PADDING + size * i, PADDING);
-		CGContextAddLineToPoint(ctx, PADDING + size * i, PADDING + size * rows);
+		CGContextMoveToPoint(ctx, xOffset + PADDING + size * i, PADDING);
+		CGContextAddLineToPoint(ctx, xOffset + PADDING + size * i, PADDING + size * rows);
 	}
 	
 	for (int j = 0; j <= rows; j += 1) {
-		CGContextMoveToPoint(ctx, PADDING, PADDING + size * j);
-		CGContextAddLineToPoint(ctx, PADDING + size * cols, PADDING + size * j);
+		CGContextMoveToPoint(ctx, xOffset + PADDING, PADDING + size * j);
+		CGContextAddLineToPoint(ctx, xOffset + PADDING + size * cols, PADDING + size * j);
 	}
 	
 	CGContextStrokePath(ctx);
