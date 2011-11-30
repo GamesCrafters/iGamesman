@@ -27,12 +27,14 @@
 	int height;						///< The number of rows
 	int pieces;						///< The number in a row needed to win
 	BOOL touchesEnabled;
+    
+    CGRect frame;
 }
 
 @property (nonatomic, assign) BOOL touchesEnabled;
 
 /// The designated initializer
-- (id) initWithGame: (GCConnectFour *) _game;
+- (id) initWithGame: (GCConnectFour *) _game frame: (CGRect) rect;
 
 /// Receiver of button taps. Simply converts the button into a move and sends it to GAME
 - (void) tapped: (UIButton *) sender;

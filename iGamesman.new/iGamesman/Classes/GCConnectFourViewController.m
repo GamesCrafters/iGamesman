@@ -19,7 +19,7 @@
  @param _height the number of rows
  @param _pieces the number in a row needed to win
  */
-- (id) initWithGame: (GCConnectFour *) _game {
+- (id) initWithGame: (GCConnectFour *) _game frame: (CGRect) rect {
 	if (self = [super init]) {
         game = _game;
         width = game.currentPosition.width;
@@ -29,6 +29,8 @@
 		touchesEnabled = NO;
 		
 		self.view.multipleTouchEnabled = NO;
+        
+        frame = rect;
 	}
 	return self;
 }
@@ -99,7 +101,7 @@
 		
 		[game postReady];
 	}
-	[self updateLabels];
+//	[self updateLabels];
 }
 
 
@@ -365,11 +367,8 @@
 
 - (void) viewDidLoad {
     [super viewDidLoad];
-	if ([self interfaceOrientation] == UIInterfaceOrientationPortrait)
-		self.view = [[UIView alloc] initWithFrame: CGRectMake(0, 0, 320, 416)];
-	else
-		self.view = [[UIView alloc] initWithFrame: CGRectMake(0, 0, 480, 256)];
-	
+    
+    self.view = [[UIView alloc] initWithFrame: frame];
 	self.view.backgroundColor = [UIColor colorWithRed: 0 green: 0 blue: 102.0/256.0 alpha: 1];
 	
 	float squareSize;

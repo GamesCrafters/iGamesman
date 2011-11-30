@@ -244,11 +244,7 @@
 		predictions = NO;
 		moveValues = NO;
 	}
-	
-	if (!c4view)
-		[c4view release];
-	c4view = [[GCConnectFourViewController alloc] initWithGame: self];
-	
+		
 	PlayerType current = [self currentPlayer] == PLAYER_LEFT ? [leftPlayer type] : [rightPlayer type];
 	if (current == HUMAN)
 		c4view.touchesEnabled = YES;		
@@ -414,16 +410,6 @@
 }
 
 /**
- * Return the view that displays this game's interface.
- *
- * @return The view managed by this game that displays the game's interface.
- */
-- (UIView *) view
-{
-    return [c4view view];
-}
-
-/**
  * Return the view (with frame rectangle FRAME) that displays this game's interface.
  *
  * @param frame The frame rectangle this game's
@@ -432,7 +418,9 @@
  */
 - (UIView *) viewWithFrame: (CGRect) frame
 {
-    [[c4view view] setFrame:frame];
+    if (!c4view)
+        c4view = [[GCConnectFourViewController alloc] initWithGame: self frame: frame];
+
     return [c4view view];
 }
 
