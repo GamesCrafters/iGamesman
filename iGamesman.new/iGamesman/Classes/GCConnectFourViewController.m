@@ -195,7 +195,7 @@
 
 
 - (void) displayPrimitive {
-	GameValue value = [game primitive];
+	GameValue value = [game primitive:game.currentPosition];
 	NSString *winner;
 	NSString *color;
 	if (value == TIE)
@@ -381,7 +381,8 @@
 	int tagNum = 1;
 	for (int j = height - 1; j >= 0; j -= 1) {
 		for (int i = 0; i < width; i += 1) {
-			UIImageView *B = [[UIImageView alloc] initWithFrame: CGRectMake((10 + width/2) + i * (squareSize - 1), 10 + (j + 1) * (squareSize - 1), squareSize, squareSize)];
+			UIImageView *B = [[UIImageView alloc] initWithFrame: CGRectMake(frame.origin.x + (10 + width/2) + i * (squareSize - 1),
+                                                                            frame.origin.y + 10 + (j + 1) * (squareSize - 1), squareSize, squareSize)];
 			[B setImage: gridImg];
 			B.tag = tagNum;
 			tagNum += 1;
@@ -397,18 +398,19 @@
 	}
 	
 	for (int i = 0; i < width; i += 1) {
-		UIView *B = [[UIView alloc] initWithFrame: CGRectMake((10 + width/2) + i * (squareSize - 1), 10 + squareSize / 2.0, squareSize, squareSize / 2.0)];
+		UIView *B = [[UIView alloc] initWithFrame: CGRectMake(frame.origin.x + (10 + width/2) + i * (squareSize - 1),
+                                                              frame.origin.y + 10 + squareSize / 2.0, squareSize, squareSize / 2.0)];
 		B.tag = 100 + i;
 		[B setBackgroundColor: [UIColor clearColor]];
 		[self.view insertSubview: B atIndex: 0];
 	}
 	
 	if ([self interfaceOrientation] == UIInterfaceOrientationPortrait)
-		message = [[UILabel alloc] initWithFrame: CGRectMake(20, 25 + (height + 0.5) * squareSize, 
-                                                             280, 416 - (45 + height * squareSize))];
+		message = [[UILabel alloc] initWithFrame: CGRectMake(frame.origin.x + 20, 25 + (height + 0.5) * squareSize, 
+                                                             frame.origin.y + 280, 416 - (45 + height * squareSize))];
 	else
-		message = [[UILabel alloc] initWithFrame: CGRectMake(10 + width * squareSize, 3, 
-                                                             480 - (10 + width * squareSize), 250)];
+		message = [[UILabel alloc] initWithFrame: CGRectMake(frame.origin.x + 10 + width * squareSize, 3, 
+                                                             frame.origin.y + 480 - (10 + width * squareSize), 250)];
 	message.backgroundColor = [UIColor clearColor];
 	message.textColor = [UIColor whiteColor];
 	message.textAlignment = UITextAlignmentCenter;
@@ -416,7 +418,7 @@
 	[self.view addSubview: message];
 	
 	spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle: UIActivityIndicatorViewStyleWhiteLarge];
-	spinner.frame = CGRectMake(width/2.0 * squareSize - 5 - width/2.0, height/2.0  * squareSize + squareSize/2.0 - 10,  37.0, 37.0);
+	spinner.frame = CGRectMake(frame.origin.x + width/2.0 * squareSize - 5 - width/2.0, frame.origin.y + height/2.0  * squareSize + squareSize/2.0 - 10,  37.0, 37.0);
 	[self.view addSubview: spinner];
 	//[self disableButtons];
 	

@@ -31,8 +31,8 @@
 	NSMutableArray				*serverUndoStack;
 }
 
+- (GameValue) primitive: (GCConnectFourPosition *) pos;
 - (NSArray *) generateMoves;    // Convenience method -- calls -generateMoves: with current position.
-- (GameValue) primitive;        // Convenience method -- calls -primitive: with current position.
 - (NSString *) boardString;     // Generate board string for the current position.
 
 - (NSString *) getValue;

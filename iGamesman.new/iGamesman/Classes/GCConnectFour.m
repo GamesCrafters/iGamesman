@@ -109,9 +109,18 @@
 	
 	return NONPRIMITIVE;
 }
-- (GameValue) primitive
+- (GCGameValue *) primitive
 {
-    return [self primitive:currentPosition];
+    // FIXME:  the rest of GCConnectFour should use GCGameValues, not GameValues
+    GameValue p = [self primitive:currentPosition];
+    switch (p) {
+        case WIN:           return GCGameValueWin;
+        case LOSE:          return GCGameValueLose;
+        case TIE:           return GCGameValueTie;
+        case DRAW:          return GCGameValueDraw;
+        case UNKNOWN:       return GCGameValueUnknown;
+        default:            return nil;
+    }
 }
 
 /**
@@ -232,13 +241,16 @@
                      right: (GCPlayer *) rp
            andPlaySettings: (NSDictionary *) settingsDict
 {
-    leftPlayer = lp;
-    rightPlayer = rp;
+    leftPlayer = [lp retain];
+    rightPlayer = [rp retain];
     playSettings = settingsDict;
     
     [currentPosition resetBoard];
 	
-	gameMode = ONLINE_SOLVED;       // FIXME extract this from playSettings
+    if ([settingsDict objectForKey: GCGameModeKey] == GCGameModeOfflineUnsolved)
+        gameMode = OFFLINE_UNSOLVED;
+    else if ([settingsDict objectForKey: GCGameModeKey] == GCGameModeOnlineSolved)
+        gameMode = ONLINE_SOLVED;
 	
 	if (gameMode == OFFLINE_UNSOLVED) {
 		predictions = NO;
