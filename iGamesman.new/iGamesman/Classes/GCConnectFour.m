@@ -181,7 +181,7 @@
  * @param move The move to undo. Guaranteed to be the move that led to the current position.
  * @param previousPosition The position before MOVE was made.
  */
-- (void) undoMove: (NSNumber *) move toPosition: (Position) previousPosition
+- (void) undoMove: (NSNumber *) move toPosition: (GCPosition *) previousPosition
 {
 	[c4view undoMove: move];
     NSMutableArray *board = currentPosition.board;
@@ -280,7 +280,7 @@
 {
     Block_release(moveHandler);
     moveHandler = Block_copy(completionHandler);
-    [c4view startReceivingTouches];
+    c4view.touchesEnabled = YES;
 }
 
 /* Pause any ongoing tasks (such as server requests) */
