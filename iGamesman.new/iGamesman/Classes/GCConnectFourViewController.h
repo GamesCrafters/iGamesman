@@ -28,7 +28,7 @@
 	int pieces;						///< The number in a row needed to win
 	BOOL touchesEnabled;
     
-    CGRect frame;
+    CGRect viewRect;
 }
 
 @property (nonatomic, assign) BOOL touchesEnabled;

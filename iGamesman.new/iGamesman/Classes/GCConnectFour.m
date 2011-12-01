@@ -297,7 +297,8 @@
 /* Legacy methods */
 - (void) postHumanMove: (NSString *) move
 {
-    NSLog(@"GCConnectFour's postHumanMove:%@ called.", move);
+    c4view.touchesEnabled = NO;
+    moveHandler(move);
 }
 - (void) postReady
 {
