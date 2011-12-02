@@ -60,7 +60,7 @@
 	moveHandler(move);
 }
 
-- (Position) doMove: (GCMove *) move{
+- (void) doMove: (GCMove *) move{
 	[othView doMove:move];
 	if  ([move intValue] != -1) {
 		NSMutableArray *oldBoard = [[NSMutableArray alloc] initWithCapacity: 3];
@@ -92,6 +92,7 @@
         [othView updateLabels];
         [othView updateServerDataWithService: service];
     }
+	return board;
 }
 
 - (void) undoMove: (GCMove *) move toPosition: (GCPosition *) previousPosition{

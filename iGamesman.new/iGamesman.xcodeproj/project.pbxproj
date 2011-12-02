@@ -87,6 +87,7 @@
 		816816321483E9620097F101 /* GCOthello.m in Sources */ = {isa = PBXBuildFile; fileRef = 8168162D1483E9620097F101 /* GCOthello.m */; };
 		816816331483E9620097F101 /* GCOthelloView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8168162F1483E9620097F101 /* GCOthelloView.m */; };
 		816816341483E9620097F101 /* GCOthelloViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 816816311483E9620097F101 /* GCOthelloViewController.m */; };
+		81AFF89C14897B81005F7DE6 /* othblackbar.png in Resources */ = {isa = PBXBuildFile; fileRef = 81AFF89B14897B81005F7DE6 /* othblackbar.png */; };
 		D707701714366079006C56F6 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = D707701214366079006C56F6 /* Default.png */; };
 		D707701814366079006C56F6 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D707701314366079006C56F6 /* Default@2x.png */; };
 		D707701914366079006C56F6 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D707701414366079006C56F6 /* Icon.png */; };
@@ -226,6 +227,7 @@
 		8168162F1483E9620097F101 /* GCOthelloView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCOthelloView.m; sourceTree = "<group>"; };
 		816816301483E9620097F101 /* GCOthelloViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCOthelloViewController.h; sourceTree = "<group>"; };
 		816816311483E9620097F101 /* GCOthelloViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCOthelloViewController.m; sourceTree = "<group>"; };
+		81AFF89B14897B81005F7DE6 /* othblackbar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = othblackbar.png; sourceTree = "<group>"; };
 		D707701214366079006C56F6 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = SOURCE_ROOT; };
 		D707701314366079006C56F6 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = SOURCE_ROOT; };
 		D707701414366079006C56F6 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = SOURCE_ROOT; };
@@ -404,6 +406,7 @@
 		816816171483E91D0097F101 /* Othello */ = {
 			isa = PBXGroup;
 			children = (
+				81AFF89B14897B81005F7DE6 /* othblackbar.png */,
 				8168161A1483E93A0097F101 /* othfelt.png */,
 				8168161B1483E93A0097F101 /* othfelt2.png */,
 				8168161C1483E93A0097F101 /* othlose.png */,
@@ -744,6 +747,7 @@
 				D7F79D371486F6A000EAF729 /* C4GridTopYellow.png in Resources */,
 				D7F79D381486F6A000EAF729 /* C4O.png in Resources */,
 				D7F79D391486F6A000EAF729 /* C4X.png in Resources */,
+				81AFF89C14897B81005F7DE6 /* othblackbar.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
