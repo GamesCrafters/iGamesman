@@ -370,7 +370,7 @@
     self.view = [[UIView alloc] initWithFrame: viewRect];
 //	self.view.backgroundColor = [UIColor colorWithRed: 0 green: 0 blue: 102.0/256.0 alpha: 0.3];
 	
-	float squareSize = MIN(236.0 / (height + 1), 380.0 / width);
+    float squareSize = MIN((viewRect.size.height - 16) / (height + 1), viewRect.size.width / width);
 	
 	UIImage *gridImg = [UIImage imageNamed: @"C4Grid.png"];
 	int tagNum = 1;
@@ -400,8 +400,8 @@
 		[self.view insertSubview: B atIndex: 0];
 	}
 	
-	message = [[UILabel alloc] initWithFrame: CGRectMake(10 + width * squareSize, 3, 
-                                                         viewRect.size.width - (10 + width * squareSize), 250)];
+	message = [[UILabel alloc] initWithFrame: CGRectMake(10 + width * squareSize, 0, 
+                                                         viewRect.size.width - (10 + width * squareSize), viewRect.size.height)];
 	message.backgroundColor = [UIColor clearColor];
 	message.textColor = [UIColor whiteColor];
 	message.textAlignment = UITextAlignmentCenter;
