@@ -100,7 +100,7 @@
 		
 		[game postReady];
 	}
-//	[self updateLabels];
+	[self updateLabels];
 }
 
 
@@ -368,13 +368,9 @@
     [super viewDidLoad];
     
     self.view = [[UIView alloc] initWithFrame: viewRect];
-	self.view.backgroundColor = [UIColor colorWithRed: 0 green: 0 blue: 102.0/256.0 alpha: 1];
+//	self.view.backgroundColor = [UIColor colorWithRed: 0 green: 0 blue: 102.0/256.0 alpha: 0.3];
 	
-	float squareSize;
-	if ([self interfaceOrientation] == UIInterfaceOrientationPortrait)
-		squareSize = MIN(300.0 / width, 356.0 / (height + 1));
-	else
-		squareSize = MIN(236.0 / (height + 1), 380.0 / width);
+	float squareSize = MIN(236.0 / (height + 1), 380.0 / width);
 	
 	UIImage *gridImg = [UIImage imageNamed: @"C4Grid.png"];
 	int tagNum = 1;
@@ -404,12 +400,8 @@
 		[self.view insertSubview: B atIndex: 0];
 	}
 	
-	if ([self interfaceOrientation] == UIInterfaceOrientationPortrait)
-		message = [[UILabel alloc] initWithFrame: CGRectMake(20, 25 + (height + 0.5) * squareSize, 
-                                                             280, 416 - (45 + height * squareSize))];
-	else
-		message = [[UILabel alloc] initWithFrame: CGRectMake(10 + width * squareSize, 3, 
-                                                             480 - (10 + width * squareSize), 250)];
+	message = [[UILabel alloc] initWithFrame: CGRectMake(10 + width * squareSize, 3, 
+                                                         viewRect.size.width - (10 + width * squareSize), 250)];
 	message.backgroundColor = [UIColor clearColor];
 	message.textColor = [UIColor whiteColor];
 	message.textAlignment = UITextAlignmentCenter;
