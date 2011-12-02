@@ -17,6 +17,9 @@
 	GCOthello				*game;
 	BOOL					touchesEnabled;
     GCJSONService			*service;
+	int						boardWidth;
+	CGFloat					squareSize;
+	CGFloat					xOffset;
 }
 
 @property (nonatomic, assign) BOOL touchesEnabled;

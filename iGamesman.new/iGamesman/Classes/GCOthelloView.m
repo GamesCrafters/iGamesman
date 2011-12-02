@@ -26,16 +26,25 @@
 	
 	CGFloat w = self.bounds.size.width;
 	CGFloat h = self.bounds.size.height;
+	CGFloat squareSize, xOffset;
+	int boardWidth;
 	
-	CGFloat size = MIN((w-(2*PADDING))/cols, (h- (80+PADDING))/rows);
-	int boardWidth = size*rows;
-	CGFloat xOffset = (w - boardWidth)/2.0;
+	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad){
+		squareSize = MIN((w - PADDING*2)/cols, (h-80)/(1.0*rows));
+		boardWidth = squareSize*rows;
+		xOffset = (w - boardWidth)/2.0;
+	}
+    else{
+		squareSize = MIN((w - PADDING*2)/cols, h/(1.0*rows));
+		boardWidth = squareSize*rows;
+		xOffset = (w - boardWidth - 50)/2.0;
+	}
 	
 	CGContextRef ctx = UIGraphicsGetCurrentContext();
 	
 	//Making Green Rectangle Background
 	UIImage *bg = [UIImage imageNamed: @"othfelt.png"];
-	[bg drawInRect:CGRectMake(xOffset + PADDING, PADDING, cols*size, rows*size)];
+	[bg drawInRect:CGRectMake(xOffset + PADDING, PADDING, cols*squareSize, rows*squareSize)];
 	
 	//Draw lines within Rectangle
 	
@@ -43,13 +52,13 @@
 	CGContextSetRGBStrokeColor(ctx, 0, .1, 0, 0.7);
 	
 	for (int i = 0; i <= cols; i += 1) {
-		CGContextMoveToPoint(ctx, xOffset + PADDING + size * i, PADDING);
-		CGContextAddLineToPoint(ctx, xOffset + PADDING + size * i, PADDING + size * rows);
+		CGContextMoveToPoint(ctx, xOffset + PADDING + squareSize * i, PADDING);
+		CGContextAddLineToPoint(ctx, xOffset + PADDING + squareSize * i, PADDING + squareSize * rows);
 	}
 	
 	for (int j = 0; j <= rows; j += 1) {
-		CGContextMoveToPoint(ctx, xOffset + PADDING, PADDING + size * j);
-		CGContextAddLineToPoint(ctx, xOffset + PADDING + size * cols, PADDING + size * j);
+		CGContextMoveToPoint(ctx, xOffset + PADDING, PADDING + squareSize * j);
+		CGContextAddLineToPoint(ctx, xOffset + PADDING + squareSize * cols, PADDING + squareSize * j);
 	}
 	
 	CGContextStrokePath(ctx);

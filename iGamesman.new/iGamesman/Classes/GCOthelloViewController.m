@@ -85,20 +85,13 @@
 
 
 - (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-	if (touchesEnabled) {		
-		CGFloat w = self.view.bounds.size.width;
-		CGFloat h = self.view.bounds.size.height;
-		
-		CGFloat size = MIN((w - 2*PADDING)/game.cols, (h - 80+PADDING)/game.rows);
-		int boardWidth = size*game.rows;
-		CGFloat xOffset = (w - boardWidth)/2.0;
-		
+	if (touchesEnabled) {
 		UITouch *theTouch = [touches anyObject];
 		CGPoint loc = [theTouch locationInView: self.view];
 		
-		if (CGRectContainsPoint(CGRectMake(xOffset + PADDING, PADDING, size * game.cols, size * game.rows), loc)) {
-			int col = (loc.x - xOffset - PADDING) / size;
-			int row = (loc.y - PADDING) / size;
+		if (CGRectContainsPoint(CGRectMake(xOffset + PADDING, PADDING, squareSize * game.cols, squareSize * game.rows), loc)) {
+			int col = (loc.x - xOffset - PADDING) / squareSize;
+			int row = (loc.y - PADDING) / squareSize;
 			int pos = col + row*game.cols;
 			NSArray *myFlips = [game getFlips:pos];
 			NSLog(@"%d", [myFlips count]);
@@ -208,13 +201,8 @@
 	if([move intValue] != -1) {
 		int col = [move intValue] % game.cols;
 		int row = [move intValue] / game.cols;
-		CGFloat w = self.view.bounds.size.width;
-		CGFloat h = self.view.bounds.size.height;
-		CGFloat size = MIN((w - 2*PADDING)/game.cols, (h - 80+PADDING)/game.rows);
-		int boardWidth = size*game.rows;
-		CGFloat xOffset = (w - boardWidth)/2.0;
 		
-		CGRect rect = CGRectMake(xOffset + PADDING + col * size,  PADDING + row * size, size, size);
+		CGRect rect = CGRectMake(xOffset + PADDING + col * squareSize,  PADDING + row * squareSize, squareSize, squareSize);
 		NSArray *myFlips = [game getFlips:(col + row*game.cols)];
 		UIImageView *piece = [[UIImageView alloc] initWithImage: [UIImage imageNamed: game.leftPlayerTurn ? @"othsimpleblack.png" : @"othsimplewhite.png"]];
 		[piece setFrame: rect];
@@ -251,7 +239,7 @@
 		UIImageView *blackbar = (UIImageView *)[self.view viewWithTag:10000];
 		[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
 		[UIView setAnimationDuration:1.0];
-		[blackbar setFrame:CGRectMake(xOffset + PADDING, PADDING + game.rows*size, (game.rows*size - 2*PADDING)*leftPlayerPieces/(leftPlayerPieces + rightPlayerPieces), 10)];
+		[blackbar setFrame:CGRectMake(xOffset + PADDING, PADDING + game.rows*squareSize, (game.rows*squareSize - 2*PADDING)*leftPlayerPieces/(leftPlayerPieces + rightPlayerPieces), 10)];
 		[UIView commitAnimations];
 	} 
 }
@@ -295,16 +283,10 @@
 	leftPlayerscore.text = [NSString stringWithFormat:@"%d", leftPlayerPieces] ;
 	rightPlayerscore.text = [NSString stringWithFormat:@"%d", rightPlayerPieces];
 	
-	CGFloat w = self.view.bounds.size.width;
-	CGFloat h = self.view.bounds.size.height;
-	CGFloat size = MIN((w - 2*PADDING)/game.cols, (h - 80+PADDING)/game.rows);
-	int boardWidth = size*game.rows;
-	CGFloat xOffset = (w - boardWidth)/2.0;
-	
 	UIImageView *blackbar = (UIImageView *)[self.view viewWithTag:10000];
 	[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
 	[UIView setAnimationDuration:1.0];
-	[blackbar setFrame:CGRectMake(xOffset + PADDING, PADDING + game.rows*size, (boardWidth - 2*PADDING)*leftPlayerPieces/(leftPlayerPieces + rightPlayerPieces), 10)];
+	[blackbar setFrame:CGRectMake(xOffset + PADDING, PADDING + game.rows*squareSize, (boardWidth - 2*PADDING)*leftPlayerPieces/(leftPlayerPieces + rightPlayerPieces), 10)];
 	
 	[UIView commitAnimations];
 	[UIView commitAnimations];
@@ -313,78 +295,122 @@
 
 // Implement loadView to create a view hierarchy programmatically, without using a nib.
 - (void)loadView: (CGRect) frame{
-	//self.view = [[GCOthelloView alloc] initWithFrame: CGRectMake(125, 5, 245, 320) andRows: game.rows andCols: game.cols];
 	self.view = [[GCOthelloView alloc] initWithFrame: frame andRows: game.rows andCols: game.cols];
-	//CGRectMake(0, 0, 320, 416)
 	CGFloat w = self.view.bounds.size.width;
 	CGFloat h = self.view.bounds.size.height;
 
-	CGFloat size = MIN((w - PADDING*2)/game.cols, (h - (80+ PADDING))/game.rows);
-
-	int boardWidth = size*game.rows;
-	CGFloat xOffset = (w - boardWidth)/2.0;
-	int col = game.cols/2 -1;
-	int row = game.rows/2 -1;
+	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad){
+		squareSize = MIN((w - PADDING*2)/game.cols, (h-80)/(1.0*game.rows));
+		boardWidth = squareSize*game.rows;
+		xOffset = (w - boardWidth)/2.0;
+	}
+    else{
+		squareSize = MIN((w - PADDING*2)/game.cols, h/(1.0*game.rows));
+		boardWidth = squareSize*game.rows;
+		xOffset = (w - boardWidth - 50)/2.0;
+	}
+	
+	int col = game.cols/2 - 1;
+	int row = game.rows/2 - 1;
 	
 	UIImageView *piece1 = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"othsimpleblack.png"]];
 	UIImageView *piece2 = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"othsimplewhite.png"]];
 	
 	UIImageView *piece3 = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"othsimplewhite.png"]];
 	UIImageView *piece4 = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"othsimpleblack.png"]];
-	[piece1 setFrame: CGRectMake(xOffset + PADDING + col * size, PADDING + row * size, size, size)];
+	[piece1 setFrame: CGRectMake(xOffset + PADDING + col * squareSize, PADDING + row * squareSize, squareSize, squareSize)];
 	piece1.tag = 1000 + row*game.cols + col;
 	[self.view addSubview: piece1];
-	[piece2 setFrame: CGRectMake(xOffset + PADDING + (col+1) * size, PADDING + row * size, size, size)];
+	[piece2 setFrame: CGRectMake(xOffset + PADDING + (col+1) * squareSize, PADDING + row * squareSize, squareSize, squareSize)];
 	piece2.tag = 1000 + row*game.cols + col +1;
 	[self.view addSubview: piece2];
-	[piece3 setFrame: CGRectMake(xOffset + PADDING + col * size, PADDING + (row +1) * size, size, size)];
+	[piece3 setFrame: CGRectMake(xOffset + PADDING + col * squareSize, PADDING + (row +1) * squareSize, squareSize, squareSize)];
 	piece3.tag = 1000 + (row+1)*game.cols + col;
 	[self.view addSubview: piece3];
-	[piece4 setFrame: CGRectMake(xOffset + PADDING + (col +1) * size, PADDING + (row+1) * size, size, size)];
+	[piece4 setFrame: CGRectMake(xOffset + PADDING + (col +1) * squareSize, PADDING + (row+1) * squareSize, squareSize, squareSize)];
 	piece4.tag = 1000 + (row+1)*game.cols + col+1;
 	[self.view addSubview: piece4];
     
+	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad){
+		//Turn
+		UIImageView *piecet = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"othsimpleblack.png"]];
+		[piecet setFrame: CGRectMake(xOffset + (boardWidth-50)/ 2.0, boardWidth + 10.0, 50, 50)];
+		piecet.tag = 999;
+		[self.view addSubview: piecet];
+		
+		UILabel *turnLabel = [[UILabel alloc] initWithFrame:CGRectMake(xOffset + PADDING, boardWidth + 40.0 , boardWidth, 50)];
+		turnLabel.textAlignment = UITextAlignmentCenter;
+		turnLabel.text = @"Turn";
+		turnLabel.tag = 2000;
+		turnLabel.textColor = [UIColor whiteColor];
+		turnLabel.backgroundColor = [UIColor clearColor];
+		[self.view addSubview:turnLabel];
+		//Player Scores
+		UIImageView *pieceblack = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"othsimpleblack.png"]];
+		[pieceblack setFrame: CGRectMake(xOffset + PADDING, boardWidth + 10.0, 50, 50)];
+		[self.view addSubview:pieceblack];
+		UILabel *leftPlayerscore = [[UILabel alloc] initWithFrame:CGRectMake(xOffset + PADDING, boardWidth + 10.0, 50, 50)];
+		leftPlayerscore.tag = 899;
+		leftPlayerscore.textAlignment = UITextAlignmentCenter;
+		leftPlayerscore.backgroundColor = [UIColor clearColor];
+		leftPlayerscore.textColor = [UIColor whiteColor];
+		leftPlayerscore.text = [NSString stringWithFormat:@"%d", game.leftPlayerPieces];
+		[self.view addSubview:leftPlayerscore];
+		
+		UIImageView *piecewhite = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"othsimplewhite.png"]];
+		[piecewhite setFrame: CGRectMake(xOffset + boardWidth - (2*PADDING) - 50, boardWidth + 10.0, 50, 50)];
+		[self.view addSubview:piecewhite];
+		UILabel *rightPlayerscore = [[UILabel alloc] initWithFrame:CGRectMake(xOffset + boardWidth-PADDING-50, boardWidth + 10.0, 50, 50)];
+		rightPlayerscore.tag = 799;
+		rightPlayerscore.textAlignment = UITextAlignmentCenter;
+		rightPlayerscore.backgroundColor = [UIColor clearColor];
+		rightPlayerscore.textColor = [UIColor blackColor];
+		rightPlayerscore.text = [NSString stringWithFormat:@"%d", game.rightPlayerPieces];
+		[self.view addSubview:rightPlayerscore];
+	}
+    else{
+		//Turn
+		UIImageView *piecet = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"othsimpleblack.png"]];
+		[piecet setFrame: CGRectMake(xOffset + boardWidth, boardWidth/2.0 - 25, 50, 50)];
+		piecet.tag = 999;
+		[self.view addSubview: piecet];
+		
+		UILabel *turnLabel = [[UILabel alloc] initWithFrame:CGRectMake(xOffset, boardWidth + 10, boardWidth, 20)];
+		turnLabel.textAlignment = UITextAlignmentCenter;
+		turnLabel.text = @"Turn";
+		turnLabel.tag = 2000;
+		turnLabel.textColor = [UIColor whiteColor];
+		turnLabel.backgroundColor = [UIColor clearColor];
+		[self.view addSubview:turnLabel];
+		//Player Scores
+		UIImageView *pieceblack = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"othsimpleblack.png"]];
+		[pieceblack setFrame: CGRectMake(xOffset + boardWidth, 0, 50, 50)];
+		[self.view addSubview:pieceblack];
+		UILabel *leftPlayerscore = [[UILabel alloc] initWithFrame:CGRectMake(xOffset + boardWidth, 0, 50, 50)];
+		leftPlayerscore.tag = 899;
+		leftPlayerscore.textAlignment = UITextAlignmentCenter;
+		leftPlayerscore.backgroundColor = [UIColor clearColor];
+		leftPlayerscore.textColor = [UIColor whiteColor];
+		leftPlayerscore.text = [NSString stringWithFormat:@"%d", game.leftPlayerPieces];
+		[self.view addSubview:leftPlayerscore];
+		
+		UIImageView *piecewhite = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"othsimplewhite.png"]];
+		[piecewhite setFrame: CGRectMake(xOffset + boardWidth, boardWidth - 50, 50, 50)];
+		[self.view addSubview:piecewhite];
+		UILabel *rightPlayerscore = [[UILabel alloc] initWithFrame:CGRectMake(xOffset + boardWidth, boardWidth - 50, 50, 50)];
+		rightPlayerscore.tag = 799;
+		rightPlayerscore.textAlignment = UITextAlignmentCenter;
+		rightPlayerscore.backgroundColor = [UIColor clearColor];
+		rightPlayerscore.textColor = [UIColor blackColor];
+		rightPlayerscore.text = [NSString stringWithFormat:@"%d", game.rightPlayerPieces];
+		[self.view addSubview:rightPlayerscore];
+	}
 	
-	//Turn
-	UIImageView *piecet = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"othsimpleblack.png"]];
-	[piecet setFrame: CGRectMake(xOffset + (boardWidth-50)/ 2.0, boardWidth + 10.0, 50, 50)];
-	piecet.tag = 999;
-	[self.view addSubview: piecet];
-	
-	UILabel *turnLabel = [[UILabel alloc] initWithFrame:CGRectMake(xOffset + PADDING, boardWidth + 40.0 , boardWidth, 50)];
-    turnLabel.textAlignment = UITextAlignmentCenter;
-	turnLabel.text = @"Turn";
-    turnLabel.tag = 2000;
-	turnLabel.textColor = [UIColor whiteColor];
-	turnLabel.backgroundColor = [UIColor clearColor];
-	[self.view addSubview:turnLabel];
-	//Player Scores
-	UIImageView *pieceblack = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"othsimpleblack.png"]];
-	[pieceblack setFrame: CGRectMake(xOffset + PADDING, boardWidth + 10.0, 50, 50)];
-	[self.view addSubview:pieceblack];
-	UILabel *leftPlayerscore = [[UILabel alloc] initWithFrame:CGRectMake(xOffset + PADDING, boardWidth + 10.0, 50, 50)];
-	leftPlayerscore.tag = 899;
-    leftPlayerscore.textAlignment = UITextAlignmentCenter;
-	leftPlayerscore.backgroundColor = [UIColor clearColor];
-	leftPlayerscore.textColor = [UIColor whiteColor];
-	leftPlayerscore.text = [NSString stringWithFormat:@"%d", game.leftPlayerPieces];
-	[self.view addSubview:leftPlayerscore];
-	
-	UIImageView *piecewhite = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"othsimplewhite.png"]];
-	[piecewhite setFrame: CGRectMake(xOffset + boardWidth - (2*PADDING) - 50, boardWidth + 10.0, 50, 50)];
-	[self.view addSubview:piecewhite];
-	UILabel *rightPlayerscore = [[UILabel alloc] initWithFrame:CGRectMake(xOffset + boardWidth-PADDING-50, boardWidth + 10.0, 50, 50)];
-	rightPlayerscore.tag = 799;
-    rightPlayerscore.textAlignment = UITextAlignmentCenter;
-	rightPlayerscore.backgroundColor = [UIColor clearColor];
-	rightPlayerscore.textColor = [UIColor blackColor];
-	rightPlayerscore.text = [NSString stringWithFormat:@"%d", game.rightPlayerPieces];
-	[self.view addSubview:rightPlayerscore];
 	
 	// Legal Moves
 	for (int i=0; i<game.cols; i+=1) {
 		for	(int j=0; j<game.rows; j+=1) {
-			UIImageView *newView = [[UIImageView alloc] initWithFrame:CGRectMake(xOffset + PADDING + i*size + size/3, PADDING + j*size + size/3, size/3, size/3)];
+			UIImageView *newView = [[UIImageView alloc] initWithFrame:CGRectMake(xOffset + PADDING + i*squareSize + squareSize/3, PADDING + j*squareSize + squareSize/3, squareSize/3, squareSize/3)];
 			newView.tag = 5000 + i + j*game.cols;
 			[newView setImage:[UIImage imageNamed:@"othrec.png"]];
 			[newView setHidden: YES];
@@ -393,11 +419,11 @@
 	}
 
 	// Sliding Bar
-	UIImageView *whitebar = [[UIImageView alloc] initWithFrame: CGRectMake(xOffset + PADDING, PADDING + game.rows*size , boardWidth - 2*PADDING, 10)];
+	UIImageView *whitebar = [[UIImageView alloc] initWithFrame: CGRectMake(xOffset + PADDING, PADDING + game.rows*squareSize , boardWidth - 2*PADDING, 10)];
 	[whitebar setImage:[UIImage imageNamed:@"othwhitebar.png"]];
 	[self.view addSubview:whitebar];
 	
-	UIImageView *blackbar = [[UIImageView alloc] initWithFrame: CGRectMake(xOffset + PADDING, PADDING + game.rows*size , boardWidth/2 - 2*PADDING, 10)];
+	UIImageView *blackbar = [[UIImageView alloc] initWithFrame: CGRectMake(xOffset + PADDING, PADDING + game.rows*squareSize , boardWidth/2 - 2*PADDING, 10)];
 	[blackbar setImage:[UIImage imageNamed:@"othblackbar.png"]];
 	blackbar.tag = 10000;
 	[self.view addSubview:blackbar];
