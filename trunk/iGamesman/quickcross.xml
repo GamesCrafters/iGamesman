@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<game>
+  <name>Quick Cross</name>
+  <code>quickcross</code>
+  <history>In 1997,Quick Cross was made by the Great American Trading Company.</history>
+  <board>A 4x4 board with a cross shape in each space.</board>
+  <pieces>Each player has 8 pieces each.</pieces>
+  <tomove>Players either place a piece or switch the direction of the piece in subsequent moves.</tomove>
+  <towin>The first person to get four in a row vertically, horizontally or diagonally wins.</towin>
+  <rules>The first player places one of the sixteen pieces on the board in any direction. The next player then either adds a piece or switches the direction of a piece on the board. Play continues until one person gets four in a row horizontally, vertically or diagonally.</rules>
+  <strategies/>
+  <variants>
+    <variant>
+      <name>Misere</name>
+      <description>To force your opponent into getting four in a row either vertically, horizontally or diagonally.</description>
+    </variant>
+    <variant>
+      <name>Corners And Diagonals</name>
+      <description>The player to score all four corners or diagonals wins.</description>
+    </variant>
+  </variants>
+  <alternates/>
+  <pictures/>
+  <references>
+    <reference>Quick Cross: The Strategy Game. The Great American Trading Company. 1997.</reference>
+  </references>
+  <links/>
+  <gamescrafters>
+    <gamescrafter>Thomas Yiu</gamescrafter>
+  </gamescrafters>
+</game>

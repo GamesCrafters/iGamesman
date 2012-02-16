@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>name</key>
+		<string>Connect 4</string>
+		<key>image</key>
+		<string>connect4.png</string>
+		<key>class</key>
+		<string>GCConnectFour</string>
+		<key>xml</key>
+		<string>connect4</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Connections</string>
+		<key>image</key>
+		<string>connections.png</string>
+		<key>class</key>
+		<string>GCConnections</string>
+		<key>xml</key>
+		<string>connections</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Othello</string>
+		<key>image</key>
+		<string>othello.png</string>
+		<key>class</key>
+		<string>GCOthello</string>
+		<key>xml</key>
+		<string>othello</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Quarto</string>
+		<key>image</key>
+		<string>quarto.png</string>
+		<key>class</key>
+		<string>GCQuarto</string>
+		<key>xml</key>
+		<string>quarto</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Quick Cross</string>
+		<key>image</key>
+		<string>quickcross.png</string>
+		<key>class</key>
+		<string>GCQuickCross</string>
+		<key>xml</key>
+		<string>quickcross</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Tic-Tac-Toe</string>
+		<key>image</key>
+		<string>tictactoe.png</string>
+		<key>class</key>
+		<string>GCTicTacToe</string>
+		<key>xml</key>
+		<string>tictactoe</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Y</string>
+		<key>image</key>
+		<string>y.png</string>
+		<key>class</key>
+		<string>GCYGame</string>
+	</dict>
+</array>
+</plist>

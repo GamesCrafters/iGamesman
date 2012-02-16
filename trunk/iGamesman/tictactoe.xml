@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<game>
+  <name>Tic-Tac-Toe</name>
+  <code>tictactoe</code>
+  <history>Tic-tac-toe, also know as Naughts and Crosses, is one of the most widely known games. Found everywhere from the temples of ancient Egypt to the medieval cathedrals of England, tic-tac-toe has entertained people for centuries. While tic-tac-toe is now considered to be a child's game, it was not always the case. In the past, the game was linked to pagan rituals dedicated to the magic properties of the nine-square grid. The grid was known as the Magic Square because the numbers 1-9 could be arranged so that their sum is the same horizontally, diagonally or vertically. During the Middle Ages, the Magic Square was known by secret societies as the Cabala of the Nine Chambers. They believed that the Magic Square held a numerological message about the world. Today, the game is more known as a simple childhood pastime. While in the United States, the game is known as tic-tac-toe, the original name of "Tit-Tat-Toe" comes to us from the 16th century. Tit by itself means to slap and a "tit for tat" is retaliation. Toe, which is the third piece placed makes the winning combination by securing the other two pieces. Recently tic-tac-toe reached stardom on the big screen in the Hollywood film Wargames, where tic-tac-toe was used to teach a super-computer about no-win situations.</history>
+  <board>Tic Tac Toe can be played on almost any surface where players can either place or draw pieces. The game board is made by drawing two parallel vertical lines, then dividing the 2 lines into thirds with two horizontal lines. The end result should be a grid with nine equal squares.</board>
+  <pieces>Each player has five pieces. These pieces can be drawn or placed such as pebbles on a beach. It does not matter what type of pieces are used as long as there are two different sets of pieces. Typically, if the pieces are drawn, one player marks X and the other player marks O.</pieces>
+  <tomove>Place your piece in an open square.</tomove>
+  <towin>Connect three in a row horizontally, vertically or diagonally.</towin>
+  <rules>Starting with a board of nine empty squares, two players alternate turns placing X’s and O’s in the empty squares.[img src="tictactoe_01.jpg" alt="tic tac toe" width="200"]&lt;br&gt;[img src="tictactoe_02.jpg" alt="tic tac toe" width="200"]The first player to connect three in a row, horizontally, vertically or diagonally wins. If there is no more room on the board and neither player has obtained three in a row, the game is a tie.</rules>
+  <strategies>
+    <strategy>
+      <name>General</name>
+      <description>While the game is a draw, there are certain strategies that can be utilized against an imperfect player. Try to place your pieces on 3 corners or on the center and two corners. In this way, you will set up a double win for yourself. On the next turn, your opponent can only stop you from making one of your rows. On your next turn you can complete the row for a win.</description>
+    </strategy>
+  </strategies>
+  <variants>
+    <variant>
+      <name>Misere</name>
+      <description>Force your opponent to connect three in a row either horizontally, vertically or diagonally.</description>
+    </variant>
+    <variant>
+      <name>Jam</name>
+      <description>Discussed in Berlekamp, Conway and Guy (1982), Jam was created by John Michon. Jam is different from tic-tac-toe in that the game is drawn with 8 towns connected by 9 straight roads. The winner is the first player to take all the roads through any one of the towns. This game is similar to tic-tac-toe.</description>
+    </variant>
+    <variant>
+      <name>Two-Part Tit-Tat-Toe</name>
+      <description>Each player has three pieces which they place on the board. Players alternate turns in an attempt to make three in a row. However, once all pieces are placed, each player alternates sliding pieces to an empty square. Each player may move their piece either horizontally, vertically or diagonally. The game ends when a player gets three in a row or the game ends in a stalemate.</description>
+    </variant>
+    <variant>
+      <name>Two-Part Tit-Tat-Toe With Jumps</name>
+      <description>Similar rules to Two-Part-Tit-Tat-Toe except that players are allowed to jump over their opponent's pieces to land in an empty square adjacent to their opponent's piece.</description>
+    </variant>
+    <variant>
+      <name>Three-Dimensional Tit-Tat-Toe</name>
+      <description>3 boards are drawn one on top of each other. Players attempt to either make three in a row horizontally, vertically or diagonally on any one of the grids or through all three grids.</description>
+    </variant>
+  </variants>
+  <alternates>
+    <alternate>Noughts And Crosses</alternate>
+    <alternate>Tit-tat-toe</alternate>
+  </alternates>
+  <pictures/>
+  <references>
+    <reference>E.R.Berlekamp, J.H.Conway, R.K.Guy. Winning Ways for Your Mathematical Plays. Academic Press, 1982.</reference>
+    <reference>Bell, Robbie and Michael Cornelius. Board Games Round the World. New York: Cambridge University Press, 1988.</reference>
+  </references>
+  <links>
+    <link>
+      <url>http://nrich.maths.org/public/viewer.php?obj_id=1230&amp;part=index&amp;refpage=topten</url>
+      <description>NRICH: Mathematical Problems, Games And Articles</description>
+    </link>
+  </links>
+  <gamescrafters>
+    <gamescrafter>Dan Garcia</gamescrafter>
+  </gamescrafters>
+</game>

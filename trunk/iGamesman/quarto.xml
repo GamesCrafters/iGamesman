@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<game>
+  <name>Quarto</name>
+  <code>quarto</code>
+  <history>Quarto is published Gigamic.</history>
+  <board>4x4 board</board>
+  <pieces>There are 16 pieces, which have four different attributes: Height: large or small; Color: light or dark; Shape: square or circle; Solid or hollow.</pieces>
+  <tomove>Players alternate turns choosing a piece which their opponent will place on the board.</tomove>
+  <towin>The first person to get four pieces in a row along any one of the dimensions: height, color, shape, solid or hollow.</towin>
+  <rules>Players take turns selecting their opponent's piece. Once your opponent has selected a piece, you must place it on the board in any open spot. The first person to get four in a row, either diagonally, horizontally or vertically wins. The catch is that the pieces that are lined up must share the same attributes.</rules>
+  <strategies/>
+  <variants>
+    <variant>
+      <name>Board Size</name>
+      <description>Change the board dimensions to make it bigger or smaller</description>
+    </variant>
+  </variants>
+  <alternates/>
+  <pictures>
+    <picture>[img src="quarto_01.jpg" alt="quarto board" width="200"]</picture>
+    <picture>[img src="quarto_02.jpg" alt="quarto board" width="200"]</picture>
+    <picture>[img src="quarto_03.jpg" alt="quarto board" width="200"]</picture>
+    <picture>[img src="quarto_04.jpg" alt="quarto board" width="200"]</picture>
+    <picture>[img src="quarto_05.jpg" alt="quarto board" width="200"]</picture>
+  </pictures>
+  <references/>
+  <links>
+    <link>
+      <url>http://www.gigamic.com/index.php</url>
+      <description>Gigamic Games</description>
+    </link>
+  </links>
+  <gamescrafters>
+    <gamescrafter>Yanpei Chen</gamescrafter>
+    <gamescrafter>Amy Hsueh</gamescrafter>
+    <gamescrafter>Mario Tanev</gamescrafter>
+  </gamescrafters>
+</game>
