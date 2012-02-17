@@ -79,18 +79,6 @@
     }
     
     
-    if ([game respondsToSelector: @selector(isShowingDeltaRemoteness)] && [game respondsToSelector: @selector(setShowingDeltaRemoteness:)])
-    {
-        [deltaRemotenessSwitch setOn: [game isShowingDeltaRemoteness]];
-        [deltaRemotenessSwitch setEnabled: YES];
-    }
-    else
-    {
-        [deltaRemotenessSwitch setOn: NO];
-        [deltaRemotenessSwitch setEnabled: NO];
-    }
-    
-    
     if ([moveValueSwitch isOn])
     {
         [deltaRemotenessLabel setEnabled: YES];
@@ -99,6 +87,18 @@
     else
     {
         [deltaRemotenessLabel setEnabled: NO];
+        [deltaRemotenessSwitch setEnabled: NO];
+    }
+    
+    
+    if ([game respondsToSelector: @selector(isShowingDeltaRemoteness)] && [game respondsToSelector: @selector(setShowingDeltaRemoteness:)])
+    {
+        [deltaRemotenessSwitch setOn: [game isShowingDeltaRemoteness]];
+        [deltaRemotenessSwitch setEnabled: YES];
+    }
+    else
+    {
+        [deltaRemotenessSwitch setOn: NO];
         [deltaRemotenessSwitch setEnabled: NO];
     }
 }

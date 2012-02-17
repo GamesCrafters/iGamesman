@@ -30,6 +30,8 @@
         rightPlayer = nil;
         
         moveHandler = nil;
+        
+        moveValues = nil;
     }
     
     return self;
@@ -42,12 +44,52 @@
     [position release];
     [leftPlayer release];
     [rightPlayer release];
+    [moveValues release];
     
     [super dealloc];
 }
 
 
 #pragma mark - GCGame protocol
+
+- (NSString *) gcWebServiceName
+{
+    return @"connect4";
+}
+
+
+- (NSDictionary *) gcWebParameters
+{
+    NSNumber *width  = [NSNumber numberWithUnsignedInteger: position.columns];
+    NSNumber *height = [NSNumber numberWithUnsignedInteger: position.rows];
+    NSNumber *pieces = [NSNumber numberWithUnsignedInteger: position.toWin];
+    
+    NSArray *objs = [NSArray arrayWithObjects: width, height, pieces, nil];
+    NSArray *keys = [NSArray arrayWithObjects: @"width", @"height", @"pieces", nil];
+    
+    NSDictionary *params = [NSDictionary dictionaryWithObjects: objs forKeys: keys];
+    
+    return params;
+}
+
+
+- (NSString *) gcWebBoardString
+{
+    NSMutableString *boardString = [NSMutableString string];
+    
+    for (GCConnectFourPiece piece in position.board)
+    {
+        if ([piece isEqualToString: GCConnectFourRedPiece])
+            [boardString appendString: @"X"];
+        else if ([piece isEqualToString: GCConnectFourBluePiece])
+            [boardString appendString: @"O"];
+        else if ([piece isEqualToString: GCConnectFourBlankPiece])
+            [boardString appendString: @" "];
+    }
+    
+    return [boardString stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
+}
+
 
 - (UIView *) viewWithFrame: (CGRect) frame center: (CGPoint) center
 {
@@ -58,6 +100,41 @@
     [connectFourView setDelegate: self];
     [connectFourView setBackgroundCenter: center];
     return connectFourView;
+}
+
+
+- (void) gcWebReportedPositionValue: (NSString *) value remoteness: (NSInteger) remoteness
+{
+    
+}
+
+
+- (void) gcWebReportedValues: (NSArray *) values remotenesses: (NSArray *) remotenesses forMoves: (NSArray *) moves
+{
+    NSMutableArray *tempVals = [[NSMutableArray alloc] initWithCapacity: [position columns]];
+    for (NSUInteger i = 0; i < [position columns]; i += 1)
+        [tempVals addObject: GCGameValueUnknown];
+    
+    for (NSUInteger i = 0; i < [moves count]; i += 1)
+    {
+        NSString *moveString = [moves objectAtIndex: i];
+        GCGameValue *value = [values objectAtIndex: i];
+        
+        NSInteger column = [moveString integerValue];
+        
+        [tempVals replaceObjectAtIndex: column withObject: value];
+    }
+    
+    moveValues = tempVals;
+    
+    [connectFourView setNeedsDisplay];
+}
+
+
+- (GCMove *) moveForGCWebMove: (NSString *) gcWebMove
+{
+    NSInteger column = [gcWebMove integerValue];
+    return [NSNumber numberWithInteger: column];
 }
 
 
@@ -88,7 +165,7 @@
     if (position)
         [position release];
     
-    position = [[GCConnectFourPosition alloc] initWithWidth: 7 height: 6 toWin: 4];
+    position = [[GCConnectFourPosition alloc] initWithWidth: 5 height: 5 toWin: 4];
     position.leftTurn = YES;
 }
 
@@ -144,6 +221,9 @@
 		}
 		slot += position.columns;
 	}
+    
+    [moveValues release];
+    moveValues = nil;
 
     position.leftTurn = !position.leftTurn;
 }
@@ -265,6 +345,20 @@
 }
 
 
+- (BOOL) isShowingMoveValues
+{
+    return showMoveValues;
+}
+
+
+- (void) setShowingMoveValues: (BOOL) _moveValues
+{
+    showMoveValues = _moveValues;
+    
+    [connectFourView setNeedsDisplay];
+}
+
+
 #pragma mark - GCConnectFourViewDelegate
 
 - (GCConnectFourPosition *) position
@@ -277,6 +371,12 @@
 {
     [connectFourView stopReceivingTouches];
     moveHandler(column);
+}
+
+
+- (NSArray *) moveValues
+{
+    return moveValues;
 }
 
 @end

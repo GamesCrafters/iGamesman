@@ -39,4 +39,7 @@
 - (NSArray *) generateMoves;
 - (void) userChoseMove: (NSNumber *) column;
 
+- (BOOL) isShowingMoveValues;
+- (NSArray *) moveValues;
+
 @end

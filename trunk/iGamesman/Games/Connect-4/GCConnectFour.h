@@ -23,6 +23,11 @@
     GCMoveCompletionHandler moveHandler;
     
     GCConnectFourView *connectFourView;
+    
+    
+    BOOL showMoveValues;
+    
+    NSArray *moveValues;
 }
 
 @end

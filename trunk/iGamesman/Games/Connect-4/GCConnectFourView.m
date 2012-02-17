@@ -8,6 +8,8 @@
 
 #import "GCConnectFourView.h"
 
+#import "GCGame.h"
+
 #import "GCConnectFourPieceView.h"
 #import "GCConnectFourPosition.h"
 
@@ -305,19 +307,43 @@
     minX += (backgroundCenter.x - cellSize * position.columns / 2.0f);
     minY += (backgroundCenter.y - cellSize * position.rows / 2.0f);
     
+    
+    NSArray *moveValues = [delegate moveValues];
+    
     for (int i = 0; i < position.columns; i += 1)
     {
+        /* Draw move values at the top, if enabled */
+        if ([delegate isShowingMoveValues])
+        {
+            GCGameValue *value = [moveValues objectAtIndex: i];
+            
+            CGRect valueRect = CGRectMake(minX + cellSize * i, minY - (cellSize / 2.0f), cellSize, cellSize / 2.0f);
+            /* Expand in X direction by 1/2 pixel each side to overlap */
+            valueRect = CGRectInset(valueRect, -0.5f, 0);
+            
+            if ([value isEqualToString: GCGameValueWin])
+                CGContextSetRGBFillColor(ctx, 0, 1, 0, 1);
+            else if ([value isEqualToString: GCGameValueLose])
+                CGContextSetRGBFillColor(ctx, 139.0f / 255.0f, 0, 0, 1);
+            else if ([value isEqualToString: GCGameValueTie])
+                CGContextSetRGBFillColor(ctx, 1, 1, 0, 1);
+            else
+                CGContextSetRGBFillColor(ctx, 0, 0, 0, 0);
+            
+            CGContextFillRect(ctx, valueRect);
+        }
+        
         for (int j = 0; j < position.rows; j += 1)
         {
             CGMutablePathRef path = CGPathCreateMutable();
-            CGRect rect = CGRectMake(minX + cellSize * i, minY + cellSize * j, cellSize, cellSize);
+            CGRect cellRect = CGRectMake(minX + cellSize * i, minY + cellSize * j, cellSize, cellSize);
             /* Expand rectangle by a pixel to overlap them */
-            rect = CGRectInset(rect, -1, -1);
+            cellRect = CGRectInset(cellRect, -1, -1);
             
             /* Add the outer (square) boundary */
-            CGPathAddRect(path, NULL, rect);
+            CGPathAddRect(path, NULL, cellRect);
             /* Add the inner (circular) boundary */
-            CGPathAddEllipseInRect(path, NULL, CGRectInset(rect, cellSize * 0.15f, cellSize * 0.15f));
+            CGPathAddEllipseInRect(path, NULL, CGRectInset(cellRect, cellSize * 0.15f, cellSize * 0.15f));
             CGContextAddPath(ctx, path);
             
             /* Fill according to the even-odd rule */

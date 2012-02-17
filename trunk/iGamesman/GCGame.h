@@ -100,7 +100,7 @@ typedef NSString GCGameValue;
  *
  * @return The equivalent move, using the game object's representation.
  */
-- (GCMove *) moveForGCWebMove: (id) gcWebMove;
+- (GCMove *) moveForGCWebMove: (NSString *) gcWebMove;
 
 
 @required
