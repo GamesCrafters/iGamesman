@@ -25,9 +25,9 @@
     GCConnectFourView *connectFourView;
     
     
-    BOOL showMoveValues;
+    BOOL showMoveValues, showDeltaRemoteness;
     
-    NSArray *moveValues;
+    NSArray *moveValues, *remotenessValues;
 }
 
 @end

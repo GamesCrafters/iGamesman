@@ -309,6 +309,7 @@
     
     
     NSArray *moveValues = [delegate moveValues];
+    NSArray *remotenessValues = [delegate remotenessValues];
     
     for (int i = 0; i < position.columns; i += 1)
     {
@@ -316,21 +317,28 @@
         if ([delegate isShowingMoveValues])
         {
             GCGameValue *value = [moveValues objectAtIndex: i];
+            NSInteger remoteness = [[remotenessValues objectAtIndex: i] integerValue];
             
             CGRect valueRect = CGRectMake(minX + cellSize * i, minY - (cellSize / 2.0f), cellSize, cellSize / 2.0f);
             /* Expand in X direction by 1/2 pixel each side to overlap */
             valueRect = CGRectInset(valueRect, -0.5f, 0);
             
-            if ([value isEqualToString: GCGameValueWin])
-                CGContextSetRGBFillColor(ctx, 0, 1, 0, 1);
-            else if ([value isEqualToString: GCGameValueLose])
-                CGContextSetRGBFillColor(ctx, 139.0f / 255.0f, 0, 0, 1);
-            else if ([value isEqualToString: GCGameValueTie])
-                CGContextSetRGBFillColor(ctx, 1, 1, 0, 1);
-            else
-                CGContextSetRGBFillColor(ctx, 0, 0, 0, 0);
             
-            CGContextFillRect(ctx, valueRect);
+            if (![value isEqualToString: GCGameValueUnknown])
+            {
+                CGFloat alpha = 1;
+                if ([delegate isShowingDeltaRemoteness] && (remoteness != 0))
+                    alpha = 1.0f / log(remoteness + 1);
+                
+                if ([value isEqualToString: GCGameValueWin])
+                    CGContextSetRGBFillColor(ctx, 0, 1, 0, alpha);
+                else if ([value isEqualToString: GCGameValueLose])
+                    CGContextSetRGBFillColor(ctx, 139.0f / 255.0f, 0, 0, alpha);
+                else if ([value isEqualToString: GCGameValueTie])
+                    CGContextSetRGBFillColor(ctx, 1, 1, 0, alpha);
+                
+                CGContextFillRect(ctx, valueRect);
+            }
         }
         
         for (int j = 0; j < position.rows; j += 1)

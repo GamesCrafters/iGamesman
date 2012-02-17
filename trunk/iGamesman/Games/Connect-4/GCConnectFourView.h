@@ -41,5 +41,7 @@
 
 - (BOOL) isShowingMoveValues;
 - (NSArray *) moveValues;
+- (BOOL) isShowingDeltaRemoteness;
+- (NSArray *) remotenessValues;
 
 @end

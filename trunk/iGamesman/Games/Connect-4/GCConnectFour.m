@@ -31,7 +31,10 @@
         
         moveHandler = nil;
         
+        showMoveValues = showDeltaRemoteness = NO;
+        
         moveValues = nil;
+        remotenessValues = nil;
     }
     
     return self;
@@ -45,6 +48,7 @@
     [leftPlayer release];
     [rightPlayer release];
     [moveValues release];
+    [remotenessValues release];
     
     [super dealloc];
 }
@@ -91,18 +95,6 @@
 }
 
 
-- (UIView *) viewWithFrame: (CGRect) frame center: (CGPoint) center
-{
-    if (connectFourView)
-        [connectFourView release];
-    
-    connectFourView = [[GCConnectFourView alloc] initWithFrame: frame];
-    [connectFourView setDelegate: self];
-    [connectFourView setBackgroundCenter: center];
-    return connectFourView;
-}
-
-
 - (void) gcWebReportedPositionValue: (NSString *) value remoteness: (NSInteger) remoteness
 {
     
@@ -115,17 +107,25 @@
     for (NSUInteger i = 0; i < [position columns]; i += 1)
         [tempVals addObject: GCGameValueUnknown];
     
+    NSMutableArray *tempRemotes = [[NSMutableArray alloc] initWithCapacity: [position columns]];
+    for (NSUInteger i = 0; i < [position columns]; i += 1)
+        [tempRemotes addObject: [NSNumber numberWithInt: INT_MAX]];
+    
     for (NSUInteger i = 0; i < [moves count]; i += 1)
     {
         NSString *moveString = [moves objectAtIndex: i];
         GCGameValue *value = [values objectAtIndex: i];
+        NSNumber *remoteness = [remotenesses objectAtIndex: i];
+        
         
         NSInteger column = [moveString integerValue];
         
         [tempVals replaceObjectAtIndex: column withObject: value];
+        [tempRemotes replaceObjectAtIndex: column withObject: remoteness];
     }
     
     moveValues = tempVals;
+    remotenessValues = tempRemotes;
     
     [connectFourView setNeedsDisplay];
 }
@@ -135,6 +135,18 @@
 {
     NSInteger column = [gcWebMove integerValue];
     return [NSNumber numberWithInteger: column];
+}
+
+
+- (UIView *) viewWithFrame: (CGRect) frame center: (CGPoint) center
+{
+    if (connectFourView)
+        [connectFourView release];
+    
+    connectFourView = [[GCConnectFourView alloc] initWithFrame: frame];
+    [connectFourView setDelegate: self];
+    [connectFourView setBackgroundCenter: center];
+    return connectFourView;
 }
 
 
@@ -165,7 +177,7 @@
     if (position)
         [position release];
     
-    position = [[GCConnectFourPosition alloc] initWithWidth: 5 height: 5 toWin: 4];
+    position = [[GCConnectFourPosition alloc] initWithWidth: 6 height: 4 toWin: 4];
     position.leftTurn = YES;
 }
 
@@ -224,6 +236,9 @@
     
     [moveValues release];
     moveValues = nil;
+    
+    [remotenessValues release];
+    remotenessValues = nil;
 
     position.leftTurn = !position.leftTurn;
 }
@@ -359,6 +374,20 @@
 }
 
 
+- (BOOL) isShowingDeltaRemoteness
+{
+    return showDeltaRemoteness;
+}
+
+
+- (void) setShowingDeltaRemoteness: (BOOL) deltaRemoteness
+{
+    showDeltaRemoteness = deltaRemoteness;
+    
+    [connectFourView setNeedsDisplay];
+}
+
+
 #pragma mark - GCConnectFourViewDelegate
 
 - (GCConnectFourPosition *) position
@@ -377,6 +406,12 @@
 - (NSArray *) moveValues
 {
     return moveValues;
+}
+
+
+- (NSArray *) remotenessValues
+{
+    return remotenessValues;
 }
 
 @end
