@@ -142,6 +142,11 @@
     {
         [delegate positionRequestDidReceiveStatusOK: self];
     }
+    else if ([[resultObject objectForKey: @"status"] isEqualToString: @"error"])
+    {
+        [delegate positionRequest: self didFailWithError: [NSError errorWithDomain: @"Server reported error" code: 200 userInfo: nil]];
+        return;
+    }
     
     NSDictionary *response = [resultObject objectForKey: @"response"];
     

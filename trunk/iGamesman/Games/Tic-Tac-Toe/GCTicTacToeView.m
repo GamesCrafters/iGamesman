@@ -44,27 +44,22 @@
     
     CGPoint location = [[touches anyObject] locationInView: self];
     
+    CGFloat width  = self.bounds.size.width;
     CGFloat height = self.bounds.size.height;
     
-    CGFloat halfWidth  = backgroundCenter.x - self.bounds.origin.x;
-    CGFloat halfHeight = self.bounds.origin.y + height - backgroundCenter.y;
-    
-    CGFloat maxCellWidth  = (2 * halfWidth) / position.columns;
-    CGFloat maxCellHeight = (2 * halfHeight) / position.rows;
+    CGFloat maxCellWidth  = (width / position.columns);
+    CGFloat maxCellHeight = (height / position.rows);
     
     CGFloat cellSize = MIN(maxCellWidth, maxCellHeight);
     
-    CGFloat minX = CGRectGetMinX(self.bounds);
-    CGFloat minY = CGRectGetMinY(self.bounds);
-    
-    minX += (backgroundCenter.x - cellSize * position.columns / 2.0f);
-    minY += (backgroundCenter.y - cellSize * position.rows / 2.0f);
+    CGFloat originX = CGRectGetMinX(self.bounds) + (width - position.columns * cellSize) / 2.0f;
+    CGFloat originY = CGRectGetMinY(self.bounds) + (height - position.rows * cellSize) / 2.0f;
     
     for (int row = 0; row < position.rows; row += 1)
     {
         for (int column = 0; column < position.columns; column += 1)
         {
-            CGRect cellRect = CGRectMake(minX + column * cellSize, minY + row * cellSize, cellSize, cellSize);
+            CGRect cellRect = CGRectMake(originX + column * cellSize, originY + row * cellSize, cellSize, cellSize);
             
             if (CGRectContainsPoint(cellRect, location))
             {
@@ -135,8 +130,6 @@
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     
 #ifdef DEMO
-    CGContextSetRGBFillColor(ctx, 1, 0, 0, 1);
-    CGContextFillEllipseInRect(ctx, CGRectMake(backgroundCenter.x - 5, backgroundCenter.y - 5, 10, 10));
     CGContextSetRGBFillColor(ctx, 0, 0, 0, 0.5f);
     CGContextFillRect(ctx, self.bounds);
 #endif
@@ -146,43 +139,53 @@
     CGFloat width  = self.bounds.size.width;
     CGFloat height = self.bounds.size.height;
     
-    CGFloat halfWidth  = backgroundCenter.x - self.bounds.origin.x;
-    CGFloat halfHeight = self.bounds.origin.y + height - backgroundCenter.y;
-    
-    CGFloat maxCellWidth  = (2 * halfWidth) / position.columns;
-    CGFloat maxCellHeight = (2 * halfHeight) / position.rows;
+    CGFloat maxCellWidth  = (width / position.columns);
+    CGFloat maxCellHeight = (height / position.rows);
     
     CGFloat cellSize = MIN(maxCellWidth, maxCellHeight);
     
-    CGFloat minX = CGRectGetMinX(self.bounds);
-    CGFloat minY = CGRectGetMinY(self.bounds);
+    CGFloat originX = CGRectGetMinX(self.bounds) + (width - position.columns * cellSize) / 2.0f;
+    CGFloat originY = CGRectGetMinY(self.bounds) + (height - position.rows * cellSize) / 2.0f;
     
-    minX += (backgroundCenter.x - cellSize * position.columns / 2.0f);
-    minY += (backgroundCenter.y - cellSize * position.rows / 2.0f);
     
-    /* Vertical separators */
-    for (int i = 1; i < position.columns; i += 1)
-    {
-        CGContextMoveToPoint(ctx, minX + i * cellSize, minY);
-        CGContextAddLineToPoint(ctx, minX + i * cellSize, minY + position.rows * cellSize);
-    }
+    CGRect backgroundRect = CGRectMake(originX, originY, cellSize * position.columns, cellSize * position.rows);
+    
+    /* Background rectangle */
+    CGContextSetRGBFillColor(ctx, 0.5f, 0.5f, 0.5f, 1);
+    CGContextFillRect(ctx, backgroundRect);
+    
+    /* Inset the board inside the background rectangle (need to recompute originX/Y and cellSize) */
+    CGRect boardRect = CGRectInset(backgroundRect, cellSize * 0.05f, cellSize * 0.05f);
+    maxCellWidth = boardRect.size.width / position.columns;
+    maxCellHeight = boardRect.size.height / position.rows;
+    cellSize = MIN(maxCellWidth, maxCellHeight);
+    originX = CGRectGetMinX(self.bounds) + (width - position.columns * cellSize) / 2.0f;
+    originY = CGRectGetMinY(self.bounds) + (height - position.rows * cellSize) / 2.0f;
     
     /* Horizontal separators */
-    for (int j = 1; j < position.rows; j += 1)
+    for (NSUInteger i = 1; i < position.columns; i += 1)
     {
-        CGContextMoveToPoint(ctx, minX, minY + j * cellSize);
-        CGContextAddLineToPoint(ctx, minX + position.columns * cellSize, minY + j * cellSize);
+        CGContextMoveToPoint(ctx, originX + cellSize * i, originY);
+        CGContextAddLineToPoint(ctx, originX + cellSize * i, originY + position.rows * cellSize);
     }
     
+    /* Vertical separators */
+    for (NSUInteger j = 1; j < position.rows; j += 1)
+    {
+        CGContextMoveToPoint(ctx, originX, originY + cellSize * j);
+        CGContextAddLineToPoint(ctx, originX + cellSize * position.columns, originY + cellSize * j);
+    }
+    
+    /* Draw the separators */
     CGContextSetRGBStrokeColor(ctx, 1, 1, 1, 1);
-    CGContextSetLineWidth(ctx, width * 0.01f);
+    CGContextSetLineWidth(ctx, width / 100.0f);
     CGContextStrokePath(ctx);
     
     
     NSArray *moveValues = [delegate moveValues];
     NSArray *remotenessValues = [delegate remotenessValues];
     
-    
+    /* For each position in the board */
     for (NSUInteger i = 0; i < [position.board count]; i += 1)
     {
         GCTTTPiece piece = [position.board objectAtIndex: i];
@@ -192,7 +195,7 @@
         NSUInteger row = i / position.columns;
         NSUInteger column = i % position.columns;
         
-        CGRect cellRect = CGRectMake(minX + column * cellSize, minY + row * cellSize, cellSize, cellSize);
+        CGRect cellRect = CGRectMake(originX + column * cellSize, originY + row * cellSize, cellSize, cellSize);
         
         
         if (value && ![value isEqualToString: GCGameValueUnknown] && [delegate isShowingMoveValues])

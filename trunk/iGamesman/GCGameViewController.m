@@ -206,27 +206,31 @@
         {
             CGFloat width  = [[self view] bounds].size.width;
             CGFloat height = [[self view] bounds].size.height;
-            vvh = [[GCVVHView alloc] initWithFrame: CGRectMake(-(width / 4.0f), 0, width / 4.0f, height)];
+            
+            CGFloat vvhWidth = width / 4.0f;
+            
+            vvh = [[GCVVHView alloc] initWithFrame: CGRectMake(-(vvhWidth), 0, vvhWidth, height)];
             
             [self.view addSubview: vvh];
             
             
             CGFloat labelHeight = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? 80 : 50;
             CGRect sideBarRect = [sideBar frame];
-            CGRect gameRect = CGRectMake(width / 4.0f + sideBarRect.size.width, 0, width - (width / 4.0f + sideBarRect.size.width), height - labelHeight);
             
-            CGPoint center = CGPointMake(CGRectGetMidX(gameRect), CGRectGetMidY(gameRect));
-            CGPoint convertedCenter = CGPointMake(center.x - (width / 4.0f + sideBarRect.size.width), center.y);
+            CGFloat newGameWidth = width - sideBarRect.size.width - vvhWidth;
             
-            CGRect labelRect = CGRectMake(width / 4.0f + sideBarRect.size.width, height - labelHeight, width - (width / 4.0f + sideBarRect.size.width) - 30, labelHeight);
+            CGRect gameRect = CGRectMake(vvhWidth + sideBarRect.size.width, labelHeight, newGameWidth, height - 2 * labelHeight);
+            
+//            CGRect labelRect = CGRectMake(vvhWidth + sideBarRect.size.width, height - labelHeight, width - (vvhWidth + sideBarRect.size.width) - 30, labelHeight);
             
             void (^animateBlock) (void) = ^(void)
             {
-                [vvh setFrame: CGRectOffset([vvh frame], width / 4.0f, 0)];
-                [sideBar setFrame: CGRectOffset([sideBar frame], width / 4.0f, 0)];
-                [messageLabel setFrame: labelRect];
+                [vvh setFrame: CGRectOffset([vvh frame], vvhWidth, 0)];
+                [sideBar setFrame: CGRectOffset([sideBar frame], vvhWidth, 0)];
+//                [messageLabel setFrame: labelRect];
                 
-                [game setViewFrame: gameRect center: convertedCenter];
+                [gameView setFrame: gameRect];
+                [gameView setNeedsDisplay];
             };
             
             [UIView animateWithDuration: 0.25f animations: animateBlock];
@@ -245,7 +249,7 @@
             
             CGFloat labelHeight = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? 80 : 50;
             
-            CGRect gameRect = CGRectMake(sideBarRect.size.width, 0, width - sideBarRect.size.width, height - labelHeight);
+            CGRect gameRect = CGRectInset([self.view bounds], sideBarRect.size.width, labelHeight);
             
             CGPoint center = CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetMidY(self.view.bounds));
             CGPoint convertedCenter = CGPointMake(center.x - sideBarRect.size.width, center.y);
@@ -255,8 +259,9 @@
             {
                 [vvh setFrame: CGRectOffset([vvh frame], -[vvh frame].size.width, 0)];
                 [sideBar setFrame: sideBarRect];
-                [game setViewFrame: gameRect center: convertedCenter];
-                [messageLabel setFrame: CGRectMake(sideBarRect.size.width, height - labelHeight, width - sideBarRect.size.width - 30, labelHeight)];
+                [gameView setFrame: gameRect];
+                [gameView setNeedsDisplay];
+//                [messageLabel setFrame: CGRectMake(sideBarRect.size.width, height - labelHeight, width - sideBarRect.size.width - 30, labelHeight)];
             };
             
             void (^completion) (BOOL) = ^(BOOL done)
@@ -395,12 +400,12 @@
     
     CGFloat labelHeight = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? 80 : 50;
     
-    CGRect gameRect = CGRectMake(sideBarRect.size.width, 0, width - sideBarRect.size.width, height - labelHeight);
+    CGRect gameRect = CGRectInset([self.view bounds], sideBarRect.size.width, labelHeight);
     
     CGPoint center = [[self view] center];
     CGPoint convertedCenter = CGPointMake(center.x - sideBarRect.size.width, center.y);
     
-    UIView *gameView = [game viewWithFrame: gameRect center: convertedCenter];
+    gameView = [game viewWithFrame: gameRect center: convertedCenter];
     gameView.clipsToBounds = NO;
     
     [self.view addSubview: gameView];
@@ -411,11 +416,8 @@
     [self.view addSubview: infoButton];
     
     
-    messageLabel = [[UILabel alloc] initWithFrame: CGRectMake(sideBarRect.size.width, height - labelHeight, width - sideBarRect.size.width - 30, labelHeight)];
+    messageLabel = [[UILabel alloc] initWithFrame: CGRectMake(sideBarRect.size.width, height - labelHeight, width - 2 * sideBarRect.size.width, labelHeight)];
     [messageLabel setBackgroundColor: [UIColor clearColor]];
-#ifdef DEMO
-    [messageLabel setBackgroundColor: [UIColor colorWithRed: 0 green: 0 blue: 1 alpha: 0.5f]];
-#endif
     [messageLabel setNumberOfLines: 2];
     [messageLabel setLineBreakMode: UILineBreakModeWordWrap];
     UIFont *font = [UIFont boldSystemFontOfSize: (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? 24 : 17];
@@ -425,6 +427,18 @@
     [messageLabel setText: @""];
     
     [self.view addSubview: messageLabel];
+    
+    
+    UILabel *gameNameLabel = [[UILabel alloc] initWithFrame: CGRectMake(sideBarRect.size.width, 0, width - 2 * sideBarRect.size.width, labelHeight)];
+    [gameNameLabel setBackgroundColor: [UIColor clearColor]];
+    font = [UIFont boldSystemFontOfSize: (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? 40 : 24];
+    [gameNameLabel setFont: font];
+    [gameNameLabel setTextAlignment: UITextAlignmentCenter];
+    [gameNameLabel setTextColor: [UIColor whiteColor]];
+    [gameNameLabel setText: NSStringFromClass([game class])];
+    
+    [self.view addSubview: gameNameLabel];
+    [gameNameLabel release];
 }
  
 

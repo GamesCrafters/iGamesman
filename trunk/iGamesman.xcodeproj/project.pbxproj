@@ -55,9 +55,6 @@
 		0A489EBE14EB0C040004919D /* GCValuesHelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A489EBD14EB0C040004919D /* GCValuesHelpViewController.m */; };
 		0A5C513A14BFA80F00CA07B8 /* GCGameController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A5C513914BFA80F00CA07B8 /* GCGameController.m */; };
 		0A5C514114BFAA9000CA07B8 /* GCGameHistoryItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A5C513F14BFAA9000CA07B8 /* GCGameHistoryItem.m */; };
-		0A5C514B14BFB19C00CA07B8 /* patchwork.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A5C514814BFB19C00CA07B8 /* patchwork.png */; };
-		0A5C514C14BFB19C00CA07B8 /* patchwork@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A5C514914BFB19C00CA07B8 /* patchwork@2x.png */; };
-		0A5C514D14BFB19C00CA07B8 /* patchwork~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A5C514A14BFB19C00CA07B8 /* patchwork~ipad.png */; };
 		0A5C515114C101E700CA07B8 /* GCConnectFour.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A5C515014C101E700CA07B8 /* GCConnectFour.m */; };
 		0A5C515414C102FA00CA07B8 /* GCConnectFourView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A5C515314C102FA00CA07B8 /* GCConnectFourView.m */; };
 		0A5C515714C1065E00CA07B8 /* GCConnectFourPosition.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A5C515614C1065E00CA07B8 /* GCConnectFourPosition.m */; };
@@ -87,6 +84,9 @@
 		0A8D8D9014D226A900330306 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A8D8D8F14D226A900330306 /* QuartzCore.framework */; };
 		0A8D8D9614D267DA00330306 /* GCPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A8D8D9214D267DA00330306 /* GCPlayer.m */; };
 		0A8D8D9714D267DA00330306 /* GCStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A8D8D9314D267DA00330306 /* GCStack.m */; };
+		0A9513A514F5A20C0000A563 /* patchwork~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A9513A214F5A20C0000A563 /* patchwork~ipad.png */; };
+		0A9513A614F5A20C0000A563 /* patchwork.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A9513A314F5A20C0000A563 /* patchwork.png */; };
+		0A9513A714F5A20C0000A563 /* patchwork@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A9513A414F5A20C0000A563 /* patchwork@2x.png */; };
 		0AB6FF1514BD0DC600CD608D /* GCGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AB6FF1414BD0DC600CD608D /* GCGameViewController.m */; };
 		0AB6FF1D14BD10F600CD608D /* GCSidebarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AB6FF1B14BD10F600CD608D /* GCSidebarView.m */; };
 		0AB6FF2014BD123B00CD608D /* GCModalDrawerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AB6FF1E14BD123B00CD608D /* GCModalDrawerView.m */; };
@@ -231,9 +231,6 @@
 		0A5C513914BFA80F00CA07B8 /* GCGameController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCGameController.m; sourceTree = "<group>"; };
 		0A5C513F14BFAA9000CA07B8 /* GCGameHistoryItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCGameHistoryItem.m; sourceTree = "<group>"; };
 		0A5C514014BFAA9000CA07B8 /* GCGameHistoryItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCGameHistoryItem.h; sourceTree = "<group>"; };
-		0A5C514814BFB19C00CA07B8 /* patchwork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = patchwork.png; sourceTree = "<group>"; };
-		0A5C514914BFB19C00CA07B8 /* patchwork@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "patchwork@2x.png"; sourceTree = "<group>"; };
-		0A5C514A14BFB19C00CA07B8 /* patchwork~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "patchwork~ipad.png"; sourceTree = "<group>"; };
 		0A5C514F14C101E700CA07B8 /* GCConnectFour.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCConnectFour.h; sourceTree = "<group>"; };
 		0A5C515014C101E700CA07B8 /* GCConnectFour.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCConnectFour.m; sourceTree = "<group>"; };
 		0A5C515214C102FA00CA07B8 /* GCConnectFourView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCConnectFourView.h; sourceTree = "<group>"; };
@@ -276,6 +273,9 @@
 		0A8D8D9314D267DA00330306 /* GCStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCStack.m; sourceTree = "<group>"; };
 		0A8D8D9414D267DA00330306 /* GCPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCPlayer.h; sourceTree = "<group>"; };
 		0A8D8D9514D267DA00330306 /* GCStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCStack.h; sourceTree = "<group>"; };
+		0A9513A214F5A20C0000A563 /* patchwork~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "patchwork~ipad.png"; sourceTree = "<group>"; };
+		0A9513A314F5A20C0000A563 /* patchwork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = patchwork.png; sourceTree = "<group>"; };
+		0A9513A414F5A20C0000A563 /* patchwork@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "patchwork@2x.png"; sourceTree = "<group>"; };
 		0AB6FF1214BD0C1400CD608D /* GCGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCGame.h; sourceTree = "<group>"; };
 		0AB6FF1314BD0DC500CD608D /* GCGameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCGameViewController.h; sourceTree = "<group>"; };
 		0AB6FF1414BD0DC600CD608D /* GCGameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCGameViewController.m; sourceTree = "<group>"; };
@@ -771,9 +771,9 @@
 				0AF146E714B536B3003E693C /* GamesCrafters.png */,
 				0AF146E814B536B3003E693C /* GamesCrafters@2x.png */,
 				0AF146F414B53D8A003E693C /* GamesCrafters~ipad.png */,
-				0A5C514814BFB19C00CA07B8 /* patchwork.png */,
-				0A5C514914BFB19C00CA07B8 /* patchwork@2x.png */,
-				0A5C514A14BFB19C00CA07B8 /* patchwork~ipad.png */,
+				0A9513A314F5A20C0000A563 /* patchwork.png */,
+				0A9513A414F5A20C0000A563 /* patchwork@2x.png */,
+				0A9513A214F5A20C0000A563 /* patchwork~ipad.png */,
 			);
 			path = "UI Assets";
 			sourceTree = "<group>";
@@ -897,9 +897,6 @@
 				0AB6FF4114BD132F00CD608D /* vvh@2x.png in Resources */,
 				0AB6FF4414BD137D00CD608D /* CloseButton.png in Resources */,
 				0AB6FF4514BD137D00CD608D /* CloseButton@2x.png in Resources */,
-				0A5C514B14BFB19C00CA07B8 /* patchwork.png in Resources */,
-				0A5C514C14BFB19C00CA07B8 /* patchwork@2x.png in Resources */,
-				0A5C514D14BFB19C00CA07B8 /* patchwork~ipad.png in Resources */,
 				0A6976D914CB9A080024AE75 /* othelloFelt.png in Resources */,
 				0A69776D14CD46500024AE75 /* ComputerIconRed@2x.png in Resources */,
 				0A69776E14CD46500024AE75 /* ComputerIconBlue.png in Resources */,
@@ -928,6 +925,9 @@
 				0A143F6E14E1B5CA00300D72 /* quartoSquare15.png in Resources */,
 				0A143F7014E1C0B700300D72 /* quartoPlatform.png in Resources */,
 				0A489EBB14EB04400004919D /* GCValuesHelpView.xib in Resources */,
+				0A9513A514F5A20C0000A563 /* patchwork~ipad.png in Resources */,
+				0A9513A614F5A20C0000A563 /* patchwork.png in Resources */,
+				0A9513A714F5A20C0000A563 /* patchwork@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

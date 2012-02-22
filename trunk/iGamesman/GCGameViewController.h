@@ -26,6 +26,8 @@
     
     UILabel *messageLabel;
     
+    UIView *gameView;
+    
     BOOL showingPredictions;
     BOOL showingVVH;
     

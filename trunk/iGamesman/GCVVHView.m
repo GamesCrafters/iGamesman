@@ -54,9 +54,20 @@
 		slots /= 2;
 	}
     
-    
-//    CGContextSetRGBFillColor(ctx, 0, 0, 84.0f / 255.0f, 1);
-//    CGContextFillRect(ctx, [self bounds]);
+
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+        CGContextSetRGBFillColor(ctx, 0, 0, 0, 1);
+        CGContextFillRect(ctx, [self bounds]);
+        
+        CGContextMoveToPoint(ctx, CGRectGetMaxX([self bounds]) - 1.5f, CGRectGetMinY([self bounds]));
+        CGContextAddLineToPoint(ctx, CGRectGetMaxX([self bounds]) - 1.5f, 3 + (h - 480) / 2.0f);
+        CGContextMoveToPoint(ctx, CGRectGetMaxX([self bounds]) - 1.5f, h - 3 - (h - 480) / 2.0f);
+        CGContextAddLineToPoint(ctx, CGRectGetMaxX([self bounds]) - 1.5f, CGRectGetMaxY([self bounds]));
+        CGContextSetLineWidth(ctx, 3);
+        CGContextSetRGBStrokeColor(ctx, 1, 1, 1, 1);
+        CGContextStrokePath(ctx);
+    }
     
 	// Flip drawing direction because of inverted coordinate system
 	CGContextSetTextMatrix(ctx, CGAffineTransformMakeScale(1.0, -1.0));
