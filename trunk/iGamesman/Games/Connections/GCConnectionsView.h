@@ -13,13 +13,11 @@
 @interface GCConnectionsView : UIView
 {
     id<GCConnectionsViewDelegate> delegate;
-    CGPoint backgroundCenter;
     
     BOOL acceptingTouches;
 }
 
 @property (nonatomic, assign) id<GCConnectionsViewDelegate> delegate;
-@property (nonatomic, assign) CGPoint backgroundCenter;
 
 - (void) startReceivingTouches;
 - (void) stopReceivingTouches;

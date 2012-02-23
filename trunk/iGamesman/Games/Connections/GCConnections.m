@@ -40,14 +40,13 @@
 }
 
 
-- (UIView *) viewWithFrame: (CGRect) frame center: (CGPoint) center
+- (UIView *) viewWithFrame: (CGRect) frame
 {
     if (connectionsView)
         [connectionsView release];
     
     connectionsView = [[GCConnectionsView alloc] initWithFrame: frame];
     [connectionsView setDelegate: self];
-    [connectionsView setBackgroundCenter: center];
     return connectionsView;
 }
 

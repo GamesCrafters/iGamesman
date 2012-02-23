@@ -13,7 +13,6 @@
 @implementation GCConnectionsView
 
 @synthesize delegate;
-@synthesize backgroundCenter;
 
 
 #pragma mark - Memory lifecycle
@@ -54,22 +53,26 @@
     GCConnectionsPosition *position = [delegate position];
     
     
+    CGFloat width  = self.bounds.size.width;
     CGFloat height = self.bounds.size.height;
     
-    CGFloat halfWidth  = backgroundCenter.x - self.bounds.origin.x;
-    CGFloat halfHeight = self.bounds.origin.y + height - backgroundCenter.y;
-    
-    CGFloat maxCellWidth  = (2 * halfWidth) / position.size;
-    CGFloat maxCellHeight = (2 * halfHeight) / position.size;
+    CGFloat maxCellWidth  = width / position.size;
+    CGFloat maxCellHeight = height / position.size;
     
     CGFloat cellSize = MIN(maxCellWidth, maxCellHeight);
     
-    CGFloat minX = CGRectGetMinX(self.bounds);
-    CGFloat minY = CGRectGetMinY(self.bounds);
+    CGFloat minX = CGRectGetMinX(self.bounds) + (width - cellSize * position.size) / 2.0f;
+    CGFloat minY = CGRectGetMinY(self.bounds) + (height - cellSize * position.size) / 2.0f;
     
-    minX += (backgroundCenter.x - cellSize * position.size / 2.0f);
-    minY += (backgroundCenter.y - cellSize * position.size / 2.0f);
-    minY -= (cellSize / (2 + sqrt(2)));
+    CGRect boardRect = CGRectMake(minX, minY, cellSize * position.size, cellSize * position.size);
+    boardRect = CGRectInset(boardRect, (cellSize * 0.2f) + 2, (cellSize * 0.2f) + 2);
+    
+    /* Recompute minX/Y and cellSize to fit */
+    maxCellWidth  = boardRect.size.width / position.size;
+    maxCellHeight = boardRect.size.height / position.size;
+    cellSize = MIN(maxCellWidth, maxCellHeight);
+    minX = CGRectGetMinX(self.bounds) + (width - cellSize * position.size) / 2.0f;
+    minY = CGRectGetMinY(self.bounds) + (height - cellSize * position.size) / 2.0f;
     
     
     CGPoint location = [[touches anyObject] locationInView: self];
@@ -89,9 +92,11 @@
             CGRect cellRect = CGRectMake(minX + col * cellSize, minY + row * cellSize, cellSize, cellSize);
             cellRect = CGRectInset(cellRect, -(cellSize * 0.2f), -(cellSize * 0.2f));
             
+#warning TODO: Improve this logic. Should check the octagonal area, not the bounding rectangle (overlapping!)
             if (CGRectContainsPoint(cellRect, location))
             {
                 [delegate userChoseMove: [NSNumber numberWithInt: row * position.size + col + 1]];
+                return;
             }
         }
     }
@@ -157,22 +162,27 @@
     GCConnectionsPosition *position = [delegate position];
     
     
+    CGFloat width  = self.bounds.size.width;
     CGFloat height = self.bounds.size.height;
     
-    CGFloat halfWidth  = backgroundCenter.x - self.bounds.origin.x;
-    CGFloat halfHeight = self.bounds.origin.y + height - backgroundCenter.y;
-    
-    CGFloat maxCellWidth  = (2 * halfWidth) / position.size;
-    CGFloat maxCellHeight = (2 * halfHeight) / position.size;
+    CGFloat maxCellWidth  = width / position.size;
+    CGFloat maxCellHeight = height / position.size;
     
     CGFloat cellSize = MIN(maxCellWidth, maxCellHeight);
     
-    CGFloat minX = CGRectGetMinX(self.bounds);
-    CGFloat minY = CGRectGetMinY(self.bounds);
+    CGFloat minX = CGRectGetMinX(self.bounds) + (width - cellSize * position.size) / 2.0f;
+    CGFloat minY = CGRectGetMinY(self.bounds) + (height - cellSize * position.size) / 2.0f;
     
-    minX += (backgroundCenter.x - cellSize * position.size / 2.0f);
-    minY += (backgroundCenter.y - cellSize * position.size / 2.0f);
-    minY -= (cellSize / (2 + sqrt(2)));
+    CGRect boardRect = CGRectMake(minX, minY, cellSize * position.size, cellSize * position.size);
+    boardRect = CGRectInset(boardRect, (cellSize * 0.2f) + 2, (cellSize * 0.2f) + 2);
+    
+    /* Recompute minX/Y and cellSize to fit */
+    maxCellWidth  = boardRect.size.width / position.size;
+    maxCellHeight = boardRect.size.height / position.size;
+    cellSize = MIN(maxCellWidth, maxCellHeight);
+    minX = CGRectGetMinX(self.bounds) + (width - cellSize * position.size) / 2.0f;
+    minY = CGRectGetMinY(self.bounds) + (height - cellSize * position.size) / 2.0f;
+    
     
     
     for (int col = 0; col < position.size; col += 1)

@@ -54,13 +54,12 @@
     CGFloat height = self.bounds.size.height;
     
     CGFloat maxCellWidth  = width / position.columns;
-    CGFloat maxCellHeight = height / (position.rows + 1);
+    CGFloat maxCellHeight = height / position.rows;
     
     CGFloat cellSize = MIN(maxCellWidth, maxCellHeight);
     
     CGFloat minX = CGRectGetMinX(self.bounds) + (width - cellSize * position.columns) / 2.0f;
-    CGFloat minY = CGRectGetMinY(self.bounds) + (height - cellSize * position.rows) / 2.0f;
-    
+    CGFloat minY = CGRectGetMinY(self.bounds) + (height - cellSize * position.rows) / 2.0f;    
     
     NSUInteger col = [column unsignedIntegerValue];
     
@@ -101,7 +100,7 @@
     CGFloat height = self.bounds.size.height;
     
     CGFloat maxCellWidth  = width / position.columns;
-    CGFloat maxCellHeight = height / (position.rows + 1);
+    CGFloat maxCellHeight = height / position.rows;
     
     CGFloat cellSize = MIN(maxCellWidth, maxCellHeight);
     
@@ -138,7 +137,7 @@
     CGFloat height = self.bounds.size.height;
     
     CGFloat maxCellWidth  = width / position.columns;
-    CGFloat maxCellHeight = height / (position.rows + 1);
+    CGFloat maxCellHeight = height / position.rows;
     
     CGFloat cellSize = MIN(maxCellWidth, maxCellHeight);
     
@@ -179,7 +178,7 @@
     CGFloat height = self.bounds.size.height;
     
     CGFloat maxCellWidth  = width / position.columns;
-    CGFloat maxCellHeight = height / (position.rows + 1);
+    CGFloat maxCellHeight = height / position.rows;
     
     CGFloat cellSize = MIN(maxCellWidth, maxCellHeight);
     
@@ -215,7 +214,7 @@
     CGFloat height = self.bounds.size.height;
     
     CGFloat maxCellWidth  = width / position.columns;
-    CGFloat maxCellHeight = height / (position.rows + 1);
+    CGFloat maxCellHeight = height / position.rows;
     
     CGFloat cellSize = MIN(maxCellWidth, maxCellHeight);
     
@@ -270,7 +269,7 @@
     CGFloat height = self.bounds.size.height;
     
     CGFloat maxCellWidth  = width / position.columns;
-    CGFloat maxCellHeight = height / (position.rows + 1);
+    CGFloat maxCellHeight = height / position.rows;
     
     CGFloat cellSize = MIN(maxCellWidth, maxCellHeight);
     
