@@ -49,6 +49,12 @@
 
 #pragma mark - GCGame protocol
 
+- (NSString *) name
+{
+    return @"Quick Cross";
+}
+
+
 - (UIView *) viewWithFrame: (CGRect) frame center: (CGPoint) center
 {
     if (quickCrossView)
@@ -58,14 +64,6 @@
     [quickCrossView setDelegate: self];
     [quickCrossView setBackgroundCenter: center];
     return quickCrossView;
-}
-
-
-- (void) setViewFrame: (CGRect) frame center: (CGPoint) center
-{
-    [quickCrossView setFrame: frame];
-    [quickCrossView setBackgroundCenter: center];
-    [quickCrossView setNeedsDisplay];
 }
 
 

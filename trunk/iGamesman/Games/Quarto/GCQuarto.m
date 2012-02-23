@@ -77,6 +77,12 @@
 }
 
 
+- (NSString *) name
+{
+    return @"Quarto";
+}
+
+
 - (UIView *) viewWithFrame: (CGRect) frame center: (CGPoint) center
 {
     if (quartoView)
@@ -86,14 +92,6 @@
     quartoView.delegate = self;
     quartoView.backgroundCenter = center;
     return quartoView;
-}
-
-
-- (void) setViewFrame: (CGRect) frame center: (CGPoint) center
-{
-    [quartoView setFrame: frame];
-    [quartoView setBackgroundCenter: center];
-    [quartoView setNeedsDisplay];
 }
 
 

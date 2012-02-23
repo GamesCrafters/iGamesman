@@ -34,6 +34,12 @@
 
 #pragma mark - GCGame protocol
 
+- (NSString *) name
+{
+    return @"Connections";
+}
+
+
 - (UIView *) viewWithFrame: (CGRect) frame center: (CGPoint) center
 {
     if (connectionsView)
@@ -43,14 +49,6 @@
     [connectionsView setDelegate: self];
     [connectionsView setBackgroundCenter: center];
     return connectionsView;
-}
-
-
-- (void) setViewFrame: (CGRect) frame center: (CGPoint) center
-{
-    [connectionsView setFrame: frame];
-    [connectionsView setBackgroundCenter: center];
-    [connectionsView setNeedsDisplay];
 }
 
 

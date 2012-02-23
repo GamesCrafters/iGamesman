@@ -14,7 +14,6 @@
 @implementation GCTicTacToeView
 
 @synthesize delegate;
-@synthesize backgroundCenter;
 
 
 - (id) initWithFrame: (CGRect) frame

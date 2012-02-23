@@ -138,6 +138,12 @@
 }
 
 
+- (NSString *) name
+{
+    return @"Connect 4";
+}
+
+
 - (UIView *) viewWithFrame: (CGRect) frame center: (CGPoint) center
 {
     if (connectFourView)
@@ -147,14 +153,6 @@
     [connectFourView setDelegate: self];
     [connectFourView setBackgroundCenter: center];
     return connectFourView;
-}
-
-
-- (void) setViewFrame: (CGRect) frame center: (CGPoint) center
-{
-    [connectFourView setFrame: frame];
-    [connectFourView setBackgroundCenter: center];
-    [connectFourView setNeedsDisplay];
 }
 
 

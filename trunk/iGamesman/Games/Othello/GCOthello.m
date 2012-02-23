@@ -119,6 +119,12 @@
 
 #pragma mark - GCGame protocol
 
+- (NSString *) name
+{
+    return @"Othello";
+}
+
+
 - (UIView *) viewWithFrame: (CGRect) frame center: (CGPoint) center
 {
     if (othelloView)
@@ -128,14 +134,6 @@
     [othelloView setDelegate: self];
     [othelloView setBackgroundCenter: center];
     return othelloView;
-}
-
-
-- (void) setViewFrame: (CGRect) frame center: (CGPoint) center
-{
-    [othelloView setFrame: frame];
-    [othelloView setBackgroundCenter: center];
-    [othelloView setNeedsDisplay];
 }
 
 

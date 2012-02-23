@@ -24,7 +24,7 @@
     id<GCGame> game;
     GCGameController *gameController;
     
-    UILabel *messageLabel;
+    UILabel *messageLabel, *gameNameLabel;
     
     UIView *gameView;
     

@@ -104,18 +104,23 @@ typedef NSString GCGameValue;
 
 
 @required
+
+/**
+ * Return the game's name
+ * 
+ * @return The name of the game
+ */
+- (NSString *) name;
+
+
 /**
  * Return the view (with frame rectangle FRAME) that displays this game's interface.
  *
  * @param frame The frame rectangle this game's view needs to be
- * @param center The point (in the game view's coordinate system) that is at the center of the background spotlight
  *
  * @return The view managed by this game that displays the game's interface.
  */
-- (UIView *) viewWithFrame: (CGRect) frame center: (CGPoint) center;
-
-
-- (void) setViewFrame: (CGRect) frame center: (CGPoint) center;
+- (UIView *) viewWithFrame: (CGRect) frame;
 
 
 /**

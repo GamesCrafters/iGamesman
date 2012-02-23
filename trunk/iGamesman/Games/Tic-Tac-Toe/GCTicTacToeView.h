@@ -16,13 +16,11 @@
 @interface GCTicTacToeView : UIView
 {
     id<GCTicTacToeViewDelegate> delegate;
-    CGPoint backgroundCenter;
     
     BOOL acceptingTouches;
 }
 
 @property (nonatomic, assign) id<GCTicTacToeViewDelegate> delegate;
-@property (nonatomic, assign) CGPoint backgroundCenter;
 
 - (void) startReceivingTouches;
 - (void) stopReceivingTouches;

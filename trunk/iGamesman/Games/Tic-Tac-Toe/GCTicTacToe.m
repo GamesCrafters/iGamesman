@@ -149,23 +149,20 @@
 }
 
 
-- (UIView *) viewWithFrame: (CGRect) frame center: (CGPoint) center
+- (NSString *) name
+{
+    return @"Tic-Tac-Toe";
+}
+
+
+- (UIView *) viewWithFrame: (CGRect) frame
 {
     if (tttView)
         [tttView release];
     
     tttView = [[GCTicTacToeView alloc] initWithFrame: frame];
     tttView.delegate = self;
-    tttView.backgroundCenter = center;
     return tttView;
-}
-
-
-- (void) setViewFrame: (CGRect) frame center: (CGPoint) center
-{
-    [tttView setFrame: frame];
-    [tttView setBackgroundCenter: center];
-    [tttView setNeedsDisplay];
 }
 
 
