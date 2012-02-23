@@ -75,7 +75,7 @@ GCOthelloPiece const GCOthelloWhitePiece = @"O";
     GCOthelloPosition *copy = [[GCOthelloPosition allocWithZone: zone] initWithWidth: columns height: rows];
     copy.leftTurn = leftTurn;
     
-    NSMutableArray *boardCopy = [board copy];
+    NSMutableArray *boardCopy = [board mutableCopy];
     copy.board = boardCopy;
     [boardCopy release];
     

@@ -13,13 +13,11 @@
 @interface GCOthelloView : UIView
 {
     id<GCOthelloViewDelegate> delegate;
-    CGPoint backgroundCenter;
     
     BOOL acceptingTouches;
 }
 
 @property (nonatomic, assign) id<GCOthelloViewDelegate> delegate;
-@property (nonatomic, assign) CGPoint backgroundCenter;
 
 - (void) startReceivingTouches;
 - (void) stopReceivingTouches;

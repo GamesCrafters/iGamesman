@@ -125,14 +125,13 @@
 }
 
 
-- (UIView *) viewWithFrame: (CGRect) frame center: (CGPoint) center
+- (UIView *) viewWithFrame: (CGRect) frame
 {
     if (othelloView)
         [othelloView release];
     
     othelloView = [[GCOthelloView alloc] initWithFrame: frame];
     [othelloView setDelegate: self];
-    [othelloView setBackgroundCenter: center];
     return othelloView;
 }
 
@@ -237,7 +236,7 @@
 {
     [position release];
     
-    position = [previousPosition retain];
+    position = [previousPosition copy];
     
     [othelloView setNeedsDisplay];
 }

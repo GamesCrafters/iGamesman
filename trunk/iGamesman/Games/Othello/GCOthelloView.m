@@ -13,7 +13,6 @@
 @implementation GCOthelloView
 
 @synthesize delegate;
-@synthesize backgroundCenter;
 
 - (id) initWithFrame: (CGRect) frame
 {
@@ -54,21 +53,16 @@
     
     CGPoint location = [[touches anyObject] locationInView: self];
     
+    CGFloat width  = self.bounds.size.width;
     CGFloat height = self.bounds.size.height;
     
-    CGFloat halfWidth  = backgroundCenter.x - self.bounds.origin.x;
-    CGFloat halfHeight = self.bounds.origin.y + height - backgroundCenter.y;
-    
-    CGFloat maxCellWidth  = (2 * halfWidth) / position.columns;
-    CGFloat maxCellHeight = (2 * halfHeight) / position.rows;
+    CGFloat maxCellWidth  = width / position.columns;
+    CGFloat maxCellHeight = height / position.rows;
     
     CGFloat cellSize = MIN(maxCellWidth, maxCellHeight);
     
-    CGFloat minX = CGRectGetMinX(self.bounds);
-    CGFloat minY = CGRectGetMinY(self.bounds);
-    
-    minX += (backgroundCenter.x - cellSize * position.columns / 2.0f);
-    minY += (backgroundCenter.y - cellSize * position.rows / 2.0f);
+    CGFloat minX = CGRectGetMinX(self.bounds) + (width - cellSize * position.columns) / 2.0f;
+    CGFloat minY = CGRectGetMinY(self.bounds) + (height - cellSize * position.rows) / 2.0f;
     
     for (int row = 0; row < position.rows; row += 1)
     {
@@ -95,29 +89,22 @@
     
 #ifdef DEMO
     CGContextSetRGBFillColor(ctx, 1, 0, 0, 1);
-    CGContextFillEllipseInRect(ctx, CGRectMake(backgroundCenter.x - 5, backgroundCenter.y - 5, 10, 10));
     CGContextSetRGBFillColor(ctx, 0, 0, 0, 0.5f);
     CGContextFillRect(ctx, self.bounds);
 #endif
     
     GCOthelloPosition *position = [delegate position];
     
+    CGFloat width  = self.bounds.size.width;
     CGFloat height = self.bounds.size.height;
     
-    CGFloat halfWidth  = backgroundCenter.x - self.bounds.origin.x;
-    CGFloat halfHeight = self.bounds.origin.y + height - backgroundCenter.y;
-    
-    CGFloat maxCellWidth  = (2 * halfWidth) / position.columns;
-    CGFloat maxCellHeight = (2 * halfHeight) / position.rows;
+    CGFloat maxCellWidth  = width / position.columns;
+    CGFloat maxCellHeight = height / position.rows;
     
     CGFloat cellSize = MIN(maxCellWidth, maxCellHeight);
     
-    CGFloat minX = CGRectGetMinX(self.bounds);
-    CGFloat minY = CGRectGetMinY(self.bounds);
-    
-    minX += (backgroundCenter.x - cellSize * position.columns / 2.0f);
-    minY += (backgroundCenter.y - cellSize * position.rows / 2.0f);
-    minY -= 1;
+    CGFloat minX = CGRectGetMinX(self.bounds) + (width - cellSize * position.columns) / 2.0f;
+    CGFloat minY = CGRectGetMinY(self.bounds) + (height - cellSize * position.rows) / 2.0f;
     
     UIImage *feltImage = [UIImage imageNamed: @"othelloFelt"];
     [feltImage drawInRect: CGRectMake(minX, minY, cellSize * position.columns, cellSize * position.rows)];
