@@ -144,14 +144,13 @@
 }
 
 
-- (UIView *) viewWithFrame: (CGRect) frame center: (CGPoint) center
+- (UIView *) viewWithFrame: (CGRect) frame
 {
     if (connectFourView)
         [connectFourView release];
     
     connectFourView = [[GCConnectFourView alloc] initWithFrame: frame];
     [connectFourView setDelegate: self];
-    [connectFourView setBackgroundCenter: center];
     return connectFourView;
 }
 

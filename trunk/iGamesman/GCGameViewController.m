@@ -439,6 +439,8 @@
     [gameNameLabel setText: [game name]];
     
     [self.view addSubview: gameNameLabel];
+    
+    [self.view sendSubviewToBack: gameNameLabel];
 }
  
 

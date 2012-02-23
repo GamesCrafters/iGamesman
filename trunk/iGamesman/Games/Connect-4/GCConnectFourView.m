@@ -16,7 +16,6 @@
 @implementation GCConnectFourView
 
 @synthesize delegate;
-@synthesize backgroundCenter;
 
 
 #pragma mark - Memory lifecycle
@@ -51,21 +50,16 @@
 {
     GCConnectFourPosition *position = [delegate position];
     
+    CGFloat width  = self.bounds.size.width;
     CGFloat height = self.bounds.size.height;
     
-    CGFloat halfWidth  = backgroundCenter.x - self.bounds.origin.x;
-    CGFloat halfHeight = self.bounds.origin.y + height - backgroundCenter.y;
-    
-    CGFloat maxCellWidth  = (2 * halfWidth) / position.columns;
-    CGFloat maxCellHeight = (2 * halfHeight) / position.rows;
+    CGFloat maxCellWidth  = width / position.columns;
+    CGFloat maxCellHeight = height / (position.rows + 1);
     
     CGFloat cellSize = MIN(maxCellWidth, maxCellHeight);
     
-    CGFloat minX = CGRectGetMinX(self.bounds);
-    CGFloat minY = CGRectGetMinY(self.bounds);
-    
-    minX += (backgroundCenter.x - cellSize * position.columns / 2.0f);
-    minY += (backgroundCenter.y - cellSize * position.rows / 2.0f);
+    CGFloat minX = CGRectGetMinX(self.bounds) + (width - cellSize * position.columns) / 2.0f;
+    CGFloat minY = CGRectGetMinY(self.bounds) + (height - cellSize * position.rows) / 2.0f;
     
     
     NSUInteger col = [column unsignedIntegerValue];
@@ -103,19 +97,15 @@
 {
     GCConnectFourPosition *position = [delegate position];
     
+    CGFloat width  = self.bounds.size.width;
     CGFloat height = self.bounds.size.height;
     
-    CGFloat halfWidth  = backgroundCenter.x - self.bounds.origin.x;
-    CGFloat halfHeight = self.bounds.origin.y + height - backgroundCenter.y;
-    
-    CGFloat maxCellWidth  = (2 * halfWidth) / position.columns;
-    CGFloat maxCellHeight = (2 * halfHeight) / position.rows;
+    CGFloat maxCellWidth  = width / position.columns;
+    CGFloat maxCellHeight = height / (position.rows + 1);
     
     CGFloat cellSize = MIN(maxCellWidth, maxCellHeight);
     
-    CGFloat minX = CGRectGetMinX(self.bounds);
-    
-    minX += (backgroundCenter.x - cellSize * position.columns / 2.0f);
+    CGFloat minX = CGRectGetMinX(self.bounds) + (width - cellSize * position.columns) / 2.0f;
     
     
     NSUInteger col = [column unsignedIntegerValue];
@@ -144,21 +134,16 @@
 {
     GCConnectFourPosition *position = [delegate position];
     
+    CGFloat width  = self.bounds.size.width;
     CGFloat height = self.bounds.size.height;
     
-    CGFloat halfWidth  = backgroundCenter.x - self.bounds.origin.x;
-    CGFloat halfHeight = self.bounds.origin.y + height - backgroundCenter.y;
-    
-    CGFloat maxCellWidth  = (2 * halfWidth) / position.columns;
-    CGFloat maxCellHeight = (2 * halfHeight) / position.rows;
+    CGFloat maxCellWidth  = width / position.columns;
+    CGFloat maxCellHeight = height / (position.rows + 1);
     
     CGFloat cellSize = MIN(maxCellWidth, maxCellHeight);
     
-    CGFloat minX = CGRectGetMinX(self.bounds);
-    CGFloat minY = CGRectGetMinY(self.bounds);
-    
-    minX += (backgroundCenter.x - cellSize * position.columns / 2.0f);
-    minY += (backgroundCenter.y - cellSize * position.rows / 2.0f);
+    CGFloat minX = CGRectGetMinX(self.bounds) + (width - cellSize * position.columns) / 2.0f;
+    CGFloat minY = CGRectGetMinY(self.bounds) + (height - cellSize * position.rows) / 2.0f;
     
     if (acceptingTouches)
     {
@@ -190,21 +175,16 @@
 {
     GCConnectFourPosition *position = [delegate position];
     
+    CGFloat width  = self.bounds.size.width;
     CGFloat height = self.bounds.size.height;
     
-    CGFloat halfWidth  = backgroundCenter.x - self.bounds.origin.x;
-    CGFloat halfHeight = self.bounds.origin.y + height - backgroundCenter.y;
-    
-    CGFloat maxCellWidth  = (2 * halfWidth) / position.columns;
-    CGFloat maxCellHeight = (2 * halfHeight) / position.rows;
+    CGFloat maxCellWidth  = width / position.columns;
+    CGFloat maxCellHeight = height / (position.rows + 1);
     
     CGFloat cellSize = MIN(maxCellWidth, maxCellHeight);
     
-    CGFloat minX = CGRectGetMinX(self.bounds);
-    CGFloat minY = CGRectGetMinY(self.bounds);
-    
-    minX += (backgroundCenter.x - cellSize * position.columns / 2.0f);
-    minY += (backgroundCenter.y - cellSize * position.rows / 2.0f);
+    CGFloat minX = CGRectGetMinX(self.bounds) + (width - cellSize * position.columns) / 2.0f;
+    CGFloat minY = CGRectGetMinY(self.bounds) + (height - cellSize * position.rows) / 2.0f;
     
     if (acceptingTouches)
     {
@@ -231,19 +211,15 @@
 {
     GCConnectFourPosition *position = [delegate position];
     
+    CGFloat width  = self.bounds.size.width;
     CGFloat height = self.bounds.size.height;
     
-    CGFloat halfWidth  = backgroundCenter.x - self.bounds.origin.x;
-    CGFloat halfHeight = self.bounds.origin.y + height - backgroundCenter.y;
-    
-    CGFloat maxCellWidth  = (2 * halfWidth) / position.columns;
-    CGFloat maxCellHeight = (2 * halfHeight) / position.rows;
+    CGFloat maxCellWidth  = width / position.columns;
+    CGFloat maxCellHeight = height / (position.rows + 1);
     
     CGFloat cellSize = MIN(maxCellWidth, maxCellHeight);
     
-    CGFloat minX = CGRectGetMinX(self.bounds);
-    
-    minX += (backgroundCenter.x - cellSize * position.columns / 2.0f);
+    CGFloat minX = CGRectGetMinX(self.bounds) + (width - cellSize * position.columns) / 2.0f;
     
     if (acceptingTouches)
     {
@@ -283,7 +259,6 @@
     
 #ifdef DEMO
     CGContextSetRGBFillColor(ctx, 1, 0, 0, 1);
-    CGContextFillEllipseInRect(ctx, CGRectMake(backgroundCenter.x - 5, backgroundCenter.y - 5, 10, 10));
     CGContextSetRGBFillColor(ctx, 0, 0, 0, 0.5f);
     CGContextFillRect(ctx, self.bounds);
 #endif
@@ -291,21 +266,16 @@
     
     GCConnectFourPosition *position = [delegate position];
     
+    CGFloat width  = self.bounds.size.width;
     CGFloat height = self.bounds.size.height;
     
-    CGFloat halfWidth  = backgroundCenter.x - self.bounds.origin.x;
-    CGFloat halfHeight = self.bounds.origin.y + height - backgroundCenter.y;
-    
-    CGFloat maxCellWidth  = (2 * halfWidth) / position.columns;
-    CGFloat maxCellHeight = (2 * halfHeight) / position.rows;
+    CGFloat maxCellWidth  = width / position.columns;
+    CGFloat maxCellHeight = height / (position.rows + 1);
     
     CGFloat cellSize = MIN(maxCellWidth, maxCellHeight);
     
-    CGFloat minX = CGRectGetMinX(self.bounds);
-    CGFloat minY = CGRectGetMinY(self.bounds);
-    
-    minX += (backgroundCenter.x - cellSize * position.columns / 2.0f);
-    minY += (backgroundCenter.y - cellSize * position.rows / 2.0f);
+    CGFloat minX = CGRectGetMinX(self.bounds) + (width - cellSize * position.columns) / 2.0f;
+    CGFloat minY = CGRectGetMinY(self.bounds) + (height - cellSize * position.rows) / 2.0f;
     
     
     NSArray *moveValues = [delegate moveValues];

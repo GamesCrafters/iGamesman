@@ -13,13 +13,11 @@
 @interface GCConnectFourView : UIView
 {
     id<GCConnectFourViewDelegate> delegate;
-    CGPoint backgroundCenter;
     
     BOOL acceptingTouches;
 }
 
 @property (nonatomic, assign) id<GCConnectFourViewDelegate> delegate;
-@property (nonatomic, assign) CGPoint backgroundCenter;
 
 - (void) startReceivingTouches;
 - (void) stopReceivingTouches;
