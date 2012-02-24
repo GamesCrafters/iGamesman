@@ -13,7 +13,6 @@
 @implementation GCQuickCrossView
 
 @synthesize delegate;
-@synthesize backgroundCenter;
 
 - (id) initWithFrame: (CGRect) frame
 {
@@ -55,21 +54,16 @@
     
     GCQuickCrossPosition *position = [delegate position];
     
+    CGFloat width  = self.bounds.size.width;
     CGFloat height = self.bounds.size.height;
     
-    CGFloat halfWidth  = backgroundCenter.x - self.bounds.origin.x;
-    CGFloat halfHeight = self.bounds.origin.y + height - backgroundCenter.y;
-    
-    CGFloat maxCellWidth  = (2 * halfWidth) / position.columns;
-    CGFloat maxCellHeight = (2 * halfHeight) / position.rows;
+    CGFloat maxCellWidth  = (width / position.columns);
+    CGFloat maxCellHeight = (height / position.rows);
     
     CGFloat cellSize = MIN(maxCellWidth, maxCellHeight);
     
-    CGFloat minX = CGRectGetMinX(self.bounds);
-    CGFloat minY = CGRectGetMinY(self.bounds);
-    
-    minX += (backgroundCenter.x - cellSize * position.columns / 2.0f);
-    minY += (backgroundCenter.y - cellSize * position.rows / 2.0f);
+    CGFloat minX = CGRectGetMinX(self.bounds) + (width - position.columns * cellSize) / 2.0f;
+    CGFloat minY = CGRectGetMinY(self.bounds) + (height - position.rows * cellSize) / 2.0f;
     
     
     CGPoint location = [[touches anyObject] locationInView: self];
@@ -163,20 +157,13 @@
     CGFloat width  = self.bounds.size.width;
     CGFloat height = self.bounds.size.height;
     
-    CGFloat halfWidth  = backgroundCenter.x - self.bounds.origin.x;
-    CGFloat halfHeight = self.bounds.origin.y + height - backgroundCenter.y;
-    
-    CGFloat maxCellWidth  = (2 * halfWidth) / position.columns;
-    CGFloat maxCellHeight = (2 * halfHeight) / position.rows;
+    CGFloat maxCellWidth  = (width / position.columns);
+    CGFloat maxCellHeight = (height / position.rows);
     
     CGFloat cellSize = MIN(maxCellWidth, maxCellHeight);
     
-    CGFloat minX = CGRectGetMinX(self.bounds);
-    CGFloat minY = CGRectGetMinY(self.bounds);
-    
-    minX += (backgroundCenter.x - cellSize * position.columns / 2.0f);
-    minY += (backgroundCenter.y - cellSize * position.rows / 2.0f);
-    
+    CGFloat minX = CGRectGetMinX(self.bounds) + (width - position.columns * cellSize) / 2.0f;
+    CGFloat minY = CGRectGetMinY(self.bounds) + (height - position.rows * cellSize) / 2.0f;
     
     /* Vertical separators */
     for (int i = 1; i < position.columns; i += 1)

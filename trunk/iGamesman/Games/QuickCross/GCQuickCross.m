@@ -55,14 +55,13 @@
 }
 
 
-- (UIView *) viewWithFrame: (CGRect) frame center: (CGPoint) center
+- (UIView *) viewWithFrame: (CGRect) frame
 {
     if (quickCrossView)
         [quickCrossView release];
     
     quickCrossView = [[GCQuickCrossView alloc] initWithFrame: frame];
     [quickCrossView setDelegate: self];
-    [quickCrossView setBackgroundCenter: center];
     return quickCrossView;
 }
 

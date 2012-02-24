@@ -13,7 +13,6 @@
 @interface GCQuickCrossView : UIView
 {
     id<GCQuickCrossViewDelegate> delegate;
-    CGPoint backgroundCenter;
     
     BOOL acceptingTouches;
     
@@ -23,7 +22,6 @@
 }
 
 @property (nonatomic, assign) id<GCQuickCrossViewDelegate> delegate;
-@property (nonatomic, assign) CGPoint backgroundCenter;
 
 - (void) startReceivingTouches;
 - (void) stopReceivingTouches;

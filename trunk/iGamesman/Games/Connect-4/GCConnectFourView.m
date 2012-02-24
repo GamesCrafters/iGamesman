@@ -32,6 +32,9 @@
 }
 
 
+#warning TODO: Reposition Connect-Four pieces on frame changes
+
+
 #pragma mark -
 
 - (void) startReceivingTouches
