@@ -24,7 +24,6 @@
 @implementation GCQuartoView
 
 @synthesize delegate;
-@synthesize backgroundCenter;
 
 
 - (id) initWithFrame: (CGRect) frame
@@ -109,21 +108,16 @@
 
 - (NSArray *) boardRects
 {
+    CGFloat width  = self.bounds.size.width;
     CGFloat height = self.bounds.size.height;
     
-    CGFloat halfWidth  = backgroundCenter.x - self.bounds.origin.x;
-    CGFloat halfHeight = self.bounds.origin.y + height - backgroundCenter.y;
-    
-    CGFloat maxCellWidth  = (2 * halfWidth) / 4;
-    CGFloat maxCellHeight = (2 * halfHeight) / 4;
+    CGFloat maxCellWidth  = width / (4 + 2);
+    CGFloat maxCellHeight = height / 4;
     
     CGFloat cellSize = MIN(maxCellWidth, maxCellHeight);
     
-    CGFloat minX = CGRectGetMinX(self.bounds);
-    CGFloat minY = CGRectGetMinY(self.bounds);
-    
-    minX += (cellSize / 3.0f);
-    minY += (backgroundCenter.y - cellSize * 4 / 2.0f);
+    CGFloat minX = CGRectGetMinX(self.bounds) + 20;
+    CGFloat minY = CGRectGetMinY(self.bounds) + (height - 4 * cellSize) / 2.0f;
     
     CGRect boardRect = CGRectMake(minX, minY, 4 * cellSize, 4 * cellSize);
     
@@ -183,19 +177,13 @@
     CGFloat width  = self.bounds.size.width;
     CGFloat height = self.bounds.size.height;
     
-    CGFloat halfWidth  = backgroundCenter.x - self.bounds.origin.x;
-    CGFloat halfHeight = self.bounds.origin.y + height - backgroundCenter.y;
-    
-    CGFloat maxCellWidth  = (2 * halfWidth) / 4;
-    CGFloat maxCellHeight = (2 * halfHeight) / 4;
+    CGFloat maxCellWidth  = width / (4 + 2);
+    CGFloat maxCellHeight = height / 4;
     
     CGFloat cellSize = MIN(maxCellWidth, maxCellHeight);
     
-    CGFloat minX = CGRectGetMinX(self.bounds);
-    CGFloat minY = CGRectGetMinY(self.bounds);
-    
-    minX += (cellSize / 3.0f);
-    minY += (backgroundCenter.y - cellSize * 4 / 2.0f);
+    CGFloat minX = CGRectGetMinX(self.bounds) + 20;
+    CGFloat minY = CGRectGetMinY(self.bounds) + (height - 4 * cellSize) / 2.0f;
     
     CGRect boardRect = CGRectMake(minX, minY, 4 * cellSize, 4 * cellSize);
     CGFloat platformX = CGRectGetMaxX(boardRect);
@@ -381,31 +369,22 @@
     
 #ifdef DEMO
     CGContextSetRGBFillColor(ctx, 1, 0, 0, 1);
-    CGContextFillEllipseInRect(ctx, CGRectMake(backgroundCenter.x - 5, backgroundCenter.y - 5, 10, 10));
     CGContextSetRGBFillColor(ctx, 0, 0, 0, 0.5f);
     CGContextFillRect(ctx, self.bounds);
 #endif
     
-#warning TODO: Make this math less dumb!
     
     CGFloat width  = self.bounds.size.width;
     CGFloat height = self.bounds.size.height;
     
-    CGFloat halfWidth  = backgroundCenter.x - self.bounds.origin.x;
-    CGFloat halfHeight = self.bounds.origin.y + height - backgroundCenter.y;
-    
-    CGFloat maxCellWidth  = (2 * halfWidth) / 4;
-    CGFloat maxCellHeight = (2 * halfHeight) / 4;
+    CGFloat maxCellWidth  = width / (4 + 2);
+    CGFloat maxCellHeight = height / 4;
     
     CGFloat cellSize = MIN(maxCellWidth, maxCellHeight);
     
-    CGFloat minX = CGRectGetMinX(self.bounds);
-    CGFloat minY = CGRectGetMinY(self.bounds);
-    
-    minX += (cellSize / 3.0f);
-    minY += (backgroundCenter.y - cellSize * 4 / 2.0f);
-    
-    
+    CGFloat minX = CGRectGetMinX(self.bounds) + 20;
+    CGFloat minY = CGRectGetMinY(self.bounds) + (height - 4 * cellSize) / 2.0f;
+
     UIImage *boardBackground = [UIImage imageNamed: @"quartoBoard"];
     CGRect boardRect = CGRectMake(minX, minY, 4 * cellSize, 4 * cellSize);
     [boardBackground drawInRect: boardRect];
@@ -492,9 +471,9 @@
         CGRect messageRect = CGRectMake(platformX + cellSize + 5, platformY, width - platformX - cellSize - 10, cellSize);
         UIFont *font;
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
-            font = [UIFont boldSystemFontOfSize: 14];
+            font = [UIFont boldSystemFontOfSize: 12];
         else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-            font = [UIFont boldSystemFontOfSize: 22];
+            font = [UIFont boldSystemFontOfSize: 16];
         CGSize messageSize = [message sizeWithFont: font constrainedToSize: messageRect.size lineBreakMode: UILineBreakModeWordWrap];
         
         messageRect = CGRectOffset(messageRect, 0, (messageRect.size.height - messageSize.height) / 2.0f);

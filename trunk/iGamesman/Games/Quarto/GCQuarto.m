@@ -83,14 +83,13 @@
 }
 
 
-- (UIView *) viewWithFrame: (CGRect) frame center: (CGPoint) center
+- (UIView *) viewWithFrame: (CGRect) frame
 {
     if (quartoView)
         [quartoView release];
     
     quartoView = [[GCQuartoView alloc] initWithFrame: frame];
     quartoView.delegate = self;
-    quartoView.backgroundCenter = center;
     return quartoView;
 }
 

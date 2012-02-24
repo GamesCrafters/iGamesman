@@ -13,13 +13,11 @@
 @interface GCQuartoView : UIView
 {
     id<GCQuartoViewDelegate> delegate;
-    CGPoint backgroundCenter;
     
     BOOL acceptingTouches;
 }
 
 @property (nonatomic, assign) id<GCQuartoViewDelegate> delegate;
-@property (nonatomic, assign) CGPoint backgroundCenter;
 
 - (void) startReceivingTouches;
 - (void) stopReceivingTouches;
