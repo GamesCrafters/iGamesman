@@ -93,6 +93,8 @@
 			CGContextSetLineDash(ctx, 0, dash, 2);
 			CGContextSetRGBStrokeColor(ctx, 0.7f, 0.7f, 0.7f, 1);
 		}
+        
+        CGContextSetLineWidth(ctx, 1);
 		
 		// Left side line
 		CGContextMoveToPoint(ctx, 20 + x0, y + 40);

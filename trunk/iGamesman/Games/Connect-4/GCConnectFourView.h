@@ -25,6 +25,8 @@
 - (void) doMove: (NSNumber *) column;
 - (void) undoMove: (NSNumber *) column;
 
+- (void) resetBoard;
+
 @end
 
 

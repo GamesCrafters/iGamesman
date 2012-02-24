@@ -13,6 +13,8 @@
 #import "GCConnectFourPieceView.h"
 #import "GCConnectFourPosition.h"
 
+#define PIECE_OFFSET (10000)
+
 @implementation GCConnectFourView
 
 @synthesize delegate;
@@ -32,10 +34,39 @@
 }
 
 
-#warning TODO: Reposition Connect-Four pieces on frame changes
-
-
 #pragma mark -
+
+- (void) setFrame: (CGRect) frame
+{
+    [super setFrame: frame];
+    
+    GCConnectFourPosition *position = [delegate position];
+    
+    CGFloat width  = self.bounds.size.width;
+    CGFloat height = self.bounds.size.height;
+    
+    CGFloat maxCellWidth  = width / position.columns;
+    CGFloat maxCellHeight = height / (position.rows + 0.5f);
+    
+    CGFloat cellSize = MIN(maxCellWidth, maxCellHeight);
+    
+    CGFloat minX = CGRectGetMinX(self.bounds) + (width - cellSize * position.columns) / 2.0f;
+    CGFloat minY = CGRectGetMinY(self.bounds) + (height - cellSize * (position.rows - 0.5f)) / 2.0f;
+    
+    for (NSUInteger slot = 0; slot < position.rows * position.columns; slot += 1)
+    {
+        GCConnectFourPieceView *pieceView = (GCConnectFourPieceView *) [self viewWithTag: PIECE_OFFSET + slot];
+        
+        if (pieceView)
+        {
+            NSUInteger row = slot / position.columns;
+            NSUInteger col = slot % position.columns;
+            CGRect destinationFrame = CGRectMake(minX + col * cellSize, minY + (position.rows - row - 1) * cellSize, cellSize, cellSize);
+            [pieceView setFrame: destinationFrame];
+        }
+    }
+}
+
 
 - (void) startReceivingTouches
 {
@@ -57,12 +88,12 @@
     CGFloat height = self.bounds.size.height;
     
     CGFloat maxCellWidth  = width / position.columns;
-    CGFloat maxCellHeight = height / position.rows;
+    CGFloat maxCellHeight = height / (position.rows + 0.5f);
     
     CGFloat cellSize = MIN(maxCellWidth, maxCellHeight);
     
     CGFloat minX = CGRectGetMinX(self.bounds) + (width - cellSize * position.columns) / 2.0f;
-    CGFloat minY = CGRectGetMinY(self.bounds) + (height - cellSize * position.rows) / 2.0f;    
+    CGFloat minY = CGRectGetMinY(self.bounds) + (height - cellSize * (position.rows - 0.5f)) / 2.0f;
     
     NSUInteger col = [column unsignedIntegerValue];
     
@@ -81,7 +112,7 @@
             else
                 newPieceView = [[GCConnectFourPieceView alloc] initBlueWithFrame: pieceFrame];
             
-            [newPieceView setTag: 10000 + slot];
+            [newPieceView setTag: PIECE_OFFSET + slot];
             [self addSubview: newPieceView];
             [self sendSubviewToBack: newPieceView];
             
@@ -103,7 +134,7 @@
     CGFloat height = self.bounds.size.height;
     
     CGFloat maxCellWidth  = width / position.columns;
-    CGFloat maxCellHeight = height / position.rows;
+    CGFloat maxCellHeight = height / (position.rows + 0.5f);
     
     CGFloat cellSize = MIN(maxCellWidth, maxCellHeight);
     
@@ -120,13 +151,26 @@
         {
             CGRect destinationFrame = CGRectMake(minX + col * cellSize, -cellSize, cellSize, cellSize);
             
-            GCConnectFourPieceView *pieceView = (GCConnectFourPieceView *) [self viewWithTag: 10000 + slot];
+            GCConnectFourPieceView *pieceView = (GCConnectFourPieceView *) [self viewWithTag: PIECE_OFFSET + slot];
             
             [UIView animateWithDuration: 0.25f animations: ^{ [pieceView setFrame: destinationFrame]; } completion: ^(BOOL done) { [pieceView removeFromSuperview]; }];
             
             return;
         }
     }
+}
+
+
+- (void) resetBoard
+{
+    GCConnectFourPosition *position = [delegate position];
+    for (NSUInteger i = 0; i < position.rows * position.columns; i += 1)
+    {
+        UIView *pieceView = [self viewWithTag: PIECE_OFFSET + i];
+        [pieceView removeFromSuperview];
+    }
+    
+    [self setNeedsDisplay];
 }
 
 
@@ -140,12 +184,12 @@
     CGFloat height = self.bounds.size.height;
     
     CGFloat maxCellWidth  = width / position.columns;
-    CGFloat maxCellHeight = height / position.rows;
+    CGFloat maxCellHeight = height / (position.rows + 0.5f);
     
     CGFloat cellSize = MIN(maxCellWidth, maxCellHeight);
     
     CGFloat minX = CGRectGetMinX(self.bounds) + (width - cellSize * position.columns) / 2.0f;
-    CGFloat minY = CGRectGetMinY(self.bounds) + (height - cellSize * position.rows) / 2.0f;
+    CGFloat minY = CGRectGetMinY(self.bounds) + (height - cellSize * (position.rows - 0.5f)) / 2.0f;
     
     if (acceptingTouches)
     {
@@ -181,12 +225,12 @@
     CGFloat height = self.bounds.size.height;
     
     CGFloat maxCellWidth  = width / position.columns;
-    CGFloat maxCellHeight = height / position.rows;
+    CGFloat maxCellHeight = height / (position.rows + 0.5f);
     
     CGFloat cellSize = MIN(maxCellWidth, maxCellHeight);
     
     CGFloat minX = CGRectGetMinX(self.bounds) + (width - cellSize * position.columns) / 2.0f;
-    CGFloat minY = CGRectGetMinY(self.bounds) + (height - cellSize * position.rows) / 2.0f;
+    CGFloat minY = CGRectGetMinY(self.bounds) + (height - cellSize * (position.rows - 0.5f)) / 2.0f;
     
     if (acceptingTouches)
     {
@@ -217,7 +261,7 @@
     CGFloat height = self.bounds.size.height;
     
     CGFloat maxCellWidth  = width / position.columns;
-    CGFloat maxCellHeight = height / position.rows;
+    CGFloat maxCellHeight = height / (position.rows + 0.5f);
     
     CGFloat cellSize = MIN(maxCellWidth, maxCellHeight);
     
@@ -272,12 +316,12 @@
     CGFloat height = self.bounds.size.height;
     
     CGFloat maxCellWidth  = width / position.columns;
-    CGFloat maxCellHeight = height / position.rows;
+    CGFloat maxCellHeight = height / (position.rows + 0.5f);
     
     CGFloat cellSize = MIN(maxCellWidth, maxCellHeight);
     
     CGFloat minX = CGRectGetMinX(self.bounds) + (width - cellSize * position.columns) / 2.0f;
-    CGFloat minY = CGRectGetMinY(self.bounds) + (height - cellSize * position.rows) / 2.0f;
+    CGFloat minY = CGRectGetMinY(self.bounds) + (height - cellSize * (position.rows - 0.5f)) / 2.0f;
     
     
     NSArray *moveValues = [delegate moveValues];

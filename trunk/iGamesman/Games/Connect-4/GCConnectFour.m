@@ -176,6 +176,8 @@
     
     position = [[GCConnectFourPosition alloc] initWithWidth: 6 height: 4 toWin: 4];
     position.leftTurn = YES;
+    
+    [connectFourView resetBoard];
 }
 
 

@@ -27,7 +27,7 @@
 
 
 - (void) customizeAppearances
-{
+{    
     /* Segmented controls */
     [[UISegmentedControl appearance] setSegmentedControlStyle: UISegmentedControlStyleBar];
     [[UISegmentedControl appearance] setTintColor: [UIColor colorWithRed: 0 green: 0 blue: 0.5f alpha: 1]];
@@ -42,12 +42,12 @@
     UIImageView *backgroundView;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
     {
-        backgroundView = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"Patchwork~ipad.png"]];
+        backgroundView = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"patchwork~ipad.png"]];
         backgroundView.frame = CGRectMake(0, 0, 768, 1024);
     }
     else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
     {
-        backgroundView = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"Patchwork.png"]];
+        backgroundView = [[UIImageView alloc] initWithImage: [UIImage imageNamed: @"patchwork.png"]];
         backgroundView.frame = CGRectMake(0, 0, 320, 480);
     }
     else
