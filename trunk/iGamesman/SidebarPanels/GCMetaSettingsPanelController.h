@@ -10,6 +10,29 @@
 
 #import "GCModalDrawerView.h"
 
+
+@protocol GCMetaSettingsPanelDelegate;
+
 @interface GCMetaSettingsPanelController : UIViewController <GCModalDrawerPanelDelegate>
+{
+    id<GCMetaSettingsPanelDelegate> delegate;
+    
+    UILabel *moveDelayLabel, *gameDelayLabel, *animationSpeedLabel;
+    UISlider *moveDelaySlider, *gameDelaySlider, *animationSpeedSlider;
+}
+
+- (void) setDelegate: (id<GCMetaSettingsPanelDelegate>) delegate;
+
+@end
+
+
+
+@protocol GCMetaSettingsPanelDelegate
+
+- (CGFloat) computerMoveDelay;
+- (void) setComputerMoveDelay: (CGFloat) delay;
+
+- (CGFloat) computerGameDelay;
+- (void) setComputerGameDelay: (CGFloat) delay;
 
 @end

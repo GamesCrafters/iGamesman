@@ -29,8 +29,19 @@
 - (void) customizeAppearances
 {    
     /* Segmented controls */
-    [[UISegmentedControl appearance] setSegmentedControlStyle: UISegmentedControlStyleBar];
-    [[UISegmentedControl appearance] setTintColor: [UIColor colorWithRed: 0 green: 0 blue: 0.5f alpha: 1]];
+    if ([[UISegmentedControl class] respondsToSelector: @selector(appearance)])
+    {
+        [[UISegmentedControl appearance] setSegmentedControlStyle: UISegmentedControlStyleBar];
+        [[UISegmentedControl appearance] setTintColor: [UIColor colorWithRed: 0 green: 0 blue: 0.5f alpha: 1]];
+    }
+    
+    /* Sliders */
+    if ([[UISlider class] respondsToSelector: @selector(appearance)])
+    {
+        UISlider *appearance = [UISlider appearance];
+        [appearance setMaximumTrackTintColor: [UIColor colorWithRed: 1 green: 204.0f / 255.0f blue: 0 alpha: 1]];
+        [appearance setMinimumTrackTintColor: [UIColor colorWithRed: 0 green: 0 blue: 102.0f / 255.0f alpha: 1]];
+    }
 }
 
 

@@ -115,25 +115,25 @@
 
 #pragma mark - GCMoveValuesRequestDelegate
 
-- (void) moveValuesRequestReachedServer:(GCMoveValuesRequest *)request
+- (void) moveValuesRequestReachedServer: (GCMoveValuesRequest *) request
 {
     
 }
 
 
-- (void) moveValuesRequestDidReceiveResponse:(GCMoveValuesRequest *)request
+- (void) moveValuesRequestDidReceiveResponse: (GCMoveValuesRequest *) request
 {
     
 }
 
 
-- (void) moveValuesRequest:(GCMoveValuesRequest *)request didFailWithError:(NSError *)error
+- (void) moveValuesRequest: (GCMoveValuesRequest *) request didFailWithError: (NSError *) error
 {
     
 }
 
 
-- (void) moveValuesRequestDidReceiveStatusOK:(GCMoveValuesRequest *)request
+- (void) moveValuesRequestDidReceiveStatusOK: (GCMoveValuesRequest *) request
 {
     
 }

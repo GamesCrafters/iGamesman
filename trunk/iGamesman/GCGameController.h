@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 #import "GCJSONService.h"
+#import "GCMetaSettingsPanelController.h"
 
 @protocol GCGame;
 @protocol GCGameControllerDelegate;
@@ -16,7 +17,7 @@
 @class GCStack;
 @class GCGameHistoryItem;
 
-@interface GCGameController : NSObject <GCJSONServiceDelegate>
+@interface GCGameController : NSObject <GCJSONServiceDelegate, GCMetaSettingsPanelDelegate>
 {
     id<GCGame> game;
     id<GCGameControllerDelegate> delegate;
@@ -27,6 +28,9 @@
     GCJSONService *service;
     
     NSThread *runner;
+    
+    CGFloat computerMoveDelay;
+    CGFloat computerGameDelay;
 }
 
 - (id) initWithGame: (id<GCGame>) game andDelegate: (id<GCGameControllerDelegate>) delegate;

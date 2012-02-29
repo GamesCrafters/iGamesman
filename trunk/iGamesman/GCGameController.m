@@ -71,6 +71,9 @@
             service = nil;
         }
         
+        computerMoveDelay = 0.2f;
+        computerGameDelay = 1.0f;
+        
         srandom(time(NULL));
     }
     
@@ -88,6 +91,32 @@
     [service release];
     
     [super dealloc];
+}
+
+
+#pragma mark - GCMetaSettingsPanelDelegate
+
+- (CGFloat) computerMoveDelay
+{
+    return computerMoveDelay;
+}
+
+
+- (void) setComputerMoveDelay: (CGFloat) delay
+{
+    computerMoveDelay = delay;
+}
+
+
+- (CGFloat) computerGameDelay
+{
+    return computerGameDelay;
+}
+
+
+- (void) setComputerGameDelay: (CGFloat) delay
+{
+    computerGameDelay = delay;
 }
 
 
@@ -287,7 +316,7 @@
         move = [legalMoves objectAtIndex: moveIndex];
     }
     
-    [NSThread sleepForTimeInterval: 0.25f];
+    [NSThread sleepForTimeInterval: computerMoveDelay];
     
     [undoStack flush];
     
@@ -320,7 +349,7 @@
 
 - (void) startNewGame
 {
-    [NSThread sleepForTimeInterval: 2];
+    [NSThread sleepForTimeInterval: computerGameDelay];
     
     [game startGameWithLeft: [game leftPlayer] right: [game rightPlayer]];
     

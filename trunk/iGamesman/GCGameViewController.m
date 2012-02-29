@@ -20,6 +20,15 @@
 #import "GCValuesPanelController.h"
 #import "GCVVHPanelController.h"
 
+
+@interface GCGameViewController ()
+{
+    GCMetaSettingsPanelController *metaPanel;
+}
+@end
+
+
+
 @implementation GCGameViewController
 
 
@@ -370,9 +379,8 @@
         }
         else if (i == 6)
         {
-            GCMetaSettingsPanelController *metaPanel = [[GCMetaSettingsPanelController alloc] init];
+            metaPanel = [[GCMetaSettingsPanelController alloc] init];
             [drawer setPanelController: metaPanel];
-            [metaPanel release];
         }
         
         [drawer release];
@@ -466,6 +474,8 @@
     
     gameController = [[GCGameController alloc] initWithGame: game andDelegate: self];
     
+    [metaPanel setDelegate: gameController];
+    
     [self updateStatusLabel];
     
     [gameController go];
@@ -482,6 +492,8 @@
     [gameController release];
     
     [sideBar release];
+    
+    [metaPanel release];
 }
 
 
