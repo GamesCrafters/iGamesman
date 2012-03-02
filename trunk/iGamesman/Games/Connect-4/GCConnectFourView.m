@@ -324,14 +324,6 @@
     CGFloat minY = CGRectGetMinY(self.bounds) + (height - cellSize * (position.rows - 0.5f)) / 2.0f;
     
     
-    if ([delegate isShowingMoveValues])
-    {
-        CGRect valuesRect = CGRectMake(minX, minY - cellSize / 2.0f, cellSize * position.columns, cellSize / 2.0f);
-        CGContextSetRGBFillColor(ctx, 0.8f, 0.8f, 0.8f, 1);
-        CGContextFillRect(ctx, valuesRect);
-    }
-    
-    
     NSArray *moveValues = [delegate moveValues];
     NSArray *remotenessValues = [delegate remotenessValues];
     
@@ -350,6 +342,9 @@
             
             if (![value isEqualToString: GCGameValueUnknown])
             {
+                CGContextSetRGBFillColor(ctx, 0.8f, 0.8f, 0.8f, 1);
+                CGContextFillRect(ctx, valueRect);
+                
                 CGFloat alpha = 1;
                 if ([delegate isShowingDeltaRemoteness] && (remoteness != 0))
                     alpha = 1.0f / log(remoteness + 1);

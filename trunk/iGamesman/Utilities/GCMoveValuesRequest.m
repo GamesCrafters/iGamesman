@@ -8,8 +8,6 @@
 
 #import "GCMoveValuesRequest.h"
 
-#import "SBJson.h"
-
 @interface GCMoveValuesRequest ()
 {
     id<GCMoveValuesRequestDelegate> delegate;
@@ -131,7 +129,7 @@
 
 - (void) connectionDidFinishLoading: (NSURLConnection *) connection
 {    
-    NSDictionary *resultObject = [resultData JSONValue];
+    NSDictionary *resultObject = [NSJSONSerialization JSONObjectWithData: resultData options: 0 error: nil];
     
     [resultData release];
     

@@ -8,8 +8,6 @@
 
 #import "GCPositionValueRequest.h"
 
-#import "SBJson.h"
-
 
 
 @interface GCPositionValueRequest ()
@@ -134,7 +132,7 @@
 
 - (void) connectionDidFinishLoading: (NSURLConnection *) connection
 {    
-    NSDictionary *resultObject = [resultData JSONValue];
+    NSDictionary *resultObject = [NSJSONSerialization JSONObjectWithData: resultData options: 0 error: nil]; 
     
     [resultData release];
     
