@@ -131,10 +131,17 @@
 
 
 - (void) connectionDidFinishLoading: (NSURLConnection *) connection
-{    
-    NSDictionary *resultObject = [NSJSONSerialization JSONObjectWithData: resultData options: 0 error: nil]; 
+{
+    NSError *error;
+    NSDictionary *resultObject = [NSJSONSerialization JSONObjectWithData: resultData options: 0 error: &error];
     
     [resultData release];
+    
+    if (error)
+    {
+        [delegate positionRequest: self didFailWithError: error];
+        return;
+    }
     
     if ([[resultObject objectForKey: @"status"] isEqualToString: @"ok"])
     {

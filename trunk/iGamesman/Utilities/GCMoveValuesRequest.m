@@ -129,13 +129,26 @@
 
 - (void) connectionDidFinishLoading: (NSURLConnection *) connection
 {    
-    NSDictionary *resultObject = [NSJSONSerialization JSONObjectWithData: resultData options: 0 error: nil];
+    NSError *error;
+    NSDictionary *resultObject = [NSJSONSerialization JSONObjectWithData: resultData options: 0 error: &error];
     
     [resultData release];
+    
+    if (error)
+    {
+        [delegate moveValuesRequest: self didFailWithError: error];
+        return;
+    }
+    
     
     if ([[resultObject objectForKey: @"status"] isEqualToString: @"ok"])
     {
         [delegate moveValuesRequestDidReceiveStatusOK: self];
+    }
+    else if ([[resultObject objectForKey: @"status"] isEqualToString: @"error"])
+    {
+        [delegate moveValuesRequest: self didFailWithError: [NSError errorWithDomain: @"Server reported error" code: 200 userInfo: nil]];
+        return;
     }
     
     NSArray *response = [resultObject objectForKey: @"response"];
