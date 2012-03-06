@@ -116,7 +116,8 @@
             [self addSubview: newPieceView];
             [self sendSubviewToBack: newPieceView];
             
-            [UIView animateWithDuration: 0.25f animations: ^{ [newPieceView setFrame: destinationFrame]; } ];
+            [UIView animateWithDuration: 0.25f
+                             animations: ^{ [newPieceView setFrame: destinationFrame]; } ];
             
             [newPieceView release];
             
@@ -153,7 +154,9 @@
             
             GCConnectFourPieceView *pieceView = (GCConnectFourPieceView *) [self viewWithTag: PIECE_OFFSET + slot];
             
-            [UIView animateWithDuration: 0.25f animations: ^{ [pieceView setFrame: destinationFrame]; } completion: ^(BOOL done) { [pieceView removeFromSuperview]; }];
+            [UIView animateWithDuration: 0.25f
+                             animations: ^{ [pieceView setFrame: destinationFrame]; } 
+                             completion: ^(BOOL done) { [pieceView removeFromSuperview]; }];
             
             return;
         }

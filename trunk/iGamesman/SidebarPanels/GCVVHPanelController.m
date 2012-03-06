@@ -12,6 +12,19 @@
 
 @implementation GCVVHPanelController
 
+- (id) initWithDataSource: (id<GCVVHViewDataSource>) _dataSource
+{
+    self = [super init];
+    
+    if (self)
+    {
+        dataSource = _dataSource;
+    }
+    
+    return self;
+}
+
+
 #pragma mark - GCModalDrawerPanelDelegate
 
 - (BOOL) wantsSaveButton
@@ -37,6 +50,12 @@
 }
 
 
+- (void) drawerWillAppear
+{
+    [vvh setNeedsDisplay];
+}
+
+
 #pragma mark - View lifecycle
 
 - (void) loadView
@@ -44,8 +63,16 @@
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
         self.view = [[[UIView alloc] initWithFrame: CGRectMake(0, 0, 460, 280 - 32)] autorelease];
     
-    GCVVHView *vvh = [[GCVVHView alloc] initWithFrame: [[self view] bounds]];
+    vvh = [[GCVVHView alloc] initWithFrame: [[self view] bounds]];
+    [vvh setDataSource: dataSource];
     [self.view addSubview: vvh];
+}
+
+
+- (void) viewDidUnload
+{
+    [super viewDidUnload];
+    
     [vvh release];
 }
 

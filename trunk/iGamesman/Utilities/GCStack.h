@@ -17,4 +17,6 @@
 - (void) pop;
 - (void) flush;
 
+- (NSEnumerator *) objectEnumerator;
+
 @end

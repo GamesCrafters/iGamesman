@@ -42,6 +42,8 @@
 
 - (GCGameHistoryItem *) currentItem;
 
+- (NSEnumerator *) historyItemEnumerator;
+
 @end
 
 
@@ -51,5 +53,6 @@
 - (void) setUndoButtonEnabled: (BOOL) enabled;
 - (void) setRedoButtonEnabled: (BOOL) enabled;
 - (void) updateStatusLabel;
+- (void) updateVVH;
 
 @end

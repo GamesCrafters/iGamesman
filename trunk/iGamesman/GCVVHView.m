@@ -10,6 +10,9 @@
 
 #import <QuartzCore/QuartzCore.h>
 
+#import "GCGameHistoryItem.h"
+
+
 @implementation GCVVHView
 
 + (Class) layerClass
@@ -35,20 +38,38 @@
 }
 
 
+- (void) setDataSource: (id<GCVVHViewDataSource>) _dataSource
+{
+    dataSource = _dataSource;
+}
+
+
+- (void) reloadData
+{
+    [self setNeedsDisplay];
+}
+
+
 - (void) drawLayer: (CALayer *) layer inContext: (CGContextRef) ctx
-{    
+{
     CGFloat x = self.bounds.origin.x;
     CGFloat y = self.bounds.origin.y;
-	CGFloat w = self.bounds.size.width;
-    CGFloat h = self.bounds.size.height;
+    CGFloat width = self.bounds.size.width;
+    CGFloat height = self.bounds.size.height;
     
-    NSInteger maxRemote = 20;
+    NSInteger maxRemote = -1;
+    NSEnumerator *enumerator = [dataSource historyItemEnumerator];
+    GCGameHistoryItem *historyItem;
+    while (historyItem = [enumerator nextObject])
+    {
+        maxRemote = MAX(maxRemote, [historyItem remoteness]);
+    }
     
     NSInteger slots = (NSInteger) ceil(maxRemote / 5.0f) * 5;
     NSInteger scale = 1;
-    CGFloat step = (w / 2.0f - 20) / (slots + 1);
+    CGFloat step = (width / 2.0f - 20) / (slots + 1);
     
-    while ((w/2.0 - 20) / (slots / 5) < 20)
+    while ((width/2.0 - 20) / (slots / 5) < 20)
     {
 		scale *= 2;
 		slots /= 2;
@@ -61,26 +82,26 @@
         CGContextFillRect(ctx, [self bounds]);
         
         CGContextMoveToPoint(ctx, CGRectGetMaxX([self bounds]) - 1.5f, CGRectGetMinY([self bounds]));
-        CGContextAddLineToPoint(ctx, CGRectGetMaxX([self bounds]) - 1.5f, 3 + (h - 480) / 2.0f);
-        CGContextMoveToPoint(ctx, CGRectGetMaxX([self bounds]) - 1.5f, h - 3 - (h - 480) / 2.0f);
+        CGContextAddLineToPoint(ctx, CGRectGetMaxX([self bounds]) - 1.5f, 3 + (height - 480) / 2.0f);
+        CGContextMoveToPoint(ctx, CGRectGetMaxX([self bounds]) - 1.5f, height - 3 - (height - 480) / 2.0f);
         CGContextAddLineToPoint(ctx, CGRectGetMaxX([self bounds]) - 1.5f, CGRectGetMaxY([self bounds]));
         CGContextSetLineWidth(ctx, 3);
         CGContextSetRGBStrokeColor(ctx, 1, 1, 1, 1);
         CGContextStrokePath(ctx);
     }
     
-	// Flip drawing direction because of inverted coordinate system
+	/* Flip drawing direction because of inverted coordinate system */
 	CGContextSetTextMatrix(ctx, CGAffineTransformMakeScale(1.0, -1.0));
     CGContextSelectFont(ctx, "Helvetica", 11, kCGEncodingMacRoman);
     CGContextSetRGBFillColor(ctx, 1, 1, 1, 1);
-    CGContextShowTextAtPoint(ctx, x + w/2.0 - 4, y + 35, "D", 1);
+    CGContextShowTextAtPoint(ctx, x + width/2.0 - 4, y + 35, "D", 1);
     
     
     for (int i = 0 ; i <= slots * scale; i += scale)
     {
-		float x0 = step * i;
+		CGFloat x0 = step * i;
 		
-		float dash[] = {5.0, 5.0};
+		CGFloat dash[] = {5.0, 5.0};
 		if (i % 5 == 0)
         {
 			// Major tick line
@@ -98,12 +119,12 @@
 		
 		// Left side line
 		CGContextMoveToPoint(ctx, 20 + x0, y + 40);
-		CGContextAddLineToPoint(ctx, 20 + x0, y + h);
+		CGContextAddLineToPoint(ctx, 20 + x0, y + height);
 		CGContextStrokePath(ctx);
 		
 		// Right side line
-		CGContextMoveToPoint(ctx, w - 20 - x0, y + 40);
-		CGContextAddLineToPoint(ctx, w - 20 - x0, y + h);
+		CGContextMoveToPoint(ctx, width - 20 - x0, y + 40);
+		CGContextAddLineToPoint(ctx, width - 20 - x0, y + height);
 		CGContextStrokePath(ctx);
 		
 		// Only label major tick lines (and not the center line)
@@ -119,7 +140,7 @@
 			CGContextShowTextAtPoint(ctx, 20 - textSize.width/2.0 + x0, y + 35, str, strlen(str));
 			
 			// Right side label
-			CGContextShowTextAtPoint(ctx, w - 20 - textSize.width/2.0 - x0, y + 35, str, strlen(str));
+			CGContextShowTextAtPoint(ctx, width - 20 - textSize.width/2.0 - x0, y + 35, str, strlen(str));
 		}
 	}
     
@@ -127,9 +148,131 @@
 	CGContextSetRGBStrokeColor(ctx, 1, 1, 1, 1);
 	CGContextSetLineWidth(ctx, 4.0);
 	CGContextSetLineDash(ctx, 0, NULL, 0);
-	CGContextMoveToPoint(ctx, x + w/2.0, y + 40);
-	CGContextAddLineToPoint(ctx, x + w/2.0, y + h);
+	CGContextMoveToPoint(ctx, x + width/2.0, y + 40);
+	CGContextAddLineToPoint(ctx, x + width/2.0, y + height);
 	CGContextStrokePath(ctx);
+    
+    
+    CGFloat currentRowY = 60.0f;
+    CGFloat radius = 7;
+    
+    CGPoint previousCenters[2] = { CGPointZero, CGPointZero };
+    NSUInteger previousCenterCount = 0;
+    
+    /* Loop through the history and draw the VVH */
+    enumerator = [dataSource historyItemEnumerator];
+    GCGameHistoryItem *item;
+    while (item = [enumerator nextObject])
+    {
+        NSInteger remoteness = [item remoteness];
+        GCGameValue *value = [item value];
+        BOOL left = ([item playerSide] == GC_PLAYER_LEFT);
+        
+        
+        CGFloat leftX  = remoteness * step + 20;
+        CGFloat rightX = width - (remoteness * step + 20);
+        
+        CGPoint centers[2] = { CGPointZero, CGPointZero };
+        NSUInteger centerCount = 0;
+        
+        if ([value isEqualToString: GCGameValueWin])
+        {
+            /* Win */
+            centers[0] = CGPointMake(left ? leftX : rightX, currentRowY);
+            centerCount = 1;
+            
+            CGContextSetRGBStrokeColor(ctx, 139.0f / 255.0f, 0, 0, 1);
+            CGContextSetRGBFillColor(ctx, 0, 1, 0, 1);
+        }
+        else if ([value isEqualToString: GCGameValueLose])
+        {
+            /* Lose */
+            centers[0] = CGPointMake(left ? rightX : leftX, currentRowY);
+            centerCount = 1;
+            
+            CGContextSetRGBStrokeColor(ctx, 0, 1, 0, 1);
+            CGContextSetRGBFillColor(ctx, 139.0f / 255.0f, 0, 0, 1);
+        }
+        else if ([value isEqualToString: GCGameValueDraw])
+        {
+            /* Draw */
+            centers[0] = CGPointMake(width / 2.0f - radius, currentRowY);
+            centers[1] = CGPointMake(width / 2.0f + radius, currentRowY);
+            centerCount = 2;
+            
+            CGContextSetRGBStrokeColor(ctx, 1, 1, 0, 1);
+            CGContextSetRGBFillColor(ctx, 1, 1, 0, 1);
+        }
+        else if ([value isEqualToString: GCGameValueTie])
+        {
+            /* Tie */
+            centers[0] = CGPointMake(leftX, currentRowY);
+            centers[1] = CGPointMake(rightX, currentRowY);
+            centerCount = 2;
+            
+            CGContextSetRGBStrokeColor(ctx, 1, 1, 0, 1);
+            CGContextSetRGBFillColor(ctx, 1, 1, 0, 1);
+        }
+        else
+        {
+            /* Unknown */
+            CGContextSetRGBStrokeColor(ctx, 0, 0, 0, 0);
+            CGContextSetRGBFillColor(ctx, 0, 0, 0, 0);
+        }
+        
+        
+        /* Draw the line(s) from the previous position to this position */
+        if ((previousCenterCount == 1) && (centerCount == 1))
+        {
+            CGContextMoveToPoint(ctx, previousCenters[0].x, previousCenters[0].y);
+            CGContextAddLineToPoint(ctx, centers[0].x, centers[0].y);
+            
+            CGContextStrokePath(ctx);
+        }
+        else if ((previousCenterCount == 1) && (centerCount == 2))
+        {
+            CGContextMoveToPoint(ctx, previousCenters[0].x, previousCenters[0].y);
+            if (previousCenters[0].x < (width / 2.0f))
+                CGContextAddLineToPoint(ctx, centers[0].x, centers[0].y);
+            else
+                CGContextAddLineToPoint(ctx, centers[1].x, centers[1].y);
+            
+            CGContextStrokePath(ctx);
+        }
+        else if ((previousCenterCount == 2) && (centerCount == 1))
+        {
+            if (left)
+                CGContextMoveToPoint(ctx, previousCenters[0].x, previousCenters[0].y);
+            else
+                CGContextMoveToPoint(ctx, previousCenters[1].x, previousCenters[1].y);
+            CGContextAddLineToPoint(ctx, centers[0].x, centers[0].y);
+            
+            CGContextStrokePath(ctx);
+        }
+        else if ((previousCenterCount == 2) && (centerCount == 2))
+        {
+            CGContextMoveToPoint(ctx, previousCenters[0].x, previousCenters[0].y);
+            CGContextAddLineToPoint(ctx, centers[0].x, centers[0].y);
+            CGContextMoveToPoint(ctx, previousCenters[1].x, previousCenters[1].y);
+            CGContextAddLineToPoint(ctx, centers[1].x, centers[1].y);
+            
+            CGContextStrokePath(ctx);
+        }
+        
+        
+        /* Draw the circle(s) for this position */
+        if (centerCount >= 1)
+            CGContextFillEllipseInRect(ctx, CGRectMake(centers[0].x - radius, centers[0].y - radius, 2 * radius, 2 * radius));
+        if (centerCount >= 2)
+            CGContextFillEllipseInRect(ctx, CGRectMake(centers[1].x - radius, centers[1].y - radius, 2 * radius, 2 * radius));
+        
+        currentRowY += (10 + 2 * radius);
+        
+        /* Update the previous */
+        previousCenters[0] = centers[0];
+        previousCenters[1] = centers[1];
+        previousCenterCount = centerCount;
+    }
 }
 
 

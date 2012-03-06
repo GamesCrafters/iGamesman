@@ -48,6 +48,7 @@
 - (void) saveButtonTapped
 {
     [delegate setComputerMoveDelay: [moveDelaySlider value]];
+    [delegate setComputerGameDelay: [gameDelaySlider value]];
 }
 
 
@@ -58,7 +59,6 @@
     
     [moveDelayLabel setText: [NSString stringWithFormat: @"Computer Move Delay: %.2fs", [moveDelaySlider value]]];
     [gameDelayLabel setText: [NSString stringWithFormat: @"Computer/Computer Game Delay: %.2fs", [gameDelaySlider value]]];
-    [animationSpeedLabel setText: [NSString stringWithFormat: @"Animation Speed: %.2fs", [animationSpeedSlider value]]];
 }
 
 
@@ -78,10 +78,6 @@
     {
         [gameDelayLabel setText: [NSString stringWithFormat: @"Computer/Computer Game Delay: %.2fs", [gameDelaySlider value]]];
     }
-    else if (sender == animationSpeedSlider)
-    {
-        [animationSpeedLabel setText: [NSString stringWithFormat: @"Animation Speed: %.2fs", [animationSpeedSlider value]]];
-    }
 }
 
 
@@ -92,30 +88,24 @@
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
         self.view = [[[UIView alloc] initWithFrame: CGRectMake(0, 0, 360, 280 - 32)] autorelease];
     else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-        self.view = [[[UIView alloc] initWithFrame: CGRectMake(0, 0, 360, 280 - 44)] autorelease];
+        self.view = [[[UIView alloc] initWithFrame: CGRectMake(0, 0, 360, 240 - 44)] autorelease];
     
     
     CGFloat width  = self.view.bounds.size.width;
+    CGFloat height = self.view.bounds.size.height;
     
-    moveDelayLabel = [[UILabel alloc] initWithFrame: CGRectMake(GC_SIDE_INSET, 0, width - 2 * GC_SIDE_INSET, 25)];
+    moveDelayLabel = [[UILabel alloc] initWithFrame: CGRectMake(GC_SIDE_INSET, GC_SIDE_INSET, width - 2 * GC_SIDE_INSET, 25)];
     [self.view addSubview: moveDelayLabel];
     
-    moveDelaySlider = [[UISlider alloc] initWithFrame: CGRectMake(GC_SIDE_INSET, 25, width - 2 * GC_SIDE_INSET, 25)];
+    moveDelaySlider = [[UISlider alloc] initWithFrame: CGRectMake(GC_SIDE_INSET, GC_SIDE_INSET + 25, width - 2 * GC_SIDE_INSET, 25)];
     [self.view addSubview: moveDelaySlider];
     
     
-    gameDelayLabel = [[UILabel alloc] initWithFrame: CGRectMake(GC_SIDE_INSET, 50, width - 2 * GC_SIDE_INSET, 25)];
+    gameDelayLabel = [[UILabel alloc] initWithFrame: CGRectMake(GC_SIDE_INSET, height / 2.0f, width - 2 * GC_SIDE_INSET, 25)];
     [self.view addSubview: gameDelayLabel];
     
-    gameDelaySlider = [[UISlider alloc] initWithFrame: CGRectMake(GC_SIDE_INSET, 75, width - 2 * GC_SIDE_INSET, 25)];
+    gameDelaySlider = [[UISlider alloc] initWithFrame: CGRectMake(GC_SIDE_INSET, height / 2.0f + 25, width - 2 * GC_SIDE_INSET, 25)];
     [self.view addSubview: gameDelaySlider];
-    
-    
-    animationSpeedLabel = [[UILabel alloc] initWithFrame: CGRectMake(GC_SIDE_INSET, 100, width - 2 * GC_SIDE_INSET, 25)];
-    [self.view addSubview: animationSpeedLabel];
-    
-    animationSpeedSlider = [[UISlider alloc] initWithFrame: CGRectMake(GC_SIDE_INSET, 125, width - 2 * GC_SIDE_INSET, 25)];
-    [self.view addSubview: animationSpeedSlider];
 }
 
 
@@ -129,9 +119,6 @@
     [gameDelayLabel setBackgroundColor: [UIColor clearColor]];
     [gameDelayLabel setTextColor: [UIColor whiteColor]];
     
-    [animationSpeedLabel setBackgroundColor: [UIColor clearColor]];
-    [animationSpeedLabel setTextColor: [UIColor whiteColor]];
-    
     [moveDelaySlider setMinimumValue: 0.0f];
     [moveDelaySlider setMaximumValue: 2.0f];
     [moveDelaySlider addTarget: self action: @selector(sliderValueChanged:) forControlEvents: UIControlEventValueChanged];
@@ -139,8 +126,6 @@
     [gameDelaySlider setMinimumValue: 0.0f];
     [gameDelaySlider setMaximumValue: 2.0f];
     [gameDelaySlider addTarget: self action: @selector(sliderValueChanged:) forControlEvents: UIControlEventValueChanged];
-    
-    [animationSpeedSlider addTarget: self action: @selector(sliderValueChanged:) forControlEvents: UIControlEventValueChanged];
 }
 
 
@@ -153,9 +138,6 @@
     
     [gameDelayLabel release];
     [gameDelaySlider release];
-    
-    [animationSpeedLabel release];
-    [animationSpeedSlider release];
 }
 
 @end

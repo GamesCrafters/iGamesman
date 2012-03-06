@@ -13,7 +13,6 @@
 #import "GCGameHistoryItem.h"
 #import "GCPlayer.h"
 #import "GCSidebarView.h"
-#import "GCVVHView.h"
 
 #import "GCMetaSettingsPanelController.h"
 #import "GCPlayerPanelController.h"
@@ -56,6 +55,14 @@
 }
 
 
+#pragma mark - GCVVHViewDataSource
+
+- (NSEnumerator *) historyItemEnumerator
+{
+    return [gameController historyItemEnumerator];
+}
+
+
 #pragma mark - GCGameControllerDelegate
 
 - (void) setUndoButtonEnabled: (BOOL) enabled
@@ -69,6 +76,12 @@
 {
     UIButton *undoButton = (UIButton *) [self.view viewWithTag: 1001];
     undoButton.enabled = enabled;
+}
+
+
+- (void) updateVVH
+{
+    [vvh reloadData];
 }
 
 
@@ -216,9 +229,10 @@
             CGFloat width  = [[self view] bounds].size.width;
             CGFloat height = [[self view] bounds].size.height;
             
-            CGFloat vvhWidth = width / 4.0f;
+            CGFloat vvhWidth = width / 3.5f;
             
             vvh = [[GCVVHView alloc] initWithFrame: CGRectMake(-(vvhWidth), 0, vvhWidth, height)];
+            [vvh setDataSource: self];
             
             [self.view addSubview: vvh];
             
@@ -281,6 +295,7 @@
             {
                 [vvh removeFromSuperview];
                 [vvh release];
+                vvh = nil;
             };
             
             [UIView animateWithDuration: 0.25f animations: animateBlock completion: completion];
@@ -347,7 +362,7 @@
         drawerWidths[1] = 460;  drawerHeights[1] = 300;
         drawerWidths[2] = 300;  drawerHeights[2] = sideBarRect.size.height;
         drawerWidths[3] = 360;  drawerHeights[3] = 250;
-        drawerWidths[4] = 360;  drawerHeights[4] = sideBarRect.size.height;
+        drawerWidths[4] = 360;  drawerHeights[4] = 240;
     }
     
     for (int i = 2; i <= 6; i += 1)
@@ -360,7 +375,7 @@
         
         if ((i == 2) && (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone))
         {
-            GCVVHPanelController *vvhPanel = [[GCVVHPanelController alloc] init];
+            GCVVHPanelController *vvhPanel = [[GCVVHPanelController alloc] initWithDataSource: self];
             [drawer setPanelController: vvhPanel];
             [vvhPanel release];
         }

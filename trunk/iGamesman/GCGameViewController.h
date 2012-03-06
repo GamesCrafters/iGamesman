@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 #import "GCGameController.h"
+#import "GCVVHView.h"
 
 #import "GCModalDrawerView.h"
 #import "GCValuesPanelController.h"
@@ -16,10 +17,9 @@
 
 @protocol GCGame;
 @class GCSidebarView;
-@class GCVVHView;
 
 
-@interface GCGameViewController : UIViewController <GCGameControllerDelegate, GCModalDrawerViewDelegate, GCValuesPanelDelegate>
+@interface GCGameViewController : UIViewController <GCGameControllerDelegate, GCModalDrawerViewDelegate, GCValuesPanelDelegate, GCVVHViewDataSource>
 {
     id<GCGame> game;
     GCGameController *gameController;

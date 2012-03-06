@@ -15,6 +15,9 @@
     /* The position */
     GCPosition *position;
     
+    /* The player */
+    GCPlayerSide player;
+    
     /* The move that led to the position */
     GCMove *move;
     
@@ -32,11 +35,13 @@
 }
 
 - (id) initWithPosition: (GCPosition *) position
+                 player: (GCPlayerSide) side
                    move: (GCMove *) move
                   value: (GCGameValue *) value
              remoteness: (NSInteger) remoteness;
 
 - (GCPosition *) position;
+- (GCPlayerSide) playerSide;
 - (GCMove *) move;
 - (GCGameValue *) value;
 - (NSInteger) remoteness;

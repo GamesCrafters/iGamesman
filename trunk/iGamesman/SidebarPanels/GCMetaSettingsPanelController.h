@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 #import "GCModalDrawerView.h"
+#import "GCGame.h"
 
 
 @protocol GCMetaSettingsPanelDelegate;
@@ -16,9 +17,10 @@
 @interface GCMetaSettingsPanelController : UIViewController <GCModalDrawerPanelDelegate>
 {
     id<GCMetaSettingsPanelDelegate> delegate;
+    id<GCGame> game;
     
-    UILabel *moveDelayLabel, *gameDelayLabel, *animationSpeedLabel;
-    UISlider *moveDelaySlider, *gameDelaySlider, *animationSpeedSlider;
+    UILabel *moveDelayLabel, *gameDelayLabel;
+    UISlider *moveDelaySlider, *gameDelaySlider;
 }
 
 - (void) setDelegate: (id<GCMetaSettingsPanelDelegate>) delegate;

@@ -78,4 +78,10 @@
     [super dealloc];
 }
 
+
+- (NSEnumerator *) objectEnumerator
+{
+    return [stack objectEnumerator];
+}
+
 @end

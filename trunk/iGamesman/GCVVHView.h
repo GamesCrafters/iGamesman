@@ -8,6 +8,24 @@
 
 #import <UIKit/UIKit.h>
 
+
+@protocol GCVVHViewDataSource;
+
 @interface GCVVHView : UIView
+{
+    id<GCVVHViewDataSource> dataSource;
+}
+
+- (void) setDataSource: (id<GCVVHViewDataSource>) dataSource;
+
+- (void) reloadData;
+
+@end
+
+
+
+@protocol GCVVHViewDataSource
+
+- (NSEnumerator *) historyItemEnumerator;
 
 @end

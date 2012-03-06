@@ -11,6 +11,7 @@
 @implementation GCGameHistoryItem
 
 - (id) initWithPosition: (GCPosition *) _position
+                 player: (GCPlayerSide) side
                    move: (GCMove *) _move
                   value: (GCGameValue *) _value
              remoteness: (NSInteger) _remoteness
@@ -20,6 +21,7 @@
     if (self)
     {
         position = [_position retain];
+        player = side;
         move = [_move retain];
         value = [_value retain];
         remoteness = _remoteness;
@@ -47,7 +49,8 @@
 
 - (NSString *) description
 {
-    NSString *desc = [NSString stringWithFormat: @"position: %@\nmove: %@\nvalue: %@\nremoteness: %d\nmove values: %@", position, move, value, remoteness, moveValues];
+    NSString *desc = [NSString stringWithFormat: @"position: %@\nside: %@\nmove: %@\nvalue: %@\nremoteness: %d\nmove values: %@", position,
+                      (player == GC_PLAYER_LEFT ? @"Left" : @"Right"), move, value, remoteness, moveValues];
     return desc;
 }
 
@@ -57,6 +60,12 @@
 - (GCPosition *) position
 {
     return position;
+}
+
+
+- (GCPlayerSide) playerSide
+{
+    return player;
 }
 
 

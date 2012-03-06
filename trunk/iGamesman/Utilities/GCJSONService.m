@@ -128,7 +128,8 @@
 
 - (void) moveValuesRequest: (GCMoveValuesRequest *) request didFailWithError: (NSError *) error
 {
-    
+    if ([delegate respondsToSelector: @selector(jsonService:didFailWithError:)])
+        [delegate jsonService: self didFailWithError: error];
 }
 
 

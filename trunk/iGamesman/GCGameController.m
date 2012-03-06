@@ -48,7 +48,11 @@
         undoStack    = [[GCStack alloc] init];
         
         GCPosition *position = [[game currentPosition] copy];
-        GCGameHistoryItem *startingItem = [[GCGameHistoryItem alloc] initWithPosition: position move: nil value: GCGameValueUnknown remoteness: -1];
+        GCGameHistoryItem *startingItem = [[GCGameHistoryItem alloc] initWithPosition: position
+                                                                               player: [game currentPlayerSide]
+                                                                                 move: nil
+                                                                                value: GCGameValueUnknown
+                                                                           remoteness: -1];
         [position release];
         
         [historyStack push: startingItem];
@@ -132,6 +136,7 @@
     [historyItem setRemoteness: remoteness];
     
     [delegate updateStatusLabel];
+    [delegate updateVVH];
 }
 
 
@@ -150,6 +155,20 @@
                               forMove: [game moveForGCWebMove: [moves objectAtIndex: i]]];
         }
     }
+}
+
+
+- (void) jsonService: (GCJSONService *) service didFailWithError: (NSError *) error
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Server Error"
+                                                    message: @"An error was encountered connecting to the GCWeb server"
+                                                   delegate: nil
+                                          cancelButtonTitle: @"OK"
+                                          otherButtonTitles: nil];
+    [alert show];
+    [alert release];
+    
+    [[GCMessageOverlayView sharedOverlayView] finishingLoading];
 }
 
 
@@ -173,12 +192,17 @@
     [game doMove: move];
     
     [delegate updateStatusLabel];
+    [delegate updateVVH];
     
     
     GCPosition *newPosition = [[game currentPosition] copy];
     GCMove *moveCopy = [move copy];
     
-    GCGameHistoryItem *historyItem = [[GCGameHistoryItem alloc] initWithPosition: newPosition move: moveCopy value: GCGameValueUnknown remoteness: -1];
+    GCGameHistoryItem *historyItem = [[GCGameHistoryItem alloc] initWithPosition: newPosition
+                                                                          player: [game currentPlayerSide]
+                                                                            move: moveCopy
+                                                                           value: GCGameValueUnknown
+                                                                      remoteness: -1];
     [historyStack push: historyItem];
     [historyItem release];
     
@@ -326,6 +350,7 @@
     [game doMove: move];
     
     [delegate updateStatusLabel];
+    [delegate updateVVH];
     
     [runner cancel];
     [runner release];
@@ -335,7 +360,11 @@
     GCPosition *newPosition = [[game currentPosition] copy];
     GCMove *moveCopy = [move copy];
     
-    GCGameHistoryItem *historyItem = [[GCGameHistoryItem alloc] initWithPosition: newPosition move: moveCopy value: GCGameValueUnknown remoteness: -1];
+    GCGameHistoryItem *historyItem = [[GCGameHistoryItem alloc] initWithPosition: newPosition
+                                                                          player: [game currentPlayerSide]
+                                                                            move: moveCopy
+                                                                           value: GCGameValueUnknown
+                                                                      remoteness: -1];
     [historyStack push: historyItem];
     [historyItem release];
     
@@ -440,6 +469,7 @@
     
     [game undoMove: previousMove toPosition: previousPosition];
     [delegate updateStatusLabel];
+    [delegate updateVVH];
     
     [previousPosition release];
     [previousMove release];
@@ -472,6 +502,7 @@
         
         [game undoMove: previousMove toPosition: previousPosition];
         [delegate updateStatusLabel];
+        [delegate updateVVH];
         
         [previousPosition release];
         [previousMove release];
@@ -500,6 +531,7 @@
     
     [game doMove: nextMove];
     [delegate updateStatusLabel];
+    [delegate updateVVH];
     
     [nextMove release];
     
@@ -524,6 +556,7 @@
         
         [game doMove: nextMove];
         [delegate updateStatusLabel];
+        [delegate updateVVH];
         
         [nextMove release];
     }
@@ -535,6 +568,12 @@
 - (GCGameHistoryItem *) currentItem
 {
     return [historyStack peek];
+}
+
+
+- (NSEnumerator *) historyItemEnumerator
+{
+    return [historyStack objectEnumerator];
 }
 
 

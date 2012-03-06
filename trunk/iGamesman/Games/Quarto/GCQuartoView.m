@@ -279,10 +279,8 @@
                 else
                     CGContextSetRGBStrokeColor(ctx, 0, 0, 0, 1);
                 
-                CGFloat lineWidth;
-                if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
-                    lineWidth = 4;
-                else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+                CGFloat lineWidth = 4;
+                if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
                     lineWidth = 6;
                 CGContextSetLineWidth(ctx, lineWidth);
                 
@@ -298,10 +296,8 @@
             else
                 CGContextSetRGBStrokeColor(ctx, 1, 1, 0, valueAlpha);
             
-            CGFloat lineWidth;
-            if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
-                lineWidth = 4;
-            else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+            CGFloat lineWidth = 4;
+            if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
                 lineWidth = 6;
             CGContextSetLineWidth(ctx, lineWidth);
             
@@ -331,10 +327,8 @@
                 else
                     CGContextSetRGBStrokeColor(ctx, 0, 0, 0, 1);
                 
-                CGFloat lineWidth;
-                if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
-                    lineWidth = 4;
-                else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+                CGFloat lineWidth = 4;
+                if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
                     lineWidth = 6;
                 CGContextSetLineWidth(ctx, lineWidth);
                 
@@ -350,10 +344,8 @@
             else
                 CGContextSetRGBStrokeColor(ctx, 1, 1, 0, valueAlpha);
             
-            CGFloat lineWidth;
-            if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
-                lineWidth = 4;
-            else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+            CGFloat lineWidth = 4;
+            if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
                 lineWidth = 6;
             CGContextSetLineWidth(ctx, lineWidth);
             
