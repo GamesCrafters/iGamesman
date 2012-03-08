@@ -16,18 +16,18 @@
 
 @interface GCConnectFour : NSObject <GCGame, GCConnectFourViewDelegate>
 {
-    GCConnectFourPosition *position;
+    GCConnectFourPosition *_position;
     
-    GCPlayer *leftPlayer, *rightPlayer;
+    GCPlayer *_leftPlayer, *_rightPlayer;
     
-    GCMoveCompletionHandler moveHandler;
+    GCMoveCompletionHandler _moveHandler;
     
-    GCConnectFourView *connectFourView;
+    GCConnectFourView *_connectFourView;
     
     
-    BOOL showMoveValues, showDeltaRemoteness;
+    BOOL _showMoveValues, _showDeltaRemoteness;
     
-    NSArray *moveValues, *remotenessValues;
+    NSArray *_moveValues, *_remotenessValues;
 }
 
 @end

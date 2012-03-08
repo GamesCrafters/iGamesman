@@ -22,19 +22,19 @@
     
     if (self)
     {
-        connectFourView = nil;
+        _connectFourView = nil;
         
-        position = nil;
+        _position = nil;
         
-        leftPlayer  = nil;
-        rightPlayer = nil;
+        _leftPlayer  = nil;
+        _rightPlayer = nil;
         
-        moveHandler = nil;
+        _moveHandler = nil;
         
-        showMoveValues = showDeltaRemoteness = NO;
+        _showMoveValues = _showDeltaRemoteness = NO;
         
-        moveValues = nil;
-        remotenessValues = nil;
+        _moveValues = nil;
+        _remotenessValues = nil;
     }
     
     return self;
@@ -43,12 +43,12 @@
 
 - (void) dealloc
 {
-    [connectFourView release];
-    [position release];
-    [leftPlayer release];
-    [rightPlayer release];
-    [moveValues release];
-    [remotenessValues release];
+    [_connectFourView release];
+    [_position release];
+    [_leftPlayer release];
+    [_rightPlayer release];
+    [_moveValues release];
+    [_remotenessValues release];
     
     [super dealloc];
 }
@@ -64,9 +64,9 @@
 
 - (NSDictionary *) gcWebParameters
 {
-    NSNumber *width  = [NSNumber numberWithUnsignedInteger: position.columns];
-    NSNumber *height = [NSNumber numberWithUnsignedInteger: position.rows];
-    NSNumber *pieces = [NSNumber numberWithUnsignedInteger: position.toWin];
+    NSNumber *width  = [NSNumber numberWithUnsignedInteger: [_position columns]];
+    NSNumber *height = [NSNumber numberWithUnsignedInteger: [_position rows]];
+    NSNumber *pieces = [NSNumber numberWithUnsignedInteger: [_position toWin]];
     
     NSArray *objs = [NSArray arrayWithObjects: width, height, pieces, nil];
     NSArray *keys = [NSArray arrayWithObjects: @"width", @"height", @"pieces", nil];
@@ -81,7 +81,7 @@
 {
     NSMutableString *boardString = [NSMutableString string];
     
-    for (GCConnectFourPiece piece in position.board)
+    for (GCConnectFourPiece piece in [_position board])
     {
         if ([piece isEqualToString: GCConnectFourRedPiece])
             [boardString appendString: @"X"];
@@ -103,12 +103,12 @@
 
 - (void) gcWebReportedValues: (NSArray *) values remotenesses: (NSArray *) remotenesses forMoves: (NSArray *) moves
 {
-    NSMutableArray *tempVals = [[NSMutableArray alloc] initWithCapacity: [position columns]];
-    for (NSUInteger i = 0; i < [position columns]; i += 1)
+    NSMutableArray *tempVals = [[NSMutableArray alloc] initWithCapacity: [_position columns]];
+    for (NSUInteger i = 0; i < [_position columns]; i += 1)
         [tempVals addObject: GCGameValueUnknown];
     
-    NSMutableArray *tempRemotes = [[NSMutableArray alloc] initWithCapacity: [position columns]];
-    for (NSUInteger i = 0; i < [position columns]; i += 1)
+    NSMutableArray *tempRemotes = [[NSMutableArray alloc] initWithCapacity: [_position columns]];
+    for (NSUInteger i = 0; i < [_position columns]; i += 1)
         [tempRemotes addObject: [NSNumber numberWithInt: INT_MAX]];
     
     for (NSUInteger i = 0; i < [moves count]; i += 1)
@@ -124,10 +124,10 @@
         [tempRemotes replaceObjectAtIndex: column withObject: remoteness];
     }
     
-    moveValues = tempVals;
-    remotenessValues = tempRemotes;
+    _moveValues = tempVals;
+    _remotenessValues = tempRemotes;
     
-    [connectFourView setNeedsDisplay];
+    [_connectFourView setNeedsDisplay];
 }
 
 
@@ -146,12 +146,12 @@
 
 - (UIView *) viewWithFrame: (CGRect) frame
 {
-    if (connectFourView)
-        [connectFourView release];
+    if (_connectFourView)
+        [_connectFourView release];
     
-    connectFourView = [[GCConnectFourView alloc] initWithFrame: frame];
-    [connectFourView setDelegate: self];
-    return connectFourView;
+    _connectFourView = [[GCConnectFourView alloc] initWithFrame: frame];
+    [_connectFourView setDelegate: self];
+    return _connectFourView;
 }
 
 
@@ -160,44 +160,44 @@
     [left retain];
     [right retain];
     
-    if (leftPlayer)
-        [leftPlayer release];
-    if (rightPlayer)
-        [rightPlayer release];
+    if (_leftPlayer)
+        [_leftPlayer release];
+    if (_rightPlayer)
+        [_rightPlayer release];
     
-    leftPlayer  = left;
-    rightPlayer = right;
+    _leftPlayer  = left;
+    _rightPlayer = right;
     
-    [leftPlayer setEpithet: @"Red"];
-    [rightPlayer setEpithet: @"Blue"];
+    [_leftPlayer setEpithet: @"Red"];
+    [_rightPlayer setEpithet: @"Blue"];
     
-    if (position)
-        [position release];
+    if (_position)
+        [_position release];
     
-    position = [[GCConnectFourPosition alloc] initWithWidth: 6 height: 4 toWin: 4];
-    position.leftTurn = YES;
+    _position = [[GCConnectFourPosition alloc] initWithWidth: 6 height: 4 toWin: 4];
+    [_position setLeftTurn: YES];
     
-    [connectFourView resetBoard];
+    [_connectFourView resetBoard];
 }
 
 
 - (void) waitForHumanMoveWithCompletion: (GCMoveCompletionHandler) completionHandler
 {
-    moveHandler = completionHandler;
+    _moveHandler = completionHandler;
     
-    [connectFourView startReceivingTouches];
+    [_connectFourView startReceivingTouches];
 }
 
 
 - (GCPosition *) currentPosition
 {
-    return position;
+    return _position;
 }
 
 
 - (GCPlayerSide) currentPlayerSide
 {
-    if (position.leftTurn)
+    if ([_position leftTurn])
         return GC_PLAYER_LEFT;
     else
         return GC_PLAYER_RIGHT;
@@ -206,50 +206,50 @@
 
 - (GCPlayer *) leftPlayer
 {
-    return leftPlayer;
+    return _leftPlayer;
 }
 
 
 - (GCPlayer *) rightPlayer
 {
-    return rightPlayer;
+    return _rightPlayer;
 }
 
 
 - (void) doMove: (NSNumber *) move
 {
-    NSMutableArray *board = position.board;
+    NSMutableArray *board = [_position board];
     
-    [connectFourView doMove: move];
+    [_connectFourView doMove: move];
     
 	NSUInteger slot = [move unsignedIntegerValue];
-	while (slot < position.columns * position.rows)
+	while (slot < ([_position columns] * [_position rows]))
     {
 		if ([[board objectAtIndex: slot] isEqual: GCConnectFourBlankPiece])
         {
-			[board replaceObjectAtIndex: slot withObject: (position.leftTurn ? GCConnectFourRedPiece : GCConnectFourBluePiece)];
+			[board replaceObjectAtIndex: slot withObject: ([_position leftTurn] ? GCConnectFourRedPiece : GCConnectFourBluePiece)];
 			break;
 		}
-		slot += position.columns;
+		slot += [_position columns];
 	}
     
-    [moveValues release];
-    moveValues = nil;
+    [_moveValues release];
+    _moveValues = nil;
     
-    [remotenessValues release];
-    remotenessValues = nil;
+    [_remotenessValues release];
+    _remotenessValues = nil;
 
-    position.leftTurn = !position.leftTurn;
+    [_position setLeftTurn: ![_position leftTurn]];
 }
 
 
 - (void) undoMove: (NSNumber *) move toPosition: (GCConnectFourPosition *) previousPosition
 {
-    NSMutableArray *board = position.board;
+    NSMutableArray *board = [_position board];
     
-    [connectFourView undoMove: move];
+    [_connectFourView undoMove: move];
 	
-	NSInteger slot = [move integerValue] + position.columns * (position.rows - 1);
+	NSInteger slot = [move integerValue] + [_position columns] * ([_position rows] - 1);
 	while (slot >= 0)
     {
 		if (![[board objectAtIndex: slot] isEqualToString: GCConnectFourBlankPiece])
@@ -257,22 +257,22 @@
 			[board replaceObjectAtIndex: slot withObject: GCConnectFourBlankPiece];
 			break;
 		}
-		slot -= position.columns;
+		slot -= [_position columns];
 	}
     
-    position.leftTurn = !position.leftTurn;
+    [_position setLeftTurn: ![_position leftTurn]];
 }
 
 
 - (GCGameValue *) primitive
 {
-    NSUInteger rows = position.rows;
-    NSUInteger columns = position.columns;
-    NSUInteger toWin = position.toWin;
+    NSUInteger rows = [_position rows];
+    NSUInteger columns = [_position columns];
+    NSUInteger toWin = [_position toWin];
     
     for (int i = 0; i < rows * columns; i += 1)
     {
-        NSString *piece = [position.board objectAtIndex: i];
+        NSString *piece = [[_position board] objectAtIndex: i];
         
         if ([piece isEqualToString: GCConnectFourBlankPiece])
             continue;
@@ -281,7 +281,7 @@
         BOOL horizontal = YES;
         for (int j = i; j < i + toWin; j += 1)
         {
-            if ((j >= columns * rows) || ((i % columns) > (j % columns)) || ![[position.board objectAtIndex: j] isEqual: piece])
+            if ((j >= columns * rows) || ((i % columns) > (j % columns)) || ![[[_position board] objectAtIndex: j] isEqual: piece])
             {
                 horizontal = NO;
                 break;
@@ -293,7 +293,7 @@
         BOOL vertical = YES;
 		for (int j = i; j < i + columns * toWin; j += columns)
         {
-			if ((j >= columns * rows) || ![[position.board objectAtIndex: j] isEqual: piece])
+			if ((j >= columns * rows) || ![[[_position board] objectAtIndex: j] isEqual: piece])
             {
 				vertical = NO;
 				break;
@@ -305,7 +305,7 @@
         BOOL positiveDiagonal = YES;
 		for (int j = i; j < i + toWin + columns * toWin; j += (columns + 1) )
         {
-			if ((j >= columns * rows) || ((i % columns) > (j % columns)) || ![[position.board objectAtIndex: j] isEqual: piece])
+			if ((j >= columns * rows) || ((i % columns) > (j % columns)) || ![[[_position board] objectAtIndex: j] isEqual: piece])
             {
 				positiveDiagonal = NO;
 				break;
@@ -317,7 +317,7 @@
         BOOL negativeDiagonal = YES;
 		for (int j = i; j < i + columns * toWin - toWin; j += (columns - 1))
         {
-			if ((j >= columns * rows) || ((i % columns) < (j % columns)) || ![[position.board objectAtIndex: j] isEqual: piece])
+			if ((j >= columns * rows) || ((i % columns) < (j % columns)) || ![[[_position board] objectAtIndex: j] isEqual: piece])
             {
 				negativeDiagonal = NO;
 				break;
@@ -325,13 +325,13 @@
 		}
         
         if (horizontal || vertical || positiveDiagonal || negativeDiagonal)
-            return [piece isEqual: (position.leftTurn ? GCConnectFourRedPiece : GCConnectFourBluePiece)] ? GCGameValueWin : GCGameValueLose;
+            return [piece isEqual: ([_position leftTurn] ? GCConnectFourRedPiece : GCConnectFourBluePiece)] ? GCGameValueWin : GCGameValueLose;
     }
     
     NSUInteger numBlanks = 0;
-    for (int i = 0; i < [position.board count]; i += 1)
+    for (int i = 0; i < [[_position board] count]; i += 1)
     {
-        if ([[position.board objectAtIndex: i] isEqualToString: GCConnectFourBlankPiece])
+        if ([[[_position board] objectAtIndex: i] isEqualToString: GCConnectFourBlankPiece])
             numBlanks += 1;
     }
     if (numBlanks == 0)
@@ -343,14 +343,14 @@
 
 - (NSArray *) generateMoves
 {
-    NSMutableArray *moves = [[NSMutableArray alloc] initWithCapacity: position.columns];
+    NSMutableArray *moves = [[NSMutableArray alloc] initWithCapacity: [_position columns]];
 	
-    NSUInteger width = position.columns;
-    NSUInteger height = position.rows;
+    NSUInteger width = [_position columns];
+    NSUInteger height = [_position rows];
     
 	NSUInteger column = 0;
 	for (int i = width * (height - 1); i < width * height; i += 1) {
-		if ([[position.board objectAtIndex: i] isEqual: GCConnectFourBlankPiece])
+		if ([[[_position board] objectAtIndex: i] isEqual: GCConnectFourBlankPiece])
 			[moves addObject: [NSNumber numberWithInteger: column]];
 		column += 1;
 	}
@@ -361,29 +361,29 @@
 
 - (BOOL) isShowingMoveValues
 {
-    return showMoveValues;
+    return _showMoveValues;
 }
 
 
-- (void) setShowingMoveValues: (BOOL) _moveValues
+- (void) setShowingMoveValues: (BOOL) moveValues
 {
-    showMoveValues = _moveValues;
+    _showMoveValues = moveValues;
     
-    [connectFourView setNeedsDisplay];
+    [_connectFourView setNeedsDisplay];
 }
 
 
 - (BOOL) isShowingDeltaRemoteness
 {
-    return showDeltaRemoteness;
+    return _showDeltaRemoteness;
 }
 
 
 - (void) setShowingDeltaRemoteness: (BOOL) deltaRemoteness
 {
-    showDeltaRemoteness = deltaRemoteness;
+    _showDeltaRemoteness = deltaRemoteness;
     
-    [connectFourView setNeedsDisplay];
+    [_connectFourView setNeedsDisplay];
 }
 
 
@@ -391,26 +391,26 @@
 
 - (GCConnectFourPosition *) position
 {
-    return position;
+    return _position;
 }
 
 
 - (void) userChoseMove: (NSNumber *) column
 {
-    [connectFourView stopReceivingTouches];
-    moveHandler(column);
+    [_connectFourView stopReceivingTouches];
+    _moveHandler(column);
 }
 
 
 - (NSArray *) moveValues
 {
-    return moveValues;
+    return _moveValues;
 }
 
 
 - (NSArray *) remotenessValues
 {
-    return remotenessValues;
+    return _remotenessValues;
 }
 
 @end

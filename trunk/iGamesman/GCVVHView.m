@@ -101,18 +101,15 @@
     {
 		CGFloat x0 = step * i;
 		
-		CGFloat dash[] = {5.0, 5.0};
 		if (i % 5 == 0)
         {
 			// Major tick line
-			CGContextSetLineDash(ctx, 0, NULL, 0);
-			CGContextSetRGBStrokeColor(ctx, 1, 1, 1, 1);
+			CGContextSetRGBStrokeColor(ctx, 0.6f, 0.6f, 0.6f, 1);
 		}
         else
         {
 			// Minor tick line
-			CGContextSetLineDash(ctx, 0, dash, 2);
-			CGContextSetRGBStrokeColor(ctx, 0.7f, 0.7f, 0.7f, 1);
+			CGContextSetRGBStrokeColor(ctx, 0.25f, 0.25f, 0.25f, 1);
 		}
         
         CGContextSetLineWidth(ctx, 1);
@@ -147,7 +144,6 @@
     // Draw the center line
 	CGContextSetRGBStrokeColor(ctx, 1, 1, 1, 1);
 	CGContextSetLineWidth(ctx, 4.0);
-	CGContextSetLineDash(ctx, 0, NULL, 0);
 	CGContextMoveToPoint(ctx, x + width/2.0, y + 40);
 	CGContextAddLineToPoint(ctx, x + width/2.0, y + height);
 	CGContextStrokePath(ctx);
