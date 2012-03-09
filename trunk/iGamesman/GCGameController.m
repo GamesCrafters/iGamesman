@@ -32,30 +32,30 @@
 
 #pragma mark - Memory lifecycle
 
-- (id) initWithGame: (id<GCGame>) _game andDelegate: (id<GCGameControllerDelegate>) _delegate
+- (id) initWithGame: (id<GCGame>) game andDelegate: (id<GCGameControllerDelegate>) delegate
 {
     self = [super init];
     
     if (self)
     {
-        game = _game;
-        delegate = _delegate;
+        _game = game;
+        _delegate = delegate;
         
-        [delegate setUndoButtonEnabled: NO];
-        [delegate setRedoButtonEnabled: NO];
+        [_delegate setUndoButtonEnabled: NO];
+        [_delegate setRedoButtonEnabled: NO];
         
-        historyStack = [[GCStack alloc] init];
-        undoStack    = [[GCStack alloc] init];
+        _historyStack = [[GCStack alloc] init];
+        _undoStack    = [[GCStack alloc] init];
         
-        GCPosition *position = [[game currentPosition] copy];
+        GCPosition *position = [[_game currentPosition] copy];
         GCGameHistoryItem *startingItem = [[GCGameHistoryItem alloc] initWithPosition: position
-                                                                               player: [game currentPlayerSide]
+                                                                               player: [_game currentPlayerSide]
                                                                                  move: nil
                                                                                 value: GCGameValueUnknown
                                                                            remoteness: -1];
         [position release];
         
-        [historyStack push: startingItem];
+        [_historyStack push: startingItem];
         [startingItem release];
         
         moveHandler = Block_copy(^(GCMove *move)
@@ -63,20 +63,20 @@
             [self processHumanMove: move];
         });
         
-        if ([game respondsToSelector: @selector(gcWebServiceName)])
+        if ([_game respondsToSelector: @selector(gcWebServiceName)])
         {
-            NSString *gcWebServiceName = [game gcWebServiceName];
-            NSDictionary *params = [game gcWebParameters];
-            service = [[GCJSONService alloc] initWithServiceName: gcWebServiceName parameters: params];
-            service.delegate = self;
+            NSString *gcWebServiceName = [_game gcWebServiceName];
+            NSDictionary *params = [_game gcWebParameters];
+            _service = [[GCJSONService alloc] initWithServiceName: gcWebServiceName parameters: params];
+            [_service setDelegate: self];
         }
         else
         {
-            service = nil;
+            _service = nil;
         }
         
-        computerMoveDelay = 0.2f;
-        computerGameDelay = 1.0f;
+        _computerMoveDelay = 0.2f;
+        _computerGameDelay = 1.0f;
         
         srandom(time(NULL));
     }
@@ -87,12 +87,12 @@
 
 - (void) dealloc
 {
-    [historyStack release];
-    [undoStack release];
+    [_historyStack release];
+    [_undoStack release];
     
     Block_release(moveHandler);
     
-    [service release];
+    [_service release];
     
     [super dealloc];
 }
@@ -102,25 +102,25 @@
 
 - (CGFloat) computerMoveDelay
 {
-    return computerMoveDelay;
+    return _computerMoveDelay;
 }
 
 
 - (void) setComputerMoveDelay: (CGFloat) delay
 {
-    computerMoveDelay = delay;
+    _computerMoveDelay = delay;
 }
 
 
 - (CGFloat) computerGameDelay
 {
-    return computerGameDelay;
+    return _computerGameDelay;
 }
 
 
 - (void) setComputerGameDelay: (CGFloat) delay
 {
-    computerGameDelay = delay;
+    _computerGameDelay = delay;
 }
 
 
@@ -128,31 +128,31 @@
 
 - (void) jsonService: (GCJSONService *) service didReceivePositionValue: (GCGameValue *) value remoteness: (NSInteger) remoteness
 {
-    if ([game respondsToSelector: @selector(gcWebReportedPositionValue:remoteness:)])
-        [game gcWebReportedPositionValue: value remoteness: remoteness];
+    if ([_game respondsToSelector: @selector(gcWebReportedPositionValue:remoteness:)])
+        [_game gcWebReportedPositionValue: value remoteness: remoteness];
     
-    GCGameHistoryItem *historyItem = [historyStack peek];
+    GCGameHistoryItem *historyItem = [_historyStack peek];
     [historyItem setGameValue: value];
     [historyItem setRemoteness: remoteness];
     
-    [delegate updateStatusLabel];
-    [delegate updateVVH];
+    [_delegate updateStatusLabel];
+    [_delegate updateVVH];
 }
 
 
 - (void) jsonService: (GCJSONService *) service didReceiveValues: (NSArray *) values remotenesses: (NSArray *) remotenesses forMoves: (NSArray *) moves
 {
-    if ([game respondsToSelector: @selector(gcWebReportedValues:remotenesses:forMoves:)])
-        [game gcWebReportedValues: values remotenesses: remotenesses forMoves: moves];
+    if ([_game respondsToSelector: @selector(gcWebReportedValues:remotenesses:forMoves:)])
+        [_game gcWebReportedValues: values remotenesses: remotenesses forMoves: moves];
     
-    if ([game respondsToSelector: @selector(moveForGCWebMove:)])
+    if ([_game respondsToSelector: @selector(moveForGCWebMove:)])
     {
         for (NSUInteger i = 0; i < [moves count]; i += 1)
         {
-            GCGameHistoryItem *currentItem = [historyStack peek];
+            GCGameHistoryItem *currentItem = [_historyStack peek];
             [currentItem setGameValue: [values objectAtIndex: i]
                            remoteness: [[remotenesses objectAtIndex: i] integerValue]
-                              forMove: [game moveForGCWebMove: [moves objectAtIndex: i]]];
+                              forMove: [_game moveForGCWebMove: [moves objectAtIndex: i]]];
         }
     }
 }
@@ -184,26 +184,26 @@
 
 - (void) processHumanMove: (GCMove *) move
 {
-    [undoStack flush];
+    [_undoStack flush];
     
-    [delegate setUndoButtonEnabled: YES];
-    [delegate setRedoButtonEnabled: NO];
+    [_delegate setUndoButtonEnabled: YES];
+    [_delegate setRedoButtonEnabled: NO];
     
-    [game doMove: move];
+    [_game doMove: move];
     
-    [delegate updateStatusLabel];
-    [delegate updateVVH];
+    [_delegate updateStatusLabel];
+    [_delegate updateVVH];
     
     
-    GCPosition *newPosition = [[game currentPosition] copy];
+    GCPosition *newPosition = [[_game currentPosition] copy];
     GCMove *moveCopy = [move copy];
     
     GCGameHistoryItem *historyItem = [[GCGameHistoryItem alloc] initWithPosition: newPosition
-                                                                          player: [game currentPlayerSide]
+                                                                          player: [_game currentPlayerSide]
                                                                             move: moveCopy
                                                                            value: GCGameValueUnknown
                                                                       remoteness: -1];
-    [historyStack push: historyItem];
+    [_historyStack push: historyItem];
     [historyItem release];
     
     [newPosition release];
@@ -216,10 +216,10 @@
 
 - (GCMove *) selectPerfectPlayMove
 {
-    GCGameHistoryItem *currentItem = [historyStack peek];
+    GCGameHistoryItem *currentItem = [_historyStack peek];
     
     NSArray *moves = [currentItem moves];
-    NSArray *legalMoves = [game generateMoves];
+    NSArray *legalMoves = [_game generateMoves];
     
     NSMutableArray *wins  = [[NSMutableArray alloc] initWithCapacity: [legalMoves count]];
     NSMutableArray *loses = [[NSMutableArray alloc] initWithCapacity: [legalMoves count]];
@@ -318,19 +318,19 @@
 
 - (void) makeComputerMove
 {
-    NSArray *legalMoves = [game generateMoves];
+    NSArray *legalMoves = [_game generateMoves];
     
     CGFloat percentPerfect;
-    if ([game currentPlayerSide] == GC_PLAYER_LEFT)
-        percentPerfect = [[game leftPlayer] percentPerfect];
+    if ([_game currentPlayerSide] == GC_PLAYER_LEFT)
+        percentPerfect = [[_game leftPlayer] percentPerfect];
     else
-        percentPerfect = [[game rightPlayer] percentPerfect];
+        percentPerfect = [[_game rightPlayer] percentPerfect];
     
     CGFloat perfectDecider = (random() % (1L << 16)) / ((CGFloat) (1L << 16));
     
     GCMove *move;
     
-    if ([game respondsToSelector: @selector(moveForGCWebMove:)] && (perfectDecider < percentPerfect))
+    if ([_game respondsToSelector: @selector(moveForGCWebMove:)] && (perfectDecider < percentPerfect))
     {
         move = [self selectPerfectPlayMove];
     }
@@ -340,32 +340,32 @@
         move = [legalMoves objectAtIndex: moveIndex];
     }
     
-    [NSThread sleepForTimeInterval: computerMoveDelay];
+    [NSThread sleepForTimeInterval: _computerMoveDelay];
     
-    [undoStack flush];
+    [_undoStack flush];
     
-    [delegate setUndoButtonEnabled: YES];
-    [delegate setRedoButtonEnabled: NO];
+    [_delegate setUndoButtonEnabled: YES];
+    [_delegate setRedoButtonEnabled: NO];
     
-    [game doMove: move];
+    [_game doMove: move];
     
-    [delegate updateStatusLabel];
-    [delegate updateVVH];
+    [_delegate updateStatusLabel];
+    [_delegate updateVVH];
     
-    [runner cancel];
-    [runner release];
-    runner = nil;
+    [_runner cancel];
+    [_runner release];
+    _runner = nil;
     
     
-    GCPosition *newPosition = [[game currentPosition] copy];
+    GCPosition *newPosition = [[_game currentPosition] copy];
     GCMove *moveCopy = [move copy];
     
     GCGameHistoryItem *historyItem = [[GCGameHistoryItem alloc] initWithPosition: newPosition
-                                                                          player: [game currentPlayerSide]
+                                                                          player: [_game currentPlayerSide]
                                                                             move: moveCopy
                                                                            value: GCGameValueUnknown
                                                                       remoteness: -1];
-    [historyStack push: historyItem];
+    [_historyStack push: historyItem];
     [historyItem release];
     
     [newPosition release];
@@ -378,13 +378,13 @@
 
 - (void) startNewGame
 {
-    [NSThread sleepForTimeInterval: computerGameDelay];
+    [NSThread sleepForTimeInterval: _computerGameDelay];
     
-    [game startGameWithLeft: [game leftPlayer] right: [game rightPlayer]];
+    [_game startGameWithLeft: [_game leftPlayer] right: [_game rightPlayer]];
     
-    [runner cancel];
-    [runner release];
-    runner = nil;
+    [_runner cancel];
+    [_runner release];
+    _runner = nil;
     
     [self performSelectorOnMainThread: @selector(go) withObject: nil waitUntilDone: NO];
 }
@@ -392,13 +392,13 @@
 
 - (void) go
 {    
-    if (service)
+    if (_service)
     {
-        GCPlayerSide currentSide = [game currentPlayerSide];    
+        GCPlayerSide currentSide = [_game currentPlayerSide];    
         
-        NSString *boardString = [game gcWebBoardString];
+        NSString *boardString = [_game gcWebBoardString];
         
-        [service retrieveDataForBoard: boardString withKey: @"board" forPlayerSide: currentSide];
+        [_service retrieveDataForBoard: boardString withKey: @"board" forPlayerSide: currentSide];
         
         [[GCMessageOverlayView sharedOverlayView] beginLoadingWithMessage: @"Hi"];
     }
@@ -411,34 +411,34 @@
  
 - (void) goAfterDataFetch
 {
-    GCPlayerSide currentSide = [game currentPlayerSide];
+    GCPlayerSide currentSide = [_game currentPlayerSide];
     
     GCPlayer *currentPlayer;
     if (currentSide == GC_PLAYER_LEFT)
-        currentPlayer = [game leftPlayer];
+        currentPlayer = [_game leftPlayer];
     else if (currentSide == GC_PLAYER_RIGHT)
-        currentPlayer = [game rightPlayer];
+        currentPlayer = [_game rightPlayer];
     else
         currentPlayer = nil;
 
-    if ([game primitive] == nil)
+    if ([_game primitive] == nil)
     {
         if ([currentPlayer type] == GC_HUMAN)
         {
-            [game waitForHumanMoveWithCompletion: moveHandler];
+            [_game waitForHumanMoveWithCompletion: moveHandler];
         }
         else if ([currentPlayer type] == GC_COMPUTER)
         {
-            runner = [[NSThread alloc] initWithTarget: self selector: @selector(makeComputerMove) object: nil];
-            [runner start];
+            _runner = [[NSThread alloc] initWithTarget: self selector: @selector(makeComputerMove) object: nil];
+            [_runner start];
         }
     }
     else
     {
-        if (([[game leftPlayer] type] == GC_COMPUTER) && ([[game rightPlayer] type] == GC_COMPUTER))
+        if (([[_game leftPlayer] type] == GC_COMPUTER) && ([[_game rightPlayer] type] == GC_COMPUTER))
         {
-            runner = [[NSThread alloc] initWithTarget: self selector: @selector(startNewGame) object: nil];
-            [runner start];
+            _runner = [[NSThread alloc] initWithTarget: self selector: @selector(startNewGame) object: nil];
+            [_runner start];
         }
     }
 }
@@ -446,63 +446,63 @@
 
 - (void) undo
 {
-    GCGameHistoryItem *currentItem = [historyStack peek];
+    GCGameHistoryItem *currentItem = [_historyStack peek];
     
     GCMove *previousMove = [[currentItem move] retain];
     
-    [undoStack push: currentItem];
+    [_undoStack push: currentItem];
     
-    [historyStack pop];
+    [_historyStack pop];
     
     
-    GCGameHistoryItem *previousItem = [historyStack peek];
+    GCGameHistoryItem *previousItem = [_historyStack peek];
     
     GCPosition *previousPosition = [[previousItem position] retain];
     
     
-    [delegate setRedoButtonEnabled: YES];
+    [_delegate setRedoButtonEnabled: YES];
     
-    if ([historyStack count] == 1)
-        [delegate setUndoButtonEnabled: NO];
+    if ([_historyStack count] == 1)
+        [_delegate setUndoButtonEnabled: NO];
     else
-        [delegate setUndoButtonEnabled: YES];
+        [_delegate setUndoButtonEnabled: YES];
     
-    [game undoMove: previousMove toPosition: previousPosition];
-    [delegate updateStatusLabel];
-    [delegate updateVVH];
+    [_game undoMove: previousMove toPosition: previousPosition];
+    [_delegate updateStatusLabel];
+    [_delegate updateVVH];
     
     [previousPosition release];
     [previousMove release];
     
-    GCPlayerType leftType  = [[game leftPlayer] type];
-    GCPlayerType rightType = [[game rightPlayer] type];
+    GCPlayerType leftType  = [[_game leftPlayer] type];
+    GCPlayerType rightType = [[_game rightPlayer] type];
     
     if (((leftType == GC_HUMAN) && (rightType == GC_COMPUTER)) ||
         ((leftType == GC_COMPUTER) && (rightType == GC_HUMAN)))
     {
-        currentItem = [historyStack peek];
+        currentItem = [_historyStack peek];
         
         previousMove = [[currentItem move] retain];
         
-        [undoStack push: currentItem];
+        [_undoStack push: currentItem];
         
-        [historyStack pop];
+        [_historyStack pop];
         
         
-        previousItem = [historyStack peek];
+        previousItem = [_historyStack peek];
         previousPosition = [[previousItem position] retain];
         
         
-        [delegate setRedoButtonEnabled: YES];
+        [_delegate setRedoButtonEnabled: YES];
         
-        if ([historyStack count] == 1)
-            [delegate setUndoButtonEnabled: NO];
+        if ([_historyStack count] == 1)
+            [_delegate setUndoButtonEnabled: NO];
         else
-            [delegate setUndoButtonEnabled: YES];
+            [_delegate setUndoButtonEnabled: YES];
         
-        [game undoMove: previousMove toPosition: previousPosition];
-        [delegate updateStatusLabel];
-        [delegate updateVVH];
+        [_game undoMove: previousMove toPosition: previousPosition];
+        [_delegate updateStatusLabel];
+        [_delegate updateVVH];
         
         [previousPosition release];
         [previousMove release];
@@ -515,48 +515,48 @@
 
 - (void) redo
 {
-    GCGameHistoryItem *historyItem = [undoStack peek];
+    GCGameHistoryItem *historyItem = [_undoStack peek];
     
     GCMove *nextMove = [[historyItem move] retain];
     
-    [historyStack push: historyItem];
-    [undoStack pop];
+    [_historyStack push: historyItem];
+    [_undoStack pop];
     
-    [delegate setUndoButtonEnabled: YES];
+    [_delegate setUndoButtonEnabled: YES];
     
-    if ([undoStack isEmpty])
-        [delegate setRedoButtonEnabled: NO];
+    if ([_undoStack isEmpty])
+        [_delegate setRedoButtonEnabled: NO];
     else
-        [delegate setRedoButtonEnabled: YES];
+        [_delegate setRedoButtonEnabled: YES];
     
-    [game doMove: nextMove];
-    [delegate updateStatusLabel];
-    [delegate updateVVH];
+    [_game doMove: nextMove];
+    [_delegate updateStatusLabel];
+    [_delegate updateVVH];
     
     [nextMove release];
     
     
-    GCPlayerType leftType  = [[game leftPlayer] type];
-    GCPlayerType rightType = [[game rightPlayer] type];
+    GCPlayerType leftType  = [[_game leftPlayer] type];
+    GCPlayerType rightType = [[_game rightPlayer] type];
     
     if (((leftType == GC_HUMAN) && (rightType == GC_COMPUTER)) ||
         ((leftType == GC_COMPUTER) && (rightType == GC_HUMAN)))
     {
-        historyItem = [undoStack peek];
+        historyItem = [_undoStack peek];
         
         nextMove = [[historyItem move] retain];
         
-        [historyStack push: historyItem];
-        [undoStack pop];
+        [_historyStack push: historyItem];
+        [_undoStack pop];
         
-        if ([undoStack isEmpty])
-            [delegate setRedoButtonEnabled: NO];
+        if ([_undoStack isEmpty])
+            [_delegate setRedoButtonEnabled: NO];
         else
-            [delegate setRedoButtonEnabled: YES];
+            [_delegate setRedoButtonEnabled: YES];
         
-        [game doMove: nextMove];
-        [delegate updateStatusLabel];
-        [delegate updateVVH];
+        [_game doMove: nextMove];
+        [_delegate updateStatusLabel];
+        [_delegate updateVVH];
         
         [nextMove release];
     }
@@ -567,13 +567,13 @@
 
 - (GCGameHistoryItem *) currentItem
 {
-    return [historyStack peek];
+    return [_historyStack peek];
 }
 
 
 - (NSEnumerator *) historyItemEnumerator
 {
-    return [historyStack objectEnumerator];
+    return [_historyStack objectEnumerator];
 }
 
 

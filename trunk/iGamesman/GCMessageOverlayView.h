@@ -10,9 +10,9 @@
 
 @interface GCMessageOverlayView : UIView
 {
-    UIActivityIndicatorView *spinner;
+    UIActivityIndicatorView *_spinner;
     
-    UILabel *messageLabel;
+    UILabel *_messageLabel;
 }
 
 + (GCMessageOverlayView *) sharedOverlayView;

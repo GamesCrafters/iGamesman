@@ -31,16 +31,16 @@
 @implementation GCGameViewController
 
 
-- (id) initWithGame: (id<GCGame>) _game
+- (id) initWithGame: (id<GCGame>) game
 {
     self = [super init];
     
     if (self)
     {
-        game = [_game retain];
+        _game = [game retain];
         
-        showingPredictions = NO;
-        showingVVH = NO;
+        _showingPredictions = NO;
+        _showingVVH = NO;
     }
     
     return self;
@@ -49,7 +49,7 @@
 
 - (void) dealloc
 {
-    [game release];
+    [_game release];
     
     [super dealloc];
 }
@@ -59,7 +59,7 @@
 
 - (NSEnumerator *) historyItemEnumerator
 {
-    return [gameController historyItemEnumerator];
+    return [_gameController historyItemEnumerator];
 }
 
 
@@ -67,46 +67,46 @@
 
 - (void) setUndoButtonEnabled: (BOOL) enabled
 {
-    UIButton *undoButton = (UIButton *) [self.view viewWithTag: 1000];
-    undoButton.enabled = enabled;
+    UIButton *undoButton = (UIButton *) [[self view] viewWithTag: 1000];
+    [undoButton setEnabled: enabled];
 }
 
 
 - (void) setRedoButtonEnabled: (BOOL) enabled
 {
-    UIButton *undoButton = (UIButton *) [self.view viewWithTag: 1001];
-    undoButton.enabled = enabled;
+    UIButton *undoButton = (UIButton *) [[self view] viewWithTag: 1001];
+    [undoButton setEnabled: enabled];
 }
 
 
 - (void) updateVVH
 {
-    [vvh reloadData];
+    [_vvh reloadData];
 }
 
 
 - (void) updateStatusLabel
 {
-    GCPlayerSide side = [game currentPlayerSide];
+    GCPlayerSide side = [_game currentPlayerSide];
     
     NSString *playerName, *otherPlayerName;
     NSString *playerEpithet, *otherPlayerEpithet;
     
     if (side == GC_PLAYER_LEFT)
     {
-        playerName = [[game leftPlayer] name];
-        playerEpithet = [[game leftPlayer] epithet];
+        playerName = [[_game leftPlayer] name];
+        playerEpithet = [[_game leftPlayer] epithet];
         
-        otherPlayerName = [[game rightPlayer] name];
-        otherPlayerEpithet = [[game rightPlayer] epithet];
+        otherPlayerName = [[_game rightPlayer] name];
+        otherPlayerEpithet = [[_game rightPlayer] epithet];
     }
     else if (side == GC_PLAYER_RIGHT)
     {
-        playerName = [[game rightPlayer] name];
-        playerEpithet = [[game rightPlayer] epithet];
+        playerName = [[_game rightPlayer] name];
+        playerEpithet = [[_game rightPlayer] epithet];
         
-        otherPlayerName = [[game leftPlayer] name];
-        otherPlayerEpithet = [[game leftPlayer] epithet];
+        otherPlayerName = [[_game leftPlayer] name];
+        otherPlayerEpithet = [[_game leftPlayer] epithet];
     }
     else
     {
@@ -114,7 +114,7 @@
     }
     
     
-    GCGameValue *primitive = [game primitive];
+    GCGameValue *primitive = [_game primitive];
     
     NSString *message = @"";
     
@@ -154,9 +154,9 @@
             epithetString = [NSString stringWithFormat: @" (%@)", playerEpithet];
         
         
-        GCGameHistoryItem *historyItem = [gameController currentItem];
+        GCGameHistoryItem *historyItem = [_gameController currentItem];
         
-        if ([[historyItem value] isEqualToString: GCGameValueUnknown] || !showingPredictions)
+        if ([[historyItem value] isEqualToString: GCGameValueUnknown] || !_showingPredictions)
         {
             message = [NSString stringWithFormat: @"%@%@'s turn", playerName, epithetString];
         }
@@ -174,7 +174,7 @@
         
     }
     
-    [messageLabel setText: message];
+    [_messageLabel setText: message];
 }
 
 
@@ -188,7 +188,7 @@
 
 - (void) addView: (UIView *) view behindDrawer: (GCModalDrawerView *) drawer
 {
-    [self.view insertSubview: view belowSubview: drawer];
+    [[self view] insertSubview: view belowSubview: drawer];
 }
 
 
@@ -196,13 +196,13 @@
 
 - (BOOL) isShowingPredictions
 {
-    return showingPredictions;
+    return _showingPredictions;
 }
 
 
 - (void) setShowingPredictions: (BOOL) predictions
 {
-    showingPredictions = predictions;
+    _showingPredictions = predictions;
     
     [self updateStatusLabel];
 }
@@ -218,27 +218,27 @@
 
 - (void) sidebarButtonTapped: (UIButton *) sender
 {
-    if (sender.tag == 1007)
+    if ([sender tag] == 1007)
     {
         [self dismissModalViewControllerAnimated: YES];
     }
-    else if ((sender.tag == 1002) && (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad))
+    else if (([sender tag] == 1002) && (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad))
     {
-        if (!showingVVH)
+        if (!_showingVVH)
         {
             CGFloat width  = [[self view] bounds].size.width;
             CGFloat height = [[self view] bounds].size.height;
             
             CGFloat vvhWidth = width / 3.5f;
             
-            vvh = [[GCVVHView alloc] initWithFrame: CGRectMake(-(vvhWidth), 0, vvhWidth, height)];
-            [vvh setDataSource: self];
+            _vvh = [[GCVVHView alloc] initWithFrame: CGRectMake(-(vvhWidth), 0, vvhWidth, height)];
+            [_vvh setDataSource: self];
             
-            [self.view addSubview: vvh];
+            [[self view] addSubview: _vvh];
             
             
             CGFloat labelHeight = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? 80 : 50;
-            CGRect sideBarRect = [sideBar frame];
+            CGRect sideBarRect = [_sideBar frame];
             
             CGFloat newGameWidth = width - sideBarRect.size.width - vvhWidth;
             
@@ -249,13 +249,13 @@
             
             void (^animateBlock) (void) = ^(void)
             {
-                [vvh setFrame: CGRectOffset([vvh frame], vvhWidth, 0)];
-                [sideBar setFrame: CGRectOffset([sideBar frame], vvhWidth, 0)];
-                [messageLabel setFrame: labelRect];
-                [gameNameLabel setFrame: gameLabelRect];
+                [_vvh setFrame: CGRectOffset([_vvh frame], vvhWidth, 0)];
+                [_sideBar setFrame: CGRectOffset([_sideBar frame], vvhWidth, 0)];
+                [_messageLabel setFrame: labelRect];
+                [_gameNameLabel setFrame: gameLabelRect];
                 
-                [gameView setFrame: gameRect];
-                [gameView setNeedsDisplay];
+                [_gameView setFrame: gameRect];
+                [_gameView setNeedsDisplay];
             };
             
             [UIView animateWithDuration: 0.25f animations: animateBlock];
@@ -263,8 +263,8 @@
         else
         {
             
-            CGFloat width = self.view.bounds.size.width;
-            CGFloat height = self.view.bounds.size.height;
+            CGFloat width = [[self view] bounds].size.width;
+            CGFloat height = [[self view] bounds].size.height;
             
             CGRect sideBarRect = CGRectZero;
             if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
@@ -274,7 +274,7 @@
             
             CGFloat labelHeight = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? 80 : 50;
             
-            CGRect gameRect = CGRectInset([self.view bounds], sideBarRect.size.width, labelHeight);
+            CGRect gameRect = CGRectInset([[self view] bounds], sideBarRect.size.width, labelHeight);
             
             CGRect labelRect = CGRectMake(sideBarRect.size.width, height - labelHeight, width - 2 * sideBarRect.size.width, labelHeight);
             CGRect gameLabelRect = CGRectMake(sideBarRect.size.width, 0, width - 2 * sideBarRect.size.width, labelHeight);
@@ -282,47 +282,47 @@
             
             void (^animateBlock) (void) = ^(void)
             {
-                [vvh setFrame: CGRectOffset([vvh frame], -[vvh frame].size.width, 0)];
-                [sideBar setFrame: sideBarRect];
-                [messageLabel setFrame: labelRect];
-                [gameNameLabel setFrame: gameLabelRect];
+                [_vvh setFrame: CGRectOffset([_vvh frame], -[_vvh frame].size.width, 0)];
+                [_sideBar setFrame: sideBarRect];
+                [_messageLabel setFrame: labelRect];
+                [_gameNameLabel setFrame: gameLabelRect];
                 
-                [gameView setFrame: gameRect];
-                [gameView setNeedsDisplay];
+                [_gameView setFrame: gameRect];
+                [_gameView setNeedsDisplay];
             };
             
             void (^completion) (BOOL) = ^(BOOL done)
             {
-                [vvh removeFromSuperview];
-                [vvh release];
-                vvh = nil;
+                [_vvh removeFromSuperview];
+                [_vvh release];
+                _vvh = nil;
             };
             
             [UIView animateWithDuration: 0.25f animations: animateBlock completion: completion];
         }
         
-        showingVVH = !showingVVH;
+        _showingVVH = !_showingVVH;
     }
-    else if (1002 <= sender.tag && sender.tag <= 1006)
+    else if (1002 <= [sender tag] && [sender tag] <= 1006)
     {
-        GCModalDrawerView *drawer = (GCModalDrawerView *) [self.view viewWithTag: sender.tag + 1000];
-        [self.view bringSubviewToFront: drawer];
+        GCModalDrawerView *drawer = (GCModalDrawerView *) [[self view] viewWithTag: [sender tag] + 1000];
+        [[self view] bringSubviewToFront: drawer];
         [drawer slideIn];
     }
-    else if (sender.tag == 1000)
+    else if ([sender tag] == 1000)
     {
-        [gameController undo];
+        [_gameController undo];
     }
-    else if (sender.tag == 1001)
+    else if ([sender tag] == 1001)
     {
-        [gameController redo];
+        [_gameController redo];
     }
 }
 
 
 - (void) addSidebarInRect: (CGRect) sideBarRect;
 {
-    sideBar = [[GCSidebarView alloc] initWithFrame: sideBarRect];
+    _sideBar = [[GCSidebarView alloc] initWithFrame: sideBarRect];
     
     
     CGFloat buttonHeight = (sideBarRect.size.height - 9 * 4) / 8;
@@ -337,13 +337,13 @@
         [button addTarget: self action: @selector(sidebarButtonTapped:) forControlEvents: UIControlEventTouchUpInside];
         [button setTag: 1000 + i];
         
-        [sideBar addSubview: button];
+        [_sideBar addSubview: button];
         
         if ((i == 0) || (i == 1))
-            button.enabled = NO;
+            [button setEnabled: NO];
     }
     
-    [self.view addSubview: sideBar];
+    [[self view] addSubview: _sideBar];
     
 #warning TODO: Find a better way to do this, once I've defined all of the panels.
     CGFloat drawerWidths[]  = { 0, 0, 0, 0, 0 };
@@ -369,9 +369,9 @@
     {
         CGRect drawerRect = CGRectMake(0, sideBarRect.origin.y + (sideBarRect.size.height - drawerHeights[i - 2]) / 2.0f, drawerWidths[i - 2], drawerHeights[i - 2]);
         GCModalDrawerView *drawer = [[GCModalDrawerView alloc] initWithFrame: drawerRect startOffscreen: YES];
-        drawer.tag = 2000 + i;
-        drawer.delegate = self;
-        [self.view addSubview: drawer];
+        [drawer setTag: 2000 + i];
+        [drawer setDelegate: self];
+        [[self view] addSubview: drawer];
         
         if ((i == 2) && (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone))
         {
@@ -381,13 +381,13 @@
         }
         if (i == 3)
         {
-            GCPlayerPanelController *playerPanel = [[GCPlayerPanelController alloc] initWithGame: game];
+            GCPlayerPanelController *playerPanel = [[GCPlayerPanelController alloc] initWithGame: _game];
             [drawer setPanelController: playerPanel];
             [playerPanel release];
         }
         else if (i == 5)
         {
-            GCValuesPanelController *valuesPanel = [[GCValuesPanelController alloc] initWithGame: game];
+            GCValuesPanelController *valuesPanel = [[GCValuesPanelController alloc] initWithGame: _game];
             [drawer setPanelController: valuesPanel];
             [valuesPanel setDelegate: self];
             [valuesPanel release];
@@ -408,12 +408,12 @@
 - (void) loadView
 {
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
-        self.view = [[[UIView alloc] initWithFrame: CGRectMake(0, 0, 480, 320)] autorelease];
+        [self setView: [[[UIView alloc] initWithFrame: CGRectMake(0, 0, 480, 320)] autorelease]];
     else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-        self.view = [[[UIView alloc] initWithFrame: CGRectMake(0, 0, 1024, 768)] autorelease];
+        [self setView: [[[UIView alloc] initWithFrame: CGRectMake(0, 0, 1024, 768)] autorelease]];
     
-    CGFloat width = self.view.bounds.size.width;
-    CGFloat height = self.view.bounds.size.height;
+    CGFloat width = [[self view] bounds].size.width;
+    CGFloat height = [[self view] bounds].size.height;
     
     CGRect sideBarRect;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
@@ -427,43 +427,43 @@
     
     CGFloat labelHeight = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? 80 : 50;
     
-    CGRect gameRect = CGRectInset([self.view bounds], sideBarRect.size.width, labelHeight);
+    CGRect gameRect = CGRectInset([[self view] bounds], sideBarRect.size.width, labelHeight);
     
-    gameView = [game viewWithFrame: gameRect];
-    gameView.clipsToBounds = NO;
+    _gameView = [_game viewWithFrame: gameRect];
+    [_gameView setClipsToBounds: NO];
     
-    [self.view addSubview: gameView];
+    [[self view] addSubview: _gameView];
     
     
     UIButton *infoButton = [UIButton buttonWithType: UIButtonTypeInfoLight];
-    infoButton.center = CGPointMake(width - 15, height - 15);
-    [self.view addSubview: infoButton];
+    [infoButton setCenter: CGPointMake(width - 15, height - 15)];
+    [[self view] addSubview: infoButton];
     
     
-    messageLabel = [[UILabel alloc] initWithFrame: CGRectMake(sideBarRect.size.width, height - labelHeight, width - 2 * sideBarRect.size.width, labelHeight)];
-    [messageLabel setBackgroundColor: [UIColor clearColor]];
-    [messageLabel setNumberOfLines: 2];
-    [messageLabel setLineBreakMode: UILineBreakModeWordWrap];
+    _messageLabel = [[UILabel alloc] initWithFrame: CGRectMake(sideBarRect.size.width, height - labelHeight, width - 2 * sideBarRect.size.width, labelHeight)];
+    [_messageLabel setBackgroundColor: [UIColor clearColor]];
+    [_messageLabel setNumberOfLines: 2];
+    [_messageLabel setLineBreakMode: UILineBreakModeWordWrap];
     UIFont *font = [UIFont boldSystemFontOfSize: (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? 24 : 17];
-    [messageLabel setFont: font];
-    [messageLabel setTextAlignment: UITextAlignmentCenter];
-    [messageLabel setTextColor: [UIColor whiteColor]];
-    [messageLabel setText: @""];
+    [_messageLabel setFont: font];
+    [_messageLabel setTextAlignment: UITextAlignmentCenter];
+    [_messageLabel setTextColor: [UIColor whiteColor]];
+    [_messageLabel setText: @""];
     
-    [self.view addSubview: messageLabel];
+    [[self view] addSubview: _messageLabel];
     
     
-    gameNameLabel = [[UILabel alloc] initWithFrame: CGRectMake(sideBarRect.size.width, 0, width - 2 * sideBarRect.size.width, labelHeight)];
-    [gameNameLabel setBackgroundColor: [UIColor clearColor]];
+    _gameNameLabel = [[UILabel alloc] initWithFrame: CGRectMake(sideBarRect.size.width, 0, width - 2 * sideBarRect.size.width, labelHeight)];
+    [_gameNameLabel setBackgroundColor: [UIColor clearColor]];
     font = [UIFont boldSystemFontOfSize: (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? 40 : 24];
-    [gameNameLabel setFont: font];
-    [gameNameLabel setTextAlignment: UITextAlignmentCenter];
-    [gameNameLabel setTextColor: [UIColor whiteColor]];
-    [gameNameLabel setText: [game name]];
+    [_gameNameLabel setFont: font];
+    [_gameNameLabel setTextAlignment: UITextAlignmentCenter];
+    [_gameNameLabel setTextColor: [UIColor whiteColor]];
+    [_gameNameLabel setText: [_game name]];
     
-    [self.view addSubview: gameNameLabel];
+    [[self view] addSubview: _gameNameLabel];
     
-    [self.view sendSubviewToBack: gameNameLabel];
+    [[self view] sendSubviewToBack: _gameNameLabel];
 }
  
 
@@ -482,18 +482,18 @@
     [right setType: GC_HUMAN];
     [right setPercentPerfect: 0];
     
-    [game startGameWithLeft: left right: right];
+    [_game startGameWithLeft: left right: right];
     
     [left release];
     [right release];
     
-    gameController = [[GCGameController alloc] initWithGame: game andDelegate: self];
+    _gameController = [[GCGameController alloc] initWithGame: _game andDelegate: self];
     
-    [metaPanel setDelegate: gameController];
+    [metaPanel setDelegate: _gameController];
     
     [self updateStatusLabel];
     
-    [gameController go];
+    [_gameController go];
 }
 
 
@@ -501,12 +501,12 @@
 {
     [super viewDidUnload];
     
-    [messageLabel release];
-    [gameNameLabel release];
+    [_messageLabel release];
+    [_gameNameLabel release];
     
-    [gameController release];
+    [_gameController release];
     
-    [sideBar release];
+    [_sideBar release];
     
     [metaPanel release];
 }

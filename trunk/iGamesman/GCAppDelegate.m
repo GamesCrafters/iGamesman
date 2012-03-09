@@ -20,7 +20,7 @@
 {
     [_window release];
     
-    [rootViewController release];
+    [_rootViewController release];
     
     [super dealloc];
 }
@@ -71,11 +71,11 @@
     [backgroundView release];
     
     
-    if (rootViewController)
-        [rootViewController release];
-    rootViewController = [[GCCarouselViewController alloc] init];
+    if (_rootViewController)
+        [_rootViewController release];
+    _rootViewController = [[GCCarouselViewController alloc] init];
     
-    [self.window addSubview: rootViewController.view];
+    [self.window addSubview: _rootViewController.view];
     
     
     [self.window addSubview: [GCMessageOverlayView sharedOverlayView]];

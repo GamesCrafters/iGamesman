@@ -20,7 +20,7 @@
     
     if (self)
     {
-        self.opaque = NO;
+        [self setOpaque: NO];
     }
     
     return self;
@@ -28,10 +28,10 @@
 
 - (void) drawRect: (CGRect) rect
 {
-    CGFloat minX = CGRectGetMinX(self.bounds);
-    CGFloat maxX = CGRectGetMaxX(self.bounds);
-    CGFloat minY = CGRectGetMinY(self.bounds);
-    CGFloat maxY = CGRectGetMaxY(self.bounds);
+    CGFloat minX = CGRectGetMinX([self bounds]);
+    CGFloat maxX = CGRectGetMaxX([self bounds]);
+    CGFloat minY = CGRectGetMinY([self bounds]);
+    CGFloat maxY = CGRectGetMaxY([self bounds]);
     
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     

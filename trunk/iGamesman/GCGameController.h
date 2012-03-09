@@ -19,18 +19,18 @@
 
 @interface GCGameController : NSObject <GCJSONServiceDelegate, GCMetaSettingsPanelDelegate>
 {
-    id<GCGame> game;
-    id<GCGameControllerDelegate> delegate;
+    id<GCGame> _game;
+    id<GCGameControllerDelegate> _delegate;
     
-    GCStack *historyStack;
-    GCStack *undoStack;
+    GCStack *_historyStack;
+    GCStack *_undoStack;
     
-    GCJSONService *service;
+    GCJSONService *_service;
     
-    NSThread *runner;
+    NSThread *_runner;
     
-    CGFloat computerMoveDelay;
-    CGFloat computerGameDelay;
+    CGFloat _computerMoveDelay;
+    CGFloat _computerGameDelay;
 }
 
 - (id) initWithGame: (id<GCGame>) game andDelegate: (id<GCGameControllerDelegate>) delegate;

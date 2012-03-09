@@ -13,7 +13,7 @@
 
 @interface GCVVHView : UIView
 {
-    id<GCVVHViewDataSource> dataSource;
+    id<GCVVHViewDataSource> _dataSource;
 }
 
 - (void) setDataSource: (id<GCVVHViewDataSource>) dataSource;

@@ -13,14 +13,14 @@
 
 @interface GCModalDrawerView : UIView
 {
-    UIButton *closeButton;
-    UIToolbar *toolbar;
+    UIButton *_closeButton;
+    UIToolbar *_toolbar;
     
-    UIView *backgroundView;
+    UIView *_backgroundView;
     
-    UIViewController<GCModalDrawerPanelDelegate> *panelController;
+    UIViewController<GCModalDrawerPanelDelegate> *_panelController;
     
-    id<GCModalDrawerViewDelegate> delegate;
+    id<GCModalDrawerViewDelegate> _delegate;
 }
 
 @property (nonatomic, assign) id<GCModalDrawerViewDelegate> delegate;

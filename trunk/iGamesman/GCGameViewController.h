@@ -21,18 +21,18 @@
 
 @interface GCGameViewController : UIViewController <GCGameControllerDelegate, GCModalDrawerViewDelegate, GCValuesPanelDelegate, GCVVHViewDataSource>
 {
-    id<GCGame> game;
-    GCGameController *gameController;
+    id<GCGame> _game;
+    GCGameController *_gameController;
     
-    UILabel *messageLabel, *gameNameLabel;
+    UILabel *_messageLabel, *_gameNameLabel;
     
-    UIView *gameView;
+    UIView *_gameView;
     
-    BOOL showingPredictions;
-    BOOL showingVVH;
+    BOOL _showingPredictions;
+    BOOL _showingVVH;
     
-    GCSidebarView *sideBar;
-    GCVVHView *vvh;
+    GCSidebarView *_sideBar;
+    GCVVHView *_vvh;
 }
 
 - (id) initWithGame: (id<GCGame>) game;

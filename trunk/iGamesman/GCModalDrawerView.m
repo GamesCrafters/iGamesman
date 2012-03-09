@@ -17,7 +17,7 @@
 
 @implementation GCModalDrawerView
 
-@synthesize delegate;
+@synthesize delegate = _delegate;
 
 #pragma mark -
 #pragma mark Memory lifecycle
@@ -28,26 +28,26 @@
     
     if (self)
     {
-        CGFloat width = self.frame.size.width;
+        CGFloat width = [self frame].size.width;
         if (offscreen)
         {
-            self.frame = CGRectOffset(self.frame, -width, 0);
+            [self setFrame: CGRectOffset([self frame], -width, 0)];
         }
         
-        self.opaque = NO;
+        [self setOpaque: NO];
         
-        panelController = nil;
+        _panelController = nil;
         
         CGFloat toolbarHeight = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? 44 : 32;
-        toolbar = [[UIToolbar alloc] initWithFrame: CGRectMake(0, 0, width, toolbarHeight)];
+        _toolbar = [[UIToolbar alloc] initWithFrame: CGRectMake(0, 0, width, toolbarHeight)];
         
         UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemCancel target: self action: @selector(cancel)];
         
-        [toolbar setItems: [NSArray arrayWithObject: cancelButton]];
+        [_toolbar setItems: [NSArray arrayWithObject: cancelButton]];
         
         [cancelButton release];
         
-        [self addSubview: toolbar];
+        [self addSubview: _toolbar];
     }
     return self;
 }
@@ -55,9 +55,9 @@
 
 - (void) dealloc
 {
-    [closeButton release];
-    [toolbar release];
-    [panelController release];
+    [_closeButton release];
+    [_toolbar release];
+    [_panelController release];
     
     [super dealloc];
 }
@@ -69,26 +69,26 @@
 - (void) slideIn
 {
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
-        backgroundView = [[UIView alloc] initWithFrame: CGRectMake(0, 0, 480, 320)];
+        _backgroundView = [[UIView alloc] initWithFrame: CGRectMake(0, 0, 480, 320)];
     else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-        backgroundView = [[UIView alloc] initWithFrame: CGRectMake(0, 0, 1024, 768)];
+        _backgroundView = [[UIView alloc] initWithFrame: CGRectMake(0, 0, 1024, 768)];
     else
-        backgroundView = nil;
-    [backgroundView setBackgroundColor: [UIColor colorWithRed: 0 green: 0 blue: 0 alpha: 1]];
-    [backgroundView setAlpha: 0];
+        _backgroundView = nil;
+    [_backgroundView setBackgroundColor: [UIColor colorWithRed: 0 green: 0 blue: 0 alpha: 1]];
+    [_backgroundView setAlpha: 0];
     
-    [delegate addView: backgroundView behindDrawer: self];
+    [_delegate addView: _backgroundView behindDrawer: self];
     
     void (^slideBlock) (void) = ^(void)
     {
-        self.frame = CGRectOffset(self.frame, +self.frame.size.width, 0);
-        closeButton.alpha = 1;
+        [self setFrame: CGRectOffset([self frame], [self frame].size.width, 0)];
+        [_closeButton setAlpha: 1];
         
-        [backgroundView setAlpha: 0.5f];
+        [_backgroundView setAlpha: 0.5f];
     };
     
-    if ([panelController respondsToSelector: @selector(drawerWillAppear)])
-        [panelController drawerWillAppear];
+    if ([_panelController respondsToSelector: @selector(drawerWillAppear)])
+        [_panelController drawerWillAppear];
     
     [UIView animateWithDuration: 0.25f
                      animations: slideBlock];
@@ -99,21 +99,21 @@
 {
     void (^slideBlock) (void) = ^(void)
     {
-        self.frame = CGRectOffset(self.frame, -self.frame.size.width, 0);
-        closeButton.alpha = 0;
+        [self setFrame: CGRectOffset(self.frame, -self.frame.size.width, 0)];
+        [_closeButton setAlpha: 0];
         
-        [backgroundView setAlpha: 0];
+        [_backgroundView setAlpha: 0];
     };
     
     void (^completionBlock) (BOOL) = ^(BOOL done)
     {
         if (done)
         {
-            [backgroundView removeFromSuperview];
-            [backgroundView release];
+            [_backgroundView removeFromSuperview];
+            [_backgroundView release];
             
-            if ([delegate respondsToSelector: @selector(drawerDidDisappear:)])
-                [delegate drawerDidDisappear: self];
+            if ([_delegate respondsToSelector: @selector(drawerDidDisappear:)])
+                [_delegate drawerDidDisappear: self];
         }
     };
     
@@ -127,11 +127,11 @@
 
 - (void) save
 {
-    if ([panelController respondsToSelector: @selector(drawerWillDisappear)])
-        [panelController drawerWillDisappear];
+    if ([_panelController respondsToSelector: @selector(drawerWillDisappear)])
+        [_panelController drawerWillDisappear];
     
-    if ([panelController respondsToSelector: @selector(saveButtonTapped)])
-        [panelController saveButtonTapped];
+    if ([_panelController respondsToSelector: @selector(saveButtonTapped)])
+        [_panelController saveButtonTapped];
     
     [self slideOut];
 }
@@ -139,11 +139,11 @@
 
 - (void) cancel
 {
-    if ([panelController respondsToSelector: @selector(drawerWillDisappear)])
-        [panelController drawerWillDisappear];
+    if ([_panelController respondsToSelector: @selector(drawerWillDisappear)])
+        [_panelController drawerWillDisappear];
     
-    if ([panelController respondsToSelector: @selector(cancelButtonTapped)])
-        [panelController cancelButtonTapped];
+    if ([_panelController respondsToSelector: @selector(cancelButtonTapped)])
+        [_panelController cancelButtonTapped];
     
     [self slideOut];
 }
@@ -151,11 +151,11 @@
 
 - (void) done
 {
-    if ([panelController respondsToSelector: @selector(drawerWillDisappear)])
-        [panelController drawerWillDisappear];
+    if ([_panelController respondsToSelector: @selector(drawerWillDisappear)])
+        [_panelController drawerWillDisappear];
     
-    if ([panelController respondsToSelector: @selector(doneButtonTapped)])
-        [panelController doneButtonTapped];
+    if ([_panelController respondsToSelector: @selector(doneButtonTapped)])
+        [_panelController doneButtonTapped];
     
     [self slideOut];
 }
@@ -163,14 +163,14 @@
 
 - (void) setPanelController: (UIViewController<GCModalDrawerPanelDelegate> *) controller
 {
-    if (panelController)
-        [panelController release];
+    if (_panelController)
+        [_panelController release];
     
-    panelController = [controller retain];
+    _panelController = [controller retain];
     
-    [panelController.view setFrame: CGRectOffset(panelController.view.frame, 0, (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) ? 32 : 44)];
+    [[_panelController view] setFrame: CGRectOffset([[_panelController view] frame], 0, (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) ? 32 : 44)];
     
-    [self addSubview: panelController.view];
+    [self addSubview: [_panelController view]];
     
     
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemDone target: self action: @selector(done)];
@@ -178,7 +178,7 @@
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemCancel target: self action: @selector(cancel)];
     UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemFlexibleSpace target: nil action: nil];
     
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame: [toolbar frame]];
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame: [_toolbar frame]];
     [titleLabel setBackgroundColor: [UIColor clearColor]];
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
     {
@@ -193,7 +193,7 @@
         [titleLabel setTextColor: [UIColor grayColor]];
     }
     [titleLabel setTextAlignment: UITextAlignmentCenter];
-    [titleLabel setText: [panelController title]];
+    [titleLabel setText: [_panelController title]];
     
     [self addSubview: titleLabel];
     
@@ -203,12 +203,12 @@
     
     [items addObject: flexibleSpace];
     
-    if ([panelController wantsCancelButton])
+    if ([_panelController wantsCancelButton])
         [items insertObject: cancelButton atIndex: 0];
     
-    if ([panelController wantsSaveButton])
+    if ([_panelController wantsSaveButton])
         [items addObject: saveButton];
-    else if ([panelController wantsDoneButton])
+    else if ([_panelController wantsDoneButton])
         [items addObject: doneButton];
     
     [doneButton release];
@@ -216,7 +216,7 @@
     [cancelButton release];
     [flexibleSpace release];
     
-    [toolbar setItems: items];
+    [_toolbar setItems: items];
     
     [items release];
 }
@@ -227,10 +227,10 @@
 
 - (void) drawRect: (CGRect) rect
 {
-    CGFloat minX = CGRectGetMinX(self.bounds);
-    CGFloat maxX = CGRectGetMaxX(self.bounds);
-    CGFloat minY = CGRectGetMinY(self.bounds);
-    CGFloat maxY = CGRectGetMaxY(self.bounds);
+    CGFloat minX = CGRectGetMinX([self bounds]);
+    CGFloat maxX = CGRectGetMaxX([self bounds]);
+    CGFloat minY = CGRectGetMinY([self bounds]);
+    CGFloat maxY = CGRectGetMaxY([self bounds]);
     
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     

@@ -18,16 +18,16 @@
     
     if (self)
     {
-        self.opaque = NO;
-        self.exclusiveTouch = NO;
+        [self setOpaque: NO];
+        [self setExclusiveTouch: NO];
         
         [self setAlpha: 0];
         
         
-        spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle: UIActivityIndicatorViewStyleWhiteLarge];
-        [spinner setCenter: [self center]];
+        _spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle: UIActivityIndicatorViewStyleWhiteLarge];
+        [_spinner setCenter: [self center]];
         
-        [self addSubview: spinner];
+        [self addSubview: _spinner];
     }
     
     return self;
@@ -36,7 +36,7 @@
 
 - (void) dealloc
 {
-    [spinner release];
+    [_spinner release];
     
     [super dealloc];
 }
@@ -62,14 +62,14 @@
 - (void) beginLoadingWithMessage: (NSString *) message
 {
     [self setAlpha: 1];
-    [spinner startAnimating];
+    [_spinner startAnimating];
 }
 
 
 - (void) finishingLoading
 {
     [self setAlpha: 0];
-    [spinner stopAnimating];
+    [_spinner stopAnimating];
 }
 
 @end

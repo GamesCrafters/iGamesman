@@ -10,24 +10,24 @@
 
 @implementation GCGameHistoryItem
 
-- (id) initWithPosition: (GCPosition *) _position
+- (id) initWithPosition: (GCPosition *) position
                  player: (GCPlayerSide) side
-                   move: (GCMove *) _move
-                  value: (GCGameValue *) _value
-             remoteness: (NSInteger) _remoteness
+                   move: (GCMove *) move
+                  value: (GCGameValue *) value
+             remoteness: (NSInteger) remoteness
 {
     self = [super init];
     
     if (self)
     {
-        position = [_position retain];
-        player = side;
-        move = [_move retain];
-        value = [_value retain];
-        remoteness = _remoteness;
+        _position = [position retain];
+        _player = side;
+        _move = [move retain];
+        _value = [value retain];
+        _remoteness = remoteness;
         
-        moveValues = [[NSMutableDictionary alloc] init];
-        moveRemotenesses = [[NSMutableDictionary alloc] init];
+        _moveValues = [[NSMutableDictionary alloc] init];
+        _moveRemotenesses = [[NSMutableDictionary alloc] init];
     }
     
     return self;
@@ -36,12 +36,12 @@
 
 - (void) dealloc
 {
-    [position release];
-    [move release];
-    [value release];
+    [_position release];
+    [_move release];
+    [_value release];
     
-    [moveValues release];
-    [moveRemotenesses release];
+    [_moveValues release];
+    [_moveRemotenesses release];
     
     [super dealloc];
 }
@@ -49,8 +49,8 @@
 
 - (NSString *) description
 {
-    NSString *desc = [NSString stringWithFormat: @"position: %@\nside: %@\nmove: %@\nvalue: %@\nremoteness: %d\nmove values: %@", position,
-                      (player == GC_PLAYER_LEFT ? @"Left" : @"Right"), move, value, remoteness, moveValues];
+    NSString *desc = [NSString stringWithFormat: @"position: %@\nside: %@\nmove: %@\nvalue: %@\nremoteness: %d\nmove values: %@", _position,
+                      (_player == GC_PLAYER_LEFT ? @"Left" : @"Right"), _move, _value, _remoteness, _moveValues];
     return desc;
 }
 
@@ -59,68 +59,68 @@
 
 - (GCPosition *) position
 {
-    return position;
+    return _position;
 }
 
 
 - (GCPlayerSide) playerSide
 {
-    return player;
+    return _player;
 }
 
 
 - (GCMove *) move
 {
-    return move;
+    return _move;
 }
 
 
 - (GCGameValue *) value
 {
-    return value;
+    return _value;
 }
 
 
 - (NSInteger) remoteness
 {
-    return remoteness;
+    return _remoteness;
 }
 
 
 - (NSArray *) moves
 {
-    return [moveValues allKeys];
+    return [_moveValues allKeys];
 }
 
 
-- (GCGameValue *) valueForMove: (GCGameValue *) _move
+- (GCGameValue *) valueForMove: (GCGameValue *) move
 {
-    return [moveValues objectForKey: _move];
+    return [_moveValues objectForKey: move];
 }
 
 
-- (NSInteger) remotenessForMove: (GCMove *) _move
+- (NSInteger) remotenessForMove: (GCMove *) move
 {
-    return [[moveRemotenesses objectForKey: _move] integerValue];
+    return [[_moveRemotenesses objectForKey: move] integerValue];
 }
 
 
-- (void) setGameValue: (GCGameValue *) _value
+- (void) setGameValue: (GCGameValue *) value
 {
-    value = _value;
+    _value = value;
 }
 
 
-- (void) setRemoteness: (NSInteger) _remoteness
+- (void) setRemoteness: (NSInteger) remoteness
 {
-    remoteness = _remoteness;
+    _remoteness = remoteness;
 }
 
 
-- (void) setGameValue: (NSString *) _value remoteness: (NSInteger) _remoteness forMove: (GCMove *) _move
+- (void) setGameValue: (NSString *) value remoteness: (NSInteger) remoteness forMove: (GCMove *) move
 {
-    [moveValues setObject: _value forKey: _move];
-    [moveRemotenesses setObject: [NSNumber numberWithInteger: _remoteness] forKey: _move];
+    [_moveValues setObject: value forKey: move];
+    [_moveRemotenesses setObject: [NSNumber numberWithInteger: remoteness] forKey: move];
 }
 
 @end

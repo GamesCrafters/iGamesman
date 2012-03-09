@@ -14,7 +14,7 @@
 
 @interface GCAppDelegate : UIResponder <UIApplicationDelegate>
 {
-    GCCarouselViewController *rootViewController;
+    GCCarouselViewController *_rootViewController;
 }
 
 @property (strong, nonatomic) UIWindow *window;

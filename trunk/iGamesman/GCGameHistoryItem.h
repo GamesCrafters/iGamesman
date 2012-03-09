@@ -13,25 +13,25 @@
 @interface GCGameHistoryItem : NSObject
 {
     /* The position */
-    GCPosition *position;
+    GCPosition *_position;
     
     /* The player */
-    GCPlayerSide player;
+    GCPlayerSide _player;
     
     /* The move that led to the position */
-    GCMove *move;
+    GCMove *_move;
     
     /* The value of the position */
-    GCGameValue *value;
+    GCGameValue *_value;
     
     /* The remoteness of the position */
-    NSInteger remoteness;
+    NSInteger _remoteness;
     
     /* A map (move->value) of the values of the moves that can be made from the position */
-    NSMutableDictionary *moveValues;
+    NSMutableDictionary *_moveValues;
     
     /* A map (move->remoteness) of the remotenesses of the moves that can be made from the position */
-    NSMutableDictionary *moveRemotenesses;
+    NSMutableDictionary *_moveRemotenesses;
 }
 
 - (id) initWithPosition: (GCPosition *) position

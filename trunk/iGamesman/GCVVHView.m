@@ -38,9 +38,9 @@
 }
 
 
-- (void) setDataSource: (id<GCVVHViewDataSource>) _dataSource
+- (void) setDataSource: (id<GCVVHViewDataSource>) dataSource
 {
-    dataSource = _dataSource;
+    _dataSource = dataSource;
 }
 
 
@@ -58,7 +58,7 @@
     CGFloat height = self.bounds.size.height;
     
     NSInteger maxRemote = -1;
-    NSEnumerator *enumerator = [dataSource historyItemEnumerator];
+    NSEnumerator *enumerator = [_dataSource historyItemEnumerator];
     GCGameHistoryItem *historyItem;
     while (historyItem = [enumerator nextObject])
     {
@@ -156,7 +156,7 @@
     NSUInteger previousCenterCount = 0;
     
     /* Loop through the history and draw the VVH */
-    enumerator = [dataSource historyItemEnumerator];
+    enumerator = [_dataSource historyItemEnumerator];
     GCGameHistoryItem *item;
     while (item = [enumerator nextObject])
     {
