@@ -26,12 +26,12 @@
     
     if (self)
     {
-        self.opaque = NO;
-        self.clearsContextBeforeDrawing = YES;
+        [self setOpaque: NO];
+        [self setClearsContextBeforeDrawing: YES];
         
-        CATiledLayer *tiledLayer = (CATiledLayer *) self.layer;
-        tiledLayer.levelsOfDetail = 5;
-        tiledLayer.levelsOfDetailBias = 2;
+        CATiledLayer *tiledLayer = (CATiledLayer *) [self layer];
+        [tiledLayer setLevelsOfDetail: 5];
+        [tiledLayer setLevelsOfDetailBias: 2];
     }
     
     return self;
@@ -52,10 +52,10 @@
 
 - (void) drawLayer: (CALayer *) layer inContext: (CGContextRef) ctx
 {
-    CGFloat x = self.bounds.origin.x;
-    CGFloat y = self.bounds.origin.y;
-    CGFloat width = self.bounds.size.width;
-    CGFloat height = self.bounds.size.height;
+    CGFloat x = [self bounds].origin.x;
+    CGFloat y = [self bounds].origin.y;
+    CGFloat width = [self bounds].size.width;
+    CGFloat height = [self bounds].size.height;
     
     NSInteger maxRemote = -1;
     NSEnumerator *enumerator = [_dataSource historyItemEnumerator];

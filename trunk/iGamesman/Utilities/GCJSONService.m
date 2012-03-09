@@ -11,7 +11,7 @@
 
 @implementation GCJSONService
 
-@synthesize delegate;
+@synthesize delegate = _delegate;
 
 #pragma mark - Memory lifecycle
 
@@ -22,16 +22,16 @@
     
     if (self)
     {
-        baseURLString = [NSString stringWithFormat: @"http://nyc.cs.berkeley.edu:8080/gcweb/service/gamesman/puzzles/%@/", name];
-        [baseURLString retain];
+        _baseURLString = [NSString stringWithFormat: @"http://nyc.cs.berkeley.edu:8080/gcweb/service/gamesman/puzzles/%@/", name];
+        [_baseURLString retain];
         
-        parameterString = @"";
+        _parameterString = @"";
         for (NSString *key in params)
         {
-            parameterString = [parameterString stringByAppendingFormat: @"%@=%@;", key, [params objectForKey: key]];
+            _parameterString = [_parameterString stringByAppendingFormat: @"%@=%@;", key, [params objectForKey: key]];
         }
         
-        [parameterString retain];
+        [_parameterString retain];
     }
     
     return self;
@@ -40,7 +40,7 @@
 
 - (void) dealloc
 {
-    [parameterString release];
+    [_parameterString release];
     
     [super dealloc];
 }
@@ -52,16 +52,16 @@
                       withKey: (NSString *) boardKey
                 forPlayerSide: (GCPlayerSide) side
 {
-    moveValueSent = NO;
-    positionValueSent = NO;
+    _moveValueSent = NO;
+    _positionValueSent = NO;
     
-    [GCPositionValueRequest requestWithBaseURL: [NSURL URLWithString: baseURLString]
-                               parameterString: parameterString
+    [GCPositionValueRequest requestWithBaseURL: [NSURL URLWithString: _baseURLString]
+                               parameterString: _parameterString
                                    forPosition: boardString
                                       delegate: self];
     
-    [GCMoveValuesRequest requestWithBaseURL: [NSURL URLWithString: baseURLString]
-                            parameterString: parameterString
+    [GCMoveValuesRequest requestWithBaseURL: [NSURL URLWithString: _baseURLString]
+                            parameterString: _parameterString
                                 forPosition: boardString
                                    delegate: self];
 }
@@ -71,43 +71,43 @@
 
 - (void) positionRequestReachedServer: (GCPositionValueRequest *) request
 {
-    if ([delegate respondsToSelector: @selector(jsonServiceDidReachServer:)])
-        [delegate jsonServiceDidReachServer: self];
+    if ([_delegate respondsToSelector: @selector(jsonServiceDidReachServer:)])
+        [_delegate jsonServiceDidReachServer: self];
 }
 
 
 - (void) positionRequestDidReceiveResponse: (GCPositionValueRequest *) request
 {
-    if ([delegate respondsToSelector: @selector(jsonServiceDidReceiveResponse:)])
-        [delegate jsonServiceDidReceiveResponse: self];
+    if ([_delegate respondsToSelector: @selector(jsonServiceDidReceiveResponse:)])
+        [_delegate jsonServiceDidReceiveResponse: self];
 }
 
 
 - (void) positionRequest: (GCPositionValueRequest *) request didFailWithError: (NSError *) error
 {
-    if ([delegate respondsToSelector: @selector(jsonService:didFailWithError:)])
-        [delegate jsonService: self didFailWithError: error];
+    if ([_delegate respondsToSelector: @selector(jsonService:didFailWithError:)])
+        [_delegate jsonService: self didFailWithError: error];
 }
 
 
 - (void) positionRequestDidReceiveStatusOK: (GCPositionValueRequest *) request
 {
-    if ([delegate respondsToSelector: @selector(jsonServiceDidReceiveStatusOK:)])
-        [delegate jsonServiceDidReceiveStatusOK: self];
+    if ([_delegate respondsToSelector: @selector(jsonServiceDidReceiveStatusOK:)])
+        [_delegate jsonServiceDidReceiveStatusOK: self];
 }
 
 
 - (void) positionRequest: (GCPositionValueRequest *) request receivedValue: (GCGameValue *) value remoteness: (NSInteger) remoteness
 {
-    if ([delegate respondsToSelector: @selector(jsonService:didReceivePositionValue:remoteness:)])
-        [delegate jsonService: self didReceivePositionValue: value remoteness: remoteness];
+    if ([_delegate respondsToSelector: @selector(jsonService:didReceivePositionValue:remoteness:)])
+        [_delegate jsonService: self didReceivePositionValue: value remoteness: remoteness];
     
-    positionValueSent = YES;
+    _positionValueSent = YES;
     
-    if (positionValueSent && moveValueSent)
+    if (_positionValueSent && _moveValueSent)
     {
-        if ([delegate respondsToSelector: @selector(jsonServiceDidFinish:)])
-            [delegate jsonServiceDidFinish: self];
+        if ([_delegate respondsToSelector: @selector(jsonServiceDidFinish:)])
+            [_delegate jsonServiceDidFinish: self];
     }   
 }
 
@@ -128,8 +128,8 @@
 
 - (void) moveValuesRequest: (GCMoveValuesRequest *) request didFailWithError: (NSError *) error
 {
-    if ([delegate respondsToSelector: @selector(jsonService:didFailWithError:)])
-        [delegate jsonService: self didFailWithError: error];
+    if ([_delegate respondsToSelector: @selector(jsonService:didFailWithError:)])
+        [_delegate jsonService: self didFailWithError: error];
 }
 
 
@@ -144,15 +144,15 @@
               remotenesses: (NSArray *) remotenesses
                   forMoves: (NSArray *) moves
 {
-    if ([delegate respondsToSelector: @selector(jsonService:didReceiveValues:remotenesses:forMoves:)])
-        [delegate jsonService: self didReceiveValues: values remotenesses: remotenesses forMoves: moves];
+    if ([_delegate respondsToSelector: @selector(jsonService:didReceiveValues:remotenesses:forMoves:)])
+        [_delegate jsonService: self didReceiveValues: values remotenesses: remotenesses forMoves: moves];
     
-    moveValueSent = YES;
+    _moveValueSent = YES;
     
-    if (positionValueSent && moveValueSent)
+    if (_positionValueSent && _moveValueSent)
     {
-        if ([delegate respondsToSelector: @selector(jsonServiceDidFinish:)])
-            [delegate jsonServiceDidFinish: self];
+        if ([_delegate respondsToSelector: @selector(jsonServiceDidFinish:)])
+            [_delegate jsonServiceDidFinish: self];
     }
 }
 

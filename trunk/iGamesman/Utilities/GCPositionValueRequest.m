@@ -11,9 +11,6 @@
 
 
 @interface GCPositionValueRequest ()
-{
-    id<GCPositionValueRequestDelegate> delegate;
-}
 
 - (id) initWithBaseURL: (NSURL *) baseURL parameterString: (NSString *) params;
 
@@ -52,8 +49,8 @@
     
     if (self)
     {
-        baseURL = [url retain];
-        parameterString = [params retain];
+        _baseURL = [url retain];
+        _parameterString = [params retain];
     }
     
     return self;
@@ -62,8 +59,8 @@
 
 - (void) dealloc
 {
-    [baseURL release];
-    [parameterString release];
+    [_baseURL release];
+    [_parameterString release];
     
     [super dealloc];
 }
@@ -71,25 +68,25 @@
 
 #pragma mark -
 
-- (void) setDelegate: (id<GCPositionValueRequestDelegate>) _delegate
+- (void) setDelegate: (id<GCPositionValueRequestDelegate>) delegate
 {
-    delegate = _delegate;
+    _delegate = delegate;
 }
 
 
 - (void) getValueForPosition: (NSString *) boardString
 {
-    NSString *methodString = [NSString stringWithFormat: @"getMoveValue;%@board=%@", parameterString, boardString];
-    NSURL *positionValueURL = [NSURL URLWithString: methodString relativeToURL: baseURL];
+    NSString *methodString = [NSString stringWithFormat: @"getMoveValue;%@board=%@", _parameterString, boardString];
+    NSURL *positionValueURL = [NSURL URLWithString: methodString relativeToURL: _baseURL];
     
-    resultData = [[NSMutableData alloc] init];
+    _resultData = [[NSMutableData alloc] init];
     
     NSURLRequest *request = [NSURLRequest requestWithURL: positionValueURL];
     NSURLConnection *connection = [NSURLConnection connectionWithRequest: request delegate: self];
     
     if (connection)
     {
-        [delegate positionRequestReachedServer: self];
+        [_delegate positionRequestReachedServer: self];
     }
 }
 
@@ -98,7 +95,7 @@
 
 - (void) connection: (NSURLConnection *) connection didReceiveResponse: (NSURLResponse *) response
 {
-    [resultData setData: nil];
+    [_resultData setData: nil];
     
     if ([response isKindOfClass: [NSHTTPURLResponse class]])
     {
@@ -106,11 +103,11 @@
         
         if ([httpResponse statusCode] == 200)
         {
-            [delegate positionRequestDidReceiveResponse: self];
+            [_delegate positionRequestDidReceiveResponse: self];
         }
         else
         {
-            [delegate positionRequest: self didFailWithError: [NSError errorWithDomain: @"Server Error" code: 100 userInfo: nil]];
+            [_delegate positionRequest: self didFailWithError: [NSError errorWithDomain: @"Server Error" code: 100 userInfo: nil]];
         }
     }
 }
@@ -118,31 +115,31 @@
 
 - (void) connection: (NSURLConnection *) connection didReceiveData: (NSData *) data
 {
-    [resultData appendData: data];
+    [_resultData appendData: data];
 }
 
 
 - (void) connection: (NSURLConnection *) connection didFailWithError: (NSError *) error
 {
-    [resultData release];
+    [_resultData release];
     
-    [delegate positionRequest: self didFailWithError: error];
+    [_delegate positionRequest: self didFailWithError: error];
 }
 
 
 - (void) connectionDidFinishLoading: (NSURLConnection *) connection
 {    
-    NSDictionary *resultObject = [NSJSONSerialization JSONObjectWithData: resultData options: 0 error: nil];
+    NSDictionary *resultObject = [NSJSONSerialization JSONObjectWithData: _resultData options: 0 error: nil];
     
-    [resultData release];
+    [_resultData release];
     
     if ([[resultObject objectForKey: @"status"] isEqualToString: @"ok"])
     {
-        [delegate positionRequestDidReceiveStatusOK: self];
+        [_delegate positionRequestDidReceiveStatusOK: self];
     }
     else if ([[resultObject objectForKey: @"status"] isEqualToString: @"error"])
     {
-        [delegate positionRequest: self didFailWithError: [NSError errorWithDomain: @"Server reported error" code: 200 userInfo: nil]];
+        [_delegate positionRequest: self didFailWithError: [NSError errorWithDomain: @"Server reported error" code: 200 userInfo: nil]];
         return;
     }
     
@@ -161,7 +158,7 @@
         if (!positionValue)
             positionValue = GCGameValueUnknown;
         
-        [delegate positionRequest: self receivedValue: positionValue remoteness: [remoteness unsignedIntegerValue]];
+        [_delegate positionRequest: self receivedValue: positionValue remoteness: [remoteness unsignedIntegerValue]];
     }
 }
 

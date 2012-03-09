@@ -17,10 +17,12 @@
  */
 @interface GCPositionValueRequest : NSObject
 {    
-    NSURL *baseURL;
-    NSString *parameterString;
+    NSURL *_baseURL;
+    NSString *_parameterString;
     
-    NSMutableData *resultData;
+    NSMutableData *_resultData;
+    
+    id<GCPositionValueRequestDelegate> _delegate;
 }
 
 + (id) requestWithBaseURL: (NSURL *) baseURL parameterString: (NSString *) params forPosition: (NSString *) boardString delegate: (id<GCPositionValueRequestDelegate>) delegate;

@@ -9,9 +9,6 @@
 #import "GCMoveValuesRequest.h"
 
 @interface GCMoveValuesRequest ()
-{
-    id<GCMoveValuesRequestDelegate> delegate;
-}
 
 - (id) initWithBaseURL: (NSURL *) baseURL parameterString: (NSString *) params;
 
@@ -49,8 +46,8 @@
     
     if (self)
     {
-        baseURL = [url retain];
-        parameterString = [params retain];
+        _baseURL = [url retain];
+        _parameterString = [params retain];
     }
     
     return self;
@@ -59,8 +56,8 @@
 
 - (void) dealloc
 {
-    [baseURL release];
-    [parameterString release];
+    [_baseURL release];
+    [_parameterString release];
     
     [super dealloc];
 }
@@ -68,25 +65,25 @@
 
 #pragma mark -
 
-- (void) setDelegate: (id<GCMoveValuesRequestDelegate>) _delegate
+- (void) setDelegate: (id<GCMoveValuesRequestDelegate>) delegate
 {
-    delegate = _delegate;
+    _delegate = delegate;
 }
 
 
 - (void) getMoveValuesForPosition: (NSString *) boardString
 {
-    NSString *methodString = [NSString stringWithFormat: @"getNextMoveValues;%@board=%@", parameterString, boardString];
-    NSURL *positionValueURL = [NSURL URLWithString: methodString relativeToURL: baseURL];
+    NSString *methodString = [NSString stringWithFormat: @"getNextMoveValues;%@board=%@", _parameterString, boardString];
+    NSURL *positionValueURL = [NSURL URLWithString: methodString relativeToURL: _baseURL];
     
-    resultData = [[NSMutableData alloc] init];
+    _resultData = [[NSMutableData alloc] init];
     
     NSURLRequest *request = [NSURLRequest requestWithURL: positionValueURL];
     NSURLConnection *connection = [NSURLConnection connectionWithRequest: request delegate: self];
     
     if (connection)
     {
-        [delegate moveValuesRequestReachedServer: self];
+        [_delegate moveValuesRequestReachedServer: self];
     }
 }
 
@@ -95,7 +92,7 @@
 
 - (void) connection: (NSURLConnection *) connection didReceiveResponse: (NSURLResponse *) response
 {
-    [resultData setData: nil];
+    [_resultData setData: nil];
     
     if ([response isKindOfClass: [NSHTTPURLResponse class]])
     {
@@ -103,11 +100,11 @@
         
         if ([httpResponse statusCode] == 200)
         {
-            [delegate moveValuesRequestDidReceiveResponse: self];
+            [_delegate moveValuesRequestDidReceiveResponse: self];
         }
         else
         {
-            [delegate moveValuesRequest: self didFailWithError: [NSError errorWithDomain: @"Server Error" code: 100 userInfo: nil]];
+            [_delegate moveValuesRequest: self didFailWithError: [NSError errorWithDomain: @"Server Error" code: 100 userInfo: nil]];
         }
     }
 }
@@ -115,32 +112,32 @@
 
 - (void) connection: (NSURLConnection *) connection didReceiveData: (NSData *) data
 {
-    [resultData appendData: data];
+    [_resultData appendData: data];
 }
 
 
 - (void) connection: (NSURLConnection *) connection didFailWithError: (NSError *) error
 {
-    [resultData release];
+    [_resultData release];
     
-    [delegate moveValuesRequest: self didFailWithError: error];
+    [_delegate moveValuesRequest: self didFailWithError: error];
 }
 
 
 - (void) connectionDidFinishLoading: (NSURLConnection *) connection
 {    
-    NSDictionary *resultObject = [NSJSONSerialization JSONObjectWithData: resultData options: 0 error: nil];
+    NSDictionary *resultObject = [NSJSONSerialization JSONObjectWithData: _resultData options: 0 error: nil];
     
-    [resultData release];
+    [_resultData release];
     
     
     if ([[resultObject objectForKey: @"status"] isEqualToString: @"ok"])
     {
-        [delegate moveValuesRequestDidReceiveStatusOK: self];
+        [_delegate moveValuesRequestDidReceiveStatusOK: self];
     }
     else if ([[resultObject objectForKey: @"status"] isEqualToString: @"error"])
     {
-        [delegate moveValuesRequest: self didFailWithError: [NSError errorWithDomain: @"Server reported error" code: 200 userInfo: nil]];
+        [_delegate moveValuesRequest: self didFailWithError: [NSError errorWithDomain: @"Server reported error" code: 200 userInfo: nil]];
         return;
     }
     
@@ -167,7 +164,7 @@
             [values addObject: value];
         }
         
-        [delegate moveValuesRequest: self receivedValues: values remotenesses: remotes forMoves: moves];
+        [_delegate moveValuesRequest: self receivedValues: values remotenesses: remotes forMoves: moves];
         
         [moves release];
         [values release];

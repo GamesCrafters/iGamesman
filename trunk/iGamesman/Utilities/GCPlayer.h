@@ -14,10 +14,10 @@ typedef enum { GC_HUMAN, GC_COMPUTER } GCPlayerType;
 
 @interface GCPlayer : NSObject
 {
-    NSString *name;
-    NSString *epithet;
-    GCPlayerType type;
-    CGFloat percentPerfect;
+    NSString *_name;
+    NSString *_epithet;
+    GCPlayerType _type;
+    CGFloat _percentPerfect;
 }
 
 @property (nonatomic, retain) NSString *name;

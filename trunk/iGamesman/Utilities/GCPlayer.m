@@ -10,16 +10,16 @@
 
 @implementation GCPlayer
 
-@synthesize name;
-@synthesize epithet;
-@synthesize type;
-@synthesize percentPerfect;
+@synthesize name = _name;
+@synthesize epithet = _epithet;
+@synthesize type = _type;
+@synthesize percentPerfect = _percentPerfect;
 
 
 - (void) dealloc
 {
-    [name release];
-    [epithet release];
+    [_name release];
+    [_epithet release];
     
     [super dealloc];
 }

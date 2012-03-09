@@ -19,15 +19,12 @@
 
 @interface GCJSONService : NSObject <GCMoveValuesRequestDelegate, GCPositionValueRequestDelegate>
 {
-    NSString *baseURLString;
-    NSString *parameterString;
+    NSString *_baseURLString;
+    NSString *_parameterString;
     
-    BOOL moveValueSent, positionValueSent;
+    BOOL _moveValueSent, _positionValueSent;
     
-    id<GCJSONServiceDelegate> delegate;
-    
-    
-    NSMutableData *resultData;
+    id<GCJSONServiceDelegate> _delegate;
 }
 
 @property (nonatomic, assign) id<GCJSONServiceDelegate> delegate;

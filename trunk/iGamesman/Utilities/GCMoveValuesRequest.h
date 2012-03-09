@@ -18,10 +18,12 @@
  */
 @interface GCMoveValuesRequest : NSObject
 {    
-    NSURL *baseURL;
-    NSString *parameterString;
+    NSURL *_baseURL;
+    NSString *_parameterString;
     
-    NSMutableData *resultData;
+    NSMutableData *_resultData;
+    
+    id<GCMoveValuesRequestDelegate> _delegate;
 }
 
 + (id) requestWithBaseURL: (NSURL *) baseURL parameterString: (NSString *) params forPosition: (NSString *) boardString delegate: (id<GCMoveValuesRequestDelegate>) delegate;
