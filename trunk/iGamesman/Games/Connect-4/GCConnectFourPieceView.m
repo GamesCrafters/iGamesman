@@ -28,7 +28,7 @@ typedef enum { GC_ConnectFour_RED, GC_ConnectFour_BLUE } GCConnectFourPieceColor
     {
         color = GC_ConnectFour_RED;
         
-        self.opaque = NO;
+        [self setOpaque: NO];
     }
     
     return self;
@@ -43,7 +43,7 @@ typedef enum { GC_ConnectFour_RED, GC_ConnectFour_BLUE } GCConnectFourPieceColor
     {
         color = GC_ConnectFour_BLUE;
         
-        self.opaque = NO;
+        [self setOpaque: NO];
     }
     
     return self;

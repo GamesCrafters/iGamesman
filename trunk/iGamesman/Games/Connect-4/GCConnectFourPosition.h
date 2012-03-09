@@ -16,13 +16,13 @@ GCConnectFourPiece const GCConnectFourBluePiece;
 
 @interface GCConnectFourPosition : NSObject <NSCopying>
 {
-    NSUInteger columns;
-    NSUInteger rows;
-    NSUInteger toWin;
+    NSUInteger _columns;
+    NSUInteger _rows;
+    NSUInteger _toWin;
     
-    BOOL leftTurn;
+    BOOL _leftTurn;
     
-    NSMutableArray *board;
+    NSMutableArray *_board;
 }
 
 @property (nonatomic, readonly) NSUInteger columns, rows, toWin;

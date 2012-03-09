@@ -12,7 +12,7 @@
 
 @interface GCConnectFourView : UIView
 {
-    id<GCConnectFourViewDelegate> delegate;
+    id<GCConnectFourViewDelegate> _delegate;
     
     BOOL acceptingTouches;
 }

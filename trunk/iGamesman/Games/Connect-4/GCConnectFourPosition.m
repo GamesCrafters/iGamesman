@@ -14,9 +14,9 @@ GCConnectFourPiece const GCConnectFourBluePiece  = @"O";
 
 @implementation GCConnectFourPosition
 
-@synthesize columns, rows, toWin;
-@synthesize leftTurn;
-@synthesize board;
+@synthesize columns = _columns, rows = _rows, toWin = _toWin;
+@synthesize leftTurn = _leftTurn;
+@synthesize board = _board;
 
 #pragma mark - Memory lifecycle
 
@@ -26,13 +26,13 @@ GCConnectFourPiece const GCConnectFourBluePiece  = @"O";
     
     if (self)
     {
-        columns = width;
-        rows = height;
-        toWin = needed;
+        _columns = width;
+        _rows = height;
+        _toWin = needed;
         
-        board = [[NSMutableArray alloc] initWithCapacity: columns * rows];
-        for (int i = 0; i < (rows * columns); i += 1)
-            [board addObject: GCConnectFourBlankPiece];
+        _board = [[NSMutableArray alloc] initWithCapacity: _columns * _rows];
+        for (int i = 0; i < (_rows * _columns); i += 1)
+            [_board addObject: GCConnectFourBlankPiece];
     }
     
     return self;
@@ -41,7 +41,7 @@ GCConnectFourPiece const GCConnectFourBluePiece  = @"O";
 
 - (void) dealloc
 {
-    [board release];
+    [_board release];
     
     [super dealloc];
 }
@@ -51,11 +51,11 @@ GCConnectFourPiece const GCConnectFourBluePiece  = @"O";
 
 - (id) copyWithZone: (NSZone *) zone
 {
-    GCConnectFourPosition *copy = [[GCConnectFourPosition allocWithZone: zone] initWithWidth: columns height: rows toWin: toWin];
+    GCConnectFourPosition *copy = [[GCConnectFourPosition allocWithZone: zone] initWithWidth: _columns height: _rows toWin: _toWin];
     
-    copy.leftTurn = leftTurn;
-    NSMutableArray *boardCopy = [board copy];
-    copy.board = boardCopy;
+    [copy setLeftTurn: _leftTurn];
+    NSMutableArray *boardCopy = [_board copy];
+    [copy setBoard: boardCopy];
     [boardCopy release];
     
     return copy;

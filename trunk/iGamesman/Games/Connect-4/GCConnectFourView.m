@@ -17,7 +17,7 @@
 
 @implementation GCConnectFourView
 
-@synthesize delegate;
+@synthesize delegate = _delegate;
 
 
 #pragma mark - Memory lifecycle
@@ -28,7 +28,7 @@
     
     if (self)
     {
-        self.opaque = NO;
+        [self setOpaque: NO];
     }
     return self;
 }
@@ -40,28 +40,28 @@
 {
     [super setFrame: frame];
     
-    GCConnectFourPosition *position = [delegate position];
+    GCConnectFourPosition *position = [_delegate position];
     
-    CGFloat width  = self.bounds.size.width;
-    CGFloat height = self.bounds.size.height;
+    CGFloat width  = [self bounds].size.width;
+    CGFloat height = [self bounds].size.height;
     
-    CGFloat maxCellWidth  = width / position.columns;
-    CGFloat maxCellHeight = height / (position.rows + 0.5f);
+    CGFloat maxCellWidth  = width / [position columns];
+    CGFloat maxCellHeight = height / ([position rows] + 0.5f);
     
     CGFloat cellSize = MIN(maxCellWidth, maxCellHeight);
     
-    CGFloat minX = CGRectGetMinX(self.bounds) + (width - cellSize * position.columns) / 2.0f;
-    CGFloat minY = CGRectGetMinY(self.bounds) + (height - cellSize * (position.rows - 0.5f)) / 2.0f;
+    CGFloat minX = CGRectGetMinX([self bounds]) + (width - cellSize * [position columns]) / 2.0f;
+    CGFloat minY = CGRectGetMinY([self bounds]) + (height - cellSize * ([position rows] - 0.5f)) / 2.0f;
     
-    for (NSUInteger slot = 0; slot < position.rows * position.columns; slot += 1)
+    for (NSUInteger slot = 0; slot < ([position rows] * [position columns]); slot += 1)
     {
         GCConnectFourPieceView *pieceView = (GCConnectFourPieceView *) [self viewWithTag: PIECE_OFFSET + slot];
         
         if (pieceView)
         {
-            NSUInteger row = slot / position.columns;
-            NSUInteger col = slot % position.columns;
-            CGRect destinationFrame = CGRectMake(minX + col * cellSize, minY + (position.rows - row - 1) * cellSize, cellSize, cellSize);
+            NSUInteger row = slot / [position columns];
+            NSUInteger col = slot % [position columns];
+            CGRect destinationFrame = CGRectMake(minX + col * cellSize, minY + ([position rows] - row - 1) * cellSize, cellSize, cellSize);
             [pieceView setFrame: destinationFrame];
         }
     }
@@ -82,32 +82,32 @@
 
 - (void) doMove: (NSNumber *) column
 {
-    GCConnectFourPosition *position = [delegate position];
+    GCConnectFourPosition *position = [_delegate position];
     
-    CGFloat width  = self.bounds.size.width;
-    CGFloat height = self.bounds.size.height;
+    CGFloat width  = [self bounds].size.width;
+    CGFloat height = [self bounds].size.height;
     
-    CGFloat maxCellWidth  = width / position.columns;
-    CGFloat maxCellHeight = height / (position.rows + 0.5f);
+    CGFloat maxCellWidth  = width / [position columns];
+    CGFloat maxCellHeight = height / ([position rows] + 0.5f);
     
     CGFloat cellSize = MIN(maxCellWidth, maxCellHeight);
     
-    CGFloat minX = CGRectGetMinX(self.bounds) + (width - cellSize * position.columns) / 2.0f;
-    CGFloat minY = CGRectGetMinY(self.bounds) + (height - cellSize * (position.rows - 0.5f)) / 2.0f;
+    CGFloat minX = CGRectGetMinX([self bounds]) + (width - cellSize * [position columns]) / 2.0f;
+    CGFloat minY = CGRectGetMinY([self bounds]) + (height - cellSize * ([position rows] - 0.5f)) / 2.0f;
     
     NSUInteger col = [column unsignedIntegerValue];
     
-    for (int row = 0; row < position.rows; row += 1)
+    for (int row = 0; row < [position rows]; row += 1)
     {
-        NSUInteger slot = row * position.columns + col;
+        NSUInteger slot = row * [position columns] + col;
         
-        if ([[position.board objectAtIndex: slot] isEqual: GCConnectFourBlankPiece])
+        if ([[[position board] objectAtIndex: slot] isEqual: GCConnectFourBlankPiece])
         {
-            CGRect destinationFrame = CGRectMake(minX + col * cellSize, minY + (position.rows - row - 1) * cellSize, cellSize, cellSize);
+            CGRect destinationFrame = CGRectMake(minX + col * cellSize, minY + ([position rows] - row - 1) * cellSize, cellSize, cellSize);
             
             GCConnectFourPieceView *newPieceView;
             CGRect pieceFrame = CGRectMake(minX + col * cellSize, minY - cellSize, cellSize, cellSize);
-            if (position.leftTurn)
+            if ([position leftTurn])
                 newPieceView = [[GCConnectFourPieceView alloc] initRedWithFrame: pieceFrame];
             else
                 newPieceView = [[GCConnectFourPieceView alloc] initBlueWithFrame: pieceFrame];
@@ -129,26 +129,26 @@
 
 - (void) undoMove: (NSNumber *) column
 {
-    GCConnectFourPosition *position = [delegate position];
+    GCConnectFourPosition *position = [_delegate position];
     
-    CGFloat width  = self.bounds.size.width;
-    CGFloat height = self.bounds.size.height;
+    CGFloat width  = [self bounds].size.width;
+    CGFloat height = [self bounds].size.height;
     
-    CGFloat maxCellWidth  = width / position.columns;
-    CGFloat maxCellHeight = height / (position.rows + 0.5f);
+    CGFloat maxCellWidth  = width / [position columns];
+    CGFloat maxCellHeight = height / ([position rows] + 0.5f);
     
     CGFloat cellSize = MIN(maxCellWidth, maxCellHeight);
     
-    CGFloat minX = CGRectGetMinX(self.bounds) + (width - cellSize * position.columns) / 2.0f;
+    CGFloat minX = CGRectGetMinX([self bounds]) + (width - cellSize * [position columns]) / 2.0f;
     
     
     NSUInteger col = [column unsignedIntegerValue];
     
-    for (int row = position.rows - 1; row >= 0; row -= 1)
+    for (int row = [position rows] - 1; row >= 0; row -= 1)
     {
-        NSUInteger slot = row * position.columns + col;
+        NSUInteger slot = row * [position columns] + col;
         
-        if (![[position.board objectAtIndex: slot] isEqual: GCConnectFourBlankPiece])
+        if (![[[position board] objectAtIndex: slot] isEqual: GCConnectFourBlankPiece])
         {
             CGRect destinationFrame = CGRectMake(minX + col * cellSize, -cellSize, cellSize, cellSize);
             
@@ -166,8 +166,8 @@
 
 - (void) resetBoard
 {
-    GCConnectFourPosition *position = [delegate position];
-    for (NSUInteger i = 0; i < position.rows * position.columns; i += 1)
+    GCConnectFourPosition *position = [_delegate position];
+    for (NSUInteger i = 0; i < [position rows] * [position columns]; i += 1)
     {
         UIView *pieceView = [self viewWithTag: PIECE_OFFSET + i];
         [pieceView removeFromSuperview];
@@ -181,18 +181,18 @@
 
 - (void) touchesBegan: (NSSet *) touches withEvent: (UIEvent *) event
 {
-    GCConnectFourPosition *position = [delegate position];
+    GCConnectFourPosition *position = [_delegate position];
     
-    CGFloat width  = self.bounds.size.width;
-    CGFloat height = self.bounds.size.height;
+    CGFloat width  = [self bounds].size.width;
+    CGFloat height = [self bounds].size.height;
     
-    CGFloat maxCellWidth  = width / position.columns;
-    CGFloat maxCellHeight = height / (position.rows + 0.5f);
+    CGFloat maxCellWidth  = width / [position columns];
+    CGFloat maxCellHeight = height / ([position rows] + 0.5f);
     
     CGFloat cellSize = MIN(maxCellWidth, maxCellHeight);
     
-    CGFloat minX = CGRectGetMinX(self.bounds) + (width - cellSize * position.columns) / 2.0f;
-    CGFloat minY = CGRectGetMinY(self.bounds) + (height - cellSize * (position.rows - 0.5f)) / 2.0f;
+    CGFloat minX = CGRectGetMinX([self bounds]) + (width - cellSize * [position columns]) / 2.0f;
+    CGFloat minY = CGRectGetMinY([self bounds]) + (height - cellSize * ([position rows] - 0.5f)) / 2.0f;
     
     if (acceptingTouches)
     {
@@ -202,12 +202,12 @@
         NSInteger column = (NSInteger) ((tapX - minX) / cellSize);
         if (column < 0)
             column = 0;
-        if (column >= position.columns)
-            column = position.columns - 1;
+        if (column >= [position columns])
+            column = [position columns] - 1;
         
         GCConnectFourPieceView *newPieceView;
         CGRect pieceFrame = CGRectMake(minX + column * cellSize, minY - cellSize, cellSize, cellSize);
-        if (position.leftTurn)
+        if ([position leftTurn])
             newPieceView = [[GCConnectFourPieceView alloc] initRedWithFrame: pieceFrame];
         else
             newPieceView = [[GCConnectFourPieceView alloc] initBlueWithFrame: pieceFrame];
@@ -222,18 +222,18 @@
 
 - (void) touchesMoved: (NSSet *) touches withEvent: (UIEvent *) event
 {
-    GCConnectFourPosition *position = [delegate position];
+    GCConnectFourPosition *position = [_delegate position];
     
-    CGFloat width  = self.bounds.size.width;
-    CGFloat height = self.bounds.size.height;
+    CGFloat width  = [self bounds].size.width;
+    CGFloat height = [self bounds].size.height;
     
-    CGFloat maxCellWidth  = width / position.columns;
-    CGFloat maxCellHeight = height / (position.rows + 0.5f);
+    CGFloat maxCellWidth  = width / [position columns];
+    CGFloat maxCellHeight = height / ([position rows] + 0.5f);
     
     CGFloat cellSize = MIN(maxCellWidth, maxCellHeight);
     
-    CGFloat minX = CGRectGetMinX(self.bounds) + (width - cellSize * position.columns) / 2.0f;
-    CGFloat minY = CGRectGetMinY(self.bounds) + (height - cellSize * (position.rows - 0.5f)) / 2.0f;
+    CGFloat minX = CGRectGetMinX([self bounds]) + (width - cellSize * [position columns]) / 2.0f;
+    CGFloat minY = CGRectGetMinY([self bounds]) + (height - cellSize * ([position rows] - 0.5f)) / 2.0f;
     
     if (acceptingTouches)
     {
@@ -246,8 +246,8 @@
             NSInteger column = (NSInteger) ((dragX - minX) / cellSize);
             if (column < 0)
                 column = 0;
-            if (column >= position.columns)
-                column = position.columns - 1;
+            if (column >= [position columns])
+                column = [position columns] - 1;
             
             CGRect newFrame = CGRectMake(minX + column * cellSize, minY - cellSize, cellSize, cellSize);
             [UIView animateWithDuration: 0.1f animations: ^{ [pieceView setFrame: newFrame]; }];
@@ -258,17 +258,17 @@
 
 - (void) touchesEnded: (NSSet *) touches withEvent: (UIEvent *) event
 {
-    GCConnectFourPosition *position = [delegate position];
+    GCConnectFourPosition *position = [_delegate position];
     
-    CGFloat width  = self.bounds.size.width;
-    CGFloat height = self.bounds.size.height;
+    CGFloat width  = [self bounds].size.width;
+    CGFloat height = [self bounds].size.height;
     
-    CGFloat maxCellWidth  = width / position.columns;
-    CGFloat maxCellHeight = height / (position.rows + 0.5f);
+    CGFloat maxCellWidth  = width / [position columns];
+    CGFloat maxCellHeight = height / ([position rows] + 0.5f);
     
     CGFloat cellSize = MIN(maxCellWidth, maxCellHeight);
     
-    CGFloat minX = CGRectGetMinX(self.bounds) + (width - cellSize * position.columns) / 2.0f;
+    CGFloat minX = CGRectGetMinX([self bounds]) + (width - cellSize * [position columns]) / 2.0f;
     
     if (acceptingTouches)
     {
@@ -278,8 +278,8 @@
             NSInteger column = (NSInteger) (([pieceView center].x - minX) / cellSize);
             NSNumber *move = [NSNumber numberWithInteger: column];
             
-            if ([[delegate generateMoves] containsObject: move])
-                [delegate userChoseMove: move];
+            if ([[_delegate generateMoves] containsObject: move])
+                [_delegate userChoseMove: move];
             
             [pieceView removeFromSuperview];
         }
@@ -309,31 +309,31 @@
 #ifdef DEMO
     CGContextSetRGBFillColor(ctx, 1, 0, 0, 1);
     CGContextSetRGBFillColor(ctx, 0, 0, 0, 0.5f);
-    CGContextFillRect(ctx, self.bounds);
+    CGContextFillRect(ctx, [self bounds]);
 #endif
     
     
-    GCConnectFourPosition *position = [delegate position];
+    GCConnectFourPosition *position = [_delegate position];
     
-    CGFloat width  = self.bounds.size.width;
-    CGFloat height = self.bounds.size.height;
+    CGFloat width  = [self bounds].size.width;
+    CGFloat height = [self bounds].size.height;
     
-    CGFloat maxCellWidth  = width / position.columns;
-    CGFloat maxCellHeight = height / (position.rows + 0.5f);
+    CGFloat maxCellWidth  = width / [position columns];
+    CGFloat maxCellHeight = height / ([position rows] + 0.5f);
     
     CGFloat cellSize = MIN(maxCellWidth, maxCellHeight);
     
-    CGFloat minX = CGRectGetMinX(self.bounds) + (width - cellSize * position.columns) / 2.0f;
-    CGFloat minY = CGRectGetMinY(self.bounds) + (height - cellSize * (position.rows - 0.5f)) / 2.0f;
+    CGFloat minX = CGRectGetMinX([self bounds]) + (width - cellSize * [position columns]) / 2.0f;
+    CGFloat minY = CGRectGetMinY([self bounds]) + (height - cellSize * ([position rows] - 0.5f)) / 2.0f;
     
     
-    NSArray *moveValues = [delegate moveValues];
-    NSArray *remotenessValues = [delegate remotenessValues];
+    NSArray *moveValues = [_delegate moveValues];
+    NSArray *remotenessValues = [_delegate remotenessValues];
     
-    for (int i = 0; i < position.columns; i += 1)
+    for (int i = 0; i < [position columns]; i += 1)
     {
         /* Draw move values at the top, if enabled */
-        if ([delegate isShowingMoveValues])
+        if ([_delegate isShowingMoveValues])
         {
             GCGameValue *value = [moveValues objectAtIndex: i];
             NSInteger remoteness = [[remotenessValues objectAtIndex: i] integerValue];
@@ -349,7 +349,7 @@
                 CGContextFillRect(ctx, valueRect);
                 
                 CGFloat alpha = 1;
-                if ([delegate isShowingDeltaRemoteness] && (remoteness != 0))
+                if ([_delegate isShowingDeltaRemoteness] && (remoteness != 0))
                     alpha = 1.0f / log(remoteness + 1);
                 
                 if ([value isEqualToString: GCGameValueWin])
@@ -363,7 +363,7 @@
             }
         }
         
-        for (int j = 0; j < position.rows; j += 1)
+        for (int j = 0; j < [position rows]; j += 1)
         {
             CGMutablePathRef path = CGPathCreateMutable();
             CGRect cellRect = CGRectMake(minX + cellSize * i, minY + cellSize * j, cellSize, cellSize);
