@@ -70,6 +70,8 @@
 		0A7B775614B16BC20011837C /* quickcross.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0A7B775114B16BC20011837C /* quickcross.xml */; };
 		0A7B775714B16BC20011837C /* tictactoe.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0A7B775214B16BC20011837C /* tictactoe.xml */; };
 		0A7C4C86150E7198004B187C /* GCConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A7C4C85150E7198004B187C /* GCConstants.m */; };
+		0A7C4C89150EA3C7004B187C /* docs in Resources */ = {isa = PBXBuildFile; fileRef = 0A7C4C88150EA3C6004B187C /* docs */; };
+		0A7C4C8B150EA422004B187C /* iGamesman.Doxyfile in Resources */ = {isa = PBXBuildFile; fileRef = 0A7C4C8A150EA421004B187C /* iGamesman.Doxyfile */; };
 		0A8D8D9014D226A900330306 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A8D8D8F14D226A900330306 /* QuartzCore.framework */; };
 		0A8D8D9614D267DA00330306 /* GCPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A8D8D9214D267DA00330306 /* GCPlayer.m */; };
 		0A8D8D9714D267DA00330306 /* GCStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A8D8D9314D267DA00330306 /* GCStack.m */; };
@@ -234,6 +236,8 @@
 		0A7B775214B16BC20011837C /* tictactoe.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = tictactoe.xml; sourceTree = "<group>"; };
 		0A7C4C84150E7198004B187C /* GCConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCConstants.h; sourceTree = "<group>"; };
 		0A7C4C85150E7198004B187C /* GCConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCConstants.m; sourceTree = "<group>"; };
+		0A7C4C88150EA3C6004B187C /* docs */ = {isa = PBXFileReference; lastKnownFileType = folder; path = docs; sourceTree = "<group>"; };
+		0A7C4C8A150EA421004B187C /* iGamesman.Doxyfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = iGamesman.Doxyfile; sourceTree = "<group>"; };
 		0A8D8D8F14D226A900330306 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		0A8D8D9214D267DA00330306 /* GCPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCPlayer.m; sourceTree = "<group>"; };
 		0A8D8D9314D267DA00330306 /* GCStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCStack.m; sourceTree = "<group>"; };
@@ -570,6 +574,8 @@
 			isa = PBXGroup;
 			children = (
 				0AD753FF14AD29EF00746E7B /* iGamesman */,
+				0A7C4C88150EA3C6004B187C /* docs */,
+				0A7C4C8A150EA421004B187C /* iGamesman.Doxyfile */,
 				0AD753F814AD29EF00746E7B /* Frameworks */,
 				0AD753F614AD29EF00746E7B /* Products */,
 			);
@@ -862,6 +868,8 @@
 				0A9513A514F5A20C0000A563 /* patchwork~ipad.png in Resources */,
 				0A9513A614F5A20C0000A563 /* patchwork.png in Resources */,
 				0A9513A714F5A20C0000A563 /* patchwork@2x.png in Resources */,
+				0A7C4C89150EA3C7004B187C /* docs in Resources */,
+				0A7C4C8B150EA422004B187C /* iGamesman.Doxyfile in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
