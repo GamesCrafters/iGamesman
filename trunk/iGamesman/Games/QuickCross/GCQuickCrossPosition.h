@@ -24,13 +24,13 @@ GCQuickCrossMove const GCQuickCrossPlaceVerticalMove;
 
 @interface GCQuickCrossPosition : NSObject <NSCopying>
 {
-    NSUInteger rows;
-    NSUInteger columns;
-    NSUInteger toWin;
+    NSUInteger _rows;
+    NSUInteger _columns;
+    NSUInteger _toWin;
     
-    BOOL leftTurn;
+    BOOL _leftTurn;
     
-    NSMutableArray *board;
+    NSMutableArray *_board;
 }
 
 @property (nonatomic, readonly) NSUInteger rows, columns, toWin;

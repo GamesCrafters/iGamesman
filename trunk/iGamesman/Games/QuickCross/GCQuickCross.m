@@ -22,12 +22,12 @@
     
     if (self)
     {
-        position = nil;
+        _position = nil;
         
-        leftPlayer = nil;
-        rightPlayer = nil;
+        _leftPlayer = nil;
+        _rightPlayer = nil;
         
-        quickCrossView = nil;
+        _quickCrossView = nil;
     }
     
     return self;
@@ -36,12 +36,12 @@
 
 - (void) dealloc
 {
-    [position release];
+    [_position release];
     
-    [leftPlayer release];
-    [rightPlayer release];
+    [_leftPlayer release];
+    [_rightPlayer release];
     
-    [quickCrossView release];
+    [_quickCrossView release];
     
     [super dealloc];
 }
@@ -57,12 +57,12 @@
 
 - (UIView *) viewWithFrame: (CGRect) frame
 {
-    if (quickCrossView)
-        [quickCrossView release];
+    if (_quickCrossView)
+        [_quickCrossView release];
     
-    quickCrossView = [[GCQuickCrossView alloc] initWithFrame: frame];
-    [quickCrossView setDelegate: self];
-    return quickCrossView;
+    _quickCrossView = [[GCQuickCrossView alloc] initWithFrame: frame];
+    [_quickCrossView setDelegate: self];
+    return _quickCrossView;
 }
 
 
@@ -71,43 +71,43 @@
     [left retain];
     [right retain];
     
-    if (leftPlayer)
-        [leftPlayer release];
-    if (rightPlayer)
-        [rightPlayer release];
+    if (_leftPlayer)
+        [_leftPlayer release];
+    if (_rightPlayer)
+        [_rightPlayer release];
     
-    leftPlayer  = left;
-    rightPlayer = right;
+    _leftPlayer  = left;
+    _rightPlayer = right;
     
-    [leftPlayer setEpithet: nil];
-    [rightPlayer setEpithet: nil];
+    [_leftPlayer setEpithet: nil];
+    [_rightPlayer setEpithet: nil];
     
     
-    if (position)
-        [position release];
+    if (_position)
+        [_position release];
     
-    position = [[GCQuickCrossPosition alloc] initWithWidth: 4 height: 4 toWin: 4];
-    position.leftTurn = YES;
+    _position = [[GCQuickCrossPosition alloc] initWithWidth: 4 height: 4 toWin: 4];
+    [_position setLeftTurn: YES];
 }
 
 
 - (void) waitForHumanMoveWithCompletion: (GCMoveCompletionHandler) completionHandler
 {
-    moveHandler = completionHandler;
+    _moveHandler = completionHandler;
     
-    [quickCrossView startReceivingTouches];
+    [_quickCrossView startReceivingTouches];
 }
 
 
 - (GCPosition *) currentPosition
 {
-    return position;
+    return _position;
 }
 
 
 - (GCPlayerSide) currentPlayerSide
 {
-    if (position.leftTurn)
+    if ([_position leftTurn])
         return GC_PLAYER_LEFT;
     else
         return GC_PLAYER_RIGHT;
@@ -116,13 +116,13 @@
 
 - (GCPlayer *) leftPlayer
 {
-    return leftPlayer;
+    return _leftPlayer;
 }
 
 
 - (GCPlayer *) rightPlayer
 {
-    return rightPlayer;
+    return _rightPlayer;
 }
 
 
@@ -134,23 +134,23 @@
     
     if ([moveType isEqual: GCQuickCrossSpinMove])
     {
-        if ([[position.board objectAtIndex: index] isEqual: GCQuickCrossVerticalPiece])
-            [position.board replaceObjectAtIndex: index withObject: GCQuickCrossHorizontalPiece];
-        else if ([[position.board objectAtIndex: index] isEqual: GCQuickCrossHorizontalPiece])
-            [position.board replaceObjectAtIndex: index withObject: GCQuickCrossVerticalPiece];
+        if ([[[_position board] objectAtIndex: index] isEqual: GCQuickCrossVerticalPiece])
+            [[_position board] replaceObjectAtIndex: index withObject: GCQuickCrossHorizontalPiece];
+        else if ([[[_position board] objectAtIndex: index] isEqual: GCQuickCrossHorizontalPiece])
+            [[_position board] replaceObjectAtIndex: index withObject: GCQuickCrossVerticalPiece];
     }
     else if ([moveType isEqual: GCQuickCrossPlaceHorizontalMove])
     {
-        [position.board replaceObjectAtIndex: index withObject: GCQuickCrossHorizontalPiece];
+        [[_position board] replaceObjectAtIndex: index withObject: GCQuickCrossHorizontalPiece];
     }
     else if ([moveType isEqual: GCQuickCrossPlaceVerticalMove])
     {
-        [position.board replaceObjectAtIndex: index withObject: GCQuickCrossVerticalPiece];
+        [[_position board] replaceObjectAtIndex: index withObject: GCQuickCrossVerticalPiece];
     }
     
-    position.leftTurn = !position.leftTurn;
+    [_position setLeftTurn: ![_position leftTurn]];
     
-    [quickCrossView setNeedsDisplay];
+    [_quickCrossView setNeedsDisplay];
 }
 
 
@@ -162,28 +162,28 @@
     
     if ([moveType isEqual: GCQuickCrossSpinMove])
     {
-        if ([[position.board objectAtIndex: index] isEqual: GCQuickCrossVerticalPiece])
-            [position.board replaceObjectAtIndex: index withObject: GCQuickCrossHorizontalPiece];
-        else if ([[position.board objectAtIndex: index] isEqual: GCQuickCrossHorizontalPiece])
-            [position.board replaceObjectAtIndex: index withObject: GCQuickCrossVerticalPiece];
+        if ([[[_position board] objectAtIndex: index] isEqual: GCQuickCrossVerticalPiece])
+            [[_position board] replaceObjectAtIndex: index withObject: GCQuickCrossHorizontalPiece];
+        else if ([[[_position board] objectAtIndex: index] isEqual: GCQuickCrossHorizontalPiece])
+            [[_position board] replaceObjectAtIndex: index withObject: GCQuickCrossVerticalPiece];
     }
     else
     {
-        [position.board replaceObjectAtIndex: index withObject: GCQuickCrossBlankPiece];
+        [[_position board] replaceObjectAtIndex: index withObject: GCQuickCrossBlankPiece];
     }
     
-    position.leftTurn = !position.leftTurn;
+    [_position setLeftTurn: ![_position leftTurn]];
     
-    [quickCrossView setNeedsDisplay];
+    [_quickCrossView setNeedsDisplay];
 }
 
 
 - (GCGameValue *) primitive
 {
-    NSUInteger rows = [position rows];
-    NSUInteger columns = [position columns];
-    NSUInteger toWin = [position toWin];
-    NSMutableArray *board = [position board];
+    NSUInteger rows = [_position rows];
+    NSUInteger columns = [_position columns];
+    NSUInteger toWin = [_position toWin];
+    NSMutableArray *board = [_position board];
     
 	for (NSUInteger i = 0; i < rows * columns; i += 1)
     {
@@ -248,16 +248,16 @@
 
 - (NSArray *) generateMoves
 {
-    NSMutableArray *moves = [[NSMutableArray alloc] initWithCapacity: 2 * position.rows * position.columns];
-    for (NSUInteger i = 0; i < position.rows + position.columns; i += 1)
+    NSMutableArray *moves = [[NSMutableArray alloc] initWithCapacity: 2 * [_position rows] * [_position columns]];
+    for (NSUInteger i = 0; i < [_position rows] + [_position columns]; i += 1)
     {
         NSNumber *slot = [NSNumber numberWithUnsignedInt: i];
-        if ([position.board isEqual: GCQuickCrossBlankPiece])
+        if ([[_position board] isEqual: GCQuickCrossBlankPiece])
         {
             [moves addObject: [NSArray arrayWithObjects: slot, GCQuickCrossPlaceHorizontalMove, nil]];
             [moves addObject: [NSArray arrayWithObjects: slot, GCQuickCrossPlaceVerticalMove, nil]];
         }
-        else if ([position.board isEqual: GCQuickCrossHorizontalPiece] || [position.board isEqual: GCQuickCrossVerticalPiece])
+        else if ([[_position board] isEqual: GCQuickCrossHorizontalPiece] || [[_position board] isEqual: GCQuickCrossVerticalPiece])
         {
             [moves addObject: [NSArray arrayWithObjects: slot, GCQuickCrossSpinMove, nil]];
         }
@@ -271,15 +271,15 @@
 
 - (GCQuickCrossPosition *) position
 {
-    return position;
+    return _position;
 }
 
 
 - (void) userChoseMove: (NSArray *) move
 {
-    [quickCrossView stopReceivingTouches];
+    [_quickCrossView stopReceivingTouches];
     
-    moveHandler(move);
+    _moveHandler(move);
 }
 
 @end

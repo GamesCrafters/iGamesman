@@ -16,13 +16,13 @@
 
 @interface GCQuickCross : NSObject <GCGame, GCQuickCrossViewDelegate>
 {
-    GCQuickCrossPosition *position;
+    GCQuickCrossPosition *_position;
     
-    GCPlayer *leftPlayer, *rightPlayer;
+    GCPlayer *_leftPlayer, *_rightPlayer;
     
-    GCMoveCompletionHandler moveHandler;
+    GCMoveCompletionHandler _moveHandler;
     
-    GCQuickCrossView *quickCrossView;
+    GCQuickCrossView *_quickCrossView;
 }
 
 @end

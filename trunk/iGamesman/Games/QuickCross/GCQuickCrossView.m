@@ -12,7 +12,7 @@
 
 @implementation GCQuickCrossView
 
-@synthesize delegate;
+@synthesize delegate = _delegate;
 
 - (id) initWithFrame: (CGRect) frame
 {
@@ -20,13 +20,13 @@
     
     if (self)
     {
-        self.opaque = NO;
+        [self setOpaque: NO];
         
-        acceptingTouches = NO;
+        _acceptingTouches = NO;
         
-        receivingMove  = NO;
-        touchDownPoint = CGPointZero;
-        moveIndex      = -1;
+        _receivingMove  = NO;
+        _touchDownPoint = CGPointZero;
+        _moveIndex      = -1;
     }
     
     return self;
@@ -37,48 +37,48 @@
 
 - (void) startReceivingTouches
 {
-    acceptingTouches = YES;
+    _acceptingTouches = YES;
 }
 
 
 - (void) stopReceivingTouches
 {
-    acceptingTouches = NO;
+    _acceptingTouches = NO;
 }
 
 
 - (void) touchesBegan: (NSSet *) touches withEvent: (UIEvent *) event
 {
-    if (!acceptingTouches)
+    if (!_acceptingTouches)
         return;
     
-    GCQuickCrossPosition *position = [delegate position];
+    GCQuickCrossPosition *position = [_delegate position];
     
-    CGFloat width  = self.bounds.size.width;
-    CGFloat height = self.bounds.size.height;
+    CGFloat width  = [self bounds].size.width;
+    CGFloat height = [self bounds].size.height;
     
-    CGFloat maxCellWidth  = (width / position.columns);
-    CGFloat maxCellHeight = (height / position.rows);
+    CGFloat maxCellWidth  = (width / [position columns]);
+    CGFloat maxCellHeight = (height / [position rows]);
     
     CGFloat cellSize = MIN(maxCellWidth, maxCellHeight);
     
-    CGFloat minX = CGRectGetMinX(self.bounds) + (width - position.columns * cellSize) / 2.0f;
-    CGFloat minY = CGRectGetMinY(self.bounds) + (height - position.rows * cellSize) / 2.0f;
+    CGFloat minX = CGRectGetMinX([self bounds]) + (width - [position columns] * cellSize) / 2.0f;
+    CGFloat minY = CGRectGetMinY([self bounds]) + (height - [position rows] * cellSize) / 2.0f;
     
     
     CGPoint location = [[touches anyObject] locationInView: self];
     
-    for (NSUInteger row = 0; row < position.rows; row += 1)
+    for (NSUInteger row = 0; row < [position rows]; row += 1)
     {
-        for (NSUInteger col = 0; col < position.columns; col += 1)
+        for (NSUInteger col = 0; col < [position columns]; col += 1)
         {
             CGRect cellRect = CGRectMake(minX + col * cellSize, minY + row * cellSize, cellSize, cellSize);
             
             if (CGRectContainsPoint(cellRect, location))
             {
-                receivingMove = YES;
-                touchDownPoint = location;
-                moveIndex = col + row * position.columns;
+                _receivingMove = YES;
+                _touchDownPoint = location;
+                _moveIndex = col + row * [position columns];
                 return;
             }
         }
@@ -88,53 +88,53 @@
 
 - (void) touchesEnded: (NSSet *) touches withEvent: (UIEvent *) event
 {
-    if (!acceptingTouches || !receivingMove)
+    if (!_acceptingTouches || !_receivingMove)
         return;
     
-    GCQuickCrossPosition *position = [delegate position];
+    GCQuickCrossPosition *position = [_delegate position];
     
     
     CGPoint location = [[touches anyObject] locationInView: self];
     
-    CGFloat deltaX = fabs(location.x - touchDownPoint.x);
-    CGFloat deltaY = fabs(location.y - touchDownPoint.y);
+    CGFloat deltaX = fabs(location.x - _touchDownPoint.x);
+    CGFloat deltaY = fabs(location.y - _touchDownPoint.y);
     
-    NSNumber *slot = [NSNumber numberWithUnsignedInt: moveIndex];
-    GCQuickCrossPiece piece = [position.board objectAtIndex: moveIndex];
+    NSNumber *slot = [NSNumber numberWithUnsignedInt: _moveIndex];
+    GCQuickCrossPiece piece = [[position board] objectAtIndex: _moveIndex];
     
     if (!deltaX && !deltaY)
     {
         if (![piece isEqual: GCQuickCrossBlankPiece])
-            [delegate userChoseMove: [NSArray arrayWithObjects: slot, GCQuickCrossSpinMove, nil]];
+            [_delegate userChoseMove: [NSArray arrayWithObjects: slot, GCQuickCrossSpinMove, nil]];
         
-        receivingMove = NO;
-        touchDownPoint = CGPointZero;
-        moveIndex = -1;
+        _receivingMove = NO;
+        _touchDownPoint = CGPointZero;
+        _moveIndex = -1;
         return;
     }
     
     if ([piece isEqual: GCQuickCrossBlankPiece])
     {
         GCQuickCrossMove moveType = (deltaX > deltaY) ? GCQuickCrossPlaceHorizontalMove : GCQuickCrossPlaceVerticalMove;
-        [delegate userChoseMove: [NSArray arrayWithObjects: slot, moveType, nil]];
+        [_delegate userChoseMove: [NSArray arrayWithObjects: slot, moveType, nil]];
     }
     else
     {
-        [delegate userChoseMove: [NSArray arrayWithObjects: slot, GCQuickCrossSpinMove, nil]];
+        [_delegate userChoseMove: [NSArray arrayWithObjects: slot, GCQuickCrossSpinMove, nil]];
     }
     
-    receivingMove = NO;
-    touchDownPoint = CGPointZero;
-    moveIndex = -1;
+    _receivingMove = NO;
+    _touchDownPoint = CGPointZero;
+    _moveIndex = -1;
     return;
 }
 
 
 - (void) touchesCancelled: (NSSet *) touches withEvent: (UIEvent *) event
 {
-    receivingMove = NO;
-    touchDownPoint = CGPointZero;
-    moveIndex = -1;
+    _receivingMove = NO;
+    _touchDownPoint = CGPointZero;
+    _moveIndex = -1;
 }
 
 
@@ -148,35 +148,35 @@
     CGContextSetRGBFillColor(ctx, 1, 0, 0, 1);
     CGContextFillEllipseInRect(ctx, CGRectMake(backgroundCenter.x - 5, backgroundCenter.y - 5, 10, 10));
     CGContextSetRGBFillColor(ctx, 0, 0, 0, 0.5f);
-    CGContextFillRect(ctx, self.bounds);
+    CGContextFillRect(ctx, [self bounds]);
 #endif
     
     
-    GCQuickCrossPosition *position = [delegate position];
+    GCQuickCrossPosition *position = [_delegate position];
     
-    CGFloat width  = self.bounds.size.width;
-    CGFloat height = self.bounds.size.height;
+    CGFloat width  = [self bounds].size.width;
+    CGFloat height = [self bounds].size.height;
     
-    CGFloat maxCellWidth  = (width / position.columns);
-    CGFloat maxCellHeight = (height / position.rows);
+    CGFloat maxCellWidth  = (width / [position columns]);
+    CGFloat maxCellHeight = (height / [position rows]);
     
     CGFloat cellSize = MIN(maxCellWidth, maxCellHeight);
     
-    CGFloat minX = CGRectGetMinX(self.bounds) + (width - position.columns * cellSize) / 2.0f;
-    CGFloat minY = CGRectGetMinY(self.bounds) + (height - position.rows * cellSize) / 2.0f;
+    CGFloat minX = CGRectGetMinX([self bounds]) + (width - [position columns] * cellSize) / 2.0f;
+    CGFloat minY = CGRectGetMinY([self bounds]) + (height - [position rows] * cellSize) / 2.0f;
     
     /* Vertical separators */
-    for (int i = 1; i < position.columns; i += 1)
+    for (int i = 1; i < [position columns]; i += 1)
     {
         CGContextMoveToPoint(ctx, minX + i * cellSize, minY);
-        CGContextAddLineToPoint(ctx, minX + i * cellSize, minY + position.rows * cellSize);
+        CGContextAddLineToPoint(ctx, minX + i * cellSize, minY + [position rows] * cellSize);
     }
     
     /* Horizontal separators */
-    for (int j = 1; j < position.rows; j += 1)
+    for (int j = 1; j < [position rows]; j += 1)
     {
         CGContextMoveToPoint(ctx, minX, minY + j * cellSize);
-        CGContextAddLineToPoint(ctx, minX + position.columns * cellSize, minY + j * cellSize);
+        CGContextAddLineToPoint(ctx, minX + [position columns] * cellSize, minY + j * cellSize);
     }
     
     CGContextSetRGBStrokeColor(ctx, 1, 1, 1, 1);
@@ -184,11 +184,11 @@
     CGContextStrokePath(ctx);
     
     
-    for (NSUInteger row = 0; row < position.rows; row += 1)
+    for (NSUInteger row = 0; row < [position rows]; row += 1)
     {
-        for (NSUInteger col = 0; col < position.columns; col += 1)
+        for (NSUInteger col = 0; col < [position columns]; col += 1)
         {
-            GCQuickCrossPiece piece = [position.board objectAtIndex: col + row * position.columns];
+            GCQuickCrossPiece piece = [[position board] objectAtIndex: col + row * [position columns]];
             
             CGFloat radius    = 0.15f * cellSize;
             CGFloat pieceMinX = minX + (col + 0.1f) * cellSize;

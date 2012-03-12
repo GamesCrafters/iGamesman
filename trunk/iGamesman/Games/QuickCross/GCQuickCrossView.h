@@ -12,13 +12,13 @@
 
 @interface GCQuickCrossView : UIView
 {
-    id<GCQuickCrossViewDelegate> delegate;
+    id<GCQuickCrossViewDelegate> _delegate;
     
-    BOOL acceptingTouches;
+    BOOL _acceptingTouches;
     
-    BOOL receivingMove;
-    CGPoint touchDownPoint;
-    NSUInteger moveIndex;
+    BOOL _receivingMove;
+    CGPoint _touchDownPoint;
+    NSUInteger _moveIndex;
 }
 
 @property (nonatomic, assign) id<GCQuickCrossViewDelegate> delegate;

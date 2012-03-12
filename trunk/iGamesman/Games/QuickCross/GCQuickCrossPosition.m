@@ -20,9 +20,9 @@ GCQuickCrossMove const GCQuickCrossPlaceVerticalMove   = @"GCQX_PLACE_VERTICAL";
 
 @implementation GCQuickCrossPosition
 
-@synthesize rows, columns, toWin;
-@synthesize leftTurn;
-@synthesize board;
+@synthesize rows = _rows, columns = _columns, toWin = _toWin;
+@synthesize leftTurn = _leftTurn;
+@synthesize board = _board;
 
 #pragma mark - Memory lifecycle
 
@@ -34,13 +34,13 @@ GCQuickCrossMove const GCQuickCrossPlaceVerticalMove   = @"GCQX_PLACE_VERTICAL";
     
     if (self)
     {
-        rows    = height;
-        columns = width;
-        toWin   = needed;
+        _rows    = height;
+        _columns = width;
+        _toWin   = needed;
         
-        board = [[NSMutableArray alloc] initWithCapacity: rows * columns];
-        for (NSUInteger i = 0; i < rows * columns; i += 1)
-            [board addObject: GCQuickCrossBlankPiece];
+        _board = [[NSMutableArray alloc] initWithCapacity: _rows * _columns];
+        for (NSUInteger i = 0; i < _rows * _columns; i += 1)
+            [_board addObject: GCQuickCrossBlankPiece];
     }
     
     return self;
@@ -49,7 +49,7 @@ GCQuickCrossMove const GCQuickCrossPlaceVerticalMove   = @"GCQX_PLACE_VERTICAL";
 
 - (void) dealloc
 {
-    [board release];
+    [_board release];
     
     [super dealloc];
 }
@@ -59,12 +59,12 @@ GCQuickCrossMove const GCQuickCrossPlaceVerticalMove   = @"GCQX_PLACE_VERTICAL";
 
 - (id) copyWithZone: (NSZone *) zone
 {
-    GCQuickCrossPosition *copy = [[GCQuickCrossPosition allocWithZone: zone] initWithWidth: columns height: rows toWin: toWin];
+    GCQuickCrossPosition *copy = [[GCQuickCrossPosition allocWithZone: zone] initWithWidth: _columns height: _rows toWin: _toWin];
     
-    copy.leftTurn = leftTurn;
+    [copy setLeftTurn: _leftTurn];
     
-    NSMutableArray *boardCopy = [board copy];
-    copy.board = boardCopy;
+    NSMutableArray *boardCopy = [_board copy];
+    [copy setBoard: boardCopy];
     [boardCopy release];
     
     return copy;
