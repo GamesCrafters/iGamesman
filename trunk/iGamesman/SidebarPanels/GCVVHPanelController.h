@@ -16,9 +16,9 @@
  */
 @interface GCVVHPanelController : UIViewController <GCModalDrawerPanelDelegate>
 {
-    id<GCVVHViewDataSource> dataSource;
+    id<GCVVHViewDataSource> _dataSource;
     
-    GCVVHView *vvh;
+    GCVVHView *_vvh;
 }
 
 - (id) initWithDataSource: (id<GCVVHViewDataSource>) dataSource;

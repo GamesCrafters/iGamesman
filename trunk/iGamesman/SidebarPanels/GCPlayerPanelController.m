@@ -14,13 +14,13 @@
 
 #pragma mark - Memory lifecycle
 
-- (id) initWithGame: (id<GCGame>) _game
+- (id) initWithGame: (id<GCGame>) game
 {
     self = [super initWithNibName: nil bundle: nil];
     
     if (self)
     {
-        game = _game;
+        _game = game;
     }
     
     return self;
@@ -37,49 +37,49 @@
 
 - (void) drawerWillAppear
 {
-    GCPlayer *leftPlayer  = [game leftPlayer];
-    GCPlayer *rightPlayer = [game rightPlayer];
+    GCPlayer *leftPlayer  = [_game leftPlayer];
+    GCPlayer *rightPlayer = [_game rightPlayer];
     
-    [leftTextField setText: [leftPlayer name]];
-    [rightTextField setText: [rightPlayer name]];
+    [_leftTextField setText: [leftPlayer name]];
+    [_rightTextField setText: [rightPlayer name]];
     
     NSUInteger leftIndex  = ([leftPlayer type] == GC_HUMAN) ? 0 : 1;
     NSUInteger rightIndex = ([rightPlayer type] == GC_HUMAN) ? 0 : 1;
-    [leftPlayerType setSelectedSegmentIndex: leftIndex];
-    [leftPlayerType sendActionsForControlEvents: UIControlEventValueChanged];
-    [rightPlayerType setSelectedSegmentIndex: rightIndex];
-    [rightPlayerType sendActionsForControlEvents: UIControlEventValueChanged];
+    [_leftPlayerType setSelectedSegmentIndex: leftIndex];
+    [_leftPlayerType sendActionsForControlEvents: UIControlEventValueChanged];
+    [_rightPlayerType setSelectedSegmentIndex: rightIndex];
+    [_rightPlayerType sendActionsForControlEvents: UIControlEventValueChanged];
     
     NSInteger leftPerfectness  = (NSInteger) round(10 * [leftPlayer percentPerfect]);
     NSInteger rightPerfectness = (NSInteger) round(10 * [rightPlayer percentPerfect]);
     
-    [leftPercentSlider setValue: leftPerfectness];
-    [leftPercentSlider sendActionsForControlEvents: UIControlEventValueChanged];
-    [rightPercentSlider setValue: rightPerfectness];
-    [rightPercentSlider sendActionsForControlEvents: UIControlEventValueChanged];
+    [_leftPercentSlider setValue: leftPerfectness];
+    [_leftPercentSlider sendActionsForControlEvents: UIControlEventValueChanged];
+    [_rightPercentSlider setValue: rightPerfectness];
+    [_rightPercentSlider sendActionsForControlEvents: UIControlEventValueChanged];
 }
 
 
 - (void) drawerWillDisappear
 {
-    [leftTextField resignFirstResponder];
-    [rightTextField resignFirstResponder];
+    [_leftTextField resignFirstResponder];
+    [_rightTextField resignFirstResponder];
 }
 
 
 - (void) saveButtonTapped
 {
-    GCPlayer *leftPlayer  = [game leftPlayer];
-    GCPlayer *rightPlayer = [game rightPlayer];
+    GCPlayer *leftPlayer  = [_game leftPlayer];
+    GCPlayer *rightPlayer = [_game rightPlayer];
     
-    [leftPlayer setName: [leftTextField text]];
-    [rightPlayer setName: [rightTextField text]];
+    [leftPlayer setName: [_leftTextField text]];
+    [rightPlayer setName: [_rightTextField text]];
     
-    [leftPlayer setType: ([leftPlayerType selectedSegmentIndex] == 0) ? GC_HUMAN : GC_COMPUTER];
-    [rightPlayer setType: ([rightPlayerType selectedSegmentIndex] == 0) ? GC_HUMAN : GC_COMPUTER];
+    [leftPlayer setType: ([_leftPlayerType selectedSegmentIndex] == 0) ? GC_HUMAN : GC_COMPUTER];
+    [rightPlayer setType: ([_rightPlayerType selectedSegmentIndex] == 0) ? GC_HUMAN : GC_COMPUTER];
     
-    [leftPlayer setPercentPerfect: leftPercentSlider.value / 10];
-    [rightPlayer setPercentPerfect: rightPercentSlider.value / 10];
+    [leftPlayer setPercentPerfect: [_leftPercentSlider value] / 10];
+    [rightPlayer setPercentPerfect: [_rightPercentSlider value] / 10];
 }
 
 
@@ -121,23 +121,23 @@
 
 - (void) segmentedControlChanged: (UISegmentedControl *) segmentedControl
 {
-    if (segmentedControl.tag == 1)
+    if ([segmentedControl tag] == 1)
     {
         NSInteger index = [segmentedControl selectedSegmentIndex];
         BOOL hidden = (index == 0);
-        [leftPercentHeader setHidden: hidden];
-        [leftPercentLabel setHidden: hidden];
-        [leftPercentSlider setHidden: hidden];
-        [leftInfoLabel setHidden: hidden];
+        [_leftPercentHeader setHidden: hidden];
+        [_leftPercentLabel setHidden: hidden];
+        [_leftPercentSlider setHidden: hidden];
+        [_leftInfoLabel setHidden: hidden];
     }
-    else if (segmentedControl.tag == 2)
+    else if ([segmentedControl tag] == 2)
     {
         NSInteger index = [segmentedControl selectedSegmentIndex];
         BOOL hidden = (index == 0);
-        [rightPercentHeader setHidden: hidden];
-        [rightPercentLabel setHidden: hidden];
-        [rightPercentSlider setHidden: hidden];
-        [rightInfoLabel setHidden: hidden];
+        [_rightPercentHeader setHidden: hidden];
+        [_rightPercentLabel setHidden: hidden];
+        [_rightPercentSlider setHidden: hidden];
+        [_rightInfoLabel setHidden: hidden];
     }
 }
 
@@ -153,17 +153,17 @@
     NSInteger integerValue = (NSInteger) rounded;
     
     UILabel *receiver = nil;
-    if (slider.tag == 1)
-        receiver = leftPercentLabel;
-    else if (slider.tag == 2)
-        receiver = rightPercentLabel;
+    if ([slider tag] == 1)
+        receiver = _leftPercentLabel;
+    else if ([slider tag] == 2)
+        receiver = _rightPercentLabel;
     [receiver setText: [NSString stringWithFormat: @"%d%%", 10 * integerValue]];
     
     receiver = nil;
-    if (slider.tag == 1)
-        receiver = leftInfoLabel;
-    else if (slider.tag == 2)
-        receiver = rightInfoLabel;
+    if ([slider tag] == 1)
+        receiver = _leftInfoLabel;
+    else if ([slider tag] == 2)
+        receiver = _rightInfoLabel;
     
     NSString *infoMessage = @"";
     if (integerValue == 0)
@@ -182,11 +182,11 @@
 - (void) loadView
 {
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
-        self.view = [[[UIView alloc] initWithFrame: CGRectMake(0, 0, 460 - 20, 280 - 32)] autorelease];
+        [self setView: [[[UIView alloc] initWithFrame: CGRectMake(0, 0, 460 - 20, 280 - 32)] autorelease]];
     else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-        self.view = [[[UIView alloc] initWithFrame: CGRectMake(0, 0, 460 - 20, 280 - 44)] autorelease];
+        [self setView: [[[UIView alloc] initWithFrame: CGRectMake(0, 0, 460 - 20, 280 - 44)] autorelease]];
     
-    CGFloat width  = self.view.bounds.size.width;
+    CGFloat width  = [[self view] bounds].size.width;
     
     CGFloat leftInset, rightInset;
     CGFloat leftHeaderY, rightHeaderY;
@@ -222,69 +222,69 @@
     [leftHeader setTextColor: [UIColor whiteColor]];
     [leftHeader setText: @"Left Player"];
     
-    [self.view addSubview: leftHeader];
+    [[self view] addSubview: leftHeader];
     [leftHeader release];
     
-    leftTextField = [[UITextField alloc] initWithFrame: CGRectMake(leftInset, CGRectGetMaxY(leftHeader.frame) + 5, playerWidth, 31)];
-    [leftTextField setBorderStyle: UITextBorderStyleRoundedRect];
-    [leftTextField setReturnKeyType: UIReturnKeyDone];
-    [leftTextField setTextColor: [UIColor colorWithRed: 56.0f / 256 green: 84.0f / 256 blue: 135.0f / 256 alpha: 1]];
-    [leftTextField setContentVerticalAlignment: UIControlContentVerticalAlignmentCenter];
-    [leftTextField setFont: [UIFont systemFontOfSize: 16]];
-    [leftTextField setPlaceholder: @"Left Player Name"];
-    [leftTextField setDelegate: self];
+    _leftTextField = [[UITextField alloc] initWithFrame: CGRectMake(leftInset, CGRectGetMaxY([leftHeader frame]) + 5, playerWidth, 31)];
+    [_leftTextField setBorderStyle: UITextBorderStyleRoundedRect];
+    [_leftTextField setReturnKeyType: UIReturnKeyDone];
+    [_leftTextField setTextColor: [UIColor colorWithRed: 56.0f / 256 green: 84.0f / 256 blue: 135.0f / 256 alpha: 1]];
+    [_leftTextField setContentVerticalAlignment: UIControlContentVerticalAlignmentCenter];
+    [_leftTextField setFont: [UIFont systemFontOfSize: 16]];
+    [_leftTextField setPlaceholder: @"Left Player Name"];
+    [_leftTextField setDelegate: self];
     
-    [self.view addSubview: leftTextField];
+    [[self view] addSubview: _leftTextField];
     
     NSArray *items = [NSArray arrayWithObjects: @"Human", @"Computer", nil];
-    leftPlayerType = [[UISegmentedControl alloc] initWithItems: items];
-    [leftPlayerType setFrame: CGRectMake(leftInset, CGRectGetMaxY(leftTextField.frame) + 10, playerWidth, 30)];
-    [leftPlayerType setSelectedSegmentIndex: 0];
-    [leftPlayerType setTag: 1];
-    [leftPlayerType addTarget: self action: @selector(segmentedControlChanged:) forControlEvents: UIControlEventValueChanged];
+    _leftPlayerType = [[UISegmentedControl alloc] initWithItems: items];
+    [_leftPlayerType setFrame: CGRectMake(leftInset, CGRectGetMaxY([_leftTextField frame]) + 10, playerWidth, 30)];
+    [_leftPlayerType setSelectedSegmentIndex: 0];
+    [_leftPlayerType setTag: 1];
+    [_leftPlayerType addTarget: self action: @selector(segmentedControlChanged:) forControlEvents: UIControlEventValueChanged];
     
-    [self.view addSubview: leftPlayerType];
+    [[self view] addSubview: _leftPlayerType];
     
-    leftPercentHeader = [[UILabel alloc] initWithFrame: CGRectMake(leftInset, CGRectGetMaxY(leftPlayerType.frame) + 10, playerWidth, 20)];
-    [leftPercentHeader setBackgroundColor: [UIColor clearColor]];
-    [leftPercentHeader setFont: [UIFont systemFontOfSize: 16]];
-    [leftPercentHeader setTextAlignment: UITextAlignmentLeft];
-    [leftPercentHeader setTextColor: [UIColor whiteColor]];
-    [leftPercentHeader setText: @"Percent Perfect"];
-    [leftPercentHeader setHidden: YES];
+    _leftPercentHeader = [[UILabel alloc] initWithFrame: CGRectMake(leftInset, CGRectGetMaxY([_leftPlayerType frame]) + 10, playerWidth, 20)];
+    [_leftPercentHeader setBackgroundColor: [UIColor clearColor]];
+    [_leftPercentHeader setFont: [UIFont systemFontOfSize: 16]];
+    [_leftPercentHeader setTextAlignment: UITextAlignmentLeft];
+    [_leftPercentHeader setTextColor: [UIColor whiteColor]];
+    [_leftPercentHeader setText: @"Percent Perfect"];
+    [_leftPercentHeader setHidden: YES];
     
-    [self.view addSubview: leftPercentHeader];
+    [[self view] addSubview: _leftPercentHeader];
     
-    leftPercentLabel = [[UILabel alloc] initWithFrame: CGRectMake(leftInset, CGRectGetMaxY(leftPlayerType.frame) + 10, playerWidth, 20)];
-    [leftPercentLabel setBackgroundColor: [UIColor clearColor]];
-    [leftPercentLabel setFont: [UIFont systemFontOfSize: 16]];
-    [leftPercentLabel setTextAlignment: UITextAlignmentRight];
-    [leftPercentLabel setTextColor: [UIColor whiteColor]];
-    [leftPercentLabel setText: @"100%"];
-    [leftPercentLabel setHidden: YES];
+    _leftPercentLabel = [[UILabel alloc] initWithFrame: CGRectMake(leftInset, CGRectGetMaxY([_leftPlayerType frame]) + 10, playerWidth, 20)];
+    [_leftPercentLabel setBackgroundColor: [UIColor clearColor]];
+    [_leftPercentLabel setFont: [UIFont systemFontOfSize: 16]];
+    [_leftPercentLabel setTextAlignment: UITextAlignmentRight];
+    [_leftPercentLabel setTextColor: [UIColor whiteColor]];
+    [_leftPercentLabel setText: @"100%"];
+    [_leftPercentLabel setHidden: YES];
     
-    [self.view addSubview: leftPercentLabel];
+    [[self view] addSubview: _leftPercentLabel];
     
-    leftPercentSlider = [[UISlider alloc] initWithFrame: CGRectMake(leftInset, CGRectGetMaxY(leftPercentLabel.frame) + 10, playerWidth, 20)];
-    [leftPercentSlider setMinimumValue: 0];
-    [leftPercentSlider setMaximumValue: 10];
-    [leftPercentSlider setValue: 10];
-    [leftPercentSlider setTag: 1];
-    [leftPercentSlider addTarget: self action: @selector(sliderChanged:) forControlEvents: UIControlEventValueChanged];
-    [leftPercentSlider setHidden: YES];
+    _leftPercentSlider = [[UISlider alloc] initWithFrame: CGRectMake(leftInset, CGRectGetMaxY([_leftPercentLabel frame]) + 10, playerWidth, 20)];
+    [_leftPercentSlider setMinimumValue: 0];
+    [_leftPercentSlider setMaximumValue: 10];
+    [_leftPercentSlider setValue: 10];
+    [_leftPercentSlider setTag: 1];
+    [_leftPercentSlider addTarget: self action: @selector(sliderChanged:) forControlEvents: UIControlEventValueChanged];
+    [_leftPercentSlider setHidden: YES];
     
-    [self.view addSubview: leftPercentSlider];
+    [[self view] addSubview: _leftPercentSlider];
     
-    leftInfoLabel = [[UILabel alloc] initWithFrame: CGRectMake(leftInset, CGRectGetMaxY(leftPercentSlider.frame) + 5, playerWidth, 50)];
-    [leftInfoLabel setBackgroundColor: [UIColor clearColor]];
-    [leftInfoLabel setFont: [UIFont systemFontOfSize: 14]];
-    [leftInfoLabel setNumberOfLines: 3];
-    [leftInfoLabel setLineBreakMode: UILineBreakModeWordWrap];
-    [leftInfoLabel setTextAlignment: UITextAlignmentLeft];
-    [leftInfoLabel setTextColor: [UIColor whiteColor]];
-    [leftInfoLabel setHidden: YES];
+    _leftInfoLabel = [[UILabel alloc] initWithFrame: CGRectMake(leftInset, CGRectGetMaxY([_leftPercentSlider frame]) + 5, playerWidth, 50)];
+    [_leftInfoLabel setBackgroundColor: [UIColor clearColor]];
+    [_leftInfoLabel setFont: [UIFont systemFontOfSize: 14]];
+    [_leftInfoLabel setNumberOfLines: 3];
+    [_leftInfoLabel setLineBreakMode: UILineBreakModeWordWrap];
+    [_leftInfoLabel setTextAlignment: UITextAlignmentLeft];
+    [_leftInfoLabel setTextColor: [UIColor whiteColor]];
+    [_leftInfoLabel setHidden: YES];
     
-    [self.view addSubview: leftInfoLabel];
+    [[self view] addSubview: _leftInfoLabel];
     
     
     
@@ -297,68 +297,68 @@
     [rightHeader setTextColor: [UIColor whiteColor]];
     [rightHeader setText: @"Right Player"];
     
-    [self.view addSubview: rightHeader];
+    [[self view] addSubview: rightHeader];
     [rightHeader release];
     
-    rightTextField = [[UITextField alloc] initWithFrame: CGRectMake(rightInset, CGRectGetMaxY(rightHeader.frame) + 5, playerWidth, 31)];
-    [rightTextField setBorderStyle: UITextBorderStyleRoundedRect];
-    [rightTextField setReturnKeyType: UIReturnKeyDone];
-    [rightTextField setTextColor: [UIColor colorWithRed: 56.0f / 256 green: 84.0f / 256 blue: 135.0f / 256 alpha: 1]];
-    [rightTextField setContentVerticalAlignment: UIControlContentVerticalAlignmentCenter];
-    [rightTextField setFont: [UIFont systemFontOfSize: 16]];
-    [rightTextField setPlaceholder: @"Right Player Name"];
-    [rightTextField setDelegate: self];
+    _rightTextField = [[UITextField alloc] initWithFrame: CGRectMake(rightInset, CGRectGetMaxY([rightHeader frame]) + 5, playerWidth, 31)];
+    [_rightTextField setBorderStyle: UITextBorderStyleRoundedRect];
+    [_rightTextField setReturnKeyType: UIReturnKeyDone];
+    [_rightTextField setTextColor: [UIColor colorWithRed: 56.0f / 256 green: 84.0f / 256 blue: 135.0f / 256 alpha: 1]];
+    [_rightTextField setContentVerticalAlignment: UIControlContentVerticalAlignmentCenter];
+    [_rightTextField setFont: [UIFont systemFontOfSize: 16]];
+    [_rightTextField setPlaceholder: @"Right Player Name"];
+    [_rightTextField setDelegate: self];
     
-    [self.view addSubview: rightTextField];
+    [[self view] addSubview: _rightTextField];
     
-    rightPlayerType = [[UISegmentedControl alloc] initWithItems: items];
-    [rightPlayerType setFrame: CGRectMake(rightInset, CGRectGetMaxY(rightTextField.frame) + 10, playerWidth, 30)];
-    [rightPlayerType setSelectedSegmentIndex: 0];
-    [rightPlayerType setTag: 2];
-    [rightPlayerType addTarget: self action: @selector(segmentedControlChanged:) forControlEvents: UIControlEventValueChanged];
+    _rightPlayerType = [[UISegmentedControl alloc] initWithItems: items];
+    [_rightPlayerType setFrame: CGRectMake(rightInset, CGRectGetMaxY([_rightTextField frame]) + 10, playerWidth, 30)];
+    [_rightPlayerType setSelectedSegmentIndex: 0];
+    [_rightPlayerType setTag: 2];
+    [_rightPlayerType addTarget: self action: @selector(segmentedControlChanged:) forControlEvents: UIControlEventValueChanged];
     
-    [self.view addSubview: rightPlayerType];
+    [[self view] addSubview: _rightPlayerType];
     
-    rightPercentHeader = [[UILabel alloc] initWithFrame: CGRectMake(rightInset, CGRectGetMaxY(rightPlayerType.frame) + 10, playerWidth, 20)];
-    [rightPercentHeader setBackgroundColor: [UIColor clearColor]];
-    [rightPercentHeader setFont: [UIFont systemFontOfSize: 16]];
-    [rightPercentHeader setTextAlignment: UITextAlignmentLeft];
-    [rightPercentHeader setTextColor: [UIColor whiteColor]];
-    [rightPercentHeader setText: @"Percent Perfect"];
-    [rightPercentHeader setHidden: YES];
+    _rightPercentHeader = [[UILabel alloc] initWithFrame: CGRectMake(rightInset, CGRectGetMaxY([_rightPlayerType frame]) + 10, playerWidth, 20)];
+    [_rightPercentHeader setBackgroundColor: [UIColor clearColor]];
+    [_rightPercentHeader setFont: [UIFont systemFontOfSize: 16]];
+    [_rightPercentHeader setTextAlignment: UITextAlignmentLeft];
+    [_rightPercentHeader setTextColor: [UIColor whiteColor]];
+    [_rightPercentHeader setText: @"Percent Perfect"];
+    [_rightPercentHeader setHidden: YES];
     
-    [self.view addSubview: rightPercentHeader];
+    [[self view] addSubview: _rightPercentHeader];
     
-    rightPercentLabel = [[UILabel alloc] initWithFrame: CGRectMake(rightInset, CGRectGetMaxY(rightPlayerType.frame) + 10, playerWidth, 20)];
-    [rightPercentLabel setBackgroundColor: [UIColor clearColor]];
-    [rightPercentLabel setFont: [UIFont systemFontOfSize: 16]];
-    [rightPercentLabel setTextAlignment: UITextAlignmentRight];
-    [rightPercentLabel setTextColor: [UIColor whiteColor]];
-    [rightPercentLabel setText: @"100%"];
-    [rightPercentLabel setHidden: YES];
+    _rightPercentLabel = [[UILabel alloc] initWithFrame: CGRectMake(rightInset, CGRectGetMaxY([_rightPlayerType frame]) + 10, playerWidth, 20)];
+    [_rightPercentLabel setBackgroundColor: [UIColor clearColor]];
+    [_rightPercentLabel setFont: [UIFont systemFontOfSize: 16]];
+    [_rightPercentLabel setTextAlignment: UITextAlignmentRight];
+    [_rightPercentLabel setTextColor: [UIColor whiteColor]];
+    [_rightPercentLabel setText: @"100%"];
+    [_rightPercentLabel setHidden: YES];
     
-    [self.view addSubview: rightPercentLabel];
+    [[self view] addSubview: _rightPercentLabel];
     
-    rightPercentSlider = [[UISlider alloc] initWithFrame: CGRectMake(rightInset, CGRectGetMaxY(rightPercentLabel.frame) + 10, playerWidth, 20)];
-    [rightPercentSlider setMinimumValue: 0];
-    [rightPercentSlider setMaximumValue: 10];
-    [rightPercentSlider setValue: 10];
-    [rightPercentSlider setTag: 2];
-    [rightPercentSlider addTarget: self action: @selector(sliderChanged:) forControlEvents: UIControlEventValueChanged];
-    [rightPercentSlider setHidden: YES];
+    _rightPercentSlider = [[UISlider alloc] initWithFrame: CGRectMake(rightInset, CGRectGetMaxY([_rightPercentLabel frame]) + 10, playerWidth, 20)];
+    [_rightPercentSlider setMinimumValue: 0];
+    [_rightPercentSlider setMaximumValue: 10];
+    [_rightPercentSlider setValue: 10];
+    [_rightPercentSlider setTag: 2];
+    [_rightPercentSlider addTarget: self action: @selector(sliderChanged:) forControlEvents: UIControlEventValueChanged];
+    [_rightPercentSlider setHidden: YES];
     
-    [self.view addSubview: rightPercentSlider];
+    [[self view] addSubview: _rightPercentSlider];
     
-    rightInfoLabel = [[UILabel alloc] initWithFrame: CGRectMake(rightInset, CGRectGetMaxY(rightPercentSlider.frame) + 5, playerWidth, 50)];
-    [rightInfoLabel setBackgroundColor: [UIColor clearColor]];
-    [rightInfoLabel setFont: [UIFont systemFontOfSize: 14]];
-    [rightInfoLabel setNumberOfLines: 3];
-    [rightInfoLabel setLineBreakMode: UILineBreakModeWordWrap];
-    [rightInfoLabel setTextAlignment: UITextAlignmentLeft];
-    [rightInfoLabel setTextColor: [UIColor whiteColor]];
-    [rightInfoLabel setHidden: YES];
+    _rightInfoLabel = [[UILabel alloc] initWithFrame: CGRectMake(rightInset, CGRectGetMaxY([_rightPercentSlider frame]) + 5, playerWidth, 50)];
+    [_rightInfoLabel setBackgroundColor: [UIColor clearColor]];
+    [_rightInfoLabel setFont: [UIFont systemFontOfSize: 14]];
+    [_rightInfoLabel setNumberOfLines: 3];
+    [_rightInfoLabel setLineBreakMode: UILineBreakModeWordWrap];
+    [_rightInfoLabel setTextAlignment: UITextAlignmentLeft];
+    [_rightInfoLabel setTextColor: [UIColor whiteColor]];
+    [_rightInfoLabel setHidden: YES];
     
-    [self.view addSubview: rightInfoLabel];
+    [[self view] addSubview: _rightInfoLabel];
 }
 
 
@@ -372,23 +372,23 @@
 {
     [super viewDidUnload];
     
-    [leftTextField release];
-    [rightTextField release];
+    [_leftTextField release];
+    [_rightTextField release];
     
-    [leftPlayerType release];
-    [rightPlayerType release];
+    [_leftPlayerType release];
+    [_rightPlayerType release];
     
-    [leftPercentHeader release];
-    [rightPercentHeader release];
+    [_leftPercentHeader release];
+    [_rightPercentHeader release];
     
-    [leftPercentLabel release];
-    [rightPercentLabel release];
+    [_leftPercentLabel release];
+    [_rightPercentLabel release];
     
-    [leftPercentSlider release];
-    [rightPercentSlider release];
+    [_leftPercentSlider release];
+    [_rightPercentSlider release];
     
-    [leftInfoLabel release];
-    [rightInfoLabel release];
+    [_leftInfoLabel release];
+    [_rightInfoLabel release];
 }
 
 @end

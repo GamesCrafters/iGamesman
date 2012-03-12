@@ -10,7 +10,7 @@
 
 @interface GCAboutGameViewController : UIViewController <NSXMLParserDelegate>
 {
-    NSDictionary *gameData;
+    NSDictionary *_gameData;
 }
 
 - (id) initWithXMLPath: (NSString *) pathToXML;

@@ -16,13 +16,13 @@
 
 @interface GCValuesPanelController : UIViewController <GCModalDrawerPanelDelegate>
 {
-    id<GCGame> game;
-    id<GCValuesPanelDelegate> delegate;
+    id<GCGame> _game;
+    id<GCValuesPanelDelegate> _delegate;
     
-    UILabel *moveValueLabel, *deltaRemotenessLabel;
-    UISwitch *predictionsSwitch, *moveValueSwitch, *deltaRemotenessSwitch;
+    UILabel *_moveValueLabel, *_deltaRemotenessLabel;
+    UISwitch *_predictionsSwitch, *_moveValueSwitch, *_deltaRemotenessSwitch;
     
-    UIPopoverController *helpPopover;
+    UIPopoverController *_helpPopoverController;
 }
 
 @property (nonatomic, assign) id<GCValuesPanelDelegate> delegate;

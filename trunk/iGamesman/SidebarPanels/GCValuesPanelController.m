@@ -12,17 +12,17 @@
 
 @implementation GCValuesPanelController
 
-@synthesize delegate;
+@synthesize delegate = _delegate;
 
 #pragma mark - Memory lifecycle
 
-- (id) initWithGame: (id<GCGame>) _game
+- (id) initWithGame: (id<GCGame>) game
 {
     self = [super initWithNibName: nil bundle: nil];
     
     if (self)
     {
-        game = _game;
+        _game = game;
     }
     
     return self;
@@ -63,60 +63,60 @@
 
 - (void) drawerWillAppear
 {
-    [predictionsSwitch setOn: [delegate isShowingPredictions]];
+    [_predictionsSwitch setOn: [_delegate isShowingPredictions]];
  
-    if ([game respondsToSelector: @selector(isShowingMoveValues)] && [game respondsToSelector: @selector(setShowingMoveValues:)])
+    if ([_game respondsToSelector: @selector(isShowingMoveValues)] && [_game respondsToSelector: @selector(setShowingMoveValues:)])
     {
-        [moveValueSwitch setOn: [game isShowingMoveValues]];
-        [moveValueSwitch setEnabled: YES];
-        [moveValueLabel setEnabled: YES];
+        [_moveValueSwitch setOn: [_game isShowingMoveValues]];
+        [_moveValueSwitch setEnabled: YES];
+        [_moveValueLabel setEnabled: YES];
     }
     else
     {
-        [moveValueSwitch setOn: NO];
-        [moveValueSwitch setEnabled: NO];
-        [moveValueLabel setEnabled: NO];
+        [_moveValueSwitch setOn: NO];
+        [_moveValueSwitch setEnabled: NO];
+        [_moveValueLabel setEnabled: NO];
     }
     
     
-    if ([moveValueSwitch isOn])
+    if ([_moveValueSwitch isOn])
     {
-        [deltaRemotenessLabel setEnabled: YES];
-        [deltaRemotenessSwitch setEnabled: YES];
-    }
-    else
-    {
-        [deltaRemotenessLabel setEnabled: NO];
-        [deltaRemotenessSwitch setEnabled: NO];
-    }
-    
-    
-    if ([game respondsToSelector: @selector(isShowingDeltaRemoteness)] && [game respondsToSelector: @selector(setShowingDeltaRemoteness:)])
-    {
-        [deltaRemotenessSwitch setOn: [game isShowingDeltaRemoteness]];
-        [deltaRemotenessSwitch setEnabled: YES];
+        [_deltaRemotenessLabel setEnabled: YES];
+        [_deltaRemotenessSwitch setEnabled: YES];
     }
     else
     {
-        [deltaRemotenessSwitch setOn: NO];
-        [deltaRemotenessSwitch setEnabled: NO];
+        [_deltaRemotenessLabel setEnabled: NO];
+        [_deltaRemotenessSwitch setEnabled: NO];
+    }
+    
+    
+    if ([_game respondsToSelector: @selector(isShowingDeltaRemoteness)] && [_game respondsToSelector: @selector(setShowingDeltaRemoteness:)])
+    {
+        [_deltaRemotenessSwitch setOn: [_game isShowingDeltaRemoteness]];
+        [_deltaRemotenessSwitch setEnabled: YES];
+    }
+    else
+    {
+        [_deltaRemotenessSwitch setOn: NO];
+        [_deltaRemotenessSwitch setEnabled: NO];
     }
 }
 
 
 - (void) saveButtonTapped
 {
-    [delegate setShowingPredictions: [predictionsSwitch isOn]];
+    [_delegate setShowingPredictions: [_predictionsSwitch isOn]];
     
-    if ([game respondsToSelector: @selector(setShowingMoveValues:)])
-        [game setShowingMoveValues: [moveValueSwitch isOn]];
+    if ([_game respondsToSelector: @selector(setShowingMoveValues:)])
+        [_game setShowingMoveValues: [_moveValueSwitch isOn]];
     
-    if ([game respondsToSelector: @selector(setShowingDeltaRemoteness:)])
+    if ([_game respondsToSelector: @selector(setShowingDeltaRemoteness:)])
     {
-        if ([moveValueSwitch isOn])
-            [game setShowingDeltaRemoteness: [deltaRemotenessSwitch isOn]];
+        if ([_moveValueSwitch isOn])
+            [_game setShowingDeltaRemoteness: [_deltaRemotenessSwitch isOn]];
         else
-            [game setShowingDeltaRemoteness: NO];
+            [_game setShowingDeltaRemoteness: NO];
     }
 }
 
@@ -125,15 +125,15 @@
 
 - (void) switchChanged: (UISwitch *) sender
 {
-    if ([sender isOn] && [game respondsToSelector: @selector(isShowingDeltaRemoteness)] && [game respondsToSelector: @selector(setShowingDeltaRemoteness:)])
+    if ([sender isOn] && [_game respondsToSelector: @selector(isShowingDeltaRemoteness)] && [_game respondsToSelector: @selector(setShowingDeltaRemoteness:)])
     {
-        [deltaRemotenessLabel setEnabled: YES];
-        [deltaRemotenessSwitch setEnabled: YES];
+        [_deltaRemotenessLabel setEnabled: YES];
+        [_deltaRemotenessSwitch setEnabled: YES];
     }
     else
     {
-        [deltaRemotenessLabel setEnabled: NO];
-        [deltaRemotenessSwitch setEnabled: NO];
+        [_deltaRemotenessLabel setEnabled: NO];
+        [_deltaRemotenessSwitch setEnabled: NO];
     }
 }
 
@@ -142,7 +142,7 @@
 {
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
     {
-        [helpPopover presentPopoverFromRect: [sender frame] inView: self.view permittedArrowDirections: UIPopoverArrowDirectionLeft animated: YES];
+        [_helpPopoverController presentPopoverFromRect: [sender frame] inView: self.view permittedArrowDirections: UIPopoverArrowDirectionLeft animated: YES];
     }
     else
     {
@@ -151,7 +151,7 @@
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController: helpController];
         [helpController release];
         
-        [delegate presentViewController: nav];
+        [_delegate presentViewController: nav];
         [nav release];
     }
 }
@@ -180,45 +180,45 @@
     [predictionsLabel release];
     
     
-    predictionsSwitch = [[UISwitch alloc] init];
-    predictionsSwitch.center = CGPointMake(width - 20 - predictionsSwitch.frame.size.width / 2.0f, 20 + (25 / 2.0f));
+    _predictionsSwitch = [[UISwitch alloc] init];
+    _predictionsSwitch.center = CGPointMake(width - 20 - _predictionsSwitch.frame.size.width / 2.0f, 20 + (25 / 2.0f));
     
-    [self.view addSubview: predictionsSwitch];
-    
-    
-    
-    moveValueLabel = [[UILabel alloc] initWithFrame: CGRectMake(20, 80, width - 40, 25)];
-    [moveValueLabel setBackgroundColor: [UIColor clearColor]];
-    [moveValueLabel setTextColor: [UIColor whiteColor]];
-    [moveValueLabel setFont: [UIFont boldSystemFontOfSize: 20]];
-    [moveValueLabel setText: @"Show Move Values"];
-    
-    [self.view addSubview: moveValueLabel];
-    
-    
-    moveValueSwitch = [[UISwitch alloc] init];
-    moveValueSwitch.center = CGPointMake(width - 20 - moveValueSwitch.frame.size.width / 2.0f, 80 + (25 / 2.0f));
-    [moveValueSwitch addTarget: self action: @selector(switchChanged:) forControlEvents: UIControlEventValueChanged];
-    
-    [self.view addSubview: moveValueSwitch];
+    [self.view addSubview: _predictionsSwitch];
     
     
     
-    deltaRemotenessLabel = [[UILabel alloc] initWithFrame: CGRectMake(20, 140, width - 40, 25)];
-    [deltaRemotenessLabel setBackgroundColor: [UIColor clearColor]];
-    [deltaRemotenessLabel setTextColor: [UIColor whiteColor]];
-    [deltaRemotenessLabel setFont: [UIFont boldSystemFontOfSize: 20]];
-    [deltaRemotenessLabel setText: @"Show Delta Remoteness"];
-    [deltaRemotenessLabel setEnabled: NO];
+    _moveValueLabel = [[UILabel alloc] initWithFrame: CGRectMake(20, 80, width - 40, 25)];
+    [_moveValueLabel setBackgroundColor: [UIColor clearColor]];
+    [_moveValueLabel setTextColor: [UIColor whiteColor]];
+    [_moveValueLabel setFont: [UIFont boldSystemFontOfSize: 20]];
+    [_moveValueLabel setText: @"Show Move Values"];
     
-    [self.view addSubview: deltaRemotenessLabel];
+    [self.view addSubview: _moveValueLabel];
     
     
-    deltaRemotenessSwitch = [[UISwitch alloc] init];
-    [deltaRemotenessSwitch setCenter: CGPointMake(width - 20 - deltaRemotenessSwitch.frame.size.width / 2.0f, 140 + (25 / 2.0f))];
-    [deltaRemotenessSwitch setEnabled: NO];
+    _moveValueSwitch = [[UISwitch alloc] init];
+    _moveValueSwitch.center = CGPointMake(width - 20 - _moveValueSwitch.frame.size.width / 2.0f, 80 + (25 / 2.0f));
+    [_moveValueSwitch addTarget: self action: @selector(switchChanged:) forControlEvents: UIControlEventValueChanged];
     
-    [self.view addSubview: deltaRemotenessSwitch];
+    [self.view addSubview: _moveValueSwitch];
+    
+    
+    
+    _deltaRemotenessLabel = [[UILabel alloc] initWithFrame: CGRectMake(20, 140, width - 40, 25)];
+    [_deltaRemotenessLabel setBackgroundColor: [UIColor clearColor]];
+    [_deltaRemotenessLabel setTextColor: [UIColor whiteColor]];
+    [_deltaRemotenessLabel setFont: [UIFont boldSystemFontOfSize: 20]];
+    [_deltaRemotenessLabel setText: @"Show Delta Remoteness"];
+    [_deltaRemotenessLabel setEnabled: NO];
+    
+    [self.view addSubview: _deltaRemotenessLabel];
+    
+    
+    _deltaRemotenessSwitch = [[UISwitch alloc] init];
+    [_deltaRemotenessSwitch setCenter: CGPointMake(width - 20 - _deltaRemotenessSwitch.frame.size.width / 2.0f, 140 + (25 / 2.0f))];
+    [_deltaRemotenessSwitch setEnabled: NO];
+    
+    [self.view addSubview: _deltaRemotenessSwitch];
     
     
     UIButton *infoButton = [UIButton buttonWithType: UIButtonTypeCustom];
@@ -235,8 +235,8 @@
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
     {
         UIViewController *dummy = [[UIViewController alloc] initWithNibName: @"GCValuesHelpView" bundle: nil];
-        helpPopover = [[UIPopoverController alloc] initWithContentViewController: dummy];
-        [helpPopover setPopoverContentSize: CGSizeMake(480, 288)];
+        _helpPopoverController = [[UIPopoverController alloc] initWithContentViewController: dummy];
+        [_helpPopoverController setPopoverContentSize: CGSizeMake(480, 288)];
         [dummy release];
     }
 }
@@ -246,14 +246,14 @@
 {
     [super viewDidUnload];
     
-    [deltaRemotenessLabel release];
-    [moveValueLabel release];
+    [_deltaRemotenessLabel release];
+    [_moveValueLabel release];
     
-    [predictionsSwitch release];
-    [moveValueSwitch release];
-    [deltaRemotenessSwitch release];
+    [_predictionsSwitch release];
+    [_moveValueSwitch release];
+    [_deltaRemotenessSwitch release];
     
-    [helpPopover release];
+    [_helpPopoverController release];
 }
 
 @end

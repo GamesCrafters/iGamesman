@@ -12,13 +12,13 @@
 
 @implementation GCVVHPanelController
 
-- (id) initWithDataSource: (id<GCVVHViewDataSource>) _dataSource
+- (id) initWithDataSource: (id<GCVVHViewDataSource>) dataSource
 {
     self = [super init];
     
     if (self)
     {
-        dataSource = _dataSource;
+        _dataSource = dataSource;
     }
     
     return self;
@@ -52,7 +52,7 @@
 
 - (void) drawerWillAppear
 {
-    [vvh setNeedsDisplay];
+    [_vvh setNeedsDisplay];
 }
 
 
@@ -61,11 +61,11 @@
 - (void) loadView
 {
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
-        self.view = [[[UIView alloc] initWithFrame: CGRectMake(0, 0, 460, 280 - 32)] autorelease];
+        [self setView: [[[UIView alloc] initWithFrame: CGRectMake(0, 0, 460, 280 - 32)] autorelease]];
     
-    vvh = [[GCVVHView alloc] initWithFrame: [[self view] bounds]];
-    [vvh setDataSource: dataSource];
-    [self.view addSubview: vvh];
+    _vvh = [[GCVVHView alloc] initWithFrame: [[self view] bounds]];
+    [_vvh setDataSource: _dataSource];
+    [[self view] addSubview: _vvh];
 }
 
 
@@ -73,7 +73,7 @@
 {
     [super viewDidUnload];
     
-    [vvh release];
+    [_vvh release];
 }
 
 @end

@@ -22,7 +22,7 @@
 - (void) aboutGameTapped
 {
     NSBundle *mainBundle = [NSBundle mainBundle];
-    NSString *xmlTitle = [currentEntry objectForKey: @"xml"];
+    NSString *xmlTitle = [_currentEntry objectForKey: @"xml"];
     
     if (xmlTitle)
     {
@@ -57,11 +57,11 @@
 
 - (void) startGameTapped
 {
-    NSString *className  = [currentEntry objectForKey: @"class"];
+    NSString *className  = [_currentEntry objectForKey: @"class"];
     
     if (!className)
     {
-        NSLog(@"No class name specified for game \"%@\"", [currentEntry objectForKey: @"name"]);
+        NSLog(@"No class name specified for game \"%@\"", [_currentEntry objectForKey: @"name"]);
         return;
     }
     
@@ -103,7 +103,7 @@
     
     if (self)
     {
-        currentEntry = nil;
+        _currentEntry = nil;
     }
     
     return self;
@@ -112,7 +112,7 @@
 
 - (void) dealloc
 {
-    [currentEntry release];
+    [_currentEntry release];
     
     [super dealloc];
 }
@@ -126,15 +126,15 @@
     
     NSDictionary *entry = [gamesScroller centerGame];
     
-    if (currentEntry)
-        [currentEntry release];
+    if (_currentEntry)
+        [_currentEntry release];
     
-    currentEntry = [entry retain];
+    _currentEntry = [entry retain];
     
     NSString *aboutTitle = [NSString stringWithFormat: @"About\n%@", [entry objectForKey: @"name"]];
     NSString *playTitle  = [NSString stringWithFormat: @"Play\n%@", [entry objectForKey: @"name"]];
     
-    [aboutGame setTitle: aboutTitle forState: UIControlStateNormal];
+    [_aboutGameButton setTitle: aboutTitle forState: UIControlStateNormal];
     [playGame setTitle: playTitle forState: UIControlStateNormal];
 }
 
@@ -144,15 +144,15 @@
 - (void) loadView
 {
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
-        self.view = [[[UIView alloc] initWithFrame: CGRectMake(0, 0, 480, 320)] autorelease];
+        [self setView: [[[UIView alloc] initWithFrame: CGRectMake(0, 0, 480, 320)] autorelease]];
     else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-        self.view = [[[UIView alloc] initWithFrame: CGRectMake(0, 0, 1024, 768)] autorelease];
+        [self setView: [[[UIView alloc] initWithFrame: CGRectMake(0, 0, 1024, 768)] autorelease]];
     else
-        self.view = nil;
+        [self setView: nil];
     
     
-    CGFloat width  = self.view.bounds.size.width;
-    CGFloat height = self.view.bounds.size.height;
+    CGFloat width  = [[self view] bounds].size.width;
+    CGFloat height = [[self view] bounds].size.height;
     
     
     CGRect scrollFrame;
@@ -162,33 +162,33 @@
         scrollFrame = CGRectMake(0, height / 4.0f, width, height * 0.75f);
     else
         scrollFrame = CGRectZero;
-    scroller = [[GCGamesScrollView alloc] initWithFrame: scrollFrame];
-    scroller.delegate = self;
+    _scroller = [[GCGamesScrollView alloc] initWithFrame: scrollFrame];
+    [_scroller setDelegate: self];
     
-    [self.view addSubview: scroller];
-    [scroller layoutIfNeeded];
+    [[self view] addSubview: _scroller];
+    [_scroller layoutIfNeeded];
     
     
-    aboutGame = [[UIButton buttonWithType: UIButtonTypeCustom] retain];
+    _aboutGameButton = [[UIButton buttonWithType: UIButtonTypeCustom] retain];
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
     {
-        [aboutGame setFrame: CGRectMake(width - 140, 20, 120, 60)];
-        [[aboutGame titleLabel] setFont: [UIFont boldSystemFontOfSize: 14.0f]];
+        [_aboutGameButton setFrame: CGRectMake(width - 140, 20, 120, 60)];
+        [[_aboutGameButton titleLabel] setFont: [UIFont boldSystemFontOfSize: 14.0f]];
     }
     else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
     {
-        [aboutGame setFrame: CGRectMake(width - 260, 20, 240, 120)];
-        [[aboutGame titleLabel] setFont: [UIFont boldSystemFontOfSize: 28.0f]];
+        [_aboutGameButton setFrame: CGRectMake(width - 260, 20, 240, 120)];
+        [[_aboutGameButton titleLabel] setFont: [UIFont boldSystemFontOfSize: 28.0f]];
     }
     
-    [aboutGame setBackgroundImage: [UIImage imageNamed: @"YellowButton.png"] forState: UIControlStateNormal];
-    [aboutGame setTitleColor: [UIColor blackColor] forState: UIControlStateNormal];
-    [[aboutGame titleLabel] setNumberOfLines: 2];
-    [[aboutGame titleLabel] setTextAlignment: UITextAlignmentCenter];
-    [aboutGame setTitle: @"About\nGame" forState: UIControlStateNormal];
-    [aboutGame addTarget: self action: @selector(aboutGameTapped) forControlEvents: UIControlEventTouchUpInside];
+    [_aboutGameButton setBackgroundImage: [UIImage imageNamed: @"YellowButton.png"] forState: UIControlStateNormal];
+    [_aboutGameButton setTitleColor: [UIColor blackColor] forState: UIControlStateNormal];
+    [[_aboutGameButton titleLabel] setNumberOfLines: 2];
+    [[_aboutGameButton titleLabel] setTextAlignment: UITextAlignmentCenter];
+    [_aboutGameButton setTitle: @"About\nGame" forState: UIControlStateNormal];
+    [_aboutGameButton addTarget: self action: @selector(aboutGameTapped) forControlEvents: UIControlEventTouchUpInside];
     
-    [self.view addSubview: aboutGame];
+    [[self view] addSubview: _aboutGameButton];
     
     
     playGame = [[UIButton buttonWithType: UIButtonTypeCustom] retain];
@@ -209,7 +209,7 @@
     [playGame setTitle: @"Play\nGame" forState: UIControlStateNormal];
     [playGame addTarget: self action: @selector(startGameTapped) forControlEvents: UIControlEventTouchUpInside];
     
-    [self.view addSubview: playGame];
+    [[self view] addSubview: playGame];
     
     
     UIButton *aboutGamesCrafters = [UIButton buttonWithType: UIButtonTypeCustom];
@@ -227,7 +227,7 @@
     [aboutGamesCrafters setImage: [UIImage imageNamed: @"GamesCrafters"] forState: UIControlStateNormal];
     [aboutGamesCrafters addTarget: self action: @selector(aboutGCTapped) forControlEvents: UIControlEventTouchUpInside];
 
-    [self.view addSubview: aboutGamesCrafters];
+    [[self view] addSubview: aboutGamesCrafters];
     
     
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
@@ -239,7 +239,7 @@
     [versionLabel setBackgroundColor: [UIColor clearColor]];
     [versionLabel setTextColor: [UIColor whiteColor]];
     
-    [self.view addSubview: versionLabel];
+    [[self view] addSubview: versionLabel];
     
     [versionLabel release];
 }
@@ -249,17 +249,17 @@
 {
     [super viewDidLoad];
     
-    NSDictionary *entry = [scroller centerGame];
+    NSDictionary *entry = [_scroller centerGame];
     
-    if (currentEntry)
-        [currentEntry release];
+    if (_currentEntry)
+        [_currentEntry release];
     
-    currentEntry = [entry retain];
+    _currentEntry = [entry retain];
     
     NSString *aboutTitle = [NSString stringWithFormat: @"About\n%@", [entry objectForKey: @"name"]];
     NSString *playTitle  = [NSString stringWithFormat: @"Play\n%@", [entry objectForKey: @"name"]];
     
-    [aboutGame setTitle: aboutTitle forState: UIControlStateNormal];
+    [_aboutGameButton setTitle: aboutTitle forState: UIControlStateNormal];
     [playGame setTitle: playTitle forState: UIControlStateNormal];
 }
 
@@ -269,9 +269,9 @@
 {
     [super viewDidUnload];
     
-    [aboutGame release];
+    [_aboutGameButton release];
     [playGame release];
-    [scroller release];
+    [_scroller release];
 }
 
 - (BOOL) shouldAutorotateToInterfaceOrientation: (UIInterfaceOrientation) interfaceOrientation

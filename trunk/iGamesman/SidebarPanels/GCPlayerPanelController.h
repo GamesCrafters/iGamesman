@@ -13,14 +13,14 @@
 
 @interface GCPlayerPanelController : UIViewController <GCModalDrawerPanelDelegate, UITextFieldDelegate>
 {
-    id<GCGame> game;
+    id<GCGame> _game;
     
-    UITextField        *leftTextField,      *rightTextField;
-    UISegmentedControl *leftPlayerType,     *rightPlayerType;
-    UILabel            *leftPercentHeader,  *rightPercentHeader;
-    UILabel            *leftPercentLabel,   *rightPercentLabel;
-    UISlider           *leftPercentSlider,  *rightPercentSlider;
-    UILabel            *leftInfoLabel,      *rightInfoLabel;
+    UITextField        *_leftTextField,      *_rightTextField;
+    UISegmentedControl *_leftPlayerType,     *_rightPlayerType;
+    UILabel            *_leftPercentHeader,  *_rightPercentHeader;
+    UILabel            *_leftPercentLabel,   *_rightPercentLabel;
+    UISlider           *_leftPercentSlider,  *_rightPercentSlider;
+    UILabel            *_leftInfoLabel,      *_rightInfoLabel;
 }
 
 - (id) initWithGame: (id<GCGame>) game;

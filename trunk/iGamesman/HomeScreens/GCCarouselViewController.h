@@ -12,10 +12,10 @@
 
 @interface GCCarouselViewController : UIViewController <UIScrollViewDelegate>
 {
-    UIButton *aboutGame, *playGame;
-    GCGamesScrollView *scroller;
+    UIButton *_aboutGameButton, *playGame;
+    GCGamesScrollView *_scroller;
     
-    NSDictionary *currentEntry;
+    NSDictionary *_currentEntry;
 }
 
 @end

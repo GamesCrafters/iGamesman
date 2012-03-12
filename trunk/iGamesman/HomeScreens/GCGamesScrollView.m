@@ -35,7 +35,7 @@ CGContextRef MyCreateBitmapContext(int pixelsWide, int pixelsHigh);
     for (UIView *cellView in [self subviews])
     {
         CGPoint center = [cellView center];
-        CGFloat distance = fabs((self.frame.size.width / 2.0f) + self.contentOffset.x - center.x);
+        CGFloat distance = fabs(([self frame].size.width / 2.0f) + [self contentOffset].x - center.x);
         
         if (distance < nearestDistance)
         {
@@ -47,8 +47,8 @@ CGContextRef MyCreateBitmapContext(int pixelsWide, int pixelsHigh);
     NSDictionary *result = nil;
     if (centerView)
     {
-        NSUInteger index = [visibleGames indexOfObject: centerView];
-        result = [visibleGameInfos objectAtIndex: index];
+        NSUInteger index = [_visibleGames indexOfObject: centerView];
+        result = [_visibleGameInfos objectAtIndex: index];
     }
     
     return result;
@@ -66,16 +66,16 @@ CGContextRef MyCreateBitmapContext(int pixelsWide, int pixelsHigh);
         NSBundle *mainBundle = [NSBundle mainBundle];
         NSString *gameInfoPath = [mainBundle pathForResource: @"Games" ofType: @"plist"];
         
-        gameInfos = [[NSArray arrayWithContentsOfFile: gameInfoPath] mutableCopy];
-        visibleGameInfos = [[NSMutableArray alloc] init];
+        _gameInfos = [[NSArray arrayWithContentsOfFile: gameInfoPath] mutableCopy];
+        _visibleGameInfos = [[NSMutableArray alloc] init];
         
-        visibleGames = [[NSMutableArray alloc] init];
+        _visibleGames = [[NSMutableArray alloc] init];
         
         
-        self.contentSize = CGSizeMake(frame.size.width * 5, frame.size.height);
+        [self setContentSize: CGSizeMake(frame.size.width * 5, frame.size.height)];
         
-        self.showsHorizontalScrollIndicator = NO;
-        self.showsVerticalScrollIndicator   = NO;
+        [self setShowsHorizontalScrollIndicator: NO];
+        [self setShowsVerticalScrollIndicator: NO];
         
         imageSize = frame.size.height * (2.0f / 3.0f);
         cellWidth = frame.size.height;
@@ -87,8 +87,8 @@ CGContextRef MyCreateBitmapContext(int pixelsWide, int pixelsHigh);
 
 - (void) dealloc
 {
-    [gameInfos release];
-    [visibleGames release];
+    [_gameInfos release];
+    [_visibleGames release];
     
     [super dealloc];
 }
@@ -105,7 +105,7 @@ CGContextRef MyCreateBitmapContext(int pixelsWide, int pixelsHigh);
     
     if (distanceFromCenter > (contentWidth / 4.0f))
     {
-        self.contentOffset = CGPointMake(centerOffsetX, currentOffset.y);
+        [self setContentOffset: CGPointMake(centerOffsetX, currentOffset.y)];
         
         for (UIView *subview in [self subviews])
         {
@@ -131,12 +131,12 @@ CGContextRef MyCreateBitmapContext(int pixelsWide, int pixelsHigh);
     [self tileGamesFromMinimumX: minimumVisibleX toMaximumX: maximumVisibleX];
     
     
-    for (UIView *cellView in visibleGames)
+    for (UIView *cellView in _visibleGames)
     {
         CGPoint center = cellView.center;
-        CGFloat offsetFromCenter = fabs((center.x - self.contentOffset.x) - self.bounds.size.width / 2.0f);
-        CGFloat alpha = 1 - (offsetFromCenter / (self.bounds.size.width * 0.75f));
-        cellView.alpha = alpha;
+        CGFloat offsetFromCenter = fabs((center.x - [self contentOffset].x) - [self bounds].size.width / 2.0f);
+        CGFloat alpha = 1 - (offsetFromCenter / ([self bounds].size.width * 0.75f));
+        [cellView setAlpha: alpha];
     }
 }
 
@@ -145,12 +145,12 @@ CGContextRef MyCreateBitmapContext(int pixelsWide, int pixelsHigh);
 
 - (CGFloat) placeGameOnRight: (CGFloat) rightEdge
 {
-    NSDictionary *entry = [gameInfos objectAtIndex: 0];
+    NSDictionary *entry = [_gameInfos objectAtIndex: 0];
     NSString *imageName = [entry objectForKey: @"image"];
     NSString *gameName  = [entry objectForKey: @"name"];
     
-    [visibleGameInfos addObject: entry];
-    [gameInfos removeObjectAtIndex: 0];
+    [_visibleGameInfos addObject: entry];
+    [_gameInfos removeObjectAtIndex: 0];
     
     UIView *cellView = [[UIView alloc] initWithFrame: CGRectMake(rightEdge, 0, cellWidth, cellWidth)];
     
@@ -188,7 +188,7 @@ CGContextRef MyCreateBitmapContext(int pixelsWide, int pixelsHigh);
     [cellView addSubview: nameLabel];
     [nameLabel release];
     
-    [visibleGames addObject: cellView];
+    [_visibleGames addObject: cellView];
     
     [self addSubview: cellView];
     [cellView release];
@@ -199,12 +199,12 @@ CGContextRef MyCreateBitmapContext(int pixelsWide, int pixelsHigh);
 
 - (CGFloat) placeGameOnLeft: (CGFloat) leftEdge
 {
-    NSDictionary *entry = [gameInfos lastObject];
+    NSDictionary *entry = [_gameInfos lastObject];
     NSString *imageName = [entry objectForKey: @"image"];
     NSString *gameName  = [entry objectForKey: @"name"];
     
-    [visibleGameInfos insertObject: entry atIndex: 0];
-    [gameInfos removeLastObject];
+    [_visibleGameInfos insertObject: entry atIndex: 0];
+    [_gameInfos removeLastObject];
     
     UIView *cellView = [[UIView alloc] initWithFrame: CGRectMake(leftEdge - cellWidth, 0, cellWidth, cellWidth)];
     
@@ -242,7 +242,7 @@ CGContextRef MyCreateBitmapContext(int pixelsWide, int pixelsHigh);
     [cellView addSubview: nameLabel];
     [nameLabel release];
     
-    [visibleGames insertObject: cellView atIndex: 0];
+    [_visibleGames insertObject: cellView atIndex: 0];
     
     [self addSubview: cellView];
     [cellView release];
@@ -254,11 +254,11 @@ CGContextRef MyCreateBitmapContext(int pixelsWide, int pixelsHigh);
 - (void) tileGamesFromMinimumX: (CGFloat) minimumVisibleX toMaximumX: (CGFloat) maximumVisibleX
 {
     /* Make sure there's at least one game */
-    if ([visibleGames count] == 0)
+    if ([_visibleGames count] == 0)
         [self placeGameOnRight: (minimumVisibleX + maximumVisibleX) / 2.0f - cellWidth / 2.0f];
     
     /* Add games that are missing on the right side */
-    UIView *lastGame = [visibleGames lastObject];
+    UIView *lastGame = [_visibleGames lastObject];
     CGFloat rightEdge = CGRectGetMaxX([lastGame frame]);
     while (rightEdge < maximumVisibleX)
     {
@@ -266,7 +266,7 @@ CGContextRef MyCreateBitmapContext(int pixelsWide, int pixelsHigh);
     }
     
     /* Add games that are missing on the left side */
-    UIView *firstGame = [visibleGames objectAtIndex: 0];
+    UIView *firstGame = [_visibleGames objectAtIndex: 0];
     CGFloat leftEdge = CGRectGetMinX([firstGame frame]);
     while (leftEdge > minimumVisibleX)
     {
@@ -274,29 +274,29 @@ CGContextRef MyCreateBitmapContext(int pixelsWide, int pixelsHigh);
     }
     
     /* Remove games that have fallen off the right side */
-    lastGame = [visibleGames lastObject];
+    lastGame = [_visibleGames lastObject];
     while (CGRectGetMinX([lastGame frame]) > maximumVisibleX)
     {
         [lastGame removeFromSuperview];
-        [visibleGames removeLastObject];
-        lastGame = [visibleGames lastObject];
+        [_visibleGames removeLastObject];
+        lastGame = [_visibleGames lastObject];
         
-        NSDictionary *lastInfo = [visibleGameInfos lastObject];
-        [gameInfos insertObject: lastInfo atIndex: 0];
-        [visibleGameInfos removeLastObject];
+        NSDictionary *lastInfo = [_visibleGameInfos lastObject];
+        [_gameInfos insertObject: lastInfo atIndex: 0];
+        [_visibleGameInfos removeLastObject];
     }
     
     /* Remove games that have fallen off the left side */
-    firstGame = [visibleGames objectAtIndex: 0];
+    firstGame = [_visibleGames objectAtIndex: 0];
     while (CGRectGetMaxX([firstGame frame]) < minimumVisibleX)
     {
         [firstGame removeFromSuperview];
-        [visibleGames removeObjectAtIndex: 0];
-        firstGame = [visibleGames objectAtIndex: 0];
+        [_visibleGames removeObjectAtIndex: 0];
+        firstGame = [_visibleGames objectAtIndex: 0];
         
-        NSDictionary *firstInfo = [visibleGameInfos objectAtIndex: 0];
-        [gameInfos addObject: firstInfo];
-        [visibleGameInfos removeObjectAtIndex: 0];
+        NSDictionary *firstInfo = [_visibleGameInfos objectAtIndex: 0];
+        [_gameInfos addObject: firstInfo];
+        [_visibleGameInfos removeObjectAtIndex: 0];
     }
 }
 
@@ -359,7 +359,7 @@ CGContextRef MyCreateBitmapContext(int pixelsWide, int pixelsHigh)
 		return nil;
     
 	// create a bitmap graphics context the size of the image
-	CGContextRef mainViewContentContext = MyCreateBitmapContext(fromImage.bounds.size.width, height);
+	CGContextRef mainViewContentContext = MyCreateBitmapContext([fromImage bounds].size.width, height);
 	
 	// create a 2 bit CGImage containing a gradient that will be used for masking the 
 	// main view content to create the 'fade' of the reflection.  The CGImageCreateWithMask
@@ -368,7 +368,7 @@ CGContextRef MyCreateBitmapContext(int pixelsWide, int pixelsHigh)
 	
 	// create an image by masking the bitmap of the mainView content with the gradient view
 	// then release the  pre-masked content bitmap and the gradient bitmap
-	CGContextClipToMask(mainViewContentContext, CGRectMake(0.0, 0.0, fromImage.bounds.size.width, height), gradientMaskImage);
+	CGContextClipToMask(mainViewContentContext, CGRectMake(0.0, 0.0, [fromImage bounds].size.width, height), gradientMaskImage);
 	CGImageRelease(gradientMaskImage);
 	
 	// In order to grab the part of the image that we want to render, we move the context origin to the
@@ -377,7 +377,7 @@ CGContextRef MyCreateBitmapContext(int pixelsWide, int pixelsHigh)
 	CGContextScaleCTM(mainViewContentContext, 1.0, -1.0);
 	
 	// draw the image into the bitmap context
-	CGContextDrawImage(mainViewContentContext, fromImage.bounds, fromImage.image.CGImage);
+	CGContextDrawImage(mainViewContentContext, [fromImage bounds], [[fromImage image] CGImage]);
 	
 	// create CGImageRef of the main view bitmap content, and then release that bitmap context
 	CGImageRef reflectionImage = CGBitmapContextCreateImage(mainViewContentContext);

@@ -16,11 +16,10 @@
 
 @interface GCMetaSettingsPanelController : UIViewController <GCModalDrawerPanelDelegate>
 {
-    id<GCMetaSettingsPanelDelegate> delegate;
-    id<GCGame> game;
+    id<GCMetaSettingsPanelDelegate> _delegate;
     
-    UILabel *moveDelayLabel, *gameDelayLabel;
-    UISlider *moveDelaySlider, *gameDelaySlider;
+    UILabel *_moveDelayLabel, *_gameDelayLabel;
+    UISlider *_moveDelaySlider, *_gameDelaySlider;
 }
 
 - (void) setDelegate: (id<GCMetaSettingsPanelDelegate>) delegate;

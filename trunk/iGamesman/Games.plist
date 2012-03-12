@@ -62,13 +62,5 @@
 		<key>xml</key>
 		<string>tictactoe</string>
 	</dict>
-	<dict>
-		<key>name</key>
-		<string>Y</string>
-		<key>image</key>
-		<string>y.png</string>
-		<key>class</key>
-		<string>GCYGame</string>
-	</dict>
 </array>
 </plist>

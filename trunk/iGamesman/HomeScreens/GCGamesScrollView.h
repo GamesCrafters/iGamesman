@@ -10,8 +10,8 @@
 
 @interface GCGamesScrollView : UIScrollView
 {
-    NSMutableArray *gameInfos, *visibleGameInfos;
-    NSMutableArray *visibleGames;
+    NSMutableArray *_gameInfos, *_visibleGameInfos;
+    NSMutableArray *_visibleGames;
 }
 
 - (NSDictionary *) centerGame;

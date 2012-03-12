@@ -11,9 +11,10 @@
 
 @interface GCAboutGameViewController ()
 {
-    NSMutableArray *dictionaryStack;
-    NSMutableArray *tagStack;
-    NSString *currentText;
+    /* Private XML parsing variables */
+    NSMutableArray *_dictionaryStack;
+    NSMutableArray *_tagStack;
+    NSString *_currentText;
 }
 
 @end
@@ -32,7 +33,7 @@
 
 - (void) populateScreen
 {
-    NSString *title = [NSString stringWithFormat: @"About %@", [gameData objectForKey: @"name"]];
+    NSString *title = [NSString stringWithFormat: @"About %@", [_gameData objectForKey: @"name"]];
     [[self navigationItem] setTitle: title];
 }
 
@@ -107,9 +108,9 @@
 
 - (void) parserDidStartDocument: (NSXMLParser *) parser
 {
-    dictionaryStack = [[NSMutableArray alloc] init];
-    [dictionaryStack addObject: [NSMutableDictionary dictionary]];
-    tagStack = [[NSMutableArray alloc] init];
+    _dictionaryStack = [[NSMutableArray alloc] init];
+    [_dictionaryStack addObject: [NSMutableDictionary dictionary]];
+    _tagStack = [[NSMutableArray alloc] init];
 }
 
 
@@ -119,16 +120,16 @@ didStartElement: (NSString *) elementName
   qualifiedName: (NSString *) qName
      attributes: (NSDictionary *) attributeDict
 {
-    [dictionaryStack addObject: [NSMutableDictionary dictionary]];
-    [tagStack addObject: elementName];
-    currentText = @"";
+    [_dictionaryStack addObject: [NSMutableDictionary dictionary]];
+    [_tagStack addObject: elementName];
+    _currentText = @"";
 }
 
 
 - (void) parser: (NSXMLParser *) parser foundCharacters: (NSString *) string
 {
     string = [string stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    currentText = [currentText stringByAppendingString: string];
+    _currentText = [_currentText stringByAppendingString: string];
 }
 
 
@@ -137,27 +138,27 @@ didStartElement: (NSString *) elementName
    namespaceURI: (NSString *) namespaceURI
   qualifiedName: (NSString *) qName
 {
-    if ([currentText isEqualToString: @""])
+    if ([_currentText isEqualToString: @""])
     {
-        NSDictionary *currentDictionary = [[dictionaryStack lastObject] retain];
-        [dictionaryStack removeLastObject];
+        NSDictionary *currentDictionary = [[_dictionaryStack lastObject] retain];
+        [_dictionaryStack removeLastObject];
         
-        NSMutableDictionary *parentDictionary = [dictionaryStack lastObject];
+        NSMutableDictionary *parentDictionary = [_dictionaryStack lastObject];
         [self addObject: currentDictionary asChildOfDictionary: parentDictionary forKey: elementName];
         
         [currentDictionary release];
     }
     else
     {
-        [dictionaryStack removeLastObject];
+        [_dictionaryStack removeLastObject];
         
-        NSMutableDictionary *parentDictionary = [dictionaryStack lastObject];
-        [self addObject: currentText asChildOfDictionary: parentDictionary forKey: elementName];
+        NSMutableDictionary *parentDictionary = [_dictionaryStack lastObject];
+        [self addObject: _currentText asChildOfDictionary: parentDictionary forKey: elementName];
     }
     
-    [tagStack removeLastObject];
+    [_tagStack removeLastObject];
     
-    currentText = @"";
+    _currentText = @"";
 }
 
 
@@ -165,12 +166,12 @@ didStartElement: (NSString *) elementName
 {
     [parser release];
     
-    gameData = [[[dictionaryStack lastObject] objectForKey: @"game"] retain];
+    _gameData = [[[_dictionaryStack lastObject] objectForKey: @"game"] retain];
     
-    NSLog(@"%@", gameData);
+    NSLog(@"%@", _gameData);
     
-    [dictionaryStack release];
-    [tagStack release];
+    [_dictionaryStack release];
+    [_tagStack release];
     
     [self populateScreen];
 }

@@ -13,9 +13,9 @@
 
 @implementation GCMetaSettingsPanelController
 
-- (void) setDelegate: (id<GCMetaSettingsPanelDelegate>) _delegate
+- (void) setDelegate: (id<GCMetaSettingsPanelDelegate>) delegate
 {
-    delegate = _delegate;
+    _delegate = delegate;
 }
 
 
@@ -47,18 +47,18 @@
 
 - (void) saveButtonTapped
 {
-    [delegate setComputerMoveDelay: [moveDelaySlider value]];
-    [delegate setComputerGameDelay: [gameDelaySlider value]];
+    [_delegate setComputerMoveDelay: [_moveDelaySlider value]];
+    [_delegate setComputerGameDelay: [_gameDelaySlider value]];
 }
 
 
 - (void) drawerWillAppear
 {
-    [moveDelaySlider setValue: [delegate computerMoveDelay]];
-    [gameDelaySlider setValue: [delegate computerGameDelay]];
+    [_moveDelaySlider setValue: [_delegate computerMoveDelay]];
+    [_gameDelaySlider setValue: [_delegate computerGameDelay]];
     
-    [moveDelayLabel setText: [NSString stringWithFormat: @"Computer Move Delay: %.2fs", [moveDelaySlider value]]];
-    [gameDelayLabel setText: [NSString stringWithFormat: @"Computer/Computer Game Delay: %.2fs", [gameDelaySlider value]]];
+    [_moveDelayLabel setText: [NSString stringWithFormat: @"Computer Move Delay: %.2fs", [_moveDelaySlider value]]];
+    [_gameDelayLabel setText: [NSString stringWithFormat: @"Computer/Computer Game Delay: %.2fs", [_gameDelaySlider value]]];
 }
 
 
@@ -70,13 +70,13 @@
     value = round(value * 10) / 10;
     [sender setValue: value];
     
-    if (sender == moveDelaySlider)
+    if (sender == _moveDelaySlider)
     {
-        [moveDelayLabel setText: [NSString stringWithFormat: @"Computer Move Delay: %.2fs", [moveDelaySlider value]]];
+        [_moveDelayLabel setText: [NSString stringWithFormat: @"Computer Move Delay: %.2fs", [_moveDelaySlider value]]];
     }
-    else if (sender == gameDelaySlider)
+    else if (sender == _gameDelaySlider)
     {
-        [gameDelayLabel setText: [NSString stringWithFormat: @"Computer/Computer Game Delay: %.2fs", [gameDelaySlider value]]];
+        [_gameDelayLabel setText: [NSString stringWithFormat: @"Computer/Computer Game Delay: %.2fs", [_gameDelaySlider value]]];
     }
 }
 
@@ -86,26 +86,26 @@
 - (void) loadView
 {
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
-        self.view = [[[UIView alloc] initWithFrame: CGRectMake(0, 0, 360, 280 - 32)] autorelease];
+        [self setView: [[[UIView alloc] initWithFrame: CGRectMake(0, 0, 360, 280 - 32)] autorelease]];
     else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-        self.view = [[[UIView alloc] initWithFrame: CGRectMake(0, 0, 360, 240 - 44)] autorelease];
+        [self setView: [[[UIView alloc] initWithFrame: CGRectMake(0, 0, 360, 240 - 44)] autorelease]];
     
     
-    CGFloat width  = self.view.bounds.size.width;
-    CGFloat height = self.view.bounds.size.height;
+    CGFloat width  = [[self view] bounds].size.width;
+    CGFloat height = [[self view] bounds].size.height;
     
-    moveDelayLabel = [[UILabel alloc] initWithFrame: CGRectMake(GC_SIDE_INSET, GC_SIDE_INSET, width - 2 * GC_SIDE_INSET, 25)];
-    [self.view addSubview: moveDelayLabel];
+    _moveDelayLabel = [[UILabel alloc] initWithFrame: CGRectMake(GC_SIDE_INSET, GC_SIDE_INSET, width - 2 * GC_SIDE_INSET, 25)];
+    [[self view] addSubview: _moveDelayLabel];
     
-    moveDelaySlider = [[UISlider alloc] initWithFrame: CGRectMake(GC_SIDE_INSET, GC_SIDE_INSET + 25, width - 2 * GC_SIDE_INSET, 25)];
-    [self.view addSubview: moveDelaySlider];
+    _moveDelaySlider = [[UISlider alloc] initWithFrame: CGRectMake(GC_SIDE_INSET, GC_SIDE_INSET + 25, width - 2 * GC_SIDE_INSET, 25)];
+    [[self view] addSubview: _moveDelaySlider];
     
     
-    gameDelayLabel = [[UILabel alloc] initWithFrame: CGRectMake(GC_SIDE_INSET, height / 2.0f, width - 2 * GC_SIDE_INSET, 25)];
-    [self.view addSubview: gameDelayLabel];
+    _gameDelayLabel = [[UILabel alloc] initWithFrame: CGRectMake(GC_SIDE_INSET, height / 2.0f, width - 2 * GC_SIDE_INSET, 25)];
+    [[self view] addSubview: _gameDelayLabel];
     
-    gameDelaySlider = [[UISlider alloc] initWithFrame: CGRectMake(GC_SIDE_INSET, height / 2.0f + 25, width - 2 * GC_SIDE_INSET, 25)];
-    [self.view addSubview: gameDelaySlider];
+    _gameDelaySlider = [[UISlider alloc] initWithFrame: CGRectMake(GC_SIDE_INSET, height / 2.0f + 25, width - 2 * GC_SIDE_INSET, 25)];
+    [[self view] addSubview: _gameDelaySlider];
 }
 
 
@@ -113,19 +113,19 @@
 {
     [super viewDidLoad];
     
-    [moveDelayLabel setBackgroundColor: [UIColor clearColor]];
-    [moveDelayLabel setTextColor: [UIColor whiteColor]];
+    [_moveDelayLabel setBackgroundColor: [UIColor clearColor]];
+    [_moveDelayLabel setTextColor: [UIColor whiteColor]];
     
-    [gameDelayLabel setBackgroundColor: [UIColor clearColor]];
-    [gameDelayLabel setTextColor: [UIColor whiteColor]];
+    [_gameDelayLabel setBackgroundColor: [UIColor clearColor]];
+    [_gameDelayLabel setTextColor: [UIColor whiteColor]];
     
-    [moveDelaySlider setMinimumValue: 0.0f];
-    [moveDelaySlider setMaximumValue: 2.0f];
-    [moveDelaySlider addTarget: self action: @selector(sliderValueChanged:) forControlEvents: UIControlEventValueChanged];
+    [_moveDelaySlider setMinimumValue: 0.0f];
+    [_moveDelaySlider setMaximumValue: 2.0f];
+    [_moveDelaySlider addTarget: self action: @selector(sliderValueChanged:) forControlEvents: UIControlEventValueChanged];
     
-    [gameDelaySlider setMinimumValue: 0.0f];
-    [gameDelaySlider setMaximumValue: 2.0f];
-    [gameDelaySlider addTarget: self action: @selector(sliderValueChanged:) forControlEvents: UIControlEventValueChanged];
+    [_gameDelaySlider setMinimumValue: 0.0f];
+    [_gameDelaySlider setMaximumValue: 2.0f];
+    [_gameDelaySlider addTarget: self action: @selector(sliderValueChanged:) forControlEvents: UIControlEventValueChanged];
 }
 
 
@@ -133,11 +133,11 @@
 {
     [super viewDidUnload];
     
-    [moveDelayLabel release];
-    [moveDelaySlider release];
+    [_moveDelayLabel release];
+    [_moveDelaySlider release];
     
-    [gameDelayLabel release];
-    [gameDelaySlider release];
+    [_gameDelayLabel release];
+    [_gameDelaySlider release];
 }
 
 @end
