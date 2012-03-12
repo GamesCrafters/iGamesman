@@ -69,6 +69,7 @@
 		0A7B775514B16BC20011837C /* quarto.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0A7B775014B16BC20011837C /* quarto.xml */; };
 		0A7B775614B16BC20011837C /* quickcross.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0A7B775114B16BC20011837C /* quickcross.xml */; };
 		0A7B775714B16BC20011837C /* tictactoe.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0A7B775214B16BC20011837C /* tictactoe.xml */; };
+		0A7C4C86150E7198004B187C /* GCConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A7C4C85150E7198004B187C /* GCConstants.m */; };
 		0A8D8D9014D226A900330306 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A8D8D8F14D226A900330306 /* QuartzCore.framework */; };
 		0A8D8D9614D267DA00330306 /* GCPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A8D8D9214D267DA00330306 /* GCPlayer.m */; };
 		0A8D8D9714D267DA00330306 /* GCStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A8D8D9314D267DA00330306 /* GCStack.m */; };
@@ -231,6 +232,8 @@
 		0A7B775014B16BC20011837C /* quarto.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = quarto.xml; sourceTree = "<group>"; };
 		0A7B775114B16BC20011837C /* quickcross.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = quickcross.xml; sourceTree = "<group>"; };
 		0A7B775214B16BC20011837C /* tictactoe.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = tictactoe.xml; sourceTree = "<group>"; };
+		0A7C4C84150E7198004B187C /* GCConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCConstants.h; sourceTree = "<group>"; };
+		0A7C4C85150E7198004B187C /* GCConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCConstants.m; sourceTree = "<group>"; };
 		0A8D8D8F14D226A900330306 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		0A8D8D9214D267DA00330306 /* GCPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCPlayer.m; sourceTree = "<group>"; };
 		0A8D8D9314D267DA00330306 /* GCStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCStack.m; sourceTree = "<group>"; };
@@ -498,6 +501,8 @@
 		0A8D8D9114D2676E00330306 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				0A7C4C84150E7198004B187C /* GCConstants.h */,
+				0A7C4C85150E7198004B187C /* GCConstants.m */,
 				0A2D0C5C14D89D6E00DFE967 /* GCJSONService.h */,
 				0A2D0C5D14D89D6E00DFE967 /* GCJSONService.m */,
 				0A8D8D9414D267DA00330306 /* GCPlayer.h */,
@@ -911,6 +916,7 @@
 				0AB7855414EC3F4900D9C44B /* GCVVHView.m in Sources */,
 				0AB7855714EC4E3E00D9C44B /* GCVVHPanelController.m in Sources */,
 				0A176E1214EC707F00F66639 /* GCMetaSettingsPanelController.m in Sources */,
+				0A7C4C86150E7198004B187C /* GCConstants.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

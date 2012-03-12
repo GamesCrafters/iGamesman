@@ -8,6 +8,7 @@
 
 #import "GCTicTacToeView.h"
 
+#import "GCConstants.h"
 #import "GCTicTacToePosition.h"
 
 
@@ -205,12 +206,14 @@
             else
                 alpha = 1;
             
+            GCColor color = {0.0f, 0.0f, 0.0f};
             if ([value isEqualToString: GCGameValueWin])
-                CGContextSetRGBFillColor(ctx, 0, 1, 0, alpha);
+                color = [GCConstants winColor];
             else if ([value isEqualToString: GCGameValueLose])
-                CGContextSetRGBFillColor(ctx, 139.0f / 255, 0, 0, alpha);
+                color = [GCConstants loseColor];
             else if ([value isEqualToString: GCGameValueTie])
-                CGContextSetRGBFillColor(ctx, 1, 1, 0, alpha);
+                color = [GCConstants tieColor];
+            CGContextSetRGBFillColor(ctx, color.red, color.green, color.blue, alpha);
             
             CGContextFillEllipseInRect(ctx, CGRectInset(cellRect, cellSize / 3.0f, cellSize / 3.0f));
         }

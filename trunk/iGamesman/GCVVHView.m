@@ -10,6 +10,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 
+#import "GCConstants.h"
 #import "GCGameHistoryItem.h"
 
 
@@ -171,23 +172,28 @@
         CGPoint centers[2] = { CGPointZero, CGPointZero };
         NSUInteger centerCount = 0;
         
+        GCColor strokeColor = {0.0f, 0.0f, 0.0f};
+        GCColor fillColor = {0.0f, 0.0f, 0.0f};
+        CGFloat strokeAlpha = 0, fillAlpha = 0;
         if ([value isEqualToString: GCGameValueWin])
         {
             /* Win */
             centers[0] = CGPointMake(left ? leftX : rightX, currentRowY);
             centerCount = 1;
             
-            CGContextSetRGBStrokeColor(ctx, 139.0f / 255.0f, 0, 0, 1);
-            CGContextSetRGBFillColor(ctx, 0, 1, 0, 1);
+            strokeColor = [GCConstants loseColor];
+            fillColor   = [GCConstants winColor];
+            strokeAlpha = fillAlpha = 1;
         }
         else if ([value isEqualToString: GCGameValueLose])
         {
             /* Lose */
             centers[0] = CGPointMake(left ? rightX : leftX, currentRowY);
             centerCount = 1;
-            
-            CGContextSetRGBStrokeColor(ctx, 0, 1, 0, 1);
-            CGContextSetRGBFillColor(ctx, 139.0f / 255.0f, 0, 0, 1);
+
+            strokeColor = [GCConstants winColor];
+            fillColor   = [GCConstants loseColor];
+            strokeAlpha = fillAlpha = 1;
         }
         else if ([value isEqualToString: GCGameValueDraw])
         {
@@ -195,9 +201,10 @@
             centers[0] = CGPointMake(width / 2.0f - radius, currentRowY);
             centers[1] = CGPointMake(width / 2.0f + radius, currentRowY);
             centerCount = 2;
-            
-            CGContextSetRGBStrokeColor(ctx, 1, 1, 0, 1);
-            CGContextSetRGBFillColor(ctx, 1, 1, 0, 1);
+
+            strokeColor = [GCConstants tieColor];
+            fillColor   = [GCConstants tieColor];
+            strokeAlpha = fillAlpha = 1;
         }
         else if ([value isEqualToString: GCGameValueTie])
         {
@@ -206,15 +213,13 @@
             centers[1] = CGPointMake(rightX, currentRowY);
             centerCount = 2;
             
-            CGContextSetRGBStrokeColor(ctx, 1, 1, 0, 1);
-            CGContextSetRGBFillColor(ctx, 1, 1, 0, 1);
+            strokeColor = [GCConstants tieColor];
+            fillColor   = [GCConstants tieColor];
+            strokeAlpha = fillAlpha = 1;
         }
-        else
-        {
-            /* Unknown */
-            CGContextSetRGBStrokeColor(ctx, 0, 0, 0, 0);
-            CGContextSetRGBFillColor(ctx, 0, 0, 0, 0);
-        }
+        
+        CGContextSetRGBStrokeColor(ctx, strokeColor.red, strokeColor.green, strokeColor.blue, strokeAlpha);
+        CGContextSetRGBFillColor(ctx, fillColor.red, fillColor.green, fillColor.blue, fillAlpha);
         
         
         /* Draw the line(s) from the previous position to this position */

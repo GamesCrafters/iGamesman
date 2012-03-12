@@ -8,6 +8,7 @@
 
 #import "GCQuartoView.h"
 
+#import "GCConstants.h"
 #import "GCQuartoPiece.h"
 #import "GCQuartoPosition.h"
 
@@ -289,12 +290,15 @@
         }
         else
         {
+            GCColor color = {0.0f, 0.0f, 0.0f};
             if ([value isEqualToString: GCGameValueWin])
-                CGContextSetRGBStrokeColor(ctx, 0, 1, 0, valueAlpha);
+                color = [GCConstants winColor];
             else if ([value isEqualToString: GCGameValueLose])
-                CGContextSetRGBStrokeColor(ctx, 139.0f / 255, 0, 0, valueAlpha);
+                color = [GCConstants loseColor];
             else
-                CGContextSetRGBStrokeColor(ctx, 1, 1, 0, valueAlpha);
+                color = [GCConstants tieColor];
+            
+            CGContextSetRGBFillColor(ctx, color.red, color.green, color.blue, valueAlpha);
             
             CGFloat lineWidth = 4;
             if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
@@ -337,12 +341,15 @@
         }
         else
         {
+            GCColor color = {0.0f, 0.0f, 0.0f};
             if ([value isEqualToString: GCGameValueWin])
-                CGContextSetRGBStrokeColor(ctx, 0, 1, 0, valueAlpha);
+                color = [GCConstants winColor];
             else if ([value isEqualToString: GCGameValueLose])
-                CGContextSetRGBStrokeColor(ctx, 139.0f / 255, 0, 0, valueAlpha);
+                color = [GCConstants loseColor];
             else
-                CGContextSetRGBStrokeColor(ctx, 1, 1, 0, valueAlpha);
+                color = [GCConstants tieColor];
+            
+            CGContextSetRGBFillColor(ctx, color.red, color.green, color.blue, valueAlpha);
             
             CGFloat lineWidth = 4;
             if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
@@ -408,12 +415,15 @@
                     slotAlpha = 1.0f / log((random() % 16) + 1);
                 
                 GCGameValue *val = [[NSArray arrayWithObjects: GCGameValueWin, GCGameValueLose, GCGameValueTie, nil] objectAtIndex: random() % 3];
+                GCColor color = {0.0f, 0.0f, 0.0f};
                 if ([val isEqualToString: GCGameValueWin])
-                    CGContextSetRGBStrokeColor(ctx, 0, 1, 0, slotAlpha);
+                    color = [GCConstants winColor];
                 else if ([val isEqualToString: GCGameValueLose])
-                    CGContextSetRGBStrokeColor(ctx, 139.0f / 255, 0, 0, slotAlpha);
+                    color = [GCConstants loseColor];
                 else
-                    CGContextSetRGBStrokeColor(ctx, 1, 1, 0, slotAlpha);
+                    color = [GCConstants tieColor];
+                
+                CGContextSetRGBFillColor(ctx, color.red, color.green, color.blue, slotAlpha);
             }
             CGContextStrokeEllipseInRect(ctx, CGRectInset(cellRect, cellSize * 0.03f, cellSize * 0.03f));
             
