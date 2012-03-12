@@ -16,13 +16,13 @@
 
 @interface GCOthello : NSObject <GCGame, GCOthelloViewDelegate, UIAlertViewDelegate>
 {
-    GCOthelloPosition *position;
+    GCOthelloPosition *_position;
     
-    GCPlayer *leftPlayer, *rightPlayer;
+    GCPlayer *_leftPlayer, *_rightPlayer;
     
-    GCMoveCompletionHandler moveHandler;
+    GCMoveCompletionHandler _moveHandler;
     
-    GCOthelloView *othelloView;
+    GCOthelloView *_othelloView;
 }
 
 @end

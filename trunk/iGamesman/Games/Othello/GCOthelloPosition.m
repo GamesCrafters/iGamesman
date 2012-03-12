@@ -14,9 +14,9 @@ GCOthelloPiece const GCOthelloWhitePiece = @"O";
 
 @implementation GCOthelloPosition
 
-@synthesize rows, columns;
-@synthesize leftTurn;
-@synthesize board;
+@synthesize rows = _rows, columns = _columns;
+@synthesize leftTurn = _leftTurn;
+@synthesize board = _board;
 
 #pragma mark - Memory lifecycle
 
@@ -26,12 +26,12 @@ GCOthelloPiece const GCOthelloWhitePiece = @"O";
     
     if (self)
     {
-        rows = height;
-        columns = width;
+        _rows = height;
+        _columns = width;
         
-        board = [[NSMutableArray alloc] initWithCapacity: rows * columns];
-        for (int i = 0; i < rows * columns; i += 1)
-            [board addObject: GCOthelloBlankPiece];
+        _board = [[NSMutableArray alloc] initWithCapacity: _rows * _columns];
+        for (int i = 0; i < _rows * _columns; i += 1)
+            [_board addObject: GCOthelloBlankPiece];
     }
     
     return self;
@@ -40,7 +40,7 @@ GCOthelloPiece const GCOthelloWhitePiece = @"O";
 
 - (void) dealloc
 {
-    [board release];
+    [_board release];
     
     [super dealloc];
 }
@@ -51,7 +51,7 @@ GCOthelloPiece const GCOthelloWhitePiece = @"O";
 - (NSUInteger) numberOfBlackPieces
 {
     NSUInteger count = 0;
-    for (NSString *piece in board)
+    for (NSString *piece in _board)
         if ([piece isEqualToString: GCOthelloBlackPiece])
             count += 1;
     return count;
@@ -61,7 +61,7 @@ GCOthelloPiece const GCOthelloWhitePiece = @"O";
 - (NSUInteger) numberOfWhitePieces
 {
     NSUInteger count = 0;
-    for (NSString *piece in board)
+    for (NSString *piece in _board)
         if ([piece isEqualToString: GCOthelloWhitePiece])
             count += 1;
     return count;
@@ -72,11 +72,11 @@ GCOthelloPiece const GCOthelloWhitePiece = @"O";
 
 - (id) copyWithZone: (NSZone *) zone
 {
-    GCOthelloPosition *copy = [[GCOthelloPosition allocWithZone: zone] initWithWidth: columns height: rows];
-    copy.leftTurn = leftTurn;
+    GCOthelloPosition *copy = [[GCOthelloPosition allocWithZone: zone] initWithWidth: _columns height: _rows];
+    [copy setLeftTurn: _leftTurn];
     
-    NSMutableArray *boardCopy = [board mutableCopy];
-    copy.board = boardCopy;
+    NSMutableArray *boardCopy = [_board mutableCopy];
+    [copy setBoard: boardCopy];
     [boardCopy release];
     
     return copy;

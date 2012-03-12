@@ -12,7 +12,7 @@
 
 @implementation GCOthelloView
 
-@synthesize delegate;
+@synthesize delegate = _delegate;
 
 - (id) initWithFrame: (CGRect) frame
 {
@@ -20,9 +20,9 @@
     
     if (self)
     {
-        self.opaque = NO;
+        [self setOpaque: NO];
         
-        acceptingTouches = NO;
+        _acceptingTouches = NO;
     }
     
     return self;
@@ -33,48 +33,48 @@
 
 - (void) startReceivingTouches
 {
-    acceptingTouches = YES;
+    _acceptingTouches = YES;
 }
 
 
 - (void) stopReceivingTouches
 {
-    acceptingTouches = NO;
+    _acceptingTouches = NO;
 }
 
 
 - (void) touchesBegan: (NSSet *) touches withEvent: (UIEvent *) event
 {
-    if (!acceptingTouches)
+    if (!_acceptingTouches)
         return;
     
-    GCOthelloPosition *position = [delegate position];
-    NSArray *legalMoves = [delegate generateMoves];
+    GCOthelloPosition *position = [_delegate position];
+    NSArray *legalMoves = [_delegate generateMoves];
     
     CGPoint location = [[touches anyObject] locationInView: self];
     
-    CGFloat width  = self.bounds.size.width;
-    CGFloat height = self.bounds.size.height;
+    CGFloat width  = [self bounds].size.width;
+    CGFloat height = [self bounds].size.height;
     
-    CGFloat maxCellWidth  = width / position.columns;
-    CGFloat maxCellHeight = height / position.rows;
+    CGFloat maxCellWidth  = width / [position columns];
+    CGFloat maxCellHeight = height / [position rows];
     
     CGFloat cellSize = MIN(maxCellWidth, maxCellHeight);
     
-    CGFloat minX = CGRectGetMinX(self.bounds) + (width - cellSize * position.columns) / 2.0f;
-    CGFloat minY = CGRectGetMinY(self.bounds) + (height - cellSize * position.rows) / 2.0f;
+    CGFloat minX = CGRectGetMinX([self bounds]) + (width - cellSize * [position columns]) / 2.0f;
+    CGFloat minY = CGRectGetMinY([self bounds]) + (height - cellSize * [position rows]) / 2.0f;
     
-    for (int row = 0; row < position.rows; row += 1)
+    for (int row = 0; row < [position rows]; row += 1)
     {
-        for (int column = 0; column < position.columns; column += 1)
+        for (int column = 0; column < [position columns]; column += 1)
         {
             CGRect cellRect = CGRectMake(minX + column * cellSize, minY + row * cellSize, cellSize, cellSize);
             
             if (CGRectContainsPoint(cellRect, location))
             {
-                NSNumber *slotNumber = [NSNumber numberWithInt: row * position.columns + column];
+                NSNumber *slotNumber = [NSNumber numberWithInt: row * [position columns] + column];
                 if ([legalMoves containsObject: slotNumber])
-                    [delegate userChoseMove: slotNumber];
+                    [_delegate userChoseMove: slotNumber];
             }
         }
     }
@@ -90,60 +90,60 @@
 #ifdef DEMO
     CGContextSetRGBFillColor(ctx, 1, 0, 0, 1);
     CGContextSetRGBFillColor(ctx, 0, 0, 0, 0.5f);
-    CGContextFillRect(ctx, self.bounds);
+    CGContextFillRect(ctx, [self bounds]);
 #endif
     
-    GCOthelloPosition *position = [delegate position];
+    GCOthelloPosition *position = [_delegate position];
     
-    CGFloat width  = self.bounds.size.width;
-    CGFloat height = self.bounds.size.height;
+    CGFloat width  = [self bounds].size.width;
+    CGFloat height = [self bounds].size.height;
     
-    CGFloat maxCellWidth  = width / position.columns;
-    CGFloat maxCellHeight = height / position.rows;
+    CGFloat maxCellWidth  = width / [position columns];
+    CGFloat maxCellHeight = height / [position rows];
     
     CGFloat cellSize = MIN(maxCellWidth, maxCellHeight);
     
-    CGFloat minX = CGRectGetMinX(self.bounds) + (width - cellSize * position.columns) / 2.0f;
-    CGFloat minY = CGRectGetMinY(self.bounds) + (height - cellSize * position.rows) / 2.0f;
+    CGFloat minX = CGRectGetMinX([self bounds]) + (width - cellSize * [position columns]) / 2.0f;
+    CGFloat minY = CGRectGetMinY([self bounds]) + (height - cellSize * [position rows]) / 2.0f;
     
     UIImage *feltImage = [UIImage imageNamed: @"othelloFelt"];
-    [feltImage drawInRect: CGRectMake(minX, minY, cellSize * position.columns, cellSize * position.rows)];
+    [feltImage drawInRect: CGRectMake(minX, minY, cellSize * [position columns], cellSize * [position rows])];
     
     CGContextSetLineWidth(ctx, 1.5);
 	CGContextSetRGBStrokeColor(ctx, 0, 0, 0, 1);
     
-    for (int col = 0; col <= position.columns; col += 1)
+    for (int col = 0; col <= [position columns]; col += 1)
     {
         CGContextMoveToPoint(ctx, minX + cellSize * col, minY);
-        CGContextAddLineToPoint(ctx, minX + cellSize * col, minY + cellSize * position.rows);
+        CGContextAddLineToPoint(ctx, minX + cellSize * col, minY + cellSize * [position rows]);
     }
     
-    for (int row = 0; row <= position.rows; row += 1)
+    for (int row = 0; row <= [position rows]; row += 1)
     {
         CGContextMoveToPoint(ctx, minX, minY + cellSize * row);
-        CGContextAddLineToPoint(ctx, minX + cellSize * position.columns, minY + cellSize * row);
+        CGContextAddLineToPoint(ctx, minX + cellSize * [position columns], minY + cellSize * row);
     }
 	
 	CGContextStrokePath(ctx);
     
-    NSArray *legalMoves = [delegate generateMoves];
+    NSArray *legalMoves = [_delegate generateMoves];
     
-    for (int row = 0; row < position.rows; row += 1)
+    for (int row = 0; row < [position rows]; row += 1)
     {
-        for (int col = 0; col < position.columns; col += 1)
+        for (int col = 0; col < [position columns]; col += 1)
         {
-            int slot = row * position.columns + col;
+            int slot = row * [position columns] + col;
             NSNumber *slotNumber = [NSNumber numberWithInt: slot];
             
             CGRect pieceRect = CGRectMake(minX + col * cellSize, minY + row * cellSize, cellSize, cellSize);
             pieceRect = CGRectInset(pieceRect, cellSize * 0.1f, cellSize * 0.1f);
             
-            if ([[position.board objectAtIndex: slot] isEqual: GCOthelloBlackPiece])
+            if ([[[position board] objectAtIndex: slot] isEqual: GCOthelloBlackPiece])
             {
                 CGContextSetRGBFillColor(ctx, 0, 0, 0, 1);
                 CGContextFillEllipseInRect(ctx, pieceRect);
             }
-            else if ([[position.board objectAtIndex: slot] isEqual: GCOthelloWhitePiece])
+            else if ([[[position board] objectAtIndex: slot] isEqual: GCOthelloWhitePiece])
             {
                 CGContextSetRGBFillColor(ctx, 1, 1, 1, 1);
                 CGContextFillEllipseInRect(ctx, pieceRect);
@@ -161,12 +161,12 @@
     NSUInteger blackCount = [position numberOfBlackPieces];
     NSUInteger whiteCount = [position numberOfWhitePieces];
     
-    CGFloat blackHeight = (position.columns * cellSize) * ((CGFloat) blackCount) / (blackCount + whiteCount);
+    CGFloat blackHeight = ([position columns] * cellSize) * ((CGFloat) blackCount) / (blackCount + whiteCount);
     
     CGContextSetRGBFillColor(ctx, 0, 0, 0, 1);
-    CGContextFillRect(ctx, CGRectMake(minX + position.columns * cellSize, minY, 20, blackHeight));
+    CGContextFillRect(ctx, CGRectMake(minX + [position columns] * cellSize, minY, 20, blackHeight));
     CGContextSetRGBFillColor(ctx, 1, 1, 1, 1);
-    CGContextFillRect(ctx, CGRectMake(minX + position.columns * cellSize, minY + blackHeight, 20, position.rows * cellSize - blackHeight));
+    CGContextFillRect(ctx, CGRectMake(minX + [position columns] * cellSize, minY + blackHeight, 20, [position rows] * cellSize - blackHeight));
 }
 
 @end

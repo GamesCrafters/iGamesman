@@ -16,12 +16,12 @@ GCOthelloPiece const GCOthelloWhitePiece;
 
 @interface GCOthelloPosition : NSObject <NSCopying>
 {
-    NSUInteger rows;
-    NSUInteger columns;
+    NSUInteger _rows;
+    NSUInteger _columns;
     
-    BOOL leftTurn;
+    BOOL _leftTurn;
     
-    NSMutableArray *board;
+    NSMutableArray *_board;
 }
 
 @property (nonatomic, assign) NSUInteger rows, columns;

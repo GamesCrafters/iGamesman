@@ -25,12 +25,12 @@
     
     if (self)
     {
-        position = nil;
+        _position = nil;
         
-        leftPlayer = nil;
-        rightPlayer = nil;
+        _leftPlayer = nil;
+        _rightPlayer = nil;
         
-        othelloView = nil;
+        _othelloView = nil;
     }
     
     return self;
@@ -39,10 +39,10 @@
 
 - (void) dealloc
 {
-    [leftPlayer release];
-    [rightPlayer release];
+    [_leftPlayer release];
+    [_rightPlayer release];
     
-    [othelloView release];
+    [_othelloView release];
     
     [super dealloc];
 }
@@ -52,8 +52,8 @@
 
 - (BOOL) isOutOfBounds: (int) loc offset: (int) offset
 {
-    int rows = position.rows;
-    int cols = position.columns;
+    int rows = [_position rows];
+    int cols = [_position columns];
     
 	if ((loc < 0) || (loc >= rows * cols))
     {
@@ -76,12 +76,12 @@
 
 - (NSArray *) getFlips: (int) loc
 {
-    int rows = position.rows;
-    int cols = position.columns;
+    int rows = [_position rows];
+    int cols = [_position columns];
 	NSMutableArray *flips = [[NSMutableArray alloc] initWithCapacity: rows * cols];
-	if ([[position.board objectAtIndex: loc] isEqualToString: GCOthelloBlankPiece])
+	if ([[[_position board] objectAtIndex: loc] isEqualToString: GCOthelloBlankPiece])
     {
-		NSString *myPiece = position.leftTurn ? GCOthelloBlackPiece : GCOthelloWhitePiece;
+		NSString *myPiece = [_position leftTurn] ? GCOthelloBlackPiece : GCOthelloWhitePiece;
 		int offsets[8] = {1, -1, cols, -cols, cols + 1, cols - 1, -cols + 1, -cols - 1};
 		for (int i = 0; i < 8; i += 1)
         {
@@ -93,9 +93,9 @@
 				tempLoc += offset;
 				if ([self isOutOfBounds: tempLoc offset: offset])
                     break;
-				if ([[position.board objectAtIndex: tempLoc] isEqualToString: GCOthelloBlankPiece])
+				if ([[[_position board] objectAtIndex: tempLoc] isEqualToString: GCOthelloBlankPiece])
                     break; 
-				if ([[position.board objectAtIndex: tempLoc] isEqualToString: myPiece])
+				if ([[[_position board] objectAtIndex: tempLoc] isEqualToString: myPiece])
                 {
 					[flips addObjectsFromArray: tempFlips];
 					break;
@@ -113,7 +113,7 @@
 
 - (void) alertView: (UIAlertView *) alertView clickedButtonAtIndex: (NSInteger) buttonIndex
 {
-	moveHandler([NSNumber numberWithInt: -1]);
+	_moveHandler([NSNumber numberWithInt: -1]);
 }
 
 
@@ -127,12 +127,12 @@
 
 - (UIView *) viewWithFrame: (CGRect) frame
 {
-    if (othelloView)
-        [othelloView release];
+    if (_othelloView)
+        [_othelloView release];
     
-    othelloView = [[GCOthelloView alloc] initWithFrame: frame];
-    [othelloView setDelegate: self];
-    return othelloView;
+    _othelloView = [[GCOthelloView alloc] initWithFrame: frame];
+    [_othelloView setDelegate: self];
+    return _othelloView;
 }
 
 
@@ -141,35 +141,35 @@
     [left retain];
     [right retain];
     
-    if (leftPlayer)
-        [leftPlayer release];
-    if (rightPlayer)
-        [rightPlayer release];
+    if (_leftPlayer)
+        [_leftPlayer release];
+    if (_rightPlayer)
+        [_rightPlayer release];
     
-    leftPlayer = left;
-    rightPlayer = right;
+    _leftPlayer = left;
+    _rightPlayer = right;
     
-    [leftPlayer setEpithet: @"Black"];
-    [rightPlayer setEpithet: @"White"];
+    [_leftPlayer setEpithet: @"Black"];
+    [_rightPlayer setEpithet: @"White"];
     
-    if (position)
-        [position release];
+    if (_position)
+        [_position release];
     
-    position = [[GCOthelloPosition alloc] initWithWidth: 8 height: 8];
-    position.leftTurn = YES;
+    _position = [[GCOthelloPosition alloc] initWithWidth: 8 height: 8];
+    [_position setLeftTurn: YES];
     
-    int col = position.columns / 2 - 1;
-    int row = position.rows / 2 - 1;
-    [position.board replaceObjectAtIndex: col + row * position.columns withObject: GCOthelloBlackPiece];
-    [position.board replaceObjectAtIndex: 1 + col + row * position.columns withObject: GCOthelloWhitePiece];
-    [position.board replaceObjectAtIndex: col + (row + 1) * position.columns withObject: GCOthelloWhitePiece];
-    [position.board replaceObjectAtIndex: 1 + col + (row + 1) * position.columns withObject: GCOthelloBlackPiece];
+    int col = [_position columns] / 2 - 1;
+    int row = [_position rows] / 2 - 1;
+    [[_position board] replaceObjectAtIndex: col + row * [_position columns] withObject: GCOthelloBlackPiece];
+    [[_position board] replaceObjectAtIndex: 1 + col + row * [_position columns] withObject: GCOthelloWhitePiece];
+    [[_position board] replaceObjectAtIndex: col + (row + 1) * [_position columns] withObject: GCOthelloWhitePiece];
+    [[_position board] replaceObjectAtIndex: 1 + col + (row + 1) * [_position columns] withObject: GCOthelloBlackPiece];
 }
 
 
 - (void) waitForHumanMoveWithCompletion: (GCMoveCompletionHandler) completionHandler
 {
-    moveHandler = completionHandler;
+    _moveHandler = completionHandler;
     
     if ([[[self generateMoves] objectAtIndex: 0] isEqual: @"PASS"])
     {
@@ -183,20 +183,20 @@
     }
     else
     {
-        [othelloView startReceivingTouches];
+        [_othelloView startReceivingTouches];
     }
 }
 
 
 - (GCPosition *) currentPosition
 {
-    return position;
+    return _position;
 }
 
 
 - (GCPlayerSide) currentPlayerSide
 {
-    if (position.leftTurn)
+    if ([_position leftTurn])
         return GC_PLAYER_LEFT;
     else
         return GC_PLAYER_RIGHT;
@@ -205,13 +205,13 @@
 
 - (GCPlayer *) leftPlayer
 {
-    return leftPlayer;
+    return _leftPlayer;
 }
 
 
 - (GCPlayer *) rightPlayer
 {
-    return rightPlayer;
+    return _rightPlayer;
 }
 
 
@@ -220,25 +220,25 @@
     if ([move intValue] != -1)
     {
         NSArray *flips = [self getFlips: [move intValue]];
-        NSString *playerPiece = (position.leftTurn ? GCOthelloBlackPiece : GCOthelloWhitePiece);
+        NSString *playerPiece = ([_position leftTurn] ? GCOthelloBlackPiece : GCOthelloWhitePiece);
         for (NSNumber *slot in flips)
-            [position.board replaceObjectAtIndex: [slot unsignedIntegerValue] withObject: playerPiece];
-        [position.board replaceObjectAtIndex: [move unsignedIntValue] withObject: playerPiece];
+            [[_position board] replaceObjectAtIndex: [slot unsignedIntegerValue] withObject: playerPiece];
+        [[_position board] replaceObjectAtIndex: [move unsignedIntValue] withObject: playerPiece];
     }
     
-    position.leftTurn = !position.leftTurn;
+    [_position setLeftTurn: ![_position leftTurn]];
     
-    [othelloView setNeedsDisplay];
+    [_othelloView setNeedsDisplay];
 }
 
 
 - (void) undoMove: (NSNumber *) move toPosition: (GCOthelloPosition *) previousPosition
 {
-    [position release];
+    [_position release];
     
-    position = [previousPosition copy];
+    _position = [previousPosition copy];
     
-    [othelloView setNeedsDisplay];
+    [_othelloView setNeedsDisplay];
 }
 
 
@@ -246,22 +246,22 @@
 {
 	if ([[[self generateMoves] objectAtIndex: 0] isEqual: PASS])
     {
-		position.leftTurn = !position.leftTurn;
+		[_position setLeftTurn: ![_position leftTurn]];
 		if ([[[self generateMoves] objectAtIndex: 0] isEqual: PASS])
         {
-			position.leftTurn = !position.leftTurn;
-            NSUInteger leftPlayerPieces = [position numberOfBlackPieces];
-            NSUInteger rightPlayerPieces = [position numberOfWhitePieces];
+			[_position setLeftTurn: ![_position leftTurn]];
+            NSUInteger leftPlayerPieces = [_position numberOfBlackPieces];
+            NSUInteger rightPlayerPieces = [_position numberOfWhitePieces];
 			if (leftPlayerPieces > rightPlayerPieces)
             {
-				if (position.leftTurn)
+				if ([_position leftTurn])
 					return GCGameValueWin;
 				else
 					return GCGameValueLose;
 			}
 			else if (rightPlayerPieces > leftPlayerPieces)
             {
-				if (position.leftTurn)
+				if ([_position leftTurn])
 					return GCGameValueLose;
 				else
 					return GCGameValueWin;
@@ -271,7 +271,7 @@
 				return GCGameValueTie;
 			}
 		}
-		position.leftTurn = !position.leftTurn;
+		[_position setLeftTurn: ![_position leftTurn]];
 	}
     
 	return nil;
@@ -280,10 +280,10 @@
 
 - (NSArray *) generateMoves
 {
-	NSMutableArray *moves = [[NSMutableArray alloc] initWithCapacity: position.rows * position.columns];
-	for (int i = 0; i < position.rows * position.columns; i += 1)
+	NSMutableArray *moves = [[NSMutableArray alloc] initWithCapacity: [_position rows] * [_position columns]];
+	for (int i = 0; i < [_position rows] * [_position columns]; i += 1)
     {
-		if ([[position.board objectAtIndex:i] isEqualToString: GCOthelloBlankPiece])
+		if ([[[_position board] objectAtIndex:i] isEqualToString: GCOthelloBlankPiece])
         {
 			if ([[self getFlips: i] count] > 0)
             {
@@ -303,15 +303,15 @@
 
 - (GCOthelloPosition *) position
 {
-    return position;
+    return _position;
 }
 
 
 - (void) userChoseMove: (NSNumber *) slot
 {
-    [othelloView stopReceivingTouches];
+    [_othelloView stopReceivingTouches];
     
-    moveHandler(slot);
+    _moveHandler(slot);
 }
 
 @end

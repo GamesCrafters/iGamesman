@@ -12,9 +12,9 @@
 
 @interface GCOthelloView : UIView
 {
-    id<GCOthelloViewDelegate> delegate;
+    id<GCOthelloViewDelegate> _delegate;
     
-    BOOL acceptingTouches;
+    BOOL _acceptingTouches;
 }
 
 @property (nonatomic, assign) id<GCOthelloViewDelegate> delegate;
