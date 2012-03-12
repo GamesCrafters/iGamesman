@@ -16,9 +16,9 @@ GCTTTPiece const GCTTTOPiece     = @"O";
 
 @implementation GCTicTacToePosition
 
-@synthesize columns, rows, toWin;
-@synthesize leftTurn;
-@synthesize board;
+@synthesize columns = _columns, rows = _rows, toWin = _toWin;
+@synthesize leftTurn = _leftTurn;
+@synthesize board = _board;
 
 
 #pragma mark -
@@ -32,13 +32,13 @@ GCTTTPiece const GCTTTOPiece     = @"O";
     
     if (self)
     {
-        columns = width;
-        rows = height;
-        toWin = needed;
+        _columns = width;
+        _rows = height;
+        _toWin = needed;
         
-        board = [[NSMutableArray alloc] initWithCapacity: rows * columns];
-        for (int i = 0; i < rows * columns; i += 1)
-            [board addObject: GCTTTBlankPiece];
+        _board = [[NSMutableArray alloc] initWithCapacity: _rows * _columns];
+        for (int i = 0; i < _rows * _columns; i += 1)
+            [_board addObject: GCTTTBlankPiece];
     }
     
     return self;
@@ -47,7 +47,7 @@ GCTTTPiece const GCTTTOPiece     = @"O";
 
 - (void) dealloc
 {
-    [board release];
+    [_board release];
     
     [super dealloc];
 }
@@ -58,11 +58,11 @@ GCTTTPiece const GCTTTOPiece     = @"O";
 
 - (id) copyWithZone: (NSZone *) zone
 {
-    GCTicTacToePosition *copy = [[GCTicTacToePosition allocWithZone: zone] initWithWidth: columns height: rows toWin: toWin];
+    GCTicTacToePosition *copy = [[GCTicTacToePosition allocWithZone: zone] initWithWidth: _columns height: _rows toWin: _toWin];
     
-    copy.leftTurn = leftTurn;
-    NSMutableArray *boardCopy = [board copy];
-    copy.board = boardCopy;
+    [copy setLeftTurn: _leftTurn];
+    NSMutableArray *boardCopy = [_board copy];
+    [copy setBoard: boardCopy];
     [boardCopy release];
     
     return copy;

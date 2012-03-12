@@ -13,7 +13,7 @@
 
 @implementation GCTicTacToeView
 
-@synthesize delegate;
+@synthesize delegate = _delegate;
 
 
 - (id) initWithFrame: (CGRect) frame
@@ -22,9 +22,9 @@
     
     if (self)
     {
-        self.opaque = NO;
+        [self setOpaque: NO];
         
-        acceptingTouches = NO;
+        _acceptingTouches = NO;
     }
     
     return self;
@@ -35,36 +35,36 @@
 
 - (void) touchesBegan: (NSSet *) touches withEvent: (UIEvent *) event
 {
-    if (!acceptingTouches)
+    if (!_acceptingTouches)
         return;
     
     
-    GCTicTacToePosition *position = [delegate position];
+    GCTicTacToePosition *position = [_delegate position];
     
     CGPoint location = [[touches anyObject] locationInView: self];
     
-    CGFloat width  = self.bounds.size.width;
-    CGFloat height = self.bounds.size.height;
+    CGFloat width  = [self bounds].size.width;
+    CGFloat height = [self bounds].size.height;
     
-    CGFloat maxCellWidth  = (width / position.columns);
-    CGFloat maxCellHeight = (height / position.rows);
+    CGFloat maxCellWidth  = (width / [position columns]);
+    CGFloat maxCellHeight = (height / [position rows]);
     
     CGFloat cellSize = MIN(maxCellWidth, maxCellHeight);
     
-    CGFloat originX = CGRectGetMinX(self.bounds) + (width - position.columns * cellSize) / 2.0f;
-    CGFloat originY = CGRectGetMinY(self.bounds) + (height - position.rows * cellSize) / 2.0f;
+    CGFloat originX = CGRectGetMinX([self bounds]) + (width - [position columns] * cellSize) / 2.0f;
+    CGFloat originY = CGRectGetMinY([self bounds]) + (height - [position rows] * cellSize) / 2.0f;
     
-    for (int row = 0; row < position.rows; row += 1)
+    for (int row = 0; row < [position rows]; row += 1)
     {
-        for (int column = 0; column < position.columns; column += 1)
+        for (int column = 0; column < [position columns]; column += 1)
         {
             CGRect cellRect = CGRectMake(originX + column * cellSize, originY + row * cellSize, cellSize, cellSize);
             
             if (CGRectContainsPoint(cellRect, location))
             {
-                NSNumber *slotNumber = [NSNumber numberWithInt: row * position.columns + column];
-                if ([[position.board objectAtIndex: slotNumber.unsignedIntegerValue] isEqualToString: GCTTTBlankPiece])
-                    [delegate userChoseMove: slotNumber];
+                NSNumber *slotNumber = [NSNumber numberWithInt: row * [position columns] + column];
+                if ([[[position board] objectAtIndex: [slotNumber unsignedIntegerValue]] isEqualToString: GCTTTBlankPiece])
+                    [_delegate userChoseMove: slotNumber];
             }
         }
     }
@@ -75,13 +75,13 @@
 
 - (void) startReceivingTouches
 {
-    acceptingTouches = YES;
+    _acceptingTouches = YES;
 }
 
 
 - (void) stopReceivingTouches
 {
-    acceptingTouches = NO;
+    _acceptingTouches = NO;
 }
 
 
@@ -130,24 +130,24 @@
     
 #ifdef DEMO
     CGContextSetRGBFillColor(ctx, 0, 0, 0, 0.5f);
-    CGContextFillRect(ctx, self.bounds);
+    CGContextFillRect(ctx, [self bounds]);
 #endif
     
-    GCTicTacToePosition *position = [delegate position];
+    GCTicTacToePosition *position = [_delegate position];
     
-    CGFloat width  = self.bounds.size.width;
-    CGFloat height = self.bounds.size.height;
+    CGFloat width  = [self bounds].size.width;
+    CGFloat height = [self bounds].size.height;
     
-    CGFloat maxCellWidth  = (width / position.columns);
-    CGFloat maxCellHeight = (height / position.rows);
+    CGFloat maxCellWidth  = (width / [position columns]);
+    CGFloat maxCellHeight = (height / [position rows]);
     
     CGFloat cellSize = MIN(maxCellWidth, maxCellHeight);
     
-    CGFloat originX = CGRectGetMinX(self.bounds) + (width - position.columns * cellSize) / 2.0f;
-    CGFloat originY = CGRectGetMinY(self.bounds) + (height - position.rows * cellSize) / 2.0f;
+    CGFloat originX = CGRectGetMinX([self bounds]) + (width - [position columns] * cellSize) / 2.0f;
+    CGFloat originY = CGRectGetMinY([self bounds]) + (height - [position rows] * cellSize) / 2.0f;
     
     
-    CGRect backgroundRect = CGRectMake(originX, originY, cellSize * position.columns, cellSize * position.rows);
+    CGRect backgroundRect = CGRectMake(originX, originY, cellSize * [position columns], cellSize * [position rows]);
     
     /* Background rectangle */
     CGContextSetRGBFillColor(ctx, 0.5f, 0.5f, 0.5f, 1);
@@ -155,24 +155,24 @@
     
     /* Inset the board inside the background rectangle (need to recompute originX/Y and cellSize) */
     CGRect boardRect = CGRectInset(backgroundRect, cellSize * 0.05f, cellSize * 0.05f);
-    maxCellWidth = boardRect.size.width / position.columns;
-    maxCellHeight = boardRect.size.height / position.rows;
+    maxCellWidth = boardRect.size.width / [position columns];
+    maxCellHeight = boardRect.size.height / [position rows];
     cellSize = MIN(maxCellWidth, maxCellHeight);
-    originX = CGRectGetMinX(self.bounds) + (width - position.columns * cellSize) / 2.0f;
-    originY = CGRectGetMinY(self.bounds) + (height - position.rows * cellSize) / 2.0f;
+    originX = CGRectGetMinX([self bounds]) + (width - [position columns] * cellSize) / 2.0f;
+    originY = CGRectGetMinY([self bounds]) + (height - [position rows] * cellSize) / 2.0f;
     
     /* Horizontal separators */
-    for (NSUInteger i = 1; i < position.columns; i += 1)
+    for (NSUInteger i = 1; i < [position columns]; i += 1)
     {
         CGContextMoveToPoint(ctx, originX + cellSize * i, originY);
-        CGContextAddLineToPoint(ctx, originX + cellSize * i, originY + position.rows * cellSize);
+        CGContextAddLineToPoint(ctx, originX + cellSize * i, originY + [position rows] * cellSize);
     }
     
     /* Vertical separators */
-    for (NSUInteger j = 1; j < position.rows; j += 1)
+    for (NSUInteger j = 1; j < [position rows]; j += 1)
     {
         CGContextMoveToPoint(ctx, originX, originY + cellSize * j);
-        CGContextAddLineToPoint(ctx, originX + cellSize * position.columns, originY + cellSize * j);
+        CGContextAddLineToPoint(ctx, originX + cellSize * [position columns], originY + cellSize * j);
     }
     
     /* Draw the separators */
@@ -181,26 +181,26 @@
     CGContextStrokePath(ctx);
     
     
-    NSArray *moveValues = [delegate moveValues];
-    NSArray *remotenessValues = [delegate remotenessValues];
+    NSArray *moveValues = [_delegate moveValues];
+    NSArray *remotenessValues = [_delegate remotenessValues];
     
     /* For each position in the board */
-    for (NSUInteger i = 0; i < [position.board count]; i += 1)
+    for (NSUInteger i = 0; i < [[position board] count]; i += 1)
     {
-        GCTTTPiece piece = [position.board objectAtIndex: i];
+        GCTTTPiece piece = [[position board] objectAtIndex: i];
         GCGameValue *value = [moveValues objectAtIndex: i];
         NSInteger remoteness = [[remotenessValues objectAtIndex: i] integerValue];
         
-        NSUInteger row = i / position.columns;
-        NSUInteger column = i % position.columns;
+        NSUInteger row = i / [position columns];
+        NSUInteger column = i % [position columns];
         
         CGRect cellRect = CGRectMake(originX + column * cellSize, originY + row * cellSize, cellSize, cellSize);
         
         
-        if (value && ![value isEqualToString: GCGameValueUnknown] && [delegate isShowingMoveValues])
+        if (value && ![value isEqualToString: GCGameValueUnknown] && [_delegate isShowingMoveValues])
         {
             CGFloat alpha;
-            if ([delegate isShowingDeltaRemoteness] && (remoteness != 0))
+            if ([_delegate isShowingDeltaRemoteness] && (remoteness != 0))
                 alpha = 1.0f / log(remoteness + 1);
             else
                 alpha = 1;

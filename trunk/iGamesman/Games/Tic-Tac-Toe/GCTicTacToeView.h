@@ -15,9 +15,9 @@
 
 @interface GCTicTacToeView : UIView
 {
-    id<GCTicTacToeViewDelegate> delegate;
+    id<GCTicTacToeViewDelegate> _delegate;
     
-    BOOL acceptingTouches;
+    BOOL _acceptingTouches;
 }
 
 @property (nonatomic, assign) id<GCTicTacToeViewDelegate> delegate;

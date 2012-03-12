@@ -17,19 +17,19 @@
 
 @interface GCTicTacToe : NSObject <GCGame, GCTicTacToeViewDelegate>
 {
-    GCTicTacToePosition *position;
+    GCTicTacToePosition *_position;
 
-    GCPlayer *leftPlayer, *rightPlayer;
+    GCPlayer *_leftPlayer, *_rightPlayer;
     
-    GCMoveCompletionHandler moveHandler;
+    GCMoveCompletionHandler _moveHandler;
     
-    GCTicTacToeView *tttView;
+    GCTicTacToeView *_tttView;
     
     
-    BOOL showMoveValues, showDeltaRemoteness;
+    BOOL _showMoveValues, _showDeltaRemoteness;
     
-    NSArray *moveValues;
-    NSArray *remotenessValues;
+    NSArray *_moveValues;
+    NSArray *_remotenessValues;
 }
 
 @end
