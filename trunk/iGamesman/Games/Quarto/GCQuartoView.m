@@ -24,7 +24,7 @@
 
 @implementation GCQuartoView
 
-@synthesize delegate;
+@synthesize delegate = _delegate;
 
 
 - (id) initWithFrame: (CGRect) frame
@@ -33,9 +33,9 @@
     
     if (self)
     {
-        self.opaque = NO;
+        [self setOpaque: NO];
         
-        acceptingTouches = NO;
+        _acceptingTouches = NO;
     }
     
     return self;
@@ -46,22 +46,22 @@
 
 - (void) startReceivingTouches
 {
-    acceptingTouches = YES;
+    _acceptingTouches = YES;
 }
 
 
 - (void) stopReceivingTouches
 {
-    acceptingTouches = NO;
+    _acceptingTouches = NO;
 }
 
 
 - (void) touchesBegan: (NSSet *) touches withEvent: (UIEvent *) event
 {
-    if (!acceptingTouches)
+    if (!_acceptingTouches)
         return;
     
-    GCQuartoPosition *position = [delegate position];
+    GCQuartoPosition *position = [_delegate position];
     
     CGPoint location = [[touches anyObject] locationInView: self];
     
@@ -71,9 +71,9 @@
     {
         CGRect cell = [value CGRectValue];
         
-        if (CGRectContainsPoint(cell, location) && ((position.phase == GCQ_LEFT_PLACE) || (position.phase == GCQ_RIGHT_PLACE)) )
+        if (CGRectContainsPoint(cell, location) && (([position phase] == GCQ_LEFT_PLACE) || ([position phase] == GCQ_RIGHT_PLACE)) )
         {
-            [delegate userPlacedPiece: i];
+            [_delegate userPlacedPiece: i];
             return;
         }
         
@@ -86,7 +86,7 @@
     {
         CGRect piece = [value CGRectValue];
         
-        if (CGRectContainsPoint(piece, location) && ((position.phase == GCQ_LEFT_CHOOSE) || (position.phase == GCQ_RIGHT_CHOOSE)) )
+        if (CGRectContainsPoint(piece, location) && (([position phase] == GCQ_LEFT_CHOOSE) || ([position phase] == GCQ_RIGHT_CHOOSE)) )
         {
             BOOL white  = ((j & 8) > 0);
             BOOL hollow = ((j & 4) > 0);
@@ -94,8 +94,8 @@
             BOOL tall   = ((j & 1) > 0);
             
             GCQuartoPiece *piece = [GCQuartoPiece pieceWithTall: tall square: square hollow: hollow white: white];
-            if ([position.pieces containsObject: piece])
-                [delegate userChosePiece: piece];
+            if ([[position pieces] containsObject: piece])
+                [_delegate userChosePiece: piece];
             
             return;
         }
@@ -109,16 +109,16 @@
 
 - (NSArray *) boardRects
 {
-    CGFloat width  = self.bounds.size.width;
-    CGFloat height = self.bounds.size.height;
+    CGFloat width  = [self bounds].size.width;
+    CGFloat height = [self bounds].size.height;
     
     CGFloat maxCellWidth  = width / (4 + 2);
     CGFloat maxCellHeight = height / 4;
     
     CGFloat cellSize = MIN(maxCellWidth, maxCellHeight);
     
-    CGFloat minX = CGRectGetMinX(self.bounds) + 20;
-    CGFloat minY = CGRectGetMinY(self.bounds) + (height - 4 * cellSize) / 2.0f;
+    CGFloat minX = CGRectGetMinX([self bounds]) + 20;
+    CGFloat minY = CGRectGetMinY([self bounds]) + (height - 4 * cellSize) / 2.0f;
     
     CGRect boardRect = CGRectMake(minX, minY, 4 * cellSize, 4 * cellSize);
     
@@ -175,16 +175,16 @@
 
 - (NSArray *) pieceRects
 {
-    CGFloat width  = self.bounds.size.width;
-    CGFloat height = self.bounds.size.height;
+    CGFloat width  = [self bounds].size.width;
+    CGFloat height = [self bounds].size.height;
     
     CGFloat maxCellWidth  = width / (4 + 2);
     CGFloat maxCellHeight = height / 4;
     
     CGFloat cellSize = MIN(maxCellWidth, maxCellHeight);
     
-    CGFloat minX = CGRectGetMinX(self.bounds) + 20;
-    CGFloat minY = CGRectGetMinY(self.bounds) + (height - 4 * cellSize) / 2.0f;
+    CGFloat minX = CGRectGetMinX([self bounds]) + 20;
+    CGFloat minY = CGRectGetMinY([self bounds]) + (height - 4 * cellSize) / 2.0f;
     
     CGRect boardRect = CGRectMake(minX, minY, 4 * cellSize, 4 * cellSize);
     CGFloat platformX = CGRectGetMaxX(boardRect);
@@ -234,10 +234,10 @@
     
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     
-    BOOL tall   = piece.tall;
-    BOOL square = piece.square;
-    BOOL hollow = piece.hollow;
-    BOOL white  = piece.white;
+    BOOL tall   = [piece tall];
+    BOOL square = [piece square];
+    BOOL hollow = [piece hollow];
+    BOOL white  = [piece white];
     
     
     CGFloat alpha = (tall ? 1 : 0.5f);
@@ -254,7 +254,7 @@
     CGRect innerRect = CGRectInset(pieceRect, width / 3, width / 3);
     
     CGFloat valueAlpha = 1;
-    if ([delegate isShowingDeltaRemoteness])
+    if ([_delegate isShowingDeltaRemoteness])
         valueAlpha = 1.0f / log((random() % 16) + 1);
     
     if (square)
@@ -369,20 +369,20 @@
 #ifdef DEMO
     CGContextSetRGBFillColor(ctx, 1, 0, 0, 1);
     CGContextSetRGBFillColor(ctx, 0, 0, 0, 0.5f);
-    CGContextFillRect(ctx, self.bounds);
+    CGContextFillRect(ctx, [self bounds]);
 #endif
     
     
-    CGFloat width  = self.bounds.size.width;
-    CGFloat height = self.bounds.size.height;
+    CGFloat width  = [self bounds].size.width;
+    CGFloat height = [self bounds].size.height;
     
     CGFloat maxCellWidth  = width / (4 + 2);
     CGFloat maxCellHeight = height / 4;
     
     CGFloat cellSize = MIN(maxCellWidth, maxCellHeight);
     
-    CGFloat minX = CGRectGetMinX(self.bounds) + 20;
-    CGFloat minY = CGRectGetMinY(self.bounds) + (height - 4 * cellSize) / 2.0f;
+    CGFloat minX = CGRectGetMinX([self bounds]) + 20;
+    CGFloat minY = CGRectGetMinY([self bounds]) + (height - 4 * cellSize) / 2.0f;
 
     UIImage *boardBackground = [UIImage imageNamed: @"quartoBoard"];
     CGRect boardRect = CGRectMake(minX, minY, 4 * cellSize, 4 * cellSize);
@@ -394,7 +394,7 @@
     CGContextStrokeEllipseInRect(ctx, CGRectInset(boardRect, lineWidth, lineWidth));
     
     
-    GCQuartoPosition *position = [delegate position];
+    GCQuartoPosition *position = [_delegate position];
     
     
     NSArray *cellRects = [self boardRects];
@@ -406,12 +406,12 @@
             GCQuartoPiece *piece = [position pieceAtRow: row column: column];
             
             CGContextSetLineWidth(ctx, lineWidth);
-            if (![piece isEqual: [GCQuartoPiece blankPiece]] || (position.phase == GCQ_LEFT_CHOOSE) || (position.phase == GCQ_RIGHT_CHOOSE) || ![delegate isShowingMoveValues])
+            if (![piece isEqual: [GCQuartoPiece blankPiece]] || ([position phase] == GCQ_LEFT_CHOOSE) || ([position phase] == GCQ_RIGHT_CHOOSE) || ![_delegate isShowingMoveValues])
                 CGContextSetRGBStrokeColor(ctx, 0, 0, 0, 1);
             else
             {
                 CGFloat slotAlpha = 1;
-                if ([delegate isShowingDeltaRemoteness])
+                if ([_delegate isShowingDeltaRemoteness])
                     slotAlpha = 1.0f / log((random() % 16) + 1);
                 
                 GCGameValue *val = [[NSArray arrayWithObjects: GCGameValueWin, GCGameValueLose, GCGameValueTie, nil] objectAtIndex: random() % 3];
@@ -449,23 +449,23 @@
     
     NSString *player = @"";
     NSString *other = @"";
-    if ((position.phase == GCQ_LEFT_PLACE) || (position.phase == GCQ_LEFT_CHOOSE))
+    if (([position phase] == GCQ_LEFT_PLACE) || ([position phase] == GCQ_LEFT_CHOOSE))
     {
-        player = [delegate leftPlayerName];
-        other  = [delegate rightPlayerName];
+        player = [_delegate leftPlayerName];
+        other  = [_delegate rightPlayerName];
     }
-    else if ((position.phase == GCQ_RIGHT_PLACE) || (position.phase == GCQ_RIGHT_CHOOSE))
+    else if (([position phase] == GCQ_RIGHT_PLACE) || ([position phase] == GCQ_RIGHT_CHOOSE))
     {
-        player = [delegate rightPlayerName];
-        other  = [delegate leftPlayerName];
+        player = [_delegate rightPlayerName];
+        other  = [_delegate leftPlayerName];
     }
     
     if ([position primitive] == nil)
     {
         NSString *action = @"";
-        if ((position.phase == GCQ_LEFT_CHOOSE) || (position.phase == GCQ_RIGHT_CHOOSE))
+        if (([position phase] == GCQ_LEFT_CHOOSE) || ([position phase] == GCQ_RIGHT_CHOOSE))
             action = [NSString stringWithFormat: @"choose a piece for %@", other];
-        else if ((position.phase == GCQ_LEFT_PLACE) || (position.phase == GCQ_RIGHT_PLACE))
+        else if (([position phase] == GCQ_LEFT_PLACE) || ([position phase] == GCQ_RIGHT_PLACE))
             action = @"place the piece on the board";
         
         NSString *message = [NSString stringWithFormat: @"%@: %@.", player, action];
@@ -502,7 +502,7 @@
         {
             GCGameValue *gameVal = GCGameValueUnknown;
             
-            if ([delegate isShowingMoveValues] && ((position.phase == GCQ_LEFT_CHOOSE) || (position.phase == GCQ_RIGHT_CHOOSE)))
+            if ([_delegate isShowingMoveValues] && (([position phase] == GCQ_LEFT_CHOOSE) || ([position phase] == GCQ_RIGHT_CHOOSE)))
             {
                 gameVal = [[NSArray arrayWithObjects: GCGameValueWin, GCGameValueLose, GCGameValueTie, nil] objectAtIndex: random() % 3];
             }

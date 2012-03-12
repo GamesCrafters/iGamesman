@@ -12,9 +12,9 @@
 
 @interface GCQuartoView : UIView
 {
-    id<GCQuartoViewDelegate> delegate;
+    id<GCQuartoViewDelegate> _delegate;
     
-    BOOL acceptingTouches;
+    BOOL _acceptingTouches;
 }
 
 @property (nonatomic, assign) id<GCQuartoViewDelegate> delegate;

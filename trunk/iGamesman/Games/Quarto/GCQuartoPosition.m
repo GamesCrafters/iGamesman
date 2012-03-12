@@ -16,10 +16,19 @@
 BOOL match(NSUInteger a, NSUInteger b, NSUInteger c, NSUInteger d);
 
 
+@interface GCQuartoPosition ()
+
+- (NSInteger) valueOfPiece: (GCQuartoPiece *) piece;
+
+@end
+
+
+
+
 @implementation GCQuartoPosition
 
-@synthesize pieces;
-@synthesize phase;
+@synthesize pieces = _pieces;
+@synthesize phase = _phase;
 
 #pragma mark - Memory lifecycle
 
@@ -29,13 +38,13 @@ BOOL match(NSUInteger a, NSUInteger b, NSUInteger c, NSUInteger d);
     
     if (self)
     {
-        board  = [[NSMutableArray alloc] initWithCapacity: 16];
-        pieces = [[NSMutableArray alloc] initWithCapacity: 16];
+        _board  = [[NSMutableArray alloc] initWithCapacity: 16];
+        _pieces = [[NSMutableArray alloc] initWithCapacity: 16];
         
         for (NSUInteger i = 0; i < 16; i += 1)
         {
             GCQuartoPiece *blank = [GCQuartoPiece blankPiece];
-            [board addObject: blank];
+            [_board addObject: blank];
             
             BOOL tall   = ((i & 1) > 0);
             BOOL square = ((i & 2) > 0);
@@ -43,12 +52,12 @@ BOOL match(NSUInteger a, NSUInteger b, NSUInteger c, NSUInteger d);
             BOOL white  = ((i & 8) > 0);
             
             GCQuartoPiece *piece = [GCQuartoPiece pieceWithTall: tall square: square hollow: hollow white: white];
-            [pieces addObject: piece];
+            [_pieces addObject: piece];
         }
         
-        platformPiece = nil;
+        _platformPiece = nil;
         
-        phase = GCQ_LEFT_CHOOSE;
+        _phase = GCQ_LEFT_CHOOSE;
     }
     
     return self;
@@ -57,8 +66,8 @@ BOOL match(NSUInteger a, NSUInteger b, NSUInteger c, NSUInteger d);
 
 - (void) dealloc
 {
-    [board release];
-    [pieces release];
+    [_board release];
+    [_pieces release];
     
     [super dealloc];
 }
@@ -70,9 +79,9 @@ BOOL match(NSUInteger a, NSUInteger b, NSUInteger c, NSUInteger d);
 {
     [newBoard retain];
     
-    [board release];
+    [_board release];
     
-    board = newBoard;
+    _board = newBoard;
 }
 
 
@@ -80,26 +89,26 @@ BOOL match(NSUInteger a, NSUInteger b, NSUInteger c, NSUInteger d);
 {
     [newPieces retain];
     
-    [pieces release];
+    [_pieces release];
     
-    pieces = newPieces;
+    _pieces = newPieces;
 }
 
 
 - (id) copyWithZone: (NSZone *) zone
 {
     GCQuartoPosition *copy = [[GCQuartoPosition allocWithZone: zone] init];
-    copy.phase = phase;
+    [copy setPhase: _phase];
 
-    NSMutableArray *boardCopy = [board copy];
+    NSMutableArray *boardCopy = [_board copy];
     [copy setBoard: boardCopy];
     [boardCopy release];
     
-    NSMutableArray *piecesCopy = [pieces copy];
+    NSMutableArray *piecesCopy = [_pieces copy];
     [copy setPieces: piecesCopy];
     [piecesCopy release];
     
-    [copy setPlatformPiece: platformPiece];
+    [copy setPlatformPiece: _platformPiece];
     
     return copy;
 }
@@ -109,10 +118,10 @@ BOOL match(NSUInteger a, NSUInteger b, NSUInteger c, NSUInteger d);
 
 - (NSInteger) valueOfPiece: (GCQuartoPiece *) piece
 {
-    if (piece.blank)
+    if ([piece blank])
         return -1;
     
-    return (piece.tall << 3) + (piece.square << 2) + (piece.hollow << 1) + (piece.white << 0);
+    return ([piece tall] << 3) + ([piece square] << 2) + ([piece hollow] << 1) + ([piece white] << 0);
 }
 
 
@@ -137,10 +146,10 @@ BOOL match(NSUInteger a, NSUInteger b, NSUInteger c, NSUInteger d)
     /* Check each column */
     for (NSUInteger column = 0; column < 4; column += 1)
     {
-        NSInteger piece0 = [self valueOfPiece: [board objectAtIndex: column + 0]];
-        NSInteger piece1 = [self valueOfPiece: [board objectAtIndex: column + 4]];
-        NSInteger piece2 = [self valueOfPiece: [board objectAtIndex: column + 8]];
-        NSInteger piece3 = [self valueOfPiece: [board objectAtIndex: column + 12]];
+        NSInteger piece0 = [self valueOfPiece: [_board objectAtIndex: column + 0]];
+        NSInteger piece1 = [self valueOfPiece: [_board objectAtIndex: column + 4]];
+        NSInteger piece2 = [self valueOfPiece: [_board objectAtIndex: column + 8]];
+        NSInteger piece3 = [self valueOfPiece: [_board objectAtIndex: column + 12]];
         
         if ((piece0 == -1) || (piece1 == -1) || (piece2 == -1) || (piece3 == -1))
             continue;
@@ -152,10 +161,10 @@ BOOL match(NSUInteger a, NSUInteger b, NSUInteger c, NSUInteger d)
     /* Check each row */
     for (NSUInteger row = 0; row < 4; row += 1)
     {
-        NSInteger piece0 = [self valueOfPiece: [board objectAtIndex: 0 + 4 * row]];
-        NSInteger piece1 = [self valueOfPiece: [board objectAtIndex: 1 + 4 * row]];
-        NSInteger piece2 = [self valueOfPiece: [board objectAtIndex: 2 + 4 * row]];
-        NSInteger piece3 = [self valueOfPiece: [board objectAtIndex: 3 + 4 * row]];
+        NSInteger piece0 = [self valueOfPiece: [_board objectAtIndex: 0 + 4 * row]];
+        NSInteger piece1 = [self valueOfPiece: [_board objectAtIndex: 1 + 4 * row]];
+        NSInteger piece2 = [self valueOfPiece: [_board objectAtIndex: 2 + 4 * row]];
+        NSInteger piece3 = [self valueOfPiece: [_board objectAtIndex: 3 + 4 * row]];
         
         if ((piece0 == -1) || (piece1 == -1) || (piece2 == -1) || (piece3 == -1))
             continue;
@@ -165,20 +174,20 @@ BOOL match(NSUInteger a, NSUInteger b, NSUInteger c, NSUInteger d)
     }
     
     /* Check the main diagonal */
-    NSInteger piece0 = [self valueOfPiece: [board objectAtIndex: 0]];
-    NSInteger piece1 = [self valueOfPiece: [board objectAtIndex: 5]];
-    NSInteger piece2 = [self valueOfPiece: [board objectAtIndex: 10]];
-    NSInteger piece3 = [self valueOfPiece: [board objectAtIndex: 15]];
+    NSInteger piece0 = [self valueOfPiece: [_board objectAtIndex: 0]];
+    NSInteger piece1 = [self valueOfPiece: [_board objectAtIndex: 5]];
+    NSInteger piece2 = [self valueOfPiece: [_board objectAtIndex: 10]];
+    NSInteger piece3 = [self valueOfPiece: [_board objectAtIndex: 15]];
     
     BOOL hasBlank = ((piece0 == -1) || (piece1 == -1) || (piece2 == -1) || (piece3 == -1));
     if (!hasBlank && match(piece0, piece1, piece2, piece3))
         return GCGameValueWin;
     
     /* Check the secondary diagonal */
-    piece0 = [self valueOfPiece: [board objectAtIndex: 3]];
-    piece1 = [self valueOfPiece: [board objectAtIndex: 6]];
-    piece2 = [self valueOfPiece: [board objectAtIndex: 9]];
-    piece3 = [self valueOfPiece: [board objectAtIndex: 12]];
+    piece0 = [self valueOfPiece: [_board objectAtIndex: 3]];
+    piece1 = [self valueOfPiece: [_board objectAtIndex: 6]];
+    piece2 = [self valueOfPiece: [_board objectAtIndex: 9]];
+    piece3 = [self valueOfPiece: [_board objectAtIndex: 12]];
     
     hasBlank = ((piece0 == -1) || (piece1 == -1) || (piece2 == -1) || (piece3 == -1));
     if (!hasBlank && match(piece0, piece1, piece2, piece3))
@@ -190,41 +199,41 @@ BOOL match(NSUInteger a, NSUInteger b, NSUInteger c, NSUInteger d)
 
 - (void) setPlatformPiece: (GCQuartoPiece *) piece
 {
-    platformPiece = [piece retain];
+    _platformPiece = [piece retain];
 }
 
 
 - (GCQuartoPiece *) platformPiece
 {
-    return platformPiece;
+    return _platformPiece;
 }
 
 
 - (void) removePlatformPiece
 {
-    if (platformPiece)
-        [platformPiece release];
+    if (_platformPiece)
+        [_platformPiece release];
     
-    platformPiece = nil;
+    _platformPiece = nil;
 }
 
 
 - (void) placePiece: (GCQuartoPiece *) piece atRow: (NSUInteger) row column: (NSUInteger) column
 {
-    [board replaceObjectAtIndex: column + 4 * row withObject: piece];
+    [_board replaceObjectAtIndex: column + 4 * row withObject: piece];
 }
 
 
 - (GCQuartoPiece *) pieceAtRow: (NSUInteger) row column: (NSUInteger) column
 {
-    return [board objectAtIndex: column + 4 * row];
+    return [_board objectAtIndex: column + 4 * row];
 }
 
 
 - (void) removePieceAtRow:(NSUInteger)row column:(NSUInteger)column
 {
     GCQuartoPiece *blank = [GCQuartoPiece blankPiece];
-    [board replaceObjectAtIndex: column + 4 * row withObject: blank];
+    [_board replaceObjectAtIndex: column + 4 * row withObject: blank];
 }
 
 @end

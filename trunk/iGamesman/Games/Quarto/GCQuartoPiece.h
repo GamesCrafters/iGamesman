@@ -10,9 +10,9 @@
 
 @interface GCQuartoPiece : NSObject <NSCopying>
 {
-    BOOL tall, square, hollow, white;
+    BOOL _tall, _square, _hollow, _white;
     
-    BOOL blank;
+    BOOL _blank;
 }
 
 @property (nonatomic, readonly) BOOL tall, square, hollow, white;

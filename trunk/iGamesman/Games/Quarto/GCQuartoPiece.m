@@ -21,8 +21,8 @@
 
 @implementation GCQuartoPiece
 
-@synthesize tall, square, hollow, white;
-@synthesize blank;
+@synthesize tall = _tall, square = _square, hollow = _hollow, white = _white;
+@synthesize blank = _blank;
 
 
 + (id) pieceWithTall: (BOOL) isTall square: (BOOL) isSquare hollow: (BOOL) isHollow white: (BOOL) isWhite
@@ -72,12 +72,12 @@
     
     if (self)
     {
-        tall   = isTall;
-        square = isSquare;
-        hollow = isHollow;
-        white  = isWhite;
+        _tall   = isTall;
+        _square = isSquare;
+        _hollow = isHollow;
+        _white  = isWhite;
         
-        blank = NO;
+        _blank = NO;
     }
     
     return self;
@@ -90,7 +90,7 @@
     
     if (self)
     {
-        blank = YES;
+        _blank = YES;
     }
     
     return self;
@@ -101,12 +101,12 @@
 
 - (BOOL) isEqual: (GCQuartoPiece *) object
 {
-    if (blank && object.blank)
+    if (_blank && [object blank])
         return YES;
-    else if (blank || object.blank)
+    else if (_blank || [object blank])
         return NO;
     
-    return ((tall == object.tall) && (square == object.square) && (hollow == object.hollow) && (white == object.white));
+    return ((_tall == [object tall]) && (_square == [object square]) && (_hollow == [object hollow]) && (_white == [object white]));
 }
 
 
@@ -116,10 +116,10 @@
 {
     GCQuartoPiece *copy;
     
-    if (blank)
+    if (_blank)
         copy = [[GCQuartoPiece allocWithZone: zone] initBlank];
     else
-        copy = [[GCQuartoPiece allocWithZone: zone] initWithTall: tall square: square hollow: hollow white: white];
+        copy = [[GCQuartoPiece allocWithZone: zone] initWithTall: _tall square: _square hollow: _hollow white: _white];
     
     return copy;
 }

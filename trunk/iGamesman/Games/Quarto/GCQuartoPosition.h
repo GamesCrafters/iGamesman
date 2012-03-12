@@ -18,12 +18,12 @@ typedef enum { GCQ_LEFT_CHOOSE, GCQ_RIGHT_PLACE, GCQ_RIGHT_CHOOSE, GCQ_LEFT_PLAC
 
 @interface GCQuartoPosition : NSObject <NSCopying>
 {
-    NSMutableArray *board;
-    NSMutableArray *pieces;
+    NSMutableArray *_board;
+    NSMutableArray *_pieces;
     
-    GCQuartoPiece *platformPiece;
+    GCQuartoPiece *_platformPiece;
     
-    GCQuartoPhase phase;
+    GCQuartoPhase _phase;
 }
 
 

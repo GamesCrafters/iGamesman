@@ -17,16 +17,16 @@
 
 @interface GCQuarto : NSObject <GCGame, GCQuartoViewDelegate>
 {
-    GCQuartoPosition *position;
+    GCQuartoPosition *_position;
     
-    GCPlayer *leftPlayer, *rightPlayer;
+    GCPlayer *_leftPlayer, *_rightPlayer;
     
-    GCMoveCompletionHandler moveHandler;
+    GCMoveCompletionHandler _moveHandler;
     
-    GCQuartoView *quartoView;
+    GCQuartoView *_quartoView;
     
     
-    BOOL showMoveValues, showDeltaRemoteness;
+    BOOL _showMoveValues, _showDeltaRemoteness;
 }
 
 @end

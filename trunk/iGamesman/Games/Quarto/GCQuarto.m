@@ -20,7 +20,7 @@
     
     if (self)
     {
-        showMoveValues = showDeltaRemoteness = NO;
+        _showMoveValues = _showDeltaRemoteness = NO;
     }
     
     return self;
@@ -49,12 +49,12 @@
     {
         for (NSUInteger column = 0; column < 4; column += 1)
         {
-            GCQuartoPiece *piece = [position pieceAtRow: row column: column];
+            GCQuartoPiece *piece = [_position pieceAtRow: row column: column];
             if ([piece isEqual: [GCQuartoPiece blankPiece]])
                 [boardString appendString: @" "];
             else
             {
-                int i = (piece.tall << 3) + (piece.square << 2) + (piece.hollow << 1) + (piece.white << 0);
+                int i = ([piece tall] << 3) + ([piece square] << 2) + ([piece hollow] << 1) + ([piece white] << 0);
                 char pieceLetter = 'A' + i;
                 [boardString appendFormat: @"%c", pieceLetter];
             }
@@ -85,12 +85,12 @@
 
 - (UIView *) viewWithFrame: (CGRect) frame
 {
-    if (quartoView)
-        [quartoView release];
+    if (_quartoView)
+        [_quartoView release];
     
-    quartoView = [[GCQuartoView alloc] initWithFrame: frame];
-    quartoView.delegate = self;
-    return quartoView;
+    _quartoView = [[GCQuartoView alloc] initWithFrame: frame];
+    [_quartoView setDelegate: self];
+    return _quartoView;
 }
 
 
@@ -99,39 +99,39 @@
     [left retain];
     [right retain];
     
-    if (leftPlayer)
-        [leftPlayer release];
-    if (rightPlayer)
-        [rightPlayer release];
+    if (_leftPlayer)
+        [_leftPlayer release];
+    if (_rightPlayer)
+        [_rightPlayer release];
     
-    leftPlayer = left;
-    rightPlayer = right;
+    _leftPlayer = left;
+    _rightPlayer = right;
     
-    [leftPlayer setEpithet: nil];
-    [rightPlayer setEpithet: nil];
+    [_leftPlayer setEpithet: nil];
+    [_rightPlayer setEpithet: nil];
     
-    position = [[GCQuartoPosition alloc] init];
-    position.phase = GCQ_LEFT_CHOOSE;
+    _position = [[GCQuartoPosition alloc] init];
+    [_position setPhase: GCQ_LEFT_CHOOSE];
 }
 
 
 - (void) waitForHumanMoveWithCompletion: (GCMoveCompletionHandler) completionHandler
 {
-    moveHandler = completionHandler;
+    _moveHandler = completionHandler;
     
-    [quartoView startReceivingTouches];
+    [_quartoView startReceivingTouches];
 }
 
 
 - (GCPosition *) currentPosition
 {
-    return position;
+    return _position;
 }
 
 
 - (GCPlayerSide) currentPlayerSide
 {
-    if ((position.phase == GCQ_LEFT_CHOOSE) || (position.phase == GCQ_LEFT_PLACE))
+    if (([_position phase] == GCQ_LEFT_CHOOSE) || ([_position phase] == GCQ_LEFT_PLACE))
         return GC_PLAYER_LEFT;
     else
         return GC_PLAYER_RIGHT;
@@ -140,13 +140,13 @@
 
 - (GCPlayer *) leftPlayer
 {
-    return leftPlayer;
+    return _leftPlayer;
 }
 
 
 - (GCPlayer *) rightPlayer
 {
-    return rightPlayer;
+    return _rightPlayer;
 }
 
 
@@ -166,32 +166,32 @@
         
         GCQuartoPiece *piece = [GCQuartoPiece pieceWithTall: tall square: square hollow: hollow white: white];
         
-        [position setPlatformPiece: piece];
+        [_position setPlatformPiece: piece];
         
-        [position.pieces removeObject: piece];
+        [[_position pieces] removeObject: piece];
         
-        if (position.phase == GCQ_LEFT_CHOOSE)
-            position.phase = GCQ_RIGHT_PLACE;
-        if (position.phase == GCQ_RIGHT_CHOOSE)
-            position.phase = GCQ_LEFT_PLACE;
+        if ([_position phase] == GCQ_LEFT_CHOOSE)
+            [_position setPhase: GCQ_RIGHT_PLACE];
+        if ([_position phase] == GCQ_RIGHT_CHOOSE)
+            [_position setPhase: GCQ_LEFT_PLACE];
         
-        [quartoView setNeedsDisplay];
+        [_quartoView setNeedsDisplay];
     }
     else if ([move isKindOfClass: [NSNumber class]])
     {
         /* "Place a piece" move */
         NSUInteger slot = [(NSNumber *) move unsignedIntegerValue];
         
-        [position placePiece: [position platformPiece] atRow: slot / 4 column: slot % 4];
+        [_position placePiece: [_position platformPiece] atRow: slot / 4 column: slot % 4];
         
-        [position removePlatformPiece];
+        [_position removePlatformPiece];
         
-        if (position.phase == GCQ_LEFT_PLACE)
-            position.phase = GCQ_LEFT_CHOOSE;
-        if (position.phase == GCQ_RIGHT_PLACE)
-            position.phase = GCQ_RIGHT_CHOOSE;
+        if ([_position phase] == GCQ_LEFT_PLACE)
+            [_position setPhase: GCQ_LEFT_CHOOSE];
+        if ([_position phase] == GCQ_RIGHT_PLACE)
+            [_position setPhase: GCQ_RIGHT_CHOOSE];
         
-        [quartoView setNeedsDisplay];
+        [_quartoView setNeedsDisplay];
     }
 }
 
@@ -211,39 +211,39 @@
         
         GCQuartoPiece *piece = [GCQuartoPiece pieceWithTall: tall square: square hollow: hollow white: white];
         
-        [position.pieces addObject: piece];
+        [[_position pieces] addObject: piece];
         
-        [position removePlatformPiece];
+        [_position removePlatformPiece];
         
-        if (position.phase == GCQ_LEFT_PLACE)
-            position.phase = GCQ_RIGHT_CHOOSE;
-        if (position.phase == GCQ_RIGHT_PLACE)
-            position.phase = GCQ_LEFT_CHOOSE;
+        if ([_position phase] == GCQ_LEFT_PLACE)
+            [_position setPhase: GCQ_RIGHT_CHOOSE];
+        if ([_position phase] == GCQ_RIGHT_PLACE)
+            [_position setPhase: GCQ_LEFT_CHOOSE];
         
-        [quartoView setNeedsDisplay];
+        [_quartoView setNeedsDisplay];
     }
     else if ([move isKindOfClass: [NSNumber class]])
     {
         /* "Place a piece" move */
         NSUInteger slot = [(NSNumber *) move unsignedIntegerValue];
         
-        [position setPlatformPiece: [position pieceAtRow: slot / 4 column: slot % 4]];
+        [_position setPlatformPiece: [_position pieceAtRow: slot / 4 column: slot % 4]];
         
-        [position removePieceAtRow: slot / 4 column: slot % 4];
+        [_position removePieceAtRow: slot / 4 column: slot % 4];
         
-        if (position.phase == GCQ_LEFT_CHOOSE)
-            position.phase = GCQ_LEFT_PLACE;
-        if (position.phase == GCQ_RIGHT_CHOOSE)
-            position.phase = GCQ_RIGHT_PLACE;
+        if ([_position phase] == GCQ_LEFT_CHOOSE)
+            [_position setPhase: GCQ_LEFT_PLACE];
+        if ([_position phase] == GCQ_RIGHT_CHOOSE)
+            [_position setPhase: GCQ_RIGHT_PLACE];
         
-        [quartoView setNeedsDisplay];
+        [_quartoView setNeedsDisplay];
     }
 }
 
 
 - (GCGameValue *) primitive
 {
-    return [position primitive];
+    return [_position primitive];
 }
 
 
@@ -255,29 +255,29 @@
 
 - (BOOL) isShowingMoveValues
 {
-    return showMoveValues;
+    return _showMoveValues;
 }
 
 
 - (BOOL) isShowingDeltaRemoteness
 {
-    return showDeltaRemoteness;
+    return _showDeltaRemoteness;
 }
 
 
 - (void) setShowingMoveValues: (BOOL) moveValues
 {
-    showMoveValues = moveValues;
+    _showMoveValues = moveValues;
     
-    [quartoView setNeedsDisplay];
+    [_quartoView setNeedsDisplay];
 }
 
 
 - (void) setShowingDeltaRemoteness: (BOOL) deltaRemoteness
 {
-    showDeltaRemoteness = deltaRemoteness;
+    _showDeltaRemoteness = deltaRemoteness;
     
-    [quartoView setNeedsDisplay];
+    [_quartoView setNeedsDisplay];
 }
 
 
@@ -285,38 +285,38 @@
 
 - (GCQuartoPosition *) position
 {
-    return position;
+    return _position;
 }
 
 
 - (NSString *) leftPlayerName
 {
-    return [leftPlayer name];
+    return [_leftPlayer name];
 }
 
 
 - (NSString *) rightPlayerName
 {
-    return [rightPlayer name];
+    return [_rightPlayer name];
 }
 
 
 - (void) userChosePiece: (GCQuartoPiece *) piece
 {
-    [quartoView stopReceivingTouches];
+    [_quartoView stopReceivingTouches];
     
-    int i = (piece.tall << 3) + (piece.square << 2) + (piece.hollow << 1) + (piece.white << 0);
+    int i = ([piece tall] << 3) + ([piece square] << 2) + ([piece hollow] << 1) + ([piece white] << 0);
     char pieceLetter = 'A' + i;
     
-    moveHandler([NSString stringWithFormat: @"%c", pieceLetter]);
+    _moveHandler([NSString stringWithFormat: @"%c", pieceLetter]);
 }
 
 
 - (void) userPlacedPiece: (NSUInteger) slot
 {
-    [quartoView stopReceivingTouches];
+    [_quartoView stopReceivingTouches];
     
-    moveHandler([NSNumber numberWithInt: slot]);
+    _moveHandler([NSNumber numberWithInt: slot]);
 }
 
 @end
