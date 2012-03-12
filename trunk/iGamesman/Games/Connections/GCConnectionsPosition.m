@@ -15,9 +15,9 @@ GCConnectionsPiece const GCConnectionsBluePiece  = @"O";
 
 @implementation GCConnectionsPosition
 
-@synthesize leftTurn;
-@synthesize board;
-@synthesize size;
+@synthesize leftTurn = _leftTurn;
+@synthesize board = _board;
+@synthesize size = _size;
 
 #pragma mark - Memory lifecycle
 
@@ -27,24 +27,24 @@ GCConnectionsPiece const GCConnectionsBluePiece  = @"O";
     
     if (self)
     {
-		size = sideLength;
-        leftTurn = YES;
-		board = [[NSMutableArray alloc] initWithCapacity: size * size];
-		for (int j = 0; j < size; j += 1)
+		_size = sideLength;
+        _leftTurn = YES;
+		_board = [[NSMutableArray alloc] initWithCapacity: _size * _size];
+		for (int j = 0; j < _size; j += 1)
         {
-			for (int i = 0; i < size; i += 1)
+			for (int i = 0; i < _size; i += 1)
             {
 				if (i % 2 == j % 2)
                 {
-					[board addObject: GCConnectionsBlankPiece];
+					[_board addObject: GCConnectionsBlankPiece];
 				}
 				else if (i % 2 == 0)
                 {
-					[board addObject: GCConnectionsBluePiece];
+					[_board addObject: GCConnectionsBluePiece];
 				}
 				else
                 {
-					[board addObject: GCConnectionsRedPiece];
+					[_board addObject: GCConnectionsRedPiece];
 				}
 			}
 		}
@@ -56,7 +56,7 @@ GCConnectionsPiece const GCConnectionsBluePiece  = @"O";
 
 - (void) dealloc
 {
-    [board release];
+    [_board release];
     
     [super dealloc];
 }
@@ -67,11 +67,11 @@ GCConnectionsPiece const GCConnectionsBluePiece  = @"O";
 - (id) copyWithZone: (NSZone *) zone
 {
     GCConnectionsPosition *copy = [[GCConnectionsPosition allocWithZone: zone] init];
-    copy.leftTurn = leftTurn;
-    copy.size = size;
+    [copy setLeftTurn: _leftTurn];
+    [copy setSize: _size];
     
-    NSMutableArray *boardCopy = [board copy];
-    copy.board = boardCopy;
+    NSMutableArray *boardCopy = [_board copy];
+    [copy setBoard: boardCopy];
     [boardCopy release];
 	
     return copy;

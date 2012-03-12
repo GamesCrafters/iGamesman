@@ -12,9 +12,9 @@
 
 @interface GCConnectionsView : UIView
 {
-    id<GCConnectionsViewDelegate> delegate;
+    id<GCConnectionsViewDelegate> _delegate;
     
-    BOOL acceptingTouches;
+    BOOL _acceptingTouches;
 }
 
 @property (nonatomic, assign) id<GCConnectionsViewDelegate> delegate;

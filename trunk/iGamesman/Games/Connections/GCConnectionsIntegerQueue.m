@@ -19,8 +19,8 @@
     
     if (self)
     {
-        fringe = [[NSMutableArray alloc] init];
-        blackList = [[NSMutableArray alloc] init];
+        _fringe = [[NSMutableArray alloc] init];
+        _blackList = [[NSMutableArray alloc] init];
     }
     
 	return self;
@@ -29,8 +29,8 @@
 
 - (void) dealloc
 {
-	[fringe release];
-	[blackList release];
+	[_fringe release];
+	[_blackList release];
     
 	[super dealloc];
 }
@@ -46,10 +46,10 @@
 {
 	NSNumber * myNum = [NSNumber numberWithInt: position];
 	
-	if (![blackList containsObject: myNum])
+	if (![_blackList containsObject: myNum])
     {
-		[fringe addObject: myNum];
-		[blackList addObject: myNum];
+		[_fringe addObject: myNum];
+		[_blackList addObject: myNum];
 	}
 }
 
@@ -58,20 +58,20 @@
  */
 - (int)	pop
 {
-	int ret = [[fringe objectAtIndex: 0] intValue];
-	[fringe removeObjectAtIndex: 0];
+	int ret = [[_fringe objectAtIndex: 0] intValue];
+	[_fringe removeObjectAtIndex: 0];
 	return ret;
 }
 
 - (void) reset
 {
-	[fringe removeAllObjects];
-	[blackList removeAllObjects];
+	[_fringe removeAllObjects];
+	[_blackList removeAllObjects];
 }
 
 - (BOOL) notEmpty
 {
-	return ([fringe count] > 0);
+	return ([_fringe count] > 0);
 }
 
 @end

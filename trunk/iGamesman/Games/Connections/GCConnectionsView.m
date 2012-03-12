@@ -12,7 +12,7 @@
 
 @implementation GCConnectionsView
 
-@synthesize delegate;
+@synthesize delegate = _delegate;
 
 
 #pragma mark - Memory lifecycle
@@ -23,8 +23,8 @@
     
     if (self)
     {
-        self.opaque = NO;
-        self.clipsToBounds = NO;
+        [self setOpaque: NO];
+        [self setClipsToBounds: NO];
     }
     
     return self;
@@ -35,56 +35,56 @@
 
 - (void) startReceivingTouches
 {
-    acceptingTouches = YES;
+    _acceptingTouches = YES;
 }
 
 
 - (void) stopReceivingTouches
 {
-    acceptingTouches = NO;
+    _acceptingTouches = NO;
 }
 
 
 - (void) touchesBegan: (NSSet *) touches withEvent: (UIEvent *) event
 {
-    if (!acceptingTouches)
+    if (!_acceptingTouches)
         return;
     
-    GCConnectionsPosition *position = [delegate position];
+    GCConnectionsPosition *position = [_delegate position];
     
     
-    CGFloat width  = self.bounds.size.width;
-    CGFloat height = self.bounds.size.height;
+    CGFloat width  = [self bounds].size.width;
+    CGFloat height = [self bounds].size.height;
     
-    CGFloat maxCellWidth  = width / position.size;
-    CGFloat maxCellHeight = height / position.size;
+    CGFloat maxCellWidth  = width / [position size];
+    CGFloat maxCellHeight = height / [position size];
     
     CGFloat cellSize = MIN(maxCellWidth, maxCellHeight);
     
-    CGFloat minX = CGRectGetMinX(self.bounds) + (width - cellSize * position.size) / 2.0f;
-    CGFloat minY = CGRectGetMinY(self.bounds) + (height - cellSize * position.size) / 2.0f;
+    CGFloat minX = CGRectGetMinX([self bounds]) + (width - cellSize * [position size]) / 2.0f;
+    CGFloat minY = CGRectGetMinY([self bounds]) + (height - cellSize * [position size]) / 2.0f;
     
-    CGRect boardRect = CGRectMake(minX, minY, cellSize * position.size, cellSize * position.size);
+    CGRect boardRect = CGRectMake(minX, minY, cellSize * [position size], cellSize * [position size]);
     boardRect = CGRectInset(boardRect, (cellSize * 0.2f) + 2, (cellSize * 0.2f) + 2);
     
     /* Recompute minX/Y and cellSize to fit */
-    maxCellWidth  = boardRect.size.width / position.size;
-    maxCellHeight = boardRect.size.height / position.size;
+    maxCellWidth  = boardRect.size.width / [position size];
+    maxCellHeight = boardRect.size.height / [position size];
     cellSize = MIN(maxCellWidth, maxCellHeight);
-    minX = CGRectGetMinX(self.bounds) + (width - cellSize * position.size) / 2.0f;
-    minY = CGRectGetMinY(self.bounds) + (height - cellSize * position.size) / 2.0f;
+    minX = CGRectGetMinX([self bounds]) + (width - cellSize * [position size]) / 2.0f;
+    minY = CGRectGetMinY([self bounds]) + (height - cellSize * [position size]) / 2.0f;
     
     
     CGPoint location = [[touches anyObject] locationInView: self];
     
     
-    for (int col = 0; col < position.size; col += 1)
+    for (int col = 0; col < [position size]; col += 1)
     {
-        for (int row = 0; row < position.size; row += 1)
+        for (int row = 0; row < [position size]; row += 1)
         {
-            NSArray *moves = [delegate generateMoves];
+            NSArray *moves = [_delegate generateMoves];
             
-            BOOL isLegalSquare = [moves containsObject: [NSNumber numberWithInt: row * position.size + col + 1]];
+            BOOL isLegalSquare = [moves containsObject: [NSNumber numberWithInt: row * [position size] + col + 1]];
             
             if (!isLegalSquare)
                 continue;
@@ -95,7 +95,7 @@
 #warning TODO: Improve this logic. Should check the octagonal area, not the bounding rectangle (overlapping!)
             if (CGRectContainsPoint(cellRect, location))
             {
-                [delegate userChoseMove: [NSNumber numberWithInt: row * position.size + col + 1]];
+                [_delegate userChoseMove: [NSNumber numberWithInt: row * [position size] + col + 1]];
                 return;
             }
         }
@@ -156,49 +156,49 @@
     CGContextSetRGBFillColor(ctx, 1, 0, 0, 1);
     CGContextFillEllipseInRect(ctx, CGRectMake(backgroundCenter.x - 5, backgroundCenter.y - 5, 10, 10));
     CGContextSetRGBFillColor(ctx, 0, 0, 0, 0.5f);
-    CGContextFillRect(ctx, self.bounds);
+    CGContextFillRect(ctx, [self bounds]);
 #endif
     
-    GCConnectionsPosition *position = [delegate position];
+    GCConnectionsPosition *position = [_delegate position];
     
     
-    CGFloat width  = self.bounds.size.width;
-    CGFloat height = self.bounds.size.height;
+    CGFloat width  = [self bounds].size.width;
+    CGFloat height = [self bounds].size.height;
     
-    CGFloat maxCellWidth  = width / position.size;
-    CGFloat maxCellHeight = height / position.size;
+    CGFloat maxCellWidth  = width / [position size];
+    CGFloat maxCellHeight = height / [position size];
     
     CGFloat cellSize = MIN(maxCellWidth, maxCellHeight);
     
-    CGFloat minX = CGRectGetMinX(self.bounds) + (width - cellSize * position.size) / 2.0f;
-    CGFloat minY = CGRectGetMinY(self.bounds) + (height - cellSize * position.size) / 2.0f;
+    CGFloat minX = CGRectGetMinX([self bounds]) + (width - cellSize * [position size]) / 2.0f;
+    CGFloat minY = CGRectGetMinY([self bounds]) + (height - cellSize * [position size]) / 2.0f;
     
-    CGRect boardRect = CGRectMake(minX, minY, cellSize * position.size, cellSize * position.size);
+    CGRect boardRect = CGRectMake(minX, minY, cellSize * [position size], cellSize * [position size]);
     boardRect = CGRectInset(boardRect, (cellSize * 0.2f) + 2, (cellSize * 0.2f) + 2);
     
     /* Recompute minX/Y and cellSize to fit */
-    maxCellWidth  = boardRect.size.width / position.size;
-    maxCellHeight = boardRect.size.height / position.size;
+    maxCellWidth  = boardRect.size.width / [position size];
+    maxCellHeight = boardRect.size.height / [position size];
     cellSize = MIN(maxCellWidth, maxCellHeight);
-    minX = CGRectGetMinX(self.bounds) + (width - cellSize * position.size) / 2.0f;
-    minY = CGRectGetMinY(self.bounds) + (height - cellSize * position.size) / 2.0f;
+    minX = CGRectGetMinX([self bounds]) + (width - cellSize * [position size]) / 2.0f;
+    minY = CGRectGetMinY([self bounds]) + (height - cellSize * [position size]) / 2.0f;
     
     
     
-    for (int col = 0; col < position.size; col += 1)
+    for (int col = 0; col < [position size]; col += 1)
     {
-        for (int row = 0; row < position.size; row += 1)
+        for (int row = 0; row < [position size]; row += 1)
         {
             CGRect cellRect = CGRectMake(minX + col * cellSize, minY + row * cellSize, cellSize, cellSize);
             
             if ((row % 2) == (col % 2))
             {
-                int size = position.size;
+                int size = [position size];
                 if (!((row == 0 && col == 0) || (row == 0 && col == size - 1) || (row == size - 1 && col == 0) || (row == size - 1 && col == size - 1)))
                 {
-                    NSArray *moves = [delegate generateMoves];
+                    NSArray *moves = [_delegate generateMoves];
                     
-                    BOOL isLegalSquare = [moves containsObject: [NSNumber numberWithInt: row * position.size + col + 1]];
+                    BOOL isLegalSquare = [moves containsObject: [NSNumber numberWithInt: row * [position size] + col + 1]];
                     
                     if (isLegalSquare)
                         CGContextSetRGBFillColor(ctx, 0, 1, 1, 1);
@@ -211,15 +211,15 @@
         }
     }
     
-    for (int col = 0; col < position.size; col += 1)
+    for (int col = 0; col < [position size]; col += 1)
     {
-        for (int row = 0; row < position.size; row += 1)
+        for (int row = 0; row < [position size]; row += 1)
         {
             CGRect cellRect = CGRectMake(minX + col * cellSize, minY + row * cellSize, cellSize, cellSize);
             
             if ((row % 2) == (col % 2))
             {              
-                if ([[position.board objectAtIndex: col + row * position.size] isEqual: GCConnectionsRedPiece])
+                if ([[[position board] objectAtIndex: col + row * [position size]] isEqual: GCConnectionsRedPiece])
                 {
                     CGRect pieceRect;
                     if ((col % 2) == 1)
@@ -230,7 +230,7 @@
                     CGContextSetRGBFillColor(ctx, 1, 0, 0, 1);
                     CGContextFillRect(ctx, pieceRect);
                 }
-                else if ([[position.board objectAtIndex: col + row * position.size] isEqual: GCConnectionsBluePiece])
+                else if ([[[position board] objectAtIndex: col + row * [position size]] isEqual: GCConnectionsBluePiece])
                 {
                     CGRect pieceRect;
                     if ((col % 2) == 1)

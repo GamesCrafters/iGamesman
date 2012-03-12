@@ -11,8 +11,8 @@
 
 @interface GCConnectionsIntegerQueue : NSObject
 {
-	NSMutableArray *fringe;
-	NSMutableArray *blackList;
+	NSMutableArray *_fringe;
+	NSMutableArray *_blackList;
 }
 
 - (void) push: (int) position;

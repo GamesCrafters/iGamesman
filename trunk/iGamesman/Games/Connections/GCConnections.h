@@ -16,13 +16,13 @@
 
 @interface GCConnections : NSObject <GCGame, GCConnectionsViewDelegate>
 {
-    GCConnectionsPosition *position;
+    GCConnectionsPosition *_position;
     
-    GCPlayer *leftPlayer, *rightPlayer;
+    GCPlayer *_leftPlayer, *_rightPlayer;
     
-    GCMoveCompletionHandler moveHandler;
+    GCMoveCompletionHandler _moveHandler;
     
-    GCConnectionsView *connectionsView;
+    GCConnectionsView *_connectionsView;
 }
 
 @end

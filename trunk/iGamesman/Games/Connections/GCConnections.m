@@ -20,12 +20,12 @@
     
     if (self)
     {
-        position = nil;
+        _position = nil;
         
-        connectionsView = nil;
+        _connectionsView = nil;
         
-        leftPlayer = nil;
-        rightPlayer = nil;
+        _leftPlayer = nil;
+        _rightPlayer = nil;
     }
     
     return self;
@@ -42,12 +42,12 @@
 
 - (UIView *) viewWithFrame: (CGRect) frame
 {
-    if (connectionsView)
-        [connectionsView release];
+    if (_connectionsView)
+        [_connectionsView release];
     
-    connectionsView = [[GCConnectionsView alloc] initWithFrame: frame];
-    [connectionsView setDelegate: self];
-    return connectionsView;
+    _connectionsView = [[GCConnectionsView alloc] initWithFrame: frame];
+    [_connectionsView setDelegate: self];
+    return _connectionsView;
 }
 
 
@@ -56,42 +56,42 @@
     [left retain];
     [right retain];
     
-    if (leftPlayer)
-        [leftPlayer release];
-    if (rightPlayer)
-        [rightPlayer release];
+    if (_leftPlayer)
+        [_leftPlayer release];
+    if (_rightPlayer)
+        [_rightPlayer release];
     
-    leftPlayer  = left;
-    rightPlayer = right;
+    _leftPlayer  = left;
+    _rightPlayer = right;
     
-    [leftPlayer setEpithet: @"Red"];
-    [rightPlayer setEpithet: @"Blue"];
+    [_leftPlayer setEpithet: @"Red"];
+    [_rightPlayer setEpithet: @"Blue"];
     
-    if (position)
-        [position release];
+    if (_position)
+        [_position release];
     
-    position = [[GCConnectionsPosition alloc] initWithSize: 7];
-    position.leftTurn = YES;
+    _position = [[GCConnectionsPosition alloc] initWithSize: 7];
+    [_position setLeftTurn: YES];
 }
 
 
 - (void) waitForHumanMoveWithCompletion: (GCMoveCompletionHandler) completionHandler
 {
-    moveHandler = completionHandler;
+    _moveHandler = completionHandler;
     
-    [connectionsView startReceivingTouches];
+    [_connectionsView startReceivingTouches];
 }
 
 
 - (GCPosition *) currentPosition
 {
-    return position;
+    return _position;
 }
 
 
 - (GCPlayerSide) currentPlayerSide
 {
-    if (position.leftTurn)
+    if ([_position leftTurn])
         return GC_PLAYER_LEFT;
     else
         return GC_PLAYER_RIGHT;
@@ -100,13 +100,13 @@
 
 - (GCPlayer *) leftPlayer
 {
-    return leftPlayer;
+    return _leftPlayer;
 }
 
 
 - (GCPlayer *) rightPlayer
 {
-    return rightPlayer;
+    return _rightPlayer;
 }
 
 
@@ -114,10 +114,10 @@
 {	
 	int slot = [move integerValue] - 1;
     
-	[position.board replaceObjectAtIndex: slot withObject: (position.leftTurn ? GCConnectionsRedPiece : GCConnectionsBluePiece)];
-	position.leftTurn = !position.leftTurn;
+	[[_position board] replaceObjectAtIndex: slot withObject: ([_position leftTurn] ? GCConnectionsRedPiece : GCConnectionsBluePiece)];
+	[_position setLeftTurn: ![_position leftTurn]];
 	
-    [connectionsView setNeedsDisplay];
+    [_connectionsView setNeedsDisplay];
 }
 
 
@@ -125,10 +125,10 @@
 {
 	int slot = [move intValue] - 1;
     
-	[position.board replaceObjectAtIndex: slot withObject: GCConnectionsBlankPiece];
-	position.leftTurn = !position.leftTurn;
+	[[_position board] replaceObjectAtIndex: slot withObject: GCConnectionsBlankPiece];
+	[_position setLeftTurn: ![_position leftTurn]];
     
-    [connectionsView setNeedsDisplay];
+    [_connectionsView setNeedsDisplay];
 }
 
 
@@ -137,9 +137,9 @@
 	GCConnectionsIntegerQueue * queue = [[GCConnectionsIntegerQueue alloc] init];
 	int positionNum;
 	int neighborPosition;
-	int size = position.size;
+	int size = [_position size];
 	
-	NSMutableArray* board = position.board;
+	NSMutableArray* board = [_position board];
 
     if ([[self generateMoves] count] == 0)
     {
@@ -148,8 +148,8 @@
 	}
 	
 	//////////////////p1 turn finished/////////////////////////
-	if (!position.leftTurn){ 
-		
+	if (![_position leftTurn])
+    { 	
 		//add in initial positions, starting with the position directly below the top left connector
 		for (int i = size + 1; i < size * 2 - 1; i += 2)
         {
@@ -321,8 +321,8 @@
 - (NSArray *) generateMoves
 {
 	NSMutableArray *moves = [[NSMutableArray alloc] init];
-	NSMutableArray *board = position.board;
-	int size = position.size;
+	NSMutableArray *board = [_position board];
+	int size = [_position size];
 	
 	for (int j = 0; j < size; j += 1)
     {
@@ -330,11 +330,8 @@
         {
 			if ([[board objectAtIndex: i + j * size] isEqual: GCConnectionsBlankPiece])
             {
-                if ( (position.leftTurn && (i != 0) && (i != (size - 1))) || (!position.leftTurn && (j != 0) && (j != (size -1))) )
+                if ( ([_position leftTurn] && (i != 0) && (i != (size - 1))) || (![_position leftTurn] && (j != 0) && (j != (size -1))) )
                     [moves addObject: [NSNumber numberWithInt: i + j * size + 1]];
-                
-//				if (i != 0 && i != size - 1 && j != 0 && j != size - 1)
-//					[moves addObject: [NSNumber numberWithInt: i + j * size + 1]];
 			}
 		}
 	}
@@ -346,14 +343,14 @@
 
 - (GCConnectionsPosition *) position
 {
-    return position;
+    return _position;
 }
 
 
 - (void) userChoseMove: (NSNumber *) slot
 {
-    [connectionsView stopReceivingTouches];
-    moveHandler(slot);
+    [_connectionsView stopReceivingTouches];
+    _moveHandler(slot);
 }
 
 @end

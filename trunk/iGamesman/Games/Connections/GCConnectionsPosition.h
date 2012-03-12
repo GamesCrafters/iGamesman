@@ -17,9 +17,9 @@ GCConnectionsPiece const GCConnectionsBluePiece;
 
 @interface GCConnectionsPosition : NSObject<NSCopying>
 {
-	BOOL leftTurn;
-	NSMutableArray *board;
-	int size;
+	BOOL _leftTurn;
+	NSMutableArray *_board;
+	int _size;
 }
 
 @property (nonatomic, assign) int size;
