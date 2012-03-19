@@ -17,6 +17,7 @@
 #import "GCMetaSettingsPanelController.h"
 #import "GCPlayerPanelController.h"
 #import "GCValuesPanelController.h"
+#import "GCVariantsPanelController.h"
 #import "GCVVHPanelController.h"
 
 
@@ -352,7 +353,7 @@
     {
         drawerWidths[0] = 460;  drawerHeights[0] = sideBarRect.size.height;
         drawerWidths[1] = 460;  drawerHeights[1] = sideBarRect.size.height; 
-        drawerWidths[2] = 300;  drawerHeights[2] = sideBarRect.size.height;
+        drawerWidths[2] = 460;  drawerHeights[2] = sideBarRect.size.height;
         drawerWidths[3] = 360;  drawerHeights[3] = sideBarRect.size.height;
         drawerWidths[4] = 360;  drawerHeights[4] = sideBarRect.size.height;
     }
@@ -360,7 +361,7 @@
     {
         drawerWidths[0] = 460;  drawerHeights[0] = sideBarRect.size.height;
         drawerWidths[1] = 460;  drawerHeights[1] = 300;
-        drawerWidths[2] = 300;  drawerHeights[2] = sideBarRect.size.height;
+        drawerWidths[2] = 460;  drawerHeights[2] = sideBarRect.size.height;
         drawerWidths[3] = 360;  drawerHeights[3] = 250;
         drawerWidths[4] = 360;  drawerHeights[4] = 240;
     }
@@ -379,11 +380,17 @@
             [drawer setPanelController: vvhPanel];
             [vvhPanel release];
         }
-        if (i == 3)
+        else if (i == 3)
         {
             GCPlayerPanelController *playerPanel = [[GCPlayerPanelController alloc] initWithGame: _game];
             [drawer setPanelController: playerPanel];
             [playerPanel release];
+        }
+        else if (i == 4)
+        {
+            GCVariantsPanelController *variantsPanel = [[GCVariantsPanelController alloc] init];
+            [drawer setPanelController: variantsPanel];
+            [variantsPanel release];
         }
         else if (i == 5)
         {

@@ -39,7 +39,7 @@ typedef NSString GCGameValue;
  *   this method should return @"ttt".
  * A game that implements this method must also implement the other -gcWeb... methods.
  *
- * @return The name of the service
+ * @return The name of the service, or nil if the current configuration is unsupported by GCWeb
  */
 - (NSString *) gcWebServiceName;
 
@@ -52,7 +52,7 @@ typedef NSString GCGameValue;
  * A game that implements this method must also implement the other -gcWeb... methods.
  * This method will only be called on a game that has already been started.
  *
- * @return A dictionary of parameter names mapping to values.
+ * @return A dictionary of parameter names mapping to values, or nil if the current configuration is unsupported by GCWeb
  */
 - (NSDictionary *) gcWebParameters;
 
@@ -62,7 +62,7 @@ typedef NSString GCGameValue;
  * Must be properly URL escaped.
  * A game that implements this method must also implement the other -gcWeb... methods.
  *
- * @return The string representation of the current position, to be passed to the GCWeb request.
+ * @return The string representation of the current position, to be passed to the GCWeb request, or nil if the current configuration is unsupported by GCWeb
  */
 - (NSString *) gcWebBoardString;
 
@@ -209,6 +209,11 @@ typedef void (^GCMoveCompletionHandler) (GCMove *move);
  * the current position. If there are no legal moves, return an empty array - NOT nil.
  */
 - (NSArray *) generateMoves;
+
+
+@optional
+- (BOOL) isMisere;
+- (void) setMisere: (BOOL) misere;
 
 
 @optional

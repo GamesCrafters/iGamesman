@@ -39,6 +39,14 @@
 		0A2D229B14CA2521001ACB53 /* GCConnectionsPosition.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A2D229914CA2521001ACB53 /* GCConnectionsPosition.m */; };
 		0A2D229E14CA277A001ACB53 /* GCConnectionsIntegerQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A2D229C14CA277A001ACB53 /* GCConnectionsIntegerQueue.m */; };
 		0A2F36EA14E3234B0078A116 /* GCMoveValuesRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A2F36E914E3234B0078A116 /* GCMoveValuesRequest.m */; };
+		0A32FE551517F5CE0093F10A /* GamesCrafters@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A32FE541517F5CE0093F10A /* GamesCrafters@2x~ipad.png */; };
+		0A32FE581517F6CA0093F10A /* Default-Portrait@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A32FE571517F6CA0093F10A /* Default-Portrait@2x~ipad.png */; };
+		0A32FE5A1517F6D70093F10A /* Default-Landscape@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A32FE591517F6D70093F10A /* Default-Landscape@2x~ipad.png */; };
+		0A32FE5C1517F8500093F10A /* Icon~ipad@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A32FE5B1517F8500093F10A /* Icon~ipad@2x.png */; };
+		0A32FE5E1517F8D40093F10A /* BlackButton@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A32FE5D1517F8D40093F10A /* BlackButton@2x~ipad.png */; };
+		0A32FE601517F8FB0093F10A /* GreenButton@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A32FE5F1517F8FB0093F10A /* GreenButton@2x~ipad.png */; };
+		0A32FE621517F91D0093F10A /* YellowButton@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A32FE611517F91D0093F10A /* YellowButton@2x~ipad.png */; };
+		0A32FE641517FC280093F10A /* patchwork@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A32FE631517FC280093F10A /* patchwork@2x~ipad.png */; };
 		0A489EBB14EB04400004919D /* GCValuesHelpView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A489EBA14EB04400004919D /* GCValuesHelpView.xib */; };
 		0A489EBE14EB0C040004919D /* GCValuesHelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A489EBD14EB0C040004919D /* GCValuesHelpViewController.m */; };
 		0A5C513A14BFA80F00CA07B8 /* GCGameController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A5C513914BFA80F00CA07B8 /* GCGameController.m */; };
@@ -55,14 +63,6 @@
 		0A6976E014CCB9510024AE75 /* GCQuickCrossView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A6976DF14CCB9510024AE75 /* GCQuickCrossView.m */; };
 		0A6976E614CCBCDE0024AE75 /* GCQuickCrossPosition.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A6976E514CCBCDE0024AE75 /* GCQuickCrossPosition.m */; };
 		0A69776114CD2E940024AE75 /* GCPlayerPanelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A69776014CD2E940024AE75 /* GCPlayerPanelController.m */; };
-		0A69776D14CD46500024AE75 /* ComputerIconRed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A69776914CD46500024AE75 /* ComputerIconRed@2x.png */; };
-		0A69776E14CD46500024AE75 /* ComputerIconBlue.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A69776A14CD46500024AE75 /* ComputerIconBlue.png */; };
-		0A69776F14CD46500024AE75 /* ComputerIconBlue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A69776B14CD46500024AE75 /* ComputerIconBlue@2x.png */; };
-		0A69777014CD46500024AE75 /* ComputerIconRed.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A69776C14CD46500024AE75 /* ComputerIconRed.png */; };
-		0A69777514CD475C0024AE75 /* UserIconBlue.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A69777114CD475A0024AE75 /* UserIconBlue.png */; };
-		0A69777614CD475C0024AE75 /* UserIconBlue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A69777214CD475A0024AE75 /* UserIconBlue@2x.png */; };
-		0A69777714CD475C0024AE75 /* UserIconRed.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A69777314CD475A0024AE75 /* UserIconRed.png */; };
-		0A69777814CD475C0024AE75 /* UserIconRed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A69777414CD475B0024AE75 /* UserIconRed@2x.png */; };
 		0A7B774D14B16BAD0011837C /* connect4.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0A7B774C14B16BAD0011837C /* connect4.xml */; };
 		0A7B775314B16BC20011837C /* connections.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0A7B774E14B16BC20011837C /* connections.xml */; };
 		0A7B775414B16BC20011837C /* othello.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0A7B774F14B16BC20011837C /* othello.xml */; };
@@ -70,8 +70,7 @@
 		0A7B775614B16BC20011837C /* quickcross.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0A7B775114B16BC20011837C /* quickcross.xml */; };
 		0A7B775714B16BC20011837C /* tictactoe.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0A7B775214B16BC20011837C /* tictactoe.xml */; };
 		0A7C4C86150E7198004B187C /* GCConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A7C4C85150E7198004B187C /* GCConstants.m */; };
-		0A7C4C89150EA3C7004B187C /* docs in Resources */ = {isa = PBXBuildFile; fileRef = 0A7C4C88150EA3C6004B187C /* docs */; };
-		0A7C4C8B150EA422004B187C /* iGamesman.Doxyfile in Resources */ = {isa = PBXBuildFile; fileRef = 0A7C4C8A150EA421004B187C /* iGamesman.Doxyfile */; };
+		0A7C4C8E150EAA77004B187C /* GCVariantsPanelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A7C4C8D150EAA77004B187C /* GCVariantsPanelController.m */; };
 		0A8D8D9014D226A900330306 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A8D8D8F14D226A900330306 /* QuartzCore.framework */; };
 		0A8D8D9614D267DA00330306 /* GCPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A8D8D9214D267DA00330306 /* GCPlayer.m */; };
 		0A8D8D9714D267DA00330306 /* GCStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A8D8D9314D267DA00330306 /* GCStack.m */; };
@@ -97,8 +96,6 @@
 		0AB6FF3F14BD132F00CD608D /* variants@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AB6FF2F14BD132F00CD608D /* variants@2x.png */; };
 		0AB6FF4014BD132F00CD608D /* vvh.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AB6FF3014BD132F00CD608D /* vvh.png */; };
 		0AB6FF4114BD132F00CD608D /* vvh@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AB6FF3114BD132F00CD608D /* vvh@2x.png */; };
-		0AB6FF4414BD137D00CD608D /* CloseButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AB6FF4214BD137D00CD608D /* CloseButton.png */; };
-		0AB6FF4514BD137D00CD608D /* CloseButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AB6FF4314BD137D00CD608D /* CloseButton@2x.png */; };
 		0AB6FF4914BD197000CD608D /* GCTicTacToe.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AB6FF4814BD197000CD608D /* GCTicTacToe.m */; };
 		0AB6FF4C14BD1A8400CD608D /* GCTicTacToeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AB6FF4B14BD1A8400CD608D /* GCTicTacToeView.m */; };
 		0AB6FF4F14BD1B3600CD608D /* GCTicTacToePosition.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AB6FF4D14BD1B3600CD608D /* GCTicTacToePosition.m */; };
@@ -190,6 +187,14 @@
 		0A2D229D14CA277A001ACB53 /* GCConnectionsIntegerQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCConnectionsIntegerQueue.h; sourceTree = "<group>"; };
 		0A2F36E814E3234B0078A116 /* GCMoveValuesRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCMoveValuesRequest.h; sourceTree = "<group>"; };
 		0A2F36E914E3234B0078A116 /* GCMoveValuesRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCMoveValuesRequest.m; sourceTree = "<group>"; };
+		0A32FE541517F5CE0093F10A /* GamesCrafters@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GamesCrafters@2x~ipad.png"; sourceTree = "<group>"; };
+		0A32FE571517F6CA0093F10A /* Default-Portrait@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Portrait@2x~ipad.png"; path = "../Default-Portrait@2x~ipad.png"; sourceTree = "<group>"; };
+		0A32FE591517F6D70093F10A /* Default-Landscape@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape@2x~ipad.png"; path = "../Default-Landscape@2x~ipad.png"; sourceTree = "<group>"; };
+		0A32FE5B1517F8500093F10A /* Icon~ipad@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon~ipad@2x.png"; path = "../Icon~ipad@2x.png"; sourceTree = "<group>"; };
+		0A32FE5D1517F8D40093F10A /* BlackButton@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BlackButton@2x~ipad.png"; sourceTree = "<group>"; };
+		0A32FE5F1517F8FB0093F10A /* GreenButton@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GreenButton@2x~ipad.png"; sourceTree = "<group>"; };
+		0A32FE611517F91D0093F10A /* YellowButton@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "YellowButton@2x~ipad.png"; sourceTree = "<group>"; };
+		0A32FE631517FC280093F10A /* patchwork@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "patchwork@2x~ipad.png"; sourceTree = "<group>"; };
 		0A489EBA14EB04400004919D /* GCValuesHelpView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GCValuesHelpView.xib; sourceTree = "<group>"; };
 		0A489EBC14EB0C040004919D /* GCValuesHelpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCValuesHelpViewController.h; sourceTree = "<group>"; };
 		0A489EBD14EB0C040004919D /* GCValuesHelpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCValuesHelpViewController.m; sourceTree = "<group>"; };
@@ -220,14 +225,6 @@
 		0A6976E514CCBCDE0024AE75 /* GCQuickCrossPosition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCQuickCrossPosition.m; sourceTree = "<group>"; };
 		0A69775F14CD2E940024AE75 /* GCPlayerPanelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCPlayerPanelController.h; sourceTree = "<group>"; };
 		0A69776014CD2E940024AE75 /* GCPlayerPanelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCPlayerPanelController.m; sourceTree = "<group>"; };
-		0A69776914CD46500024AE75 /* ComputerIconRed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ComputerIconRed@2x.png"; sourceTree = "<group>"; };
-		0A69776A14CD46500024AE75 /* ComputerIconBlue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ComputerIconBlue.png; sourceTree = "<group>"; };
-		0A69776B14CD46500024AE75 /* ComputerIconBlue@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ComputerIconBlue@2x.png"; sourceTree = "<group>"; };
-		0A69776C14CD46500024AE75 /* ComputerIconRed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ComputerIconRed.png; sourceTree = "<group>"; };
-		0A69777114CD475A0024AE75 /* UserIconBlue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UserIconBlue.png; sourceTree = "<group>"; };
-		0A69777214CD475A0024AE75 /* UserIconBlue@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UserIconBlue@2x.png"; sourceTree = "<group>"; };
-		0A69777314CD475A0024AE75 /* UserIconRed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UserIconRed.png; sourceTree = "<group>"; };
-		0A69777414CD475B0024AE75 /* UserIconRed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UserIconRed@2x.png"; sourceTree = "<group>"; };
 		0A7B774C14B16BAD0011837C /* connect4.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = connect4.xml; sourceTree = "<group>"; };
 		0A7B774E14B16BC20011837C /* connections.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = connections.xml; sourceTree = "<group>"; };
 		0A7B774F14B16BC20011837C /* othello.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = othello.xml; sourceTree = "<group>"; };
@@ -238,6 +235,8 @@
 		0A7C4C85150E7198004B187C /* GCConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCConstants.m; sourceTree = "<group>"; };
 		0A7C4C88150EA3C6004B187C /* docs */ = {isa = PBXFileReference; lastKnownFileType = folder; path = docs; sourceTree = "<group>"; };
 		0A7C4C8A150EA421004B187C /* iGamesman.Doxyfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = iGamesman.Doxyfile; sourceTree = "<group>"; };
+		0A7C4C8C150EAA77004B187C /* GCVariantsPanelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCVariantsPanelController.h; sourceTree = "<group>"; };
+		0A7C4C8D150EAA77004B187C /* GCVariantsPanelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCVariantsPanelController.m; sourceTree = "<group>"; };
 		0A8D8D8F14D226A900330306 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		0A8D8D9214D267DA00330306 /* GCPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCPlayer.m; sourceTree = "<group>"; };
 		0A8D8D9314D267DA00330306 /* GCStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCStack.m; sourceTree = "<group>"; };
@@ -269,8 +268,6 @@
 		0AB6FF2F14BD132F00CD608D /* variants@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "variants@2x.png"; sourceTree = "<group>"; };
 		0AB6FF3014BD132F00CD608D /* vvh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vvh.png; sourceTree = "<group>"; };
 		0AB6FF3114BD132F00CD608D /* vvh@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "vvh@2x.png"; sourceTree = "<group>"; };
-		0AB6FF4214BD137D00CD608D /* CloseButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseButton.png; sourceTree = "<group>"; };
-		0AB6FF4314BD137D00CD608D /* CloseButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CloseButton@2x.png"; sourceTree = "<group>"; };
 		0AB6FF4714BD197000CD608D /* GCTicTacToe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCTicTacToe.h; sourceTree = "<group>"; };
 		0AB6FF4814BD197000CD608D /* GCTicTacToe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCTicTacToe.m; sourceTree = "<group>"; };
 		0AB6FF4A14BD1A8400CD608D /* GCTicTacToeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCTicTacToeView.h; sourceTree = "<group>"; };
@@ -467,26 +464,13 @@
 				0A199AF814E5E06600B7D4F4 /* GCValuesPanelController.m */,
 				0A489EBC14EB0C040004919D /* GCValuesHelpViewController.h */,
 				0A489EBD14EB0C040004919D /* GCValuesHelpViewController.m */,
+				0A7C4C8C150EAA77004B187C /* GCVariantsPanelController.h */,
+				0A7C4C8D150EAA77004B187C /* GCVariantsPanelController.m */,
 				0AB7855514EC4E3E00D9C44B /* GCVVHPanelController.h */,
 				0AB7855614EC4E3E00D9C44B /* GCVVHPanelController.m */,
 			);
 			name = "Sidebar Panels";
 			path = SidebarPanels;
-			sourceTree = "<group>";
-		};
-		0A69776814CD46270024AE75 /* Player Panel */ = {
-			isa = PBXGroup;
-			children = (
-				0A69776A14CD46500024AE75 /* ComputerIconBlue.png */,
-				0A69776B14CD46500024AE75 /* ComputerIconBlue@2x.png */,
-				0A69776C14CD46500024AE75 /* ComputerIconRed.png */,
-				0A69776914CD46500024AE75 /* ComputerIconRed@2x.png */,
-				0A69777114CD475A0024AE75 /* UserIconBlue.png */,
-				0A69777214CD475A0024AE75 /* UserIconBlue@2x.png */,
-				0A69777314CD475A0024AE75 /* UserIconRed.png */,
-				0A69777414CD475B0024AE75 /* UserIconRed@2x.png */,
-			);
-			name = "Player Panel";
 			sourceTree = "<group>";
 		};
 		0A7B774B14B16B9A0011837C /* Game XMLs */ = {
@@ -651,8 +635,10 @@
 			children = (
 				0AD7541E14AD2E5100746E7B /* Default.png */,
 				0AD7542014AD2E5300746E7B /* Default@2x.png */,
-				0AD7542214AD2E5700746E7B /* Default-Portrait~ipad.png */,
 				0AD7542414AD2E5A00746E7B /* Default-Landscape~ipad.png */,
+				0A32FE591517F6D70093F10A /* Default-Landscape@2x~ipad.png */,
+				0AD7542214AD2E5700746E7B /* Default-Portrait~ipad.png */,
+				0A32FE571517F6CA0093F10A /* Default-Portrait@2x~ipad.png */,
 			);
 			name = "Launch Images";
 			sourceTree = "<group>";
@@ -663,6 +649,7 @@
 				0AD7541014AD2A3A00746E7B /* Icon.png */,
 				0AD7541214AD2A3E00746E7B /* Icon@2x.png */,
 				0AD7541414AD2A4200746E7B /* Icon~ipad.png */,
+				0A32FE5B1517F8500093F10A /* Icon~ipad@2x.png */,
 			);
 			name = "App Icons";
 			sourceTree = "<group>";
@@ -695,25 +682,27 @@
 		0AF146F614B53ED1003E693C /* UI Assets */ = {
 			isa = PBXGroup;
 			children = (
-				0A69776814CD46270024AE75 /* Player Panel */,
 				0AB6FF2114BD12CE00CD608D /* Sidebar */,
 				0AF146CD14B51A12003E693C /* BlackButton.png */,
 				0AF146CC14B51A12003E693C /* BlackButton@2x.png */,
 				0AF146F214B53D6E003E693C /* BlackButton~ipad.png */,
+				0A32FE5D1517F8D40093F10A /* BlackButton@2x~ipad.png */,
 				0AF146D914B51D10003E693C /* GreenButton.png */,
 				0AF146D814B51D10003E693C /* GreenButton@2x.png */,
 				0AF146F014B53D14003E693C /* GreenButton~ipad.png */,
+				0A32FE5F1517F8FB0093F10A /* GreenButton@2x~ipad.png */,
 				0AF146DF14B531F8003E693C /* YellowButton.png */,
 				0AF146E014B531F8003E693C /* YellowButton@2x.png */,
 				0AF146EE14B53C00003E693C /* YellowButton~ipad.png */,
-				0AB6FF4214BD137D00CD608D /* CloseButton.png */,
-				0AB6FF4314BD137D00CD608D /* CloseButton@2x.png */,
+				0A32FE611517F91D0093F10A /* YellowButton@2x~ipad.png */,
 				0AF146E714B536B3003E693C /* GamesCrafters.png */,
 				0AF146E814B536B3003E693C /* GamesCrafters@2x.png */,
 				0AF146F414B53D8A003E693C /* GamesCrafters~ipad.png */,
+				0A32FE541517F5CE0093F10A /* GamesCrafters@2x~ipad.png */,
 				0A9513A314F5A20C0000A563 /* patchwork.png */,
 				0A9513A414F5A20C0000A563 /* patchwork@2x.png */,
 				0A9513A214F5A20C0000A563 /* patchwork~ipad.png */,
+				0A32FE631517FC280093F10A /* patchwork@2x~ipad.png */,
 			);
 			path = "UI Assets";
 			sourceTree = "<group>";
@@ -835,17 +824,7 @@
 				0AB6FF3F14BD132F00CD608D /* variants@2x.png in Resources */,
 				0AB6FF4014BD132F00CD608D /* vvh.png in Resources */,
 				0AB6FF4114BD132F00CD608D /* vvh@2x.png in Resources */,
-				0AB6FF4414BD137D00CD608D /* CloseButton.png in Resources */,
-				0AB6FF4514BD137D00CD608D /* CloseButton@2x.png in Resources */,
 				0A6976D914CB9A080024AE75 /* othelloFelt.png in Resources */,
-				0A69776D14CD46500024AE75 /* ComputerIconRed@2x.png in Resources */,
-				0A69776E14CD46500024AE75 /* ComputerIconBlue.png in Resources */,
-				0A69776F14CD46500024AE75 /* ComputerIconBlue@2x.png in Resources */,
-				0A69777014CD46500024AE75 /* ComputerIconRed.png in Resources */,
-				0A69777514CD475C0024AE75 /* UserIconBlue.png in Resources */,
-				0A69777614CD475C0024AE75 /* UserIconBlue@2x.png in Resources */,
-				0A69777714CD475C0024AE75 /* UserIconRed.png in Resources */,
-				0A69777814CD475C0024AE75 /* UserIconRed@2x.png in Resources */,
 				0A143F4E14E1B49A00300D72 /* quartoBoard.png in Resources */,
 				0A143F5F14E1B5CA00300D72 /* quartoSquare0.png in Resources */,
 				0A143F6014E1B5CA00300D72 /* quartoSquare1.png in Resources */,
@@ -868,8 +847,14 @@
 				0A9513A514F5A20C0000A563 /* patchwork~ipad.png in Resources */,
 				0A9513A614F5A20C0000A563 /* patchwork.png in Resources */,
 				0A9513A714F5A20C0000A563 /* patchwork@2x.png in Resources */,
-				0A7C4C89150EA3C7004B187C /* docs in Resources */,
-				0A7C4C8B150EA422004B187C /* iGamesman.Doxyfile in Resources */,
+				0A32FE551517F5CE0093F10A /* GamesCrafters@2x~ipad.png in Resources */,
+				0A32FE581517F6CA0093F10A /* Default-Portrait@2x~ipad.png in Resources */,
+				0A32FE5A1517F6D70093F10A /* Default-Landscape@2x~ipad.png in Resources */,
+				0A32FE5C1517F8500093F10A /* Icon~ipad@2x.png in Resources */,
+				0A32FE5E1517F8D40093F10A /* BlackButton@2x~ipad.png in Resources */,
+				0A32FE601517F8FB0093F10A /* GreenButton@2x~ipad.png in Resources */,
+				0A32FE621517F91D0093F10A /* YellowButton@2x~ipad.png in Resources */,
+				0A32FE641517FC280093F10A /* patchwork@2x~ipad.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -925,6 +910,7 @@
 				0AB7855714EC4E3E00D9C44B /* GCVVHPanelController.m in Sources */,
 				0A176E1214EC707F00F66639 /* GCMetaSettingsPanelController.m in Sources */,
 				0A7C4C86150E7198004B187C /* GCConstants.m in Sources */,
+				0A7C4C8E150EAA77004B187C /* GCVariantsPanelController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -995,7 +981,7 @@
 				GCC_PREFIX_HEADER = "iGamesman/iGamesman-Prefix.pch";
 				INFOPLIST_FILE = "iGamesman/iGamesman-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "72BA560F-E2D2-426C-AF05-108491AF31A6";
+				PROVISIONING_PROFILE = "B7A0FB7E-512A-4CD9-B41B-9717BDD8BA41";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1008,7 +994,7 @@
 				GCC_PREFIX_HEADER = "iGamesman/iGamesman-Prefix.pch";
 				INFOPLIST_FILE = "iGamesman/iGamesman-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "72BA560F-E2D2-426C-AF05-108491AF31A6";
+				PROVISIONING_PROFILE = "B7A0FB7E-512A-4CD9-B41B-9717BDD8BA41";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
