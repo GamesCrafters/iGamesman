@@ -79,18 +79,6 @@
     }
     
     
-    if ([_moveValueSwitch isOn])
-    {
-        [_deltaRemotenessLabel setEnabled: YES];
-        [_deltaRemotenessSwitch setEnabled: YES];
-    }
-    else
-    {
-        [_deltaRemotenessLabel setEnabled: NO];
-        [_deltaRemotenessSwitch setEnabled: NO];
-    }
-    
-    
     if ([_game respondsToSelector: @selector(isShowingDeltaRemoteness)] && [_game respondsToSelector: @selector(setShowingDeltaRemoteness:)])
     {
         [_deltaRemotenessSwitch setOn: [_game isShowingDeltaRemoteness]];
@@ -99,6 +87,18 @@
     else
     {
         [_deltaRemotenessSwitch setOn: NO];
+        [_deltaRemotenessSwitch setEnabled: NO];
+    }
+    
+    
+    if ([_moveValueSwitch isOn])
+    {
+        [_deltaRemotenessLabel setEnabled: YES];
+        [_deltaRemotenessSwitch setEnabled: YES];
+    }
+    else
+    {
+        [_deltaRemotenessLabel setEnabled: NO];
         [_deltaRemotenessSwitch setEnabled: NO];
     }
 }

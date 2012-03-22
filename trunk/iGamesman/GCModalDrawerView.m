@@ -10,6 +10,8 @@
 
 #import <QuartzCore/QuartzCore.h>
 
+#import "GCVariantsPanelController.h"
+
 #define OUTER_RADIUS (10)
 
 
@@ -55,11 +57,19 @@
 
 - (void) dealloc
 {
-    [_closeButton release];
     [_toolbar release];
     [_panelController release];
     
     [super dealloc];
+}
+
+
+#pragma mark -
+#pragma mark GCVariantsPanelDelegate
+
+- (void) closeDrawer
+{
+    [self slideOut];
 }
 
 
@@ -82,7 +92,6 @@
     void (^slideBlock) (void) = ^(void)
     {
         [self setFrame: CGRectOffset([self frame], [self frame].size.width, 0)];
-        [_closeButton setAlpha: 1];
         
         [_backgroundView setAlpha: 0.5f];
     };
@@ -100,7 +109,6 @@
     void (^slideBlock) (void) = ^(void)
     {
         [self setFrame: CGRectOffset(self.frame, -self.frame.size.width, 0)];
-        [_closeButton setAlpha: 0];
         
         [_backgroundView setAlpha: 0];
     };
@@ -133,7 +141,10 @@
     if ([_panelController respondsToSelector: @selector(saveButtonTapped)])
         [_panelController saveButtonTapped];
     
-    [self slideOut];
+    if (![_panelController respondsToSelector: @selector(drawerShouldClose)] || [_panelController drawerShouldClose])
+    {
+        [self slideOut];
+    }
 }
 
 

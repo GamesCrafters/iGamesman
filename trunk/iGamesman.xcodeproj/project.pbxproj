@@ -245,6 +245,7 @@
 		0A9513A214F5A20C0000A563 /* patchwork~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "patchwork~ipad.png"; sourceTree = "<group>"; };
 		0A9513A314F5A20C0000A563 /* patchwork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = patchwork.png; sourceTree = "<group>"; };
 		0A9513A414F5A20C0000A563 /* patchwork@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "patchwork@2x.png"; sourceTree = "<group>"; };
+		0AA03879151BDC3D007C072B /* GCModalDrawer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GCModalDrawer.h; sourceTree = "<group>"; };
 		0AB6FF1214BD0C1400CD608D /* GCGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCGame.h; sourceTree = "<group>"; };
 		0AB6FF1314BD0DC500CD608D /* GCGameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCGameViewController.h; sourceTree = "<group>"; };
 		0AB6FF1414BD0DC600CD608D /* GCGameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCGameViewController.m; sourceTree = "<group>"; };
@@ -594,6 +595,7 @@
 				0AB6FF1214BD0C1400CD608D /* GCGame.h */,
 				0AD7540814AD29EF00746E7B /* GCAppDelegate.h */,
 				0AD7540914AD29EF00746E7B /* GCAppDelegate.m */,
+				0AA03879151BDC3D007C072B /* GCModalDrawer.h */,
 				0AB6FF1F14BD123B00CD608D /* GCModalDrawerView.h */,
 				0AB6FF1E14BD123B00CD608D /* GCModalDrawerView.m */,
 				0A5C513814BFA80F00CA07B8 /* GCGameController.h */,
@@ -732,6 +734,7 @@
 			buildPhases = (
 				0AD753F114AD29EF00746E7B /* Sources */,
 				0AD753F214AD29EF00746E7B /* Frameworks */,
+				0AA03877151BD343007C072B /* ShellScript */,
 				0AD753F314AD29EF00746E7B /* Resources */,
 			);
 			buildRules = (
@@ -749,7 +752,7 @@
 		0AD753EC14AD29EF00746E7B /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0430;
 				ORGANIZATIONNAME = GamesCrafters;
 			};
 			buildConfigurationList = 0AD753EF14AD29EF00746E7B /* Build configuration list for PBXProject "iGamesman" */;
@@ -859,6 +862,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0AA03877151BD343007C072B /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "arch=${ARCHS:0:4}\nif [ $arch != \"i386\" ]\nthen\n    buildNumber=$(/usr/libexec/PlistBuddy -c \"Print GCBuildNumber\" ${PROJECT_DIR}/iGamesman/iGamesman-Info.plist)\n    buildNumber=$(($buildNumber + 1))\n    /usr/libexec/PlistBuddy -c \"Set :GCBuildNumber $buildNumber\" ${PROJECT_DIR}/iGamesman/iGamesman-Info.plist\nfi";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		0AD753F114AD29EF00746E7B /* Sources */ = {

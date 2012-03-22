@@ -231,7 +231,7 @@
     
     
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-    NSString *versionString = [NSString stringWithFormat: @"v%@, build %@", [infoDictionary objectForKey: @"CFBundleShortVersionString"], [infoDictionary objectForKey: @"CFBundleVersion"]];
+    NSString *versionString = [NSString stringWithFormat: @"v%@, build %@", [infoDictionary objectForKey: @"GCVersionNumber"], [infoDictionary objectForKey: @"GCBuildNumber"]];
     CGSize textSize = [versionString sizeWithFont: [UIFont boldSystemFontOfSize: 14.0f]];
     UILabel *versionLabel = [[UILabel alloc] initWithFrame: CGRectMake(5, height - 22, textSize.width, 22)];
     [versionLabel setText: versionString];

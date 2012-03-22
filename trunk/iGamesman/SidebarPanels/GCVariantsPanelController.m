@@ -10,6 +10,8 @@
 
 @implementation GCVariantsPanelController
 
+@synthesize delegate = _delegate;
+
 #pragma mark - GCModalDrawerPanelDelegate
 
 - (BOOL) wantsSaveButton
@@ -33,6 +35,32 @@
 - (NSString *) title
 {
     return @"Game Variants";
+}
+
+
+- (void) saveButtonTapped
+{
+    NSString *message = @"Changing game variants will restart the game. All progress in the current game will be lost! Are you sure you want to change variants?";
+    UIAlertView *infoAlert = [[UIAlertView alloc] initWithTitle: @"Change Variants"
+                                                        message: message
+                                                       delegate: self
+                                              cancelButtonTitle: @"Cancel"
+                                              otherButtonTitles: @"OK", nil];
+    [infoAlert show];
+    [infoAlert release];
+}
+
+
+- (void) alertView: (UIAlertView *) alertView clickedButtonAtIndex: (NSInteger) buttonIndex
+{
+    if (buttonIndex == 1)
+        [_delegate closeDrawer];
+}
+
+
+- (BOOL) drawerShouldClose
+{
+    return NO;
 }
 
 

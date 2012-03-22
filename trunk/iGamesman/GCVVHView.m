@@ -27,7 +27,7 @@
     
     if (self)
     {
-        [self setOpaque: NO];
+        [self setOpaque: YES];
         [self setClearsContextBeforeDrawing: YES];
         
         CATiledLayer *tiledLayer = (CATiledLayer *) [self layer];

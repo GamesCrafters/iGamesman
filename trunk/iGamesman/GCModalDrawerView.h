@@ -8,12 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol GCModalDrawerPanelDelegate;
-@protocol GCModalDrawerViewDelegate;
+#import "GCModalDrawer.h"
 
-@interface GCModalDrawerView : UIView
+#import "GCVariantsPanelController.h"
+
+
+@interface GCModalDrawerView : UIView <GCVariantsPanelDelegate>
 {
-    UIButton *_closeButton;
     UIToolbar *_toolbar;
     
     UIView *_backgroundView;
@@ -42,34 +43,5 @@
 
 /* Slide the drawer offscreen */
 - (void) slideOut;
-
-@end
-
-
-
-@protocol GCModalDrawerPanelDelegate <NSObject>
-
-- (BOOL) wantsSaveButton;
-- (BOOL) wantsDoneButton;
-- (BOOL) wantsCancelButton;
-- (NSString *) title;
-
-@optional
-- (void) drawerWillAppear;
-- (void) drawerWillDisappear;
-
-- (void) saveButtonTapped;
-- (void) doneButtonTapped;
-- (void) cancelButtonTapped;
-
-@end
-
-
-@protocol GCModalDrawerViewDelegate <NSObject>
-
-- (void) addView: (UIView *) view behindDrawer: (GCModalDrawerView *) drawer;
-
-@optional
-- (void) drawerDidDisappear: (GCModalDrawerView *) drawer;
 
 @end

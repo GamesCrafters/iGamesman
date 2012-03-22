@@ -8,8 +8,24 @@
 
 #import <UIKit/UIKit.h>
 
-#import "GCModalDrawerView.h"
+#import "GCModalDrawer.h"
 
-@interface GCVariantsPanelController : UIViewController <GCModalDrawerPanelDelegate>
+
+@protocol GCVariantsPanelDelegate;
+
+@interface GCVariantsPanelController : UIViewController <GCModalDrawerPanelDelegate, UIAlertViewDelegate>
+{
+    id<GCVariantsPanelDelegate> _delegate;
+}
+
+@property (nonatomic, assign) id<GCVariantsPanelDelegate> delegate;
+
+@end
+
+
+
+@protocol GCVariantsPanelDelegate
+
+- (void) closeDrawer;
 
 @end
