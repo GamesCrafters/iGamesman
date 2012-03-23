@@ -325,7 +325,10 @@
 		}
         
         if (horizontal || vertical || positiveDiagonal || negativeDiagonal)
-            return [piece isEqual: ([_position leftTurn] ? GCConnectFourRedPiece : GCConnectFourBluePiece)] ? GCGameValueWin : GCGameValueLose;
+        {
+            BOOL pieceIsCurrentPlayer = [piece isEqual: ([_position leftTurn] ? GCConnectFourRedPiece : GCConnectFourBluePiece)];
+            return (pieceIsCurrentPlayer ? GCGameValueWin : GCGameValueLose);
+        }
     }
     
     NSUInteger numBlanks = 0;

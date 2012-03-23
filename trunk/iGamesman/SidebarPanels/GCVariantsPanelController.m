@@ -8,9 +8,23 @@
 
 #import "GCVariantsPanelController.h"
 
+#import "GCPlayer.h"
+
 @implementation GCVariantsPanelController
 
 @synthesize delegate = _delegate;
+
+- (id) initWithGame: (id<GCGame>) game
+{
+    self = [super init];
+    
+    if (self)
+    {
+        _game = game;
+    }
+    
+    return self;
+}
 
 #pragma mark - GCModalDrawerPanelDelegate
 
@@ -38,6 +52,23 @@
 }
 
 
+- (void) drawerWillAppear
+{
+    if ([_game respondsToSelector: @selector(isMisere)])
+    {
+        [_misereLabel setEnabled: YES];
+        [_misereSwitch setEnabled: YES];
+        [_misereSwitch setOn: [_game isMisere]];
+    }
+    else
+    {
+        [_misereLabel setEnabled: NO];
+        [_misereSwitch setEnabled: NO];
+        [_misereSwitch setOn: NO];
+    }
+}
+
+
 - (void) saveButtonTapped
 {
     NSString *message = @"Changing game variants will restart the game. All progress in the current game will be lost! Are you sure you want to change variants?";
@@ -51,16 +82,21 @@
 }
 
 
-- (void) alertView: (UIAlertView *) alertView clickedButtonAtIndex: (NSInteger) buttonIndex
-{
-    if (buttonIndex == 1)
-        [_delegate closeDrawer];
-}
-
-
 - (BOOL) drawerShouldClose
 {
     return NO;
+}
+
+
+#pragma mark - UIAlertViewDelegate
+
+- (void) alertView: (UIAlertView *) alertView clickedButtonAtIndex: (NSInteger) buttonIndex
+{
+    /* OK button */
+    if (buttonIndex == 1)
+    {
+        [_delegate closeDrawer];
+    }
 }
 
 
@@ -76,21 +112,28 @@
     
     CGFloat width  = self.view.bounds.size.width;
     
-    UILabel *misereLabel = [[UILabel alloc] initWithFrame: CGRectMake(20, 20, width - 40, 25)];
-    [misereLabel setBackgroundColor: [UIColor clearColor]];
-    [misereLabel setTextColor: [UIColor whiteColor]];
-    [misereLabel setFont: [UIFont boldSystemFontOfSize: 20]];
-    [misereLabel setText: @"Misère"];
+    _misereLabel = [[UILabel alloc] initWithFrame: CGRectMake(20, 20, width - 40, 25)];
+    [_misereLabel setBackgroundColor: [UIColor clearColor]];
+    [_misereLabel setTextColor: [UIColor whiteColor]];
+    [_misereLabel setFont: [UIFont boldSystemFontOfSize: 20]];
+    [_misereLabel setText: @"Misère"];
     
-    [self.view addSubview: misereLabel];
-    [misereLabel release];
+    [self.view addSubview: _misereLabel];
     
     
-    UISwitch *misereSwitch = [[UISwitch alloc] init];
-    [misereSwitch setCenter: CGPointMake(width - 20 - misereSwitch.frame.size.width / 2.0f, 20 + (25 / 2.0f))];
+    _misereSwitch = [[UISwitch alloc] init];
+    [_misereSwitch setCenter: CGPointMake(width - 20 - _misereSwitch.frame.size.width / 2.0f, 20 + (25 / 2.0f))];
     
-    [self.view addSubview: misereSwitch];
-    [misereSwitch release];
+    [self.view addSubview: _misereSwitch];
+}
+
+
+- (void) viewDidUnload
+{
+    [super viewDidUnload];
+    
+    [_misereLabel release];
+    [_misereSwitch release];
 }
 
 @end

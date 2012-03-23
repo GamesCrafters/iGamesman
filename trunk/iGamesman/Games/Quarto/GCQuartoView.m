@@ -8,7 +8,7 @@
 
 #import "GCQuartoView.h"
 
-#import "GCConstants.h"
+#import "GCUtilities.h"
 #import "GCQuartoPiece.h"
 #import "GCQuartoPosition.h"
 

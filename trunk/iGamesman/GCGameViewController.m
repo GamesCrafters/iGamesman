@@ -388,7 +388,7 @@
         }
         else if (i == 4)
         {
-            GCVariantsPanelController *variantsPanel = [[GCVariantsPanelController alloc] init];
+            GCVariantsPanelController *variantsPanel = [[GCVariantsPanelController alloc] initWithGame: _game];
             [variantsPanel setDelegate: drawer];
             [drawer setPanelController: variantsPanel];
             [variantsPanel release];

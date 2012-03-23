@@ -8,7 +8,7 @@
 
 #import "GCTicTacToeView.h"
 
-#import "GCConstants.h"
+#import "GCUtilities.h"
 #import "GCTicTacToePosition.h"
 
 

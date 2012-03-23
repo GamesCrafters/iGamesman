@@ -12,7 +12,7 @@
 
 #import "GCConnectFourPieceView.h"
 #import "GCConnectFourPosition.h"
-#import "GCConstants.h"
+#import "GCUtilities.h"
 
 #define PIECE_OFFSET (10000)
 
@@ -331,6 +331,8 @@
     NSArray *moveValues = [_delegate moveValues];
     NSArray *remotenessValues = [_delegate remotenessValues];
     
+    NSArray *sortedValues = [GCValuesHelper sortedValuesForMoveValues: moveValues remotenesses: remotenessValues];
+    
     for (int i = 0; i < [position columns]; i += 1)
     {
         /* Draw move values at the top, if enabled */
@@ -350,8 +352,42 @@
                 CGContextFillRect(ctx, valueRect);
                 
                 CGFloat alpha = 1;
-                if ([_delegate isShowingDeltaRemoteness] && (remoteness != 0))
-                    alpha = 1.0f / log(remoteness + 1);
+                
+                if ([_delegate isShowingDeltaRemoteness])
+                {
+                    alpha = 0.2f;
+                    
+                    if ([sortedValues count] > 0)
+                    {
+                        NSArray *pair = [sortedValues objectAtIndex: 0];
+                        GCGameValue *v = [pair objectAtIndex: 0];
+                        NSNumber *n = [pair objectAtIndex: 1];
+                        
+                        if ([v isEqualToString: value] && ([n integerValue] == remoteness))
+                            alpha = 1;
+                    }
+                    
+                    if ([sortedValues count] > 1)
+                    {
+                        NSArray *pair = [sortedValues objectAtIndex: 1];
+                        GCGameValue *v = [pair objectAtIndex: 0];
+                        NSNumber *n = [pair objectAtIndex: 1];
+                        
+                        if ([v isEqualToString: value] && ([n integerValue] == remoteness))
+                            alpha = 0.5f;
+                    }
+                    
+                    if ([sortedValues count] > 2)
+                    {
+                        NSArray *pair = [sortedValues objectAtIndex: 2];
+                        GCGameValue *v = [pair objectAtIndex: 0];
+                        NSNumber *n = [pair objectAtIndex: 1];
+                        
+                        if ([v isEqualToString: value] && ([n integerValue] == remoteness))
+                            alpha = 0.3f;
+                    }
+                }
+                
                 
                 GCColor color = {0.0f, 0.0f, 0.0f};
                 if ([value isEqualToString: GCGameValueWin])

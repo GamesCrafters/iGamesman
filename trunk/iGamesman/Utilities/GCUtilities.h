@@ -26,3 +26,11 @@ typedef struct _GCColor GCColor;
 + (GCColor) drawColor;
 
 @end
+
+
+
+@interface GCValuesHelper : NSObject
+
++ (NSArray *) sortedValuesForMoveValues: (NSArray *) moveValues remotenesses: (NSArray *) remotenesses;
+
+@end

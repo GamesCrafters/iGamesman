@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 #import "GCModalDrawer.h"
+#import "GCGame.h"
 
 
 @protocol GCVariantsPanelDelegate;
@@ -16,9 +17,15 @@
 @interface GCVariantsPanelController : UIViewController <GCModalDrawerPanelDelegate, UIAlertViewDelegate>
 {
     id<GCVariantsPanelDelegate> _delegate;
+    id<GCGame> _game;
+    
+    UILabel *_misereLabel;
+    UISwitch *_misereSwitch;
 }
 
 @property (nonatomic, assign) id<GCVariantsPanelDelegate> delegate;
+
+- (id) initWithGame: (id<GCGame>) game;
 
 @end
 

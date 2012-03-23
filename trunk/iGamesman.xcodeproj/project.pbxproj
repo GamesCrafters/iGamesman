@@ -69,7 +69,7 @@
 		0A7B775514B16BC20011837C /* quarto.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0A7B775014B16BC20011837C /* quarto.xml */; };
 		0A7B775614B16BC20011837C /* quickcross.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0A7B775114B16BC20011837C /* quickcross.xml */; };
 		0A7B775714B16BC20011837C /* tictactoe.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0A7B775214B16BC20011837C /* tictactoe.xml */; };
-		0A7C4C86150E7198004B187C /* GCConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A7C4C85150E7198004B187C /* GCConstants.m */; };
+		0A7C4C86150E7198004B187C /* GCUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A7C4C85150E7198004B187C /* GCUtilities.m */; };
 		0A7C4C8E150EAA77004B187C /* GCVariantsPanelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A7C4C8D150EAA77004B187C /* GCVariantsPanelController.m */; };
 		0A8D8D9014D226A900330306 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A8D8D8F14D226A900330306 /* QuartzCore.framework */; };
 		0A8D8D9614D267DA00330306 /* GCPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A8D8D9214D267DA00330306 /* GCPlayer.m */; };
@@ -231,8 +231,8 @@
 		0A7B775014B16BC20011837C /* quarto.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = quarto.xml; sourceTree = "<group>"; };
 		0A7B775114B16BC20011837C /* quickcross.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = quickcross.xml; sourceTree = "<group>"; };
 		0A7B775214B16BC20011837C /* tictactoe.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = tictactoe.xml; sourceTree = "<group>"; };
-		0A7C4C84150E7198004B187C /* GCConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCConstants.h; sourceTree = "<group>"; };
-		0A7C4C85150E7198004B187C /* GCConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCConstants.m; sourceTree = "<group>"; };
+		0A7C4C84150E7198004B187C /* GCUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCUtilities.h; sourceTree = "<group>"; };
+		0A7C4C85150E7198004B187C /* GCUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCUtilities.m; sourceTree = "<group>"; };
 		0A7C4C88150EA3C6004B187C /* docs */ = {isa = PBXFileReference; lastKnownFileType = folder; path = docs; sourceTree = "<group>"; };
 		0A7C4C8A150EA421004B187C /* iGamesman.Doxyfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = iGamesman.Doxyfile; sourceTree = "<group>"; };
 		0A7C4C8C150EAA77004B187C /* GCVariantsPanelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCVariantsPanelController.h; sourceTree = "<group>"; };
@@ -490,8 +490,8 @@
 		0A8D8D9114D2676E00330306 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				0A7C4C84150E7198004B187C /* GCConstants.h */,
-				0A7C4C85150E7198004B187C /* GCConstants.m */,
+				0A7C4C84150E7198004B187C /* GCUtilities.h */,
+				0A7C4C85150E7198004B187C /* GCUtilities.m */,
 				0A2D0C5C14D89D6E00DFE967 /* GCJSONService.h */,
 				0A2D0C5D14D89D6E00DFE967 /* GCJSONService.m */,
 				0A8D8D9414D267DA00330306 /* GCPlayer.h */,
@@ -875,7 +875,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "arch=${ARCHS:0:4}\nif [ $arch != \"i386\" ]\nthen\n    buildNumber=$(/usr/libexec/PlistBuddy -c \"Print GCBuildNumber\" ${PROJECT_DIR}/iGamesman/iGamesman-Info.plist)\n    buildNumber=$(($buildNumber + 1))\n    /usr/libexec/PlistBuddy -c \"Set :GCBuildNumber $buildNumber\" ${PROJECT_DIR}/iGamesman/iGamesman-Info.plist\nfi";
+			shellScript = "# Only increment build number on to-device builds\narch=${ARCHS:0:4}\nif [ $arch != \"i386\" ]\nthen\n    buildNumber=$(/usr/libexec/PlistBuddy -c \"Print GCBuildNumber\" ${PROJECT_DIR}/iGamesman/iGamesman-Info.plist)\n    buildNumber=$(($buildNumber + 1))\n    /usr/libexec/PlistBuddy -c \"Set :GCBuildNumber $buildNumber\" ${PROJECT_DIR}/iGamesman/iGamesman-Info.plist\nfi";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -928,7 +928,7 @@
 				0AB7855414EC3F4900D9C44B /* GCVVHView.m in Sources */,
 				0AB7855714EC4E3E00D9C44B /* GCVVHPanelController.m in Sources */,
 				0A176E1214EC707F00F66639 /* GCMetaSettingsPanelController.m in Sources */,
-				0A7C4C86150E7198004B187C /* GCConstants.m in Sources */,
+				0A7C4C86150E7198004B187C /* GCUtilities.m in Sources */,
 				0A7C4C8E150EAA77004B187C /* GCVariantsPanelController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

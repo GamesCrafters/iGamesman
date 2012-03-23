@@ -10,7 +10,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 
-#import "GCConstants.h"
+#import "GCUtilities.h"
 #import "GCGameHistoryItem.h"
 
 
