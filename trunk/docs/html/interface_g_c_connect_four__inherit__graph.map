@@ -1,0 +1,4 @@
+<map id="G" name="G">
+<area shape="rect" id="node2" href="$protocol_g_c_game-p.html" title="{\&lt;GCGame\&gt;\n||+ gcWebServiceName\l+ gcWebParameters\l+ gcWebBoardString\l+ gcWebReportedPositionValue:remoteness:\l+ gcWebReportedValues:remotenesses:forMoves:\l+ moveForGCWebMove:\l+ name\l+ viewWithFrame:\l+ startGameWithLeft:right:options:\l+ waitForHumanMoveWithCompletion:\land 14 more...}" alt="" coords="5,6,323,247"/>
+<area shape="rect" id="node4" href="$protocol_g_c_connect_four_view_delegate-p.html" title="{\&lt;GCConnectFourViewDelegate\&gt;\n||+ position\l+ generateMoves\l+ userChoseMove:\l+ isShowingMoveValues\l+ moveValues\l+ isShowingDeltaRemoteness\l+ remotenessValues\l}" alt="" coords="347,38,563,215"/>
+</map>

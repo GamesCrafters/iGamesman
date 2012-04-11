@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['gccolor',['GCColor',['../_g_c_constants_8h.html#a7774ab0aa0d65c45357d70f573e73cd2',1,'GCConstants.h']]],
+  ['gccolor',['GCColor',['../_g_c_utilities_8h.html#a7774ab0aa0d65c45357d70f573e73cd2',1,'GCUtilities.h']]],
   ['gcconnectfourpiece',['GCConnectFourPiece',['../_g_c_connect_four_position_8h.html#a6859cf58b2d72144924f7f50c97cb435',1,'GCConnectFourPosition.h']]],
   ['gcconnectionspiece',['GCConnectionsPiece',['../_g_c_connections_position_8h.html#a088c7869e7023079cd32957efd93fba7',1,'GCConnectionsPosition.h']]],
   ['gcgamevalue',['GCGameValue',['../_g_c_game_8h.html#a42d32f8c6232a82f6de49ba76fedb119',1,'GCGame.h']]],

@@ -66,7 +66,7 @@
 }
 
 
-- (void) startGameWithLeft: (GCPlayer *) left right: (GCPlayer *) right
+- (void) startGameWithLeft: (GCPlayer *) left right: (GCPlayer *) right options: (NSDictionary *) options
 {
     [left retain];
     [right retain];
@@ -264,6 +264,18 @@
     }
     
     return [moves autorelease];
+}
+
+
+- (BOOL) canShowMoveValues
+{
+    return NO;
+}
+
+
+- (BOOL) canShowDeltaRemoteness
+{
+    return NO;
 }
 
 

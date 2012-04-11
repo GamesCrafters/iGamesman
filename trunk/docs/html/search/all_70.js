@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['panelcontroller',['panelController',['../interface_g_c_modal_drawer_view.html#a8e6481c7a9f49052259962a9a7ed3d8c',1,'GCModalDrawerView']]],
   ['pass',['PASS',['../_g_c_othello_8m.html#aba5c54fadff8d880b1945dde87496e31',1,'GCOthello.m']]],
   ['peek',['peek',['../interface_g_c_stack.html#ac9ead214e419c8f5655bd1b86642846b',1,'GCStack']]],
   ['percentperfect',['percentPerfect',['../interface_g_c_player.html#a75c5470dd1767a945e2ace1a4da51073',1,'GCPlayer']]],

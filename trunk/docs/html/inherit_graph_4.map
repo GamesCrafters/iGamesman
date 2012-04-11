@@ -1,0 +1,8 @@
+<map id="G" name="G">
+<area shape="rect" id="node1" href="$protocol_g_c_game_controller_delegate-p.html" title="\&lt;GCGameControllerDelegate\&gt;" alt="" coords="12,5,217,33"/>
+<area shape="rect" id="node3" href="$interface_g_c_game_view_controller.html" title="GCGameViewController" alt="" coords="273,109,437,137"/>
+<area shape="rect" id="node4" href="$protocol_g_c_modal_drawer_view_delegate-p.html" title="\&lt;GCModalDrawerViewDelegate\&gt;" alt="" coords="6,57,224,85"/>
+<area shape="rect" id="node6" href="$protocol_g_c_values_panel_delegate-p.html" title="\&lt;GCValuesPanelDelegate\&gt;" alt="" coords="23,109,207,137"/>
+<area shape="rect" id="node8" href="$protocol_g_c_variants_panel_delegate-p.html" title="\&lt;GCVariantsPanelDelegate\&gt;" alt="" coords="19,161,211,189"/>
+<area shape="rect" id="node10" href="$protocol_g_c_v_v_h_view_data_source-p.html" title="\&lt;GCVVHViewDataSource\&gt;" alt="" coords="23,213,206,241"/>
+</map>

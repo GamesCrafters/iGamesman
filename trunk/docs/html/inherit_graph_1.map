@@ -1,0 +1,8 @@
+<map id="G" name="G">
+<area shape="rect" id="node1" href="$protocol_g_c_modal_drawer_panel_delegate-p.html" title="\&lt;GCModalDrawerPanelDelegate\&gt;" alt="" coords="6,109,229,137"/>
+<area shape="rect" id="node3" href="$interface_g_c_meta_settings_panel_controller.html" title="GCMetaSettingsPanelController" alt="" coords="277,5,488,33"/>
+<area shape="rect" id="node5" href="$interface_g_c_player_panel_controller.html" title="GCPlayerPanelController" alt="" coords="297,57,468,85"/>
+<area shape="rect" id="node7" href="$interface_g_c_values_panel_controller.html" title="GCValuesPanelController" alt="" coords="296,109,469,137"/>
+<area shape="rect" id="node9" href="$interface_g_c_variants_panel_controller.html" title="GCVariantsPanelController" alt="" coords="292,161,473,189"/>
+<area shape="rect" id="node11" href="$interface_g_c_v_v_h_panel_controller.html" title="GCVVHPanelController" alt="" coords="302,213,463,241"/>
+</map>

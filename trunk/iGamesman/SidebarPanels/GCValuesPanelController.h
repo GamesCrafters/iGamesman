@@ -19,7 +19,7 @@
     id<GCGame> _game;
     id<GCValuesPanelDelegate> _delegate;
     
-    UILabel *_moveValueLabel, *_deltaRemotenessLabel;
+    UILabel *_predictionsLabel, *_moveValueLabel, *_deltaRemotenessLabel;
     UISwitch *_predictionsSwitch, *_moveValueSwitch, *_deltaRemotenessSwitch;
     
     UIPopoverController *_helpPopoverController;

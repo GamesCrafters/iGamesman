@@ -1,0 +1,7 @@
+<map id="G" name="G">
+<area shape="rect" id="node2" href="$protocol_g_c_game_controller_delegate-p.html" title="{\&lt;GCGameControllerDelegate\&gt;\n||+ setUndoButtonEnabled:\l+ setRedoButtonEnabled:\l+ updateStatusLabel\l+ updateVVH\l}" alt="" coords="4,6,208,135"/>
+<area shape="rect" id="node4" href="$protocol_g_c_modal_drawer_view_delegate-p.html" title="{\&lt;GCModalDrawerViewDelegate\&gt;\n||+ addView:behindDrawer:\l+ drawerDidDisappear:\l}" alt="" coords="232,22,449,119"/>
+<area shape="rect" id="node6" href="$protocol_g_c_values_panel_delegate-p.html" title="{\&lt;GCValuesPanelDelegate\&gt;\n||+ isShowingPredictions\l+ setShowingPredictions:\l+ presentViewController:\l}" alt="" coords="475,14,659,127"/>
+<area shape="rect" id="node8" href="$protocol_g_c_variants_panel_delegate-p.html" title="{\&lt;GCVariantsPanelDelegate\&gt;\n||+ closeDrawer:\l+ startNewGameWithOptions:\l}" alt="" coords="682,22,880,119"/>
+<area shape="rect" id="node10" href="$protocol_g_c_v_v_h_view_data_source-p.html" title="{\&lt;GCVVHViewDataSource\&gt;\n||+ historyItemEnumerator\l}" alt="" coords="904,30,1087,111"/>
+</map>

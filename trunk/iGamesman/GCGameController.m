@@ -184,7 +184,7 @@
 
 - (void) processHumanMove: (GCMove *) move
 {
-    [_undoStack flush];
+    [_undoStack clear];
     
     [_delegate setUndoButtonEnabled: YES];
     [_delegate setRedoButtonEnabled: NO];
@@ -342,7 +342,7 @@
     
     [NSThread sleepForTimeInterval: _computerMoveDelay];
     
-    [_undoStack flush];
+    [_undoStack clear];
     
     [_delegate setUndoButtonEnabled: YES];
     [_delegate setRedoButtonEnabled: NO];
@@ -380,13 +380,73 @@
 {
     [NSThread sleepForTimeInterval: _computerGameDelay];
     
-    [_game startGameWithLeft: [_game leftPlayer] right: [_game rightPlayer]];
+    /* Clear the stacks */
+    [_historyStack clear];
+    [_undoStack clear];
+    
+    [_game startGameWithLeft: [_game leftPlayer] 
+                       right: [_game rightPlayer]
+                     options: [NSDictionary dictionaryWithObject: [NSNumber numberWithBool: NO] forKey: GCGameMisereOptionKey]];
+    
+    GCPosition *position = [[_game currentPosition] copy];
+    GCGameHistoryItem *startingItem = [[GCGameHistoryItem alloc] initWithPosition: position
+                                                                           player: [_game currentPlayerSide]
+                                                                             move: nil
+                                                                            value: GCGameValueUnknown
+                                                                       remoteness: -1];
+    [position release];
+    
+    [_historyStack push: startingItem];
+    [startingItem release];
     
     [_runner cancel];
     [_runner release];
     _runner = nil;
     
     [self performSelectorOnMainThread: @selector(go) withObject: nil waitUntilDone: NO];
+}
+
+
+- (void) start
+{
+    if ([_game respondsToSelector: @selector(gcWebServiceName)])
+    {
+        if ([_game gcWebServiceName] == nil)
+        {
+            [_service release];
+            _service = nil;
+        }
+        else
+        {
+            NSString *gcWebServiceName = [_game gcWebServiceName];
+            NSDictionary *params = [_game gcWebParameters];
+            _service = [[GCJSONService alloc] initWithServiceName: gcWebServiceName parameters: params];
+            [_service setDelegate: self];
+        }
+    }
+    else
+    {
+        _service = nil;
+    }
+    
+    [_delegate setUndoButtonEnabled: NO];
+    [_delegate setRedoButtonEnabled: NO];
+    
+    [_historyStack clear];
+    [_undoStack clear];
+    
+    GCPosition *position = [[_game currentPosition] copy];
+    GCGameHistoryItem *startingItem = [[GCGameHistoryItem alloc] initWithPosition: position
+                                                                           player: [_game currentPlayerSide]
+                                                                             move: nil
+                                                                            value: GCGameValueUnknown
+                                                                       remoteness: -1];
+    [position release];
+    
+    [_historyStack push: startingItem];
+    [startingItem release];
+    
+    [self go];
 }
 
 

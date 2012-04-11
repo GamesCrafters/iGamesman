@@ -73,7 +73,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="annotated.html"><span>Class&#160;List</span></a></li>
       <li><a href="classes.html"><span>Class&#160;Index</span></a></li>
-      <li><a href="hierarchy.html"><span>Class&#160;Hierarchy</span></a></li>
+      <li><a href="inherits.html"><span>Class&#160;Hierarchy</span></a></li>
       <li class="current"><a href="functions.html"><span>Class&#160;Members</span></a></li>
     </ul>
   </div>
@@ -152,8 +152,20 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>cancelButtonTapped
 : <a class="el" href="protocol_g_c_modal_drawer_panel_delegate-p.html#a76c63f4e0273cc7ab3e97aacab87dd37">&lt;GCModalDrawerPanelDelegate&gt;</a>
 </li>
+<li>canShowDeltaRemoteness
+: <a class="el" href="protocol_g_c_game-p.html#a67463276601e47f9a51c88696bf470a2">&lt;GCGame&gt;</a>
+</li>
+<li>canShowMoveValues
+: <a class="el" href="protocol_g_c_game-p.html#a2fddc6fc9913373c7731012f0f59f153">&lt;GCGame&gt;</a>
+</li>
 <li>centerGame
 : <a class="el" href="interface_g_c_games_scroll_view.html#aa1be9c2ae737a7a9f21166c5e2e196c0">GCGamesScrollView</a>
+</li>
+<li>clear
+: <a class="el" href="interface_g_c_stack.html#a45d7c8c8e356c377bd34b1842d95f1ee">GCStack</a>
+</li>
+<li>closeDrawer:
+: <a class="el" href="protocol_g_c_variants_panel_delegate-p.html#ace9fce0e3abd905ea4ae3bb9d375da15">&lt;GCVariantsPanelDelegate&gt;</a>
 </li>
 <li>computerGameDelay
 : <a class="el" href="protocol_g_c_meta_settings_panel_delegate-p.html#a234e84b54296d8ac905e6c8db8a4b8b5">&lt;GCMetaSettingsPanelDelegate&gt;</a>
@@ -190,6 +202,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>drawerDidDisappear:
 : <a class="el" href="protocol_g_c_modal_drawer_view_delegate-p.html#a6d4e5deb228e87f85b51c987dce0095f">&lt;GCModalDrawerViewDelegate&gt;</a>
 </li>
+<li>drawerShouldClose
+: <a class="el" href="protocol_g_c_modal_drawer_panel_delegate-p.html#a60b459444cf614c4dc7555ca6c99f119">&lt;GCModalDrawerPanelDelegate&gt;</a>
+</li>
 <li>drawerWillAppear
 : <a class="el" href="protocol_g_c_modal_drawer_panel_delegate-p.html#ab4e23c05001f35478b0f03f26e4ec2ce">&lt;GCModalDrawerPanelDelegate&gt;</a>
 </li>
@@ -202,9 +217,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <h3><a class="anchor" id="index_f"></a>- f -</h3><ul>
 <li>finishingLoading
 : <a class="el" href="interface_g_c_message_overlay_view.html#a1d8a6370ba29fcfe8f5bb13a564b8875">GCMessageOverlayView</a>
-</li>
-<li>flush
-: <a class="el" href="interface_g_c_stack.html#a858df11edaeefab20612f6b1b2ea89f1">GCStack</a>
 </li>
 </ul>
 
@@ -278,6 +290,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="interface_g_c_game_view_controller.html#ab1776c83b24411c28a89f758b1651052">GCGameViewController</a>
 , <a class="el" href="interface_g_c_player_panel_controller.html#af48bbb96ef794eab988df9ee3d85c089">GCPlayerPanelController</a>
 , <a class="el" href="interface_g_c_values_panel_controller.html#ade6d729f090a97043a1754de91bac227">GCValuesPanelController</a>
+, <a class="el" href="interface_g_c_variants_panel_controller.html#a99c310b51e80dad8063f9e2994d951cc">GCVariantsPanelController</a>
 </li>
 <li>initWithGame:andDelegate:
 : <a class="el" href="interface_g_c_game_controller.html#a224e9a019a972a09f8e84d6bc96101e8">GCGameController</a>
@@ -299,8 +312,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li>initWithWidth:height:toWin:
 : <a class="el" href="interface_g_c_connect_four_position.html#aabf5f5562541d3e1a1fb87fa55080c0a">GCConnectFourPosition</a>
-, <a class="el" href="interface_g_c_quick_cross_position.html#a9d710bd7eeddffc921c97dcc26560274">GCQuickCrossPosition</a>
 , <a class="el" href="interface_g_c_tic_tac_toe_position.html#a0ceb401ccdbb12848c899f7e0b283465">GCTicTacToePosition</a>
+, <a class="el" href="interface_g_c_quick_cross_position.html#a9d710bd7eeddffc921c97dcc26560274">GCQuickCrossPosition</a>
 </li>
 <li>initWithXMLPath:
 : <a class="el" href="interface_g_c_about_game_view_controller.html#a9a027132cd6bbd0c7bb553294f706e48">GCAboutGameViewController</a>
@@ -308,17 +321,20 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>isEmpty
 : <a class="el" href="interface_g_c_stack.html#a42ef1bf3b07c306993aaaf43c09f4490">GCStack</a>
 </li>
+<li>isMisere
+: <a class="el" href="protocol_g_c_game-p.html#a54bdf39982502841617cb039180ca790">&lt;GCGame&gt;</a>
+</li>
 <li>isShowingDeltaRemoteness
-: <a class="el" href="protocol_g_c_connect_four_view_delegate-p.html#a9d88af0f795f7058e41962204dfc744c">&lt;GCConnectFourViewDelegate&gt;</a>
-, <a class="el" href="protocol_g_c_quarto_view_delegate-p.html#a120f7a28767d1e76e2036944da3e8d93">&lt;GCQuartoViewDelegate&gt;</a>
+: <a class="el" href="protocol_g_c_tic_tac_toe_view_delegate-p.html#a7634958504d890582e1544c0e589b3e9">&lt;GCTicTacToeViewDelegate&gt;</a>
 , <a class="el" href="protocol_g_c_game-p.html#a8e64f53d717e45071a1b16c89674e386">&lt;GCGame&gt;</a>
-, <a class="el" href="protocol_g_c_tic_tac_toe_view_delegate-p.html#a7634958504d890582e1544c0e589b3e9">&lt;GCTicTacToeViewDelegate&gt;</a>
+, <a class="el" href="protocol_g_c_quarto_view_delegate-p.html#a120f7a28767d1e76e2036944da3e8d93">&lt;GCQuartoViewDelegate&gt;</a>
+, <a class="el" href="protocol_g_c_connect_four_view_delegate-p.html#a9d88af0f795f7058e41962204dfc744c">&lt;GCConnectFourViewDelegate&gt;</a>
 </li>
 <li>isShowingMoveValues
-: <a class="el" href="protocol_g_c_tic_tac_toe_view_delegate-p.html#a33515b67fd76d08ebbc88300f7486263">&lt;GCTicTacToeViewDelegate&gt;</a>
-, <a class="el" href="protocol_g_c_connect_four_view_delegate-p.html#ac7f5d1e2d7733efd8ca4eca30f8556e8">&lt;GCConnectFourViewDelegate&gt;</a>
+: <a class="el" href="protocol_g_c_connect_four_view_delegate-p.html#ac7f5d1e2d7733efd8ca4eca30f8556e8">&lt;GCConnectFourViewDelegate&gt;</a>
 , <a class="el" href="protocol_g_c_quarto_view_delegate-p.html#aa6a48e3b08878b4131b0d91e93855141">&lt;GCQuartoViewDelegate&gt;</a>
 , <a class="el" href="protocol_g_c_game-p.html#af412a3bd9c350b452be8645c4be8108e">&lt;GCGame&gt;</a>
+, <a class="el" href="protocol_g_c_tic_tac_toe_view_delegate-p.html#a33515b67fd76d08ebbc88300f7486263">&lt;GCTicTacToeViewDelegate&gt;</a>
 </li>
 <li>isShowingPredictions
 : <a class="el" href="protocol_g_c_values_panel_delegate-p.html#ab02b0cc005da7eabe7acb419caca2a33">&lt;GCValuesPanelDelegate&gt;</a>
@@ -420,6 +436,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 
 <h3><a class="anchor" id="index_p"></a>- p -</h3><ul>
+<li>panelController
+: <a class="el" href="interface_g_c_modal_drawer_view.html#a8e6481c7a9f49052259962a9a7ed3d8c">GCModalDrawerView</a>
+</li>
 <li>peek
 : <a class="el" href="interface_g_c_stack.html#ac9ead214e419c8f5655bd1b86642846b">GCStack</a>
 </li>
@@ -446,13 +465,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 , <a class="el" href="interface_g_c_stack.html#a0d6867545c8a2a2b6d543653af09e917">GCStack</a>
 </li>
 <li>position
-: <a class="el" href="interface_g_c_game_history_item.html#a9a48de48d612517073de76ec0dd94466">GCGameHistoryItem</a>
+: <a class="el" href="protocol_g_c_tic_tac_toe_view_delegate-p.html#a24737cd6eeb014e5fdfff83ca7ac1321">&lt;GCTicTacToeViewDelegate&gt;</a>
+, <a class="el" href="interface_g_c_game_history_item.html#a9a48de48d612517073de76ec0dd94466">GCGameHistoryItem</a>
 , <a class="el" href="protocol_g_c_connect_four_view_delegate-p.html#a9b15273b89c66d17300671f652b24df7">&lt;GCConnectFourViewDelegate&gt;</a>
+, <a class="el" href="protocol_g_c_quick_cross_view_delegate-p.html#adf9cbc6c59bd5d1d87a7f3d156de4cc6">&lt;GCQuickCrossViewDelegate&gt;</a>
 , <a class="el" href="protocol_g_c_connections_view_delegate-p.html#a000cdf83d64e8c320772569d584984c3">&lt;GCConnectionsViewDelegate&gt;</a>
-, <a class="el" href="protocol_g_c_tic_tac_toe_view_delegate-p.html#a24737cd6eeb014e5fdfff83ca7ac1321">&lt;GCTicTacToeViewDelegate&gt;</a>
 , <a class="el" href="protocol_g_c_othello_view_delegate-p.html#aff514789bc0f2e682ae679af0435c8a3">&lt;GCOthelloViewDelegate&gt;</a>
 , <a class="el" href="protocol_g_c_quarto_view_delegate-p.html#a6758670e3adc3da9a54bf6ae7fc970cf">&lt;GCQuartoViewDelegate&gt;</a>
-, <a class="el" href="protocol_g_c_quick_cross_view_delegate-p.html#adf9cbc6c59bd5d1d87a7f3d156de4cc6">&lt;GCQuickCrossViewDelegate&gt;</a>
 </li>
 <li>positionRequest:didFailWithError:
 : <a class="el" href="protocol_g_c_position_value_request_delegate-p.html#a368d0e74eb990a5a252705c420e52cb3">&lt;GCPositionValueRequestDelegate&gt;</a>
@@ -473,12 +492,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="protocol_g_c_values_panel_delegate-p.html#afe4aff5735f1ee60e4426194a40c897f">&lt;GCValuesPanelDelegate&gt;</a>
 </li>
 <li>primitive
-: <a class="el" href="interface_g_c_quarto_position.html#a5c5785c82b0df4b52f5bd72ea4ffd37a">GCQuartoPosition</a>
-, <a class="el" href="protocol_g_c_game-p.html#a17f947c9fb0fe509d57f8cd18e650820">&lt;GCGame&gt;</a>
+: <a class="el" href="protocol_g_c_game-p.html#a17f947c9fb0fe509d57f8cd18e650820">&lt;GCGame&gt;</a>
+, <a class="el" href="interface_g_c_quarto_position.html#a5c5785c82b0df4b52f5bd72ea4ffd37a">GCQuartoPosition</a>
 </li>
 <li>push:
-: <a class="el" href="interface_g_c_connections_integer_queue.html#ab03e2480475fbeb866c7422ded525c8b">GCConnectionsIntegerQueue</a>
-, <a class="el" href="interface_g_c_stack.html#a28769dc8016779bd52468f8e44cc702f">GCStack</a>
+: <a class="el" href="interface_g_c_stack.html#a28769dc8016779bd52468f8e44cc702f">GCStack</a>
+, <a class="el" href="interface_g_c_connections_integer_queue.html#ab03e2480475fbeb866c7422ded525c8b">GCConnectionsIntegerQueue</a>
 </li>
 </ul>
 
@@ -588,24 +607,33 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>slideOut
 : <a class="el" href="interface_g_c_modal_drawer_view.html#a52584ddf6161e66f38ee86aa7139f7e4">GCModalDrawerView</a>
 </li>
-<li>startGameWithLeft:right:
-: <a class="el" href="protocol_g_c_game-p.html#a92e610fdfb936696b09cfb55c918f99c">&lt;GCGame&gt;</a>
+<li>sortedValuesForMoveValues:remotenesses:
+: <a class="el" href="interface_g_c_values_helper.html#ae8fc2b8a24172ebcdc41bbc2d7a362e6">GCValuesHelper</a>
+</li>
+<li>start
+: <a class="el" href="interface_g_c_game_controller.html#a28993eeab47d77d72343df506931f01a">GCGameController</a>
+</li>
+<li>startGameWithLeft:right:options:
+: <a class="el" href="protocol_g_c_game-p.html#ad8d29d43960100cef14f8d71a54b4764">&lt;GCGame&gt;</a>
+</li>
+<li>startNewGameWithOptions:
+: <a class="el" href="protocol_g_c_variants_panel_delegate-p.html#ab4d2061f62482b00a9bac95d241bbd0d">&lt;GCVariantsPanelDelegate&gt;</a>
 </li>
 <li>startReceivingTouches
-: <a class="el" href="interface_g_c_quick_cross_view.html#ac65567535b7a66f1728e6f4eb0a91d53">GCQuickCrossView</a>
+: <a class="el" href="interface_g_c_othello_view.html#a8a29ddafa1dfa84e3172c53c75297329">GCOthelloView</a>
 , <a class="el" href="interface_g_c_tic_tac_toe_view.html#af6e03c97857faf8f65ddf6bc5ea6403d">GCTicTacToeView</a>
+, <a class="el" href="interface_g_c_quick_cross_view.html#ac65567535b7a66f1728e6f4eb0a91d53">GCQuickCrossView</a>
 , <a class="el" href="interface_g_c_connect_four_view.html#a671d9c005891370916606ffe6e741ce4">GCConnectFourView</a>
 , <a class="el" href="interface_g_c_connections_view.html#ae8cdacbaf75759cd102b669b80a21ea8">GCConnectionsView</a>
-, <a class="el" href="interface_g_c_othello_view.html#a8a29ddafa1dfa84e3172c53c75297329">GCOthelloView</a>
 , <a class="el" href="interface_g_c_quarto_view.html#a4dd81c05a00b9f2fae4903ee6163c99e">GCQuartoView</a>
 </li>
 <li>stopReceivingTouches
-: <a class="el" href="interface_g_c_othello_view.html#ae88a0ec4d6a08775492c5ef7978ed9d4">GCOthelloView</a>
-, <a class="el" href="interface_g_c_tic_tac_toe_view.html#a23bdb4a13aac9bcab9ecd6388c82372d">GCTicTacToeView</a>
-, <a class="el" href="interface_g_c_quarto_view.html#a608d1c463fd4c2c0a54c0116675b44b7">GCQuartoView</a>
+: <a class="el" href="interface_g_c_quick_cross_view.html#abb745e6efd14076e32efdea8189a0026">GCQuickCrossView</a>
 , <a class="el" href="interface_g_c_connections_view.html#aa22bc72c41fa552aebca4f9fc59cc6e9">GCConnectionsView</a>
-, <a class="el" href="interface_g_c_quick_cross_view.html#abb745e6efd14076e32efdea8189a0026">GCQuickCrossView</a>
+, <a class="el" href="interface_g_c_quarto_view.html#a608d1c463fd4c2c0a54c0116675b44b7">GCQuartoView</a>
 , <a class="el" href="interface_g_c_connect_four_view.html#a3178ac49a71cee69150a194aaa00e9b0">GCConnectFourView</a>
+, <a class="el" href="interface_g_c_tic_tac_toe_view.html#a23bdb4a13aac9bcab9ecd6388c82372d">GCTicTacToeView</a>
+, <a class="el" href="interface_g_c_othello_view.html#ae88a0ec4d6a08775492c5ef7978ed9d4">GCOthelloView</a>
 </li>
 </ul>
 
@@ -689,7 +717,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Mar 12 2012 14:38:53 for iGamesman by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Apr 11 2012 13:53:32 for iGamesman by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

@@ -119,23 +119,26 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00022"></a><a class="code" href="interface_g_c_connect_four_position.html#a7cf97a853602141b19c01495c20ad856">00022</a>     
 <a name="l00023"></a>00023     BOOL <a class="code" href="interface_g_c_connect_four_position.html#a8659713115f80fbf174af7b94bda00bf">_leftTurn</a>;
 <a name="l00024"></a><a class="code" href="interface_g_c_connect_four_position.html#a8659713115f80fbf174af7b94bda00bf">00024</a>     
-<a name="l00025"></a>00025     NSMutableArray *<a class="code" href="interface_g_c_connect_four_position.html#a1dcd6337ab24489bdf72ea0f209ef125">_board</a>;
-<a name="l00026"></a><a class="code" href="interface_g_c_connect_four_position.html#a1dcd6337ab24489bdf72ea0f209ef125">00026</a> }
-<a name="l00027"></a>00027 
-<a name="l00028"></a>00028 <span class="keyword">@property</span> (nonatomic, readonly) NSUInteger columns, rows, toWin;
-<a name="l00029"></a><a class="code" href="interface_g_c_connect_four_position.html#a0ecb5a073a14a614a7561a13dd754206">00029</a> <span class="keyword">@property</span> (nonatomic, assign) BOOL leftTurn;
-<a name="l00030"></a><a class="code" href="interface_g_c_connect_four_position.html#a519653709963eb18f2ee50feff919515">00030</a> <span class="keyword">@property</span> (nonatomic, retain) NSMutableArray *board;
-<a name="l00031"></a><a class="code" href="interface_g_c_connect_four_position.html#ae05aa30db3e792db1549dd8097c14f60">00031</a> 
-<a name="l00032"></a>00032 - (id) initWithWidth: (NSUInteger) width
-<a name="l00033"></a>00033               height: (NSUInteger) height
-<a name="l00034"></a>00034                toWin: (NSUInteger) needed;
-<a name="l00035"></a>00035 
-<a name="l00036"></a>00036 <span class="keyword">@end</span>
+<a name="l00025"></a>00025     BOOL <a class="code" href="interface_g_c_connect_four_position.html#ae8b111ab8b61c08a7c2a8572fa6dd59d">_misere</a>;
+<a name="l00026"></a><a class="code" href="interface_g_c_connect_four_position.html#ae8b111ab8b61c08a7c2a8572fa6dd59d">00026</a>     
+<a name="l00027"></a>00027     NSMutableArray *<a class="code" href="interface_g_c_connect_four_position.html#a1dcd6337ab24489bdf72ea0f209ef125">_board</a>;
+<a name="l00028"></a><a class="code" href="interface_g_c_connect_four_position.html#a1dcd6337ab24489bdf72ea0f209ef125">00028</a> }
+<a name="l00029"></a>00029 
+<a name="l00030"></a>00030 <span class="keyword">@property</span> (nonatomic, readonly) NSUInteger columns, rows, toWin;
+<a name="l00031"></a><a class="code" href="interface_g_c_connect_four_position.html#a0ecb5a073a14a614a7561a13dd754206">00031</a> <span class="keyword">@property</span> (nonatomic, assign) BOOL leftTurn;
+<a name="l00032"></a><a class="code" href="interface_g_c_connect_four_position.html#a519653709963eb18f2ee50feff919515">00032</a> <span class="keyword">@property</span> (nonatomic, retain) NSMutableArray *board;
+<a name="l00033"></a><a class="code" href="interface_g_c_connect_four_position.html#ae05aa30db3e792db1549dd8097c14f60">00033</a> <span class="keyword">@property</span> (nonatomic, assign, getter = isMisere) BOOL misere;
+<a name="l00034"></a><a class="code" href="interface_g_c_connect_four_position.html#afc560ae02b3afe762d773fff6992b4fc">00034</a> 
+<a name="l00035"></a>00035 - (id) initWithWidth: (NSUInteger) width
+<a name="l00036"></a>00036               height: (NSUInteger) height
+<a name="l00037"></a>00037                toWin: (NSUInteger) needed;
+<a name="l00038"></a>00038 
+<a name="l00039"></a>00039 <span class="keyword">@end</span>
 </pre></div></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Mar 12 2012 14:38:52 for iGamesman by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Apr 11 2012 13:53:30 for iGamesman by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

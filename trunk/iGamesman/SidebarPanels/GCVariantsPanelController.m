@@ -95,7 +95,10 @@
     /* OK button */
     if (buttonIndex == 1)
     {
-        [_delegate closeDrawer];
+        [_delegate closeDrawer: self];
+        
+        NSDictionary *options = [NSDictionary dictionaryWithObject: [NSNumber numberWithBool: [_misereSwitch isOn]] forKey: GCGameMisereOptionKey];
+        [_delegate startNewGameWithOptions: options];
     }
 }
 

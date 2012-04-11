@@ -1,0 +1,3 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$interface_g_c_game_controller.html" title="{GCGameController\n|# _game\l# _delegate\l# _historyStack\l# _undoStack\l# _service\l# _runner\l# _computerMoveDelay\l# _computerGameDelay\l|+ initWithGame:andDelegate:\l+ start\l+ go\l+ undo\l+ redo\l+ currentItem\l+ historyItemEnumerator\l}" alt="" coords="18,185,213,474"/>
+</map>

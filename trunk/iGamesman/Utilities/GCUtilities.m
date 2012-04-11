@@ -1,5 +1,5 @@
 //
-//  GCConstants.m
+//  GCUtilities.m
 //  iGamesman
 //
 //  Created by Kevin Jorgensen on 3/12/12.

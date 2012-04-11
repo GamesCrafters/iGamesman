@@ -19,6 +19,7 @@ GCTTTPiece const GCTTTOPiece     = @"O";
 @synthesize columns = _columns, rows = _rows, toWin = _toWin;
 @synthesize leftTurn = _leftTurn;
 @synthesize board = _board;
+@synthesize misere = _misere;
 
 
 #pragma mark -
@@ -61,6 +62,7 @@ GCTTTPiece const GCTTTOPiece     = @"O";
     GCTicTacToePosition *copy = [[GCTicTacToePosition allocWithZone: zone] initWithWidth: _columns height: _rows toWin: _toWin];
     
     [copy setLeftTurn: _leftTurn];
+    [copy setMisere: _misere];
     NSMutableArray *boardCopy = [_board copy];
     [copy setBoard: boardCopy];
     [boardCopy release];

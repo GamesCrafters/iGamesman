@@ -22,12 +22,15 @@ GCConnectFourPiece const GCConnectFourBluePiece;
     
     BOOL _leftTurn;
     
+    BOOL _misere;
+    
     NSMutableArray *_board;
 }
 
 @property (nonatomic, readonly) NSUInteger columns, rows, toWin;
 @property (nonatomic, assign) BOOL leftTurn;
 @property (nonatomic, retain) NSMutableArray *board;
+@property (nonatomic, assign, getter = isMisere) BOOL misere;
 
 - (id) initWithWidth: (NSUInteger) width
               height: (NSUInteger) height

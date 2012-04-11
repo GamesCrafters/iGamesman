@@ -1,0 +1,4 @@
+<map id="G" name="G">
+<area shape="rect" id="node2" href="$protocol_g_c_move_values_request_delegate-p.html" title="{\&lt;GCMoveValuesRequestDelegate\&gt;\n||+ moveValuesRequestReachedServer:\l+ moveValuesRequestDidReceiveResponse:\l+ moveValuesRequest:didFailWithError:\l+ moveValuesRequestDidReceiveStatusOK:\l+ moveValuesRequest:receivedValues:remotenesses:forMoves:\l}" alt="" coords="5,6,403,151"/>
+<area shape="rect" id="node4" href="$protocol_g_c_position_value_request_delegate-p.html" title="{\&lt;GCPositionValueRequestDelegate\&gt;\n||+ positionRequestReachedServer:\l+ positionRequestDidReceiveResponse:\l+ positionRequest:didFailWithError:\l+ positionRequestDidReceiveStatusOK:\l+ positionRequest:receivedValue:remoteness:\l}" alt="" coords="427,6,719,151"/>
+</map>

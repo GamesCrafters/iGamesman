@@ -62,7 +62,7 @@
 }
 
 
-- (void) flush
+- (void) clear
 {
     while (![self isEmpty])
     {

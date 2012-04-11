@@ -1,7 +1,11 @@
 var searchData=
 [
   ['cancelbuttontapped',['cancelButtonTapped',['../protocol_g_c_modal_drawer_panel_delegate-p.html#a76c63f4e0273cc7ab3e97aacab87dd37',1,'GCModalDrawerPanelDelegate-p']]],
+  ['canshowdeltaremoteness',['canShowDeltaRemoteness',['../protocol_g_c_game-p.html#a67463276601e47f9a51c88696bf470a2',1,'GCGame-p']]],
+  ['canshowmovevalues',['canShowMoveValues',['../protocol_g_c_game-p.html#a2fddc6fc9913373c7731012f0f59f153',1,'GCGame-p']]],
   ['centergame',['centerGame',['../interface_g_c_games_scroll_view.html#aa1be9c2ae737a7a9f21166c5e2e196c0',1,'GCGamesScrollView']]],
+  ['clear',['clear',['../interface_g_c_stack.html#a45d7c8c8e356c377bd34b1842d95f1ee',1,'GCStack']]],
+  ['closedrawer_3a',['closeDrawer:',['../protocol_g_c_variants_panel_delegate-p.html#ace9fce0e3abd905ea4ae3bb9d375da15',1,'GCVariantsPanelDelegate-p']]],
   ['columns',['columns',['../interface_g_c_connect_four_position.html#a7beae344a91fbf38045116625ed5064f',1,'GCConnectFourPosition::columns()'],['../interface_g_c_othello_position.html#ad1637005fc9bc391bb7a3f60ef3531a4',1,'GCOthelloPosition::columns()'],['../interface_g_c_quick_cross_position.html#a51ca255209f6b33e49211e82db8c7c86',1,'GCQuickCrossPosition::columns()'],['../interface_g_c_tic_tac_toe_position.html#a6ca5d5c28fe790faee99b77a58074d8e',1,'GCTicTacToePosition::columns()']]],
   ['computergamedelay',['computerGameDelay',['../protocol_g_c_meta_settings_panel_delegate-p.html#a234e84b54296d8ac905e6c8db8a4b8b5',1,'GCMetaSettingsPanelDelegate-p']]],
   ['computermovedelay',['computerMoveDelay',['../protocol_g_c_meta_settings_panel_delegate-p.html#a28037df1cf7e2764d0191ecae039b075',1,'GCMetaSettingsPanelDelegate-p']]],

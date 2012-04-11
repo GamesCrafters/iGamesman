@@ -3,6 +3,7 @@ var searchData=
   ['main',['main',['../main_8m.html#a0ddf1224851353fc92bfbff6f499fa97',1,'main.m']]],
   ['main_2em',['main.m',['../main_8m.html',1,'']]],
   ['match',['match',['../_g_c_quarto_position_8m.html#aaaaf02c75acc49b566d10ff3e616d173',1,'GCQuartoPosition.m']]],
+  ['misere',['misere',['../interface_g_c_connect_four_position.html#afc560ae02b3afe762d773fff6992b4fc',1,'GCConnectFourPosition::misere()'],['../interface_g_c_tic_tac_toe_position.html#ab308e184c2f630e31a64a92ea85339a4',1,'GCTicTacToePosition::misere()']]],
   ['move',['move',['../interface_g_c_game_history_item.html#aa0d34b8e1e6af4123a0c576b2783ec41',1,'GCGameHistoryItem']]],
   ['moveforgcwebmove_3a',['moveForGCWebMove:',['../protocol_g_c_game-p.html#ac198889dc54e05b2260933eb285d9082',1,'GCGame-p']]],
   ['moves',['moves',['../interface_g_c_game_history_item.html#ae8090797b4275068bf7d667b5c3704f5',1,'GCGameHistoryItem']]],

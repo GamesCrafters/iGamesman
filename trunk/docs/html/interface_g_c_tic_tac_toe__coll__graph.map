@@ -1,0 +1,7 @@
+<map id="G" name="G">
+<area shape="rect" id="node2" href="$protocol_g_c_game-p.html" title="{\&lt;GCGame\&gt;\n||+ gcWebServiceName\l+ gcWebParameters\l+ gcWebBoardString\l+ gcWebReportedPositionValue:remoteness:\l+ gcWebReportedValues:remotenesses:forMoves:\l+ moveForGCWebMove:\l+ name\l+ viewWithFrame:\l+ startGameWithLeft:right:options:\l+ waitForHumanMoveWithCompletion:\land 14 more...}" alt="" coords="5,14,323,255"/>
+<area shape="rect" id="node4" href="$protocol_g_c_tic_tac_toe_view_delegate-p.html" title="{\&lt;GCTicTacToeViewDelegate\&gt;\n||+ position\l+ moveValues\l+ remotenessValues\l+ userChoseMove:\l+ isShowingMoveValues\l+ isShowingDeltaRemoteness\l}" alt="" coords="347,54,545,215"/>
+<area shape="rect" id="node6" href="$interface_g_c_tic_tac_toe_position.html" title="{GCTicTacToePosition\n|+ columns\l+ rows\l+ toWin\l+ leftTurn\l+ board\l+ misere\l# _columns\l# _rows\l# _toWin\l# _leftTurn\l# _misere\l# _board\l|+ initWithWidth:height:toWin:\l}" alt="" coords="571,6,763,263"/>
+<area shape="rect" id="node8" href="$interface_g_c_player.html" title="{GCPlayer\n|+ name\l+ epithet\l+ type\l+ percentPerfect\l# _name\l# _epithet\l# _type\l# _percentPerfect\l|}" alt="" coords="787,38,913,231"/>
+<area shape="rect" id="node10" href="$interface_g_c_tic_tac_toe_view.html" title="{GCTicTacToeView\n|+ delegate\l# _delegate\l# _acceptingTouches\l|+ startReceivingTouches\l+ stopReceivingTouches\l}" alt="" coords="938,70,1104,199"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="G" name="G">
+<area shape="rect" id="node2" href="$protocol_g_c_game-p.html" title="{\&lt;GCGame\&gt;\n||+ gcWebServiceName\l+ gcWebParameters\l+ gcWebBoardString\l+ gcWebReportedPositionValue:remoteness:\l+ gcWebReportedValues:remotenesses:forMoves:\l+ moveForGCWebMove:\l+ name\l+ viewWithFrame:\l+ startGameWithLeft:right:options:\l+ waitForHumanMoveWithCompletion:\land 14 more...}" alt="" coords="5,6,323,247"/>
+<area shape="rect" id="node4" href="$protocol_g_c_othello_view_delegate-p.html" title="{\&lt;GCOthelloViewDelegate\&gt;\n||+ position\l+ generateMoves\l+ userChoseMove:\l}" alt="" coords="347,70,527,183"/>
+<area shape="rect" id="node6" href="$interface_g_c_player.html" title="{GCPlayer\n|+ name\l+ epithet\l+ type\l+ percentPerfect\l# _name\l# _epithet\l# _type\l# _percentPerfect\l|}" alt="" coords="551,30,677,223"/>
+<area shape="rect" id="node8" href="$interface_g_c_othello_view.html" title="{GCOthelloView\n|+ delegate\l# _delegate\l# _acceptingTouches\l|+ startReceivingTouches\l+ stopReceivingTouches\l}" alt="" coords="702,62,868,191"/>
+<area shape="rect" id="node10" href="$interface_g_c_othello_position.html" title="{GCOthelloPosition\n|+ rows\l+ columns\l+ leftTurn\l+ board\l# _rows\l# _columns\l# _leftTurn\l# _board\l|+ initWithWidth:height:\l+ numberOfBlackPieces\l+ numberOfWhitePieces\l}" alt="" coords="893,14,1059,239"/>
+</map>

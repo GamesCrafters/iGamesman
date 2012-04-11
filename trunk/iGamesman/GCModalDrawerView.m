@@ -65,15 +65,6 @@
 
 
 #pragma mark -
-#pragma mark GCVariantsPanelDelegate
-
-- (void) closeDrawer
-{
-    [self slideOut];
-}
-
-
-#pragma mark -
 #pragma mark Sliding animations
 
 - (void) slideIn
@@ -230,6 +221,12 @@
     [_toolbar setItems: items];
     
     [items release];
+}
+
+
+- (UIViewController<GCModalDrawerPanelDelegate> *) panelController
+{
+    return _panelController;
 }
 
 

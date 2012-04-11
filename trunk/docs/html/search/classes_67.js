@@ -65,9 +65,12 @@ var searchData=
   ['gctictactoeposition',['GCTicTacToePosition',['../interface_g_c_tic_tac_toe_position.html',1,'']]],
   ['gctictactoeview',['GCTicTacToeView',['../interface_g_c_tic_tac_toe_view.html',1,'']]],
   ['gctictactoeviewdelegate_2dp',['GCTicTacToeViewDelegate-p',['../protocol_g_c_tic_tac_toe_view_delegate-p.html',1,'']]],
+  ['gcvalueshelper',['GCValuesHelper',['../interface_g_c_values_helper.html',1,'']]],
   ['gcvalueshelpviewcontroller',['GCValuesHelpViewController',['../interface_g_c_values_help_view_controller.html',1,'']]],
   ['gcvaluespanelcontroller',['GCValuesPanelController',['../interface_g_c_values_panel_controller.html',1,'']]],
   ['gcvaluespaneldelegate_2dp',['GCValuesPanelDelegate-p',['../protocol_g_c_values_panel_delegate-p.html',1,'']]],
+  ['gcvariantspanelcontroller',['GCVariantsPanelController',['../interface_g_c_variants_panel_controller.html',1,'']]],
+  ['gcvariantspaneldelegate_2dp',['GCVariantsPanelDelegate-p',['../protocol_g_c_variants_panel_delegate-p.html',1,'']]],
   ['gcvvhpanelcontroller',['GCVVHPanelController',['../interface_g_c_v_v_h_panel_controller.html',1,'']]],
   ['gcvvhview',['GCVVHView',['../interface_g_c_v_v_h_view.html',1,'']]],
   ['gcvvhviewdatasource_2dp',['GCVVHViewDataSource-p',['../protocol_g_c_v_v_h_view_data_source-p.html',1,'']]]

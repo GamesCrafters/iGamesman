@@ -15,7 +15,7 @@
 - (void) push: (id) object;
 - (id) peek;
 - (void) pop;
-- (void) flush;
+- (void) clear;
 
 - (NSEnumerator *) objectEnumerator;
 

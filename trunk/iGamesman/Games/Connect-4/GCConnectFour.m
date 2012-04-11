@@ -58,12 +58,18 @@
 
 - (NSString *) gcWebServiceName
 {
+    if ([_position isMisere])
+        return nil;
+    
     return @"connect4";
 }
 
 
 - (NSDictionary *) gcWebParameters
 {
+    if ([_position isMisere])
+        return nil;
+    
     NSNumber *width  = [NSNumber numberWithUnsignedInteger: [_position columns]];
     NSNumber *height = [NSNumber numberWithUnsignedInteger: [_position rows]];
     NSNumber *pieces = [NSNumber numberWithUnsignedInteger: [_position toWin]];
@@ -79,6 +85,9 @@
 
 - (NSString *) gcWebBoardString
 {
+    if ([_position isMisere])
+        return nil;
+    
     NSMutableString *boardString = [NSMutableString string];
     
     for (GCConnectFourPiece piece in [_position board])
@@ -155,7 +164,7 @@
 }
 
 
-- (void) startGameWithLeft: (GCPlayer *) left right: (GCPlayer *) right
+- (void) startGameWithLeft: (GCPlayer *) left right: (GCPlayer *) right options: (NSDictionary *) options
 {
     [left retain];
     [right retain];
@@ -176,6 +185,9 @@
     
     _position = [[GCConnectFourPosition alloc] initWithWidth: 6 height: 4 toWin: 4];
     [_position setLeftTurn: YES];
+    
+    BOOL misere = [[options objectForKey: GCGameMisereOptionKey] boolValue];
+    [_position setMisere: misere];
     
     [_connectFourView resetBoard];
 }
@@ -327,7 +339,10 @@
         if (horizontal || vertical || positiveDiagonal || negativeDiagonal)
         {
             BOOL pieceIsCurrentPlayer = [piece isEqual: ([_position leftTurn] ? GCConnectFourRedPiece : GCConnectFourBluePiece)];
-            return (pieceIsCurrentPlayer ? GCGameValueWin : GCGameValueLose);
+            if ([_position isMisere])
+                return (pieceIsCurrentPlayer ? GCGameValueLose : GCGameValueWin);
+            else
+                return (pieceIsCurrentPlayer ? GCGameValueWin : GCGameValueLose);
         }
     }
     
@@ -362,8 +377,29 @@
 }
 
 
+- (BOOL) isMisere
+{
+    return [_position isMisere];
+}
+
+
+- (BOOL) canShowMoveValues
+{
+    return ![_position isMisere];
+}
+
+
+- (BOOL) canShowDeltaRemoteness
+{
+    return ![_position isMisere];
+}
+
+
 - (BOOL) isShowingMoveValues
 {
+    if ([_position isMisere])
+        return NO;
+    
     return _showMoveValues;
 }
 
@@ -378,6 +414,9 @@
 
 - (BOOL) isShowingDeltaRemoteness
 {
+    if ([_position isMisere])
+        return NO;
+    
     return _showDeltaRemoteness;
 }
 

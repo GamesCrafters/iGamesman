@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['panelcontroller',['panelController',['../interface_g_c_modal_drawer_view.html#a8e6481c7a9f49052259962a9a7ed3d8c',1,'GCModalDrawerView']]],
   ['peek',['peek',['../interface_g_c_stack.html#ac9ead214e419c8f5655bd1b86642846b',1,'GCStack']]],
   ['pieceatrow_3acolumn_3a',['pieceAtRow:column:',['../interface_g_c_quarto_position.html#a751e30603256ff02cd765b4b48e2e6ff',1,'GCQuartoPosition']]],
   ['piecerects',['pieceRects',['../interface_g_c_quarto_view_07_08.html#accf4451200e388cee55ec8c317d64c7e',1,'GCQuartoView()']]],

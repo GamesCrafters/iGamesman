@@ -1,0 +1,8 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$interface_g_c_connect_four.html" title="{GCConnectFour\n|# _position\l# _leftPlayer\l# _rightPlayer\l# _moveHandler\l# _connectFourView\l# _showMoveValues\l# _showDeltaRemoteness\l# _moveValues\l# _remotenessValues\l|}" alt="" coords="5,297,181,506"/>
+<area shape="rect" id="node5" href="$interface_g_c_connections.html" title="{GCConnections\n|# _position\l# _leftPlayer\l# _rightPlayer\l# _moveHandler\l# _connectionsView\l|}" alt="" coords="206,329,345,474"/>
+<area shape="rect" id="node7" href="$interface_g_c_othello.html" title="{GCOthello\n|# _position\l# _leftPlayer\l# _rightPlayer\l# _moveHandler\l# _othelloView\l|}" alt="" coords="370,329,488,474"/>
+<area shape="rect" id="node9" href="$interface_g_c_quarto.html" title="{GCQuarto\n|# _position\l# _leftPlayer\l# _rightPlayer\l# _moveHandler\l# _quartoView\l# _showMoveValues\l# _showDeltaRemoteness\l|}" alt="" coords="513,313,689,490"/>
+<area shape="rect" id="node11" href="$interface_g_c_quick_cross.html" title="{GCQuickCross\n|# _position\l# _leftPlayer\l# _rightPlayer\l# _moveHandler\l# _quickCrossView\l|}" alt="" coords="714,329,848,474"/>
+<area shape="rect" id="node13" href="$interface_g_c_tic_tac_toe.html" title="{GCTicTacToe\n|# _position\l# _leftPlayer\l# _rightPlayer\l# _moveHandler\l# _tttView\l# _showMoveValues\l# _showDeltaRemoteness\l# _moveValues\l# _remotenessValues\l|}" alt="" coords="873,297,1049,506"/>
+</map>

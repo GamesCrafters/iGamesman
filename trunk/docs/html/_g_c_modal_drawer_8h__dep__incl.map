@@ -1,0 +1,19 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$_g_c_modal_drawer_view_8h.html" title="iGamesman/GCModalDrawerView.h" alt="" coords="840,161,1075,189"/>
+<area shape="rect" id="node39" href="$_g_c_variants_panel_controller_8h.html" title="iGamesman/SidebarPanels/GCVariantsPanelController.h" alt="" coords="253,83,611,111"/>
+<area shape="rect" id="node5" href="$_g_c_game_view_controller_8h.html" title="iGamesman/GCGameViewController.h" alt="" coords="1711,393,1960,421"/>
+<area shape="rect" id="node11" href="$_g_c_modal_drawer_view_8m.html" title="iGamesman/GCModalDrawerView.m" alt="" coords="170,238,408,266"/>
+<area shape="rect" id="node13" href="$_g_c_meta_settings_panel_controller_8h.html" title="iGamesman/SidebarPanels/GCMetaSettingsPanelController.h" alt="" coords="1166,238,1553,266"/>
+<area shape="rect" id="node23" href="$_g_c_player_panel_controller_8h.html" title="iGamesman/SidebarPanels/GCPlayerPanelController.h" alt="" coords="433,238,780,266"/>
+<area shape="rect" id="node28" href="$_g_c_values_panel_controller_8h.html" title="iGamesman/SidebarPanels/GCValuesPanelController.h" alt="" coords="1981,315,2331,343"/>
+<area shape="rect" id="node34" href="$_g_c_v_v_h_panel_controller_8h.html" title="iGamesman/SidebarPanels/GCVVHPanelController.h" alt="" coords="805,238,1141,266"/>
+<area shape="rect" id="node7" href="$_g_c_game_view_controller_8m.html" title="iGamesman/GCGameViewController.m" alt="" coords="846,470,1100,498"/>
+<area shape="rect" id="node9" href="$_g_c_carousel_view_controller_8m.html" title="iGamesman/HomeScreens/GCCarouselViewController.m" alt="" coords="1656,470,2015,498"/>
+<area shape="rect" id="node15" href="$_g_c_game_controller_8h.html" title="iGamesman/GCGameController.h" alt="" coords="1219,315,1440,343"/>
+<area shape="rect" id="node21" href="$_g_c_meta_settings_panel_controller_8m.html" title="iGamesman/SidebarPanels/GCMetaSettingsPanelController.m" alt="" coords="1464,315,1855,343"/>
+<area shape="rect" id="node17" href="$_g_c_game_controller_8m.html" title="iGamesman/GCGameController.m" alt="" coords="1218,393,1443,421"/>
+<area shape="rect" id="node26" href="$_g_c_player_panel_controller_8m.html" title="iGamesman/SidebarPanels/GCPlayerPanelController.m" alt="" coords="376,315,727,343"/>
+<area shape="rect" id="node32" href="$_g_c_values_panel_controller_8m.html" title="iGamesman/SidebarPanels/GCValuesPanelController.m" alt="" coords="2035,393,2388,421"/>
+<area shape="rect" id="node37" href="$_g_c_v_v_h_panel_controller_8m.html" title="iGamesman/SidebarPanels/GCVVHPanelController.m" alt="" coords="803,315,1143,343"/>
+<area shape="rect" id="node45" href="$_g_c_variants_panel_controller_8m.html" title="iGamesman/SidebarPanels/GCVariantsPanelController.m" alt="" coords="30,161,391,189"/>
+</map>

@@ -35,6 +35,7 @@
 
 - (id) initWithGame: (id<GCGame>) game andDelegate: (id<GCGameControllerDelegate>) delegate;
 
+- (void) start;
 - (void) go;
 
 - (void) undo;

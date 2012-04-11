@@ -1,0 +1,19 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$_g_c_game_view_controller_8h.html" title="GCGameViewController.h" alt="" coords="1051,83,1225,111"/>
+<area shape="rect" id="node14" href="$_g_c_game_8h.html" title="GCGame.h" alt="" coords="540,470,628,498"/>
+<area shape="rect" id="node25" href="$_g_c_meta_settings_panel_controller_8h.html" title="GCMetaSettingsPanelController.h" alt="" coords="705,238,927,266"/>
+<area shape="rect" id="node33" href="$_g_c_variants_panel_controller_8h.html" title="GCVariantsPanelController.h" alt="" coords="996,393,1187,421"/>
+<area shape="rect" id="node43" href="$_g_c_values_panel_controller_8h.html" title="GCValuesPanelController.h" alt="" coords="1002,238,1184,266"/>
+<area shape="rect" id="node50" href="$_g_c_game_history_item_8h.html" title="GCGameHistoryItem.h" alt="" coords="55,393,211,421"/>
+<area shape="rect" id="node54" href="$_g_c_player_8h.html" title="GCPlayer.h" alt="" coords="5,161,93,189"/>
+<area shape="rect" id="node57" href="$_g_c_sidebar_view_8h.html" title="GCSidebarView.h" alt="" coords="1687,83,1813,111"/>
+<area shape="rect" id="node61" href="$_g_c_player_panel_controller_8h.html" title="GCPlayerPanelController.h" alt="" coords="1260,238,1441,266"/>
+<area shape="rect" id="node68" href="$_g_c_v_v_h_panel_controller_8h.html" title="GCVVHPanelController.h" alt="" coords="1566,238,1737,266"/>
+<area shape="rect" id="node7" href="$_g_c_game_controller_8h.html" title="GCGameController.h" alt="" coords="667,161,812,189"/>
+<area shape="rect" id="node28" href="$_g_c_modal_drawer_view_8h.html" title="GCModalDrawerView.h" alt="" coords="1231,315,1389,343"/>
+<area shape="rect" id="node39" href="$_g_c_v_v_h_view_8h.html" title="GCVVHView.h" alt="" coords="1515,315,1623,343"/>
+<area shape="rect" id="node11" href="$_g_c_j_s_o_n_service_8h.html" title="GCJSONService.h" alt="" coords="647,315,779,343"/>
+<area shape="rect" id="node17" href="$_g_c_move_values_request_8h.html" title="GCMoveValuesRequest.h" alt="" coords="697,393,871,421"/>
+<area shape="rect" id="node21" href="$_g_c_position_value_request_8h.html" title="GCPositionValueRequest.h" alt="" coords="338,393,520,421"/>
+<area shape="rect" id="node31" href="$_g_c_modal_drawer_8h.html" title="GCModalDrawer.h" alt="" coords="1118,470,1249,498"/>
+</map>

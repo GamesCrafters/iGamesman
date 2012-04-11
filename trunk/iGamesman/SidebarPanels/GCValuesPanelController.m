@@ -62,24 +62,30 @@
 
 
 - (void) drawerWillAppear
-{
-    [_predictionsSwitch setOn: [_delegate isShowingPredictions]];
- 
-    if ([_game respondsToSelector: @selector(isShowingMoveValues)] && [_game respondsToSelector: @selector(setShowingMoveValues:)])
+{ 
+    if ([_game canShowMoveValues] && [_game respondsToSelector: @selector(isShowingMoveValues)] && [_game respondsToSelector: @selector(setShowingMoveValues:)])
     {
+        [_predictionsSwitch setOn: [_delegate isShowingPredictions]];
+        [_predictionsSwitch setEnabled: YES];
+        [_predictionsLabel setEnabled: YES];
+        
         [_moveValueSwitch setOn: [_game isShowingMoveValues]];
         [_moveValueSwitch setEnabled: YES];
         [_moveValueLabel setEnabled: YES];
     }
     else
     {
+        [_predictionsSwitch setOn: NO];
+        [_predictionsSwitch setEnabled: NO];
+        [_predictionsLabel setEnabled: NO];
+        
         [_moveValueSwitch setOn: NO];
         [_moveValueSwitch setEnabled: NO];
         [_moveValueLabel setEnabled: NO];
     }
     
     
-    if ([_game respondsToSelector: @selector(isShowingDeltaRemoteness)] && [_game respondsToSelector: @selector(setShowingDeltaRemoteness:)])
+    if ([_game canShowDeltaRemoteness] && [_game respondsToSelector: @selector(isShowingDeltaRemoteness)] && [_game respondsToSelector: @selector(setShowingDeltaRemoteness:)])
     {
         [_deltaRemotenessSwitch setOn: [_game isShowingDeltaRemoteness]];
         [_deltaRemotenessSwitch setEnabled: YES];
@@ -108,10 +114,10 @@
 {
     [_delegate setShowingPredictions: [_predictionsSwitch isOn]];
     
-    if ([_game respondsToSelector: @selector(setShowingMoveValues:)])
+    if ([_game canShowMoveValues] && [_game respondsToSelector: @selector(setShowingMoveValues:)])
         [_game setShowingMoveValues: [_moveValueSwitch isOn]];
     
-    if ([_game respondsToSelector: @selector(setShowingDeltaRemoteness:)])
+    if ([_game canShowDeltaRemoteness] && [_game respondsToSelector: @selector(setShowingDeltaRemoteness:)])
     {
         if ([_moveValueSwitch isOn])
             [_game setShowingDeltaRemoteness: [_deltaRemotenessSwitch isOn]];
@@ -125,7 +131,8 @@
 
 - (void) switchChanged: (UISwitch *) sender
 {
-    if ([sender isOn] && [_game respondsToSelector: @selector(isShowingDeltaRemoteness)] && [_game respondsToSelector: @selector(setShowingDeltaRemoteness:)])
+    if ([sender isOn] && [_game canShowDeltaRemoteness] && [_game respondsToSelector: @selector(isShowingDeltaRemoteness)]
+        && [_game respondsToSelector: @selector(setShowingDeltaRemoteness:)])
     {
         [_deltaRemotenessLabel setEnabled: YES];
         [_deltaRemotenessSwitch setEnabled: YES];
@@ -170,14 +177,13 @@
     CGFloat width  = [[self view] bounds].size.width;
     CGFloat height = [[self view] bounds].size.height;
     
-    UILabel *predictionsLabel = [[UILabel alloc] initWithFrame: CGRectMake(20, 20, width - 40, 25)];
-    [predictionsLabel setBackgroundColor: [UIColor clearColor]];
-    [predictionsLabel setTextColor: [UIColor whiteColor]];
-    [predictionsLabel setFont: [UIFont boldSystemFontOfSize: 20]];
-    [predictionsLabel setText: @"Show Predictions"];
+    _predictionsLabel = [[UILabel alloc] initWithFrame: CGRectMake(20, 20, width - 40, 25)];
+    [_predictionsLabel setBackgroundColor: [UIColor clearColor]];
+    [_predictionsLabel setTextColor: [UIColor whiteColor]];
+    [_predictionsLabel setFont: [UIFont boldSystemFontOfSize: 20]];
+    [_predictionsLabel setText: @"Show Predictions"];
     
-    [[self view] addSubview: predictionsLabel];
-    [predictionsLabel release];
+    [[self view] addSubview: _predictionsLabel];
     
     
     _predictionsSwitch = [[UISwitch alloc] init];
@@ -246,6 +252,7 @@
 {
     [super viewDidUnload];
     
+    [_predictionsLabel release];
     [_deltaRemotenessLabel release];
     [_moveValueLabel release];
     

@@ -31,6 +31,7 @@
 
 @implementation GCGameViewController
 
+#pragma mark - Memory lifecycle
 
 - (id) initWithGame: (id<GCGame>) game
 {
@@ -176,6 +177,12 @@
     }
     
     [_messageLabel setText: message];
+    
+    
+    if ([_game respondsToSelector: @selector(isMisere)] && [_game isMisere])
+        [_gameNameLabel setText: [NSString stringWithFormat: @"%@ (Misère)", [_game name]]];
+    else
+        [_gameNameLabel setText: [_game name]];
 }
 
 
@@ -212,6 +219,41 @@
 - (void) presentViewController: (UIViewController *) viewController
 {
     [self presentModalViewController: viewController animated: YES];
+}
+
+
+#pragma mark - GCVariantsPanelDelegate
+
+- (void) closeDrawer: (GCVariantsPanelController *) sender
+{
+    GCModalDrawerView *drawer = (GCModalDrawerView *) [[self view] viewWithTag: 2004];
+    [drawer slideOut];
+}
+
+
+- (void) startNewGameWithOptions: (NSDictionary *) options
+{
+    GCPlayer *left = [[_game leftPlayer] retain];
+    GCPlayer *right = [[_game rightPlayer] retain];
+    
+    [_game startGameWithLeft: left 
+                       right: right
+                     options: options];
+    
+    [left release];
+    [right release];
+    
+    
+    /* Release the old controller */
+    [_gameController release];
+    
+    _gameController = [[GCGameController alloc] initWithGame: _game andDelegate: self];
+    
+    [metaPanel setDelegate: _gameController];
+    
+    [self updateStatusLabel];
+    
+    [_gameController start];
 }
 
 
@@ -389,7 +431,7 @@
         else if (i == 4)
         {
             GCVariantsPanelController *variantsPanel = [[GCVariantsPanelController alloc] initWithGame: _game];
-            [variantsPanel setDelegate: drawer];
+            [variantsPanel setDelegate: self];
             [drawer setPanelController: variantsPanel];
             [variantsPanel release];
         }
@@ -467,7 +509,6 @@
     [_gameNameLabel setFont: font];
     [_gameNameLabel setTextAlignment: UITextAlignmentCenter];
     [_gameNameLabel setTextColor: [UIColor whiteColor]];
-    [_gameNameLabel setText: [_game name]];
     
     [[self view] addSubview: _gameNameLabel];
     
@@ -490,7 +531,9 @@
     [right setType: GC_HUMAN];
     [right setPercentPerfect: 0];
     
-    [_game startGameWithLeft: left right: right];
+    [_game startGameWithLeft: left
+                       right: right
+                     options: [NSDictionary dictionaryWithObject: [NSNumber numberWithBool: NO] forKey: GCGameMisereOptionKey]];
     
     [left release];
     [right release];
@@ -501,7 +544,7 @@
     
     [self updateStatusLabel];
     
-    [_gameController go];
+    [_gameController start];
 }
 
 

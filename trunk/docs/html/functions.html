@@ -73,7 +73,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="annotated.html"><span>Class&#160;List</span></a></li>
       <li><a href="classes.html"><span>Class&#160;Index</span></a></li>
-      <li><a href="hierarchy.html"><span>Class&#160;Hierarchy</span></a></li>
+      <li><a href="inherits.html"><span>Class&#160;Hierarchy</span></a></li>
       <li class="current"><a href="functions.html"><span>Class&#160;Members</span></a></li>
     </ul>
   </div>
@@ -165,9 +165,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 , <a class="el" href="interface_g_c_connections_position.html#a78e292e48bbf54d6835904896b827aa9">GCConnectionsPosition</a>
 , <a class="el" href="interface_g_c_othello_position.html#abd4e99b43747f93028f15e9eee76e8db">GCOthelloPosition</a>
 </li>
-<li>_closeButton
-: <a class="el" href="interface_g_c_modal_drawer_view.html#a7f26729ecd049f25a71f696718478be3">GCModalDrawerView</a>
-</li>
 <li>_columns
 : <a class="el" href="interface_g_c_connect_four_position.html#a2c2a7d04e8b632328a25e349f12e7aba">GCConnectFourPosition</a>
 , <a class="el" href="interface_g_c_othello_position.html#aad05bc347ed7b2d51c3b61590247aba0">GCOthelloPosition</a>
@@ -194,8 +191,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 , <a class="el" href="interface_g_c_v_v_h_panel_controller.html#aa40020e550fe9ab20c1c6b5db05869d7">GCVVHPanelController</a>
 </li>
 <li>_delegate
-: <a class="el" href="interface_g_c_connections_view.html#a2ebd279d85f3fb2c1f3734fa89e09849">GCConnectionsView</a>
-, <a class="el" href="interface_g_c_othello_view.html#a63fda8806e9b7bfe1c3c3dbf48fd9f96">GCOthelloView</a>
+: <a class="el" href="interface_g_c_othello_view.html#a63fda8806e9b7bfe1c3c3dbf48fd9f96">GCOthelloView</a>
 , <a class="el" href="interface_g_c_quarto_view.html#a2a87b3d468f3ba0c6870dde321236178">GCQuartoView</a>
 , <a class="el" href="interface_g_c_quick_cross_view.html#a4c5b206aaa12f3c608cbbe76f7180d02">GCQuickCrossView</a>
 , <a class="el" href="interface_g_c_tic_tac_toe_view.html#a8a885643abdee54fa7b2718ea16f5480">GCTicTacToeView</a>
@@ -203,10 +199,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 , <a class="el" href="interface_g_c_modal_drawer_view.html#ae120493ae7baf53fa7f0b072a7e05f08">GCModalDrawerView</a>
 , <a class="el" href="interface_g_c_meta_settings_panel_controller.html#acdcc82f484283798a01ba7c430c7437e">GCMetaSettingsPanelController</a>
 , <a class="el" href="interface_g_c_values_panel_controller.html#a3869d07acac7e19dcfcb72c90058cca1">GCValuesPanelController</a>
+, <a class="el" href="interface_g_c_variants_panel_controller.html#aa3ff43aeb2834ca502be3223d80ac3ae">GCVariantsPanelController</a>
 , <a class="el" href="interface_g_c_j_s_o_n_service.html#aa8e352f2d8cf5254f105ad1f36fe6932">GCJSONService</a>
 , <a class="el" href="interface_g_c_move_values_request.html#a6458bd0766357d76a639511c8179461a">GCMoveValuesRequest</a>
 , <a class="el" href="interface_g_c_position_value_request.html#a6ddfe91bf79aab1bea2f2c0822a7639c">GCPositionValueRequest</a>
 , <a class="el" href="interface_g_c_connect_four_view.html#a358545e051a8dc470d9ed28771792465">GCConnectFourView</a>
+, <a class="el" href="interface_g_c_connections_view.html#a2ebd279d85f3fb2c1f3734fa89e09849">GCConnectionsView</a>
 </li>
 <li>_deltaRemotenessLabel
 : <a class="el" href="interface_g_c_values_panel_controller.html#a183bc54a19b76968d97942e26853723d">GCValuesPanelController</a>
@@ -225,6 +223,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 , <a class="el" href="interface_g_c_game_view_controller.html#a9efff14c9007c11f92ba8706e2697194">GCGameViewController</a>
 , <a class="el" href="interface_g_c_player_panel_controller.html#a2ad035d35b8e9aeee2ca850811d6dd50">GCPlayerPanelController</a>
 , <a class="el" href="interface_g_c_values_panel_controller.html#a492a69defe2e58e603b0cc587b1a8af2">GCValuesPanelController</a>
+, <a class="el" href="interface_g_c_variants_panel_controller.html#aba0d944ddd504b2d47924f20faf05b88">GCVariantsPanelController</a>
 </li>
 <li>_gameController
 : <a class="el" href="interface_g_c_game_view_controller.html#aa2bdbfa4359991a191fd79f0be8fd895">GCGameViewController</a>
@@ -293,6 +292,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="interface_g_c_game_view_controller.html#a93af4afa37099a070a807fa8be7a3d45">GCGameViewController</a>
 , <a class="el" href="interface_g_c_message_overlay_view.html#acf45a5a7993b4af504e749fce3b2ebce">GCMessageOverlayView</a>
 </li>
+<li>_misere
+: <a class="el" href="interface_g_c_connect_four_position.html#ae8b111ab8b61c08a7c2a8572fa6dd59d">GCConnectFourPosition</a>
+, <a class="el" href="interface_g_c_tic_tac_toe_position.html#aa7465c0250e6902c2c7f39a83edc563d">GCTicTacToePosition</a>
+</li>
+<li>_misereLabel
+: <a class="el" href="interface_g_c_variants_panel_controller.html#ae369366b8b0218e7278bd1495dd67c4c">GCVariantsPanelController</a>
+</li>
+<li>_misereSwitch
+: <a class="el" href="interface_g_c_variants_panel_controller.html#adc77364d4ee90f52f27af94d3dfcb1f8">GCVariantsPanelController</a>
+</li>
 <li>_move
 : <a class="el" href="interface_g_c_game_history_item.html#aae9070834e9bd3322a136ef8c0ff877f">GCGameHistoryItem</a>
 </li>
@@ -317,12 +326,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="interface_g_c_game_history_item.html#ab241e3195be49af4ea98202d1b5e83af">GCGameHistoryItem</a>
 </li>
 <li>_moveValueLabel
-: <a class="el" href="interface_g_c_values_panel_controller.html#a110eed1d73565b6580c2baee65fbb489">GCValuesPanelController</a>
+: <a class="el" href="interface_g_c_values_panel_controller.html#a9bda09114c9c046394d2706bf7d911da">GCValuesPanelController</a>
 </li>
 <li>_moveValues
-: <a class="el" href="interface_g_c_game_history_item.html#a2d21090efece5ec78e53a12dad4ea247">GCGameHistoryItem</a>
-, <a class="el" href="interface_g_c_connect_four.html#aa425c3e6986553ed1c315e0a4a0da891">GCConnectFour</a>
+: <a class="el" href="interface_g_c_connect_four.html#aa425c3e6986553ed1c315e0a4a0da891">GCConnectFour</a>
 , <a class="el" href="interface_g_c_tic_tac_toe.html#aa2b9387c1bc8909b6ccf93e4197f2f9b">GCTicTacToe</a>
+, <a class="el" href="interface_g_c_game_history_item.html#a2d21090efece5ec78e53a12dad4ea247">GCGameHistoryItem</a>
 </li>
 <li>_moveValueSent
 : <a class="el" href="interface_g_c_j_s_o_n_service.html#abf1eeb0195e4375945b9dde9cadd771f">GCJSONService</a>
@@ -340,9 +349,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="interface_g_c_modal_drawer_view.html#a511b574e5a8f63c4623f48d8cecfc6d2">GCModalDrawerView</a>
 </li>
 <li>_parameterString
-: <a class="el" href="interface_g_c_position_value_request.html#ad1ebc78ea0d3ce24a52f380b1d7dd437">GCPositionValueRequest</a>
+: <a class="el" href="interface_g_c_move_values_request.html#acf44280156729f7f62621582baba0cd8">GCMoveValuesRequest</a>
 , <a class="el" href="interface_g_c_j_s_o_n_service.html#a11bafd0c354f7144fd4786a5735aedf3">GCJSONService</a>
-, <a class="el" href="interface_g_c_move_values_request.html#acf44280156729f7f62621582baba0cd8">GCMoveValuesRequest</a>
+, <a class="el" href="interface_g_c_position_value_request.html#ad1ebc78ea0d3ce24a52f380b1d7dd437">GCPositionValueRequest</a>
 </li>
 <li>_percentPerfect
 : <a class="el" href="interface_g_c_player.html#afa7dd7ababe62af901dd4ef2750ce0c5">GCPlayer</a>
@@ -360,9 +369,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="interface_g_c_game_history_item.html#a618b5af9042b331377850d2f0dddde11">GCGameHistoryItem</a>
 </li>
 <li>_position
-: <a class="el" href="interface_g_c_othello.html#a87f5e44f5678086038c0c92899ce0ad9">GCOthello</a>
-, <a class="el" href="interface_g_c_connect_four.html#a2e32d240e3af08d15f97075b7332a9ee">GCConnectFour</a>
+: <a class="el" href="interface_g_c_connect_four.html#a2e32d240e3af08d15f97075b7332a9ee">GCConnectFour</a>
 , <a class="el" href="interface_g_c_connections.html#aa3b758f6c509b342ccb94a91c06850a8">GCConnections</a>
+, <a class="el" href="interface_g_c_othello.html#a87f5e44f5678086038c0c92899ce0ad9">GCOthello</a>
 , <a class="el" href="interface_g_c_quarto.html#a3f56a471524d61abd4414801d7e3d839">GCQuarto</a>
 , <a class="el" href="interface_g_c_quick_cross.html#a606cdff088e0760c1b2d32b241edf9da">GCQuickCross</a>
 , <a class="el" href="interface_g_c_tic_tac_toe.html#a1c8a8f788f99c99fdb34b1c030f5abbb">GCTicTacToe</a>
@@ -370,6 +379,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li>_positionValueSent
 : <a class="el" href="interface_g_c_j_s_o_n_service.html#a6c44622b40b6e8443f594945bc131fd1">GCJSONService</a>
+</li>
+<li>_predictionsLabel
+: <a class="el" href="interface_g_c_values_panel_controller.html#a9dbabc690c5765a6c7b067e51e2d08e2">GCValuesPanelController</a>
 </li>
 <li>_predictionsSwitch
 : <a class="el" href="interface_g_c_values_panel_controller.html#a9c7c8c26897c1f8a73d2fa5578b70c8b">GCValuesPanelController</a>
@@ -387,12 +399,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="interface_g_c_game_history_item.html#acd56e3c909a4c8674422e134e988c32a">GCGameHistoryItem</a>
 </li>
 <li>_remotenessValues
-: <a class="el" href="interface_g_c_tic_tac_toe.html#a985b9a001c5b4036852bac8c2220ada1">GCTicTacToe</a>
-, <a class="el" href="interface_g_c_connect_four.html#ab0ef2c403495bbaaf352979e68903542">GCConnectFour</a>
+: <a class="el" href="interface_g_c_connect_four.html#ab0ef2c403495bbaaf352979e68903542">GCConnectFour</a>
+, <a class="el" href="interface_g_c_tic_tac_toe.html#a985b9a001c5b4036852bac8c2220ada1">GCTicTacToe</a>
 </li>
 <li>_resultData
-: <a class="el" href="interface_g_c_position_value_request.html#a4cdfc4142631e4c6d3a5ff5ad5491855">GCPositionValueRequest</a>
-, <a class="el" href="interface_g_c_move_values_request.html#aef54df879a33f2630787b9f80b3a9ea6">GCMoveValuesRequest</a>
+: <a class="el" href="interface_g_c_move_values_request.html#aef54df879a33f2630787b9f80b3a9ea6">GCMoveValuesRequest</a>
+, <a class="el" href="interface_g_c_position_value_request.html#a4cdfc4142631e4c6d3a5ff5ad5491855">GCPositionValueRequest</a>
 </li>
 <li>_rightInfoLabel
 : <a class="el" href="interface_g_c_player_panel_controller.html#ae2a2b705002f0fcca66daf740db862ea">GCPlayerPanelController</a>
@@ -407,12 +419,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="interface_g_c_player_panel_controller.html#ac0797c58fa6628a749b15e2cdb5c1054">GCPlayerPanelController</a>
 </li>
 <li>_rightPlayer
-: <a class="el" href="interface_g_c_othello.html#ad7c92ec9da71c598638d98dd8aa01895">GCOthello</a>
+: <a class="el" href="interface_g_c_connect_four.html#aa6130440af6d384f3fd133ae49ebab8d">GCConnectFour</a>
+, <a class="el" href="interface_g_c_othello.html#ad7c92ec9da71c598638d98dd8aa01895">GCOthello</a>
 , <a class="el" href="interface_g_c_quick_cross.html#a7e71a95d87a7a53aba34ee29579477ca">GCQuickCross</a>
 , <a class="el" href="interface_g_c_connections.html#a707be7af99912b9d60518cbf190e5d39">GCConnections</a>
 , <a class="el" href="interface_g_c_tic_tac_toe.html#aa08e2ec3e25632a43b61c2ea12073466">GCTicTacToe</a>
 , <a class="el" href="interface_g_c_quarto.html#a6366e724fc7025683552be6176ea427c">GCQuarto</a>
-, <a class="el" href="interface_g_c_connect_four.html#aa6130440af6d384f3fd133ae49ebab8d">GCConnectFour</a>
 </li>
 <li>_rightPlayerType
 : <a class="el" href="interface_g_c_player_panel_controller.html#a29d0cca3638991b35a1db811def033a2">GCPlayerPanelController</a>
@@ -424,10 +436,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="interface_g_c_app_delegate.html#a5b23c9593061573f60d7ae34571a359f">GCAppDelegate</a>
 </li>
 <li>_rows
-: <a class="el" href="interface_g_c_othello_position.html#adffdef29406818d6ecd85457cc69d476">GCOthelloPosition</a>
-, <a class="el" href="interface_g_c_quick_cross_position.html#a9c57bef1bbf107283d4c8c3d98aabc8f">GCQuickCrossPosition</a>
-, <a class="el" href="interface_g_c_connect_four_position.html#a66be3aca3d7d47a3378b06c03ac2549c">GCConnectFourPosition</a>
+: <a class="el" href="interface_g_c_connect_four_position.html#a66be3aca3d7d47a3378b06c03ac2549c">GCConnectFourPosition</a>
 , <a class="el" href="interface_g_c_tic_tac_toe_position.html#a8f466a5a51f3522cc4ba66ed7b27f39f">GCTicTacToePosition</a>
+, <a class="el" href="interface_g_c_quick_cross_position.html#a9c57bef1bbf107283d4c8c3d98aabc8f">GCQuickCrossPosition</a>
+, <a class="el" href="interface_g_c_othello_position.html#adffdef29406818d6ecd85457cc69d476">GCOthelloPosition</a>
 </li>
 <li>_runner
 : <a class="el" href="interface_g_c_game_controller.html#a01510a4b86d1817498c6be19f52b85a2">GCGameController</a>
@@ -439,8 +451,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="interface_g_c_game_controller.html#aed3a592481f85b8ed72473397574f6e3">GCGameController</a>
 </li>
 <li>_showDeltaRemoteness
-: <a class="el" href="interface_g_c_tic_tac_toe.html#a97856a9fcd6040d4c6af555a5973b4c5">GCTicTacToe</a>
-, <a class="el" href="interface_g_c_connect_four.html#a32ea1d7f0240fdbc22ccad6777c550e1">GCConnectFour</a>
+: <a class="el" href="interface_g_c_connect_four.html#a32ea1d7f0240fdbc22ccad6777c550e1">GCConnectFour</a>
+, <a class="el" href="interface_g_c_tic_tac_toe.html#a97856a9fcd6040d4c6af555a5973b4c5">GCTicTacToe</a>
 , <a class="el" href="interface_g_c_quarto.html#a9c6699d322803af2eb8178c6bda72486">GCQuarto</a>
 </li>
 <li>_showingPredictions
@@ -450,9 +462,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="interface_g_c_game_view_controller.html#a13275007917febcceb3dd14a970704aa">GCGameViewController</a>
 </li>
 <li>_showMoveValues
-: <a class="el" href="interface_g_c_tic_tac_toe.html#a218b5d87b000595f3e1d8e54bcc4af0c">GCTicTacToe</a>
+: <a class="el" href="interface_g_c_connect_four.html#ae2352919312af9dd9e5a49ad79cd7f9e">GCConnectFour</a>
 , <a class="el" href="interface_g_c_quarto.html#a23ff04fea7198604e982ea3d20f68789">GCQuarto</a>
-, <a class="el" href="interface_g_c_connect_four.html#ae2352919312af9dd9e5a49ad79cd7f9e">GCConnectFour</a>
+, <a class="el" href="interface_g_c_tic_tac_toe.html#a218b5d87b000595f3e1d8e54bcc4af0c">GCTicTacToe</a>
 </li>
 <li>_sideBar
 : <a class="el" href="interface_g_c_game_view_controller.html#aec6750d7ef8250aef931bb88655f3466">GCGameViewController</a>
@@ -476,9 +488,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="interface_g_c_quick_cross_view.html#aab3528da6944d01acbd93a4f4181cc13">GCQuickCrossView</a>
 </li>
 <li>_toWin
-: <a class="el" href="interface_g_c_connect_four_position.html#a7cf97a853602141b19c01495c20ad856">GCConnectFourPosition</a>
+: <a class="el" href="interface_g_c_quick_cross_position.html#a379c39f476344e27befdd67f0d01dc30">GCQuickCrossPosition</a>
 , <a class="el" href="interface_g_c_tic_tac_toe_position.html#ad582610481b34b8ef1a7fbf46d022dbb">GCTicTacToePosition</a>
-, <a class="el" href="interface_g_c_quick_cross_position.html#a379c39f476344e27befdd67f0d01dc30">GCQuickCrossPosition</a>
+, <a class="el" href="interface_g_c_connect_four_position.html#a7cf97a853602141b19c01495c20ad856">GCConnectFourPosition</a>
 </li>
 <li>_tttView
 : <a class="el" href="interface_g_c_tic_tac_toe.html#a5602005f78386ef7f08c8e38d2326d25">GCTicTacToe</a>
@@ -499,8 +511,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="interface_g_c_games_scroll_view.html#ac9b2d9bcbb7be652b840347b76f4b066">GCGamesScrollView</a>
 </li>
 <li>_vvh
-: <a class="el" href="interface_g_c_v_v_h_panel_controller.html#abe6aef24c9015c0edef9fbbec4dbc661">GCVVHPanelController</a>
-, <a class="el" href="interface_g_c_game_view_controller.html#a82fce893127f549032512f38766d3e95">GCGameViewController</a>
+: <a class="el" href="interface_g_c_game_view_controller.html#a82fce893127f549032512f38766d3e95">GCGameViewController</a>
+, <a class="el" href="interface_g_c_v_v_h_panel_controller.html#abe6aef24c9015c0edef9fbbec4dbc661">GCVVHPanelController</a>
 </li>
 <li>_white
 : <a class="el" href="interface_g_c_quarto_piece.html#ab5051022a270eae7c72a575b318473b1">GCQuartoPiece</a>
@@ -510,7 +522,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Mar 12 2012 14:38:52 for iGamesman by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Apr 11 2012 13:53:32 for iGamesman by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

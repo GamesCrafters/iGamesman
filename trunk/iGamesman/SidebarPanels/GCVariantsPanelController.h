@@ -33,6 +33,7 @@
 
 @protocol GCVariantsPanelDelegate
 
-- (void) closeDrawer;
+- (void) closeDrawer: (GCVariantsPanelController *) sender;
+- (void) startNewGameWithOptions: (NSDictionary *) options;
 
 @end

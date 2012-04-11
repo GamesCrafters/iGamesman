@@ -1,0 +1,7 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$interface_g_c_meta_settings_panel_controller.html" title="{GCMetaSettingsPanelController\n|# _delegate\l# _moveDelayLabel\l# _gameDelayLabel\l# _moveDelaySlider\l# _gameDelaySlider\l|+ setDelegate:\l}" alt="" coords="5,345,216,490"/>
+<area shape="rect" id="node5" href="$interface_g_c_player_panel_controller.html" title="{GCPlayerPanelController\n|# _game\l# _leftTextField\l# _rightTextField\l# _leftPlayerType\l# _rightPlayerType\l# _leftPercentHeader\l# _rightPercentHeader\l# _leftPercentLabel\l# _rightPercentLabel\l# _leftPercentSlider\l# _rightPercentSlider\l# _leftInfoLabel\l# _rightInfoLabel\l|+ initWithGame:\l}" alt="" coords="240,281,411,554"/>
+<area shape="rect" id="node7" href="$interface_g_c_values_panel_controller.html" title="{GCValuesPanelController\n|+ delegate\l# _game\l# _delegate\l# _predictionsLabel\l# _moveValueLabel\l# _deltaRemotenessLabel\l# _predictionsSwitch\l# _moveValueSwitch\l# _deltaRemotenessSwitch\l# _helpPopoverController\l|+ initWithGame:\l}" alt="" coords="435,305,617,530"/>
+<area shape="rect" id="node9" href="$interface_g_c_variants_panel_controller.html" title="{GCVariantsPanelController\n|+ delegate\l# _delegate\l# _game\l# _misereLabel\l# _misereSwitch\l|+ initWithGame:\l}" alt="" coords="643,345,823,490"/>
+<area shape="rect" id="node11" href="$interface_g_c_v_v_h_panel_controller.html" title="{GCVVHPanelController\n|# _dataSource\l# _vvh\l|+ initWithDataSource:\l}" alt="" coords="848,369,1008,466"/>
+</map>

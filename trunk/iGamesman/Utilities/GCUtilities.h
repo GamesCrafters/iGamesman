@@ -1,5 +1,5 @@
 //
-//  GCConstants.h
+//  GCUtilities.h
 //  iGamesman
 //
 //  Created by Kevin Jorgensen on 3/12/12.
@@ -16,6 +16,7 @@ struct _GCColor {
 };
 
 typedef struct _GCColor GCColor;
+
 
 
 @interface GCConstants : NSObject

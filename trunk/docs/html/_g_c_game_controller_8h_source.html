@@ -132,32 +132,33 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00035"></a>00035 
 <a name="l00036"></a>00036 - (id) initWithGame: (<span class="keywordtype">id</span>&lt;<a class="code" href="protocol_g_c_game-p.html">GCGame</a>&gt;) game andDelegate: (<span class="keywordtype">id</span>&lt;<a class="code" href="protocol_g_c_game_controller_delegate-p.html">GCGameControllerDelegate</a>&gt;) delegate;
 <a name="l00037"></a>00037 
-<a name="l00038"></a>00038 - (void) go;
-<a name="l00039"></a>00039 
-<a name="l00040"></a>00040 - (void) undo;
-<a name="l00041"></a>00041 - (void) redo;
-<a name="l00042"></a>00042 
-<a name="l00043"></a>00043 - (<a class="code" href="interface_g_c_game_history_item.html">GCGameHistoryItem</a> *) currentItem;
-<a name="l00044"></a>00044 
-<a name="l00045"></a>00045 - (NSEnumerator *) historyItemEnumerator;
-<a name="l00046"></a>00046 
-<a name="l00047"></a>00047 <span class="keyword">@end</span>
-<a name="l00048"></a>00048 
+<a name="l00038"></a>00038 - (void) start;
+<a name="l00039"></a>00039 - (void) go;
+<a name="l00040"></a>00040 
+<a name="l00041"></a>00041 - (void) undo;
+<a name="l00042"></a>00042 - (void) redo;
+<a name="l00043"></a>00043 
+<a name="l00044"></a>00044 - (<a class="code" href="interface_g_c_game_history_item.html">GCGameHistoryItem</a> *) currentItem;
+<a name="l00045"></a>00045 
+<a name="l00046"></a>00046 - (NSEnumerator *) historyItemEnumerator;
+<a name="l00047"></a>00047 
+<a name="l00048"></a>00048 <span class="keyword">@end</span>
 <a name="l00049"></a>00049 
 <a name="l00050"></a>00050 
-<a name="l00051"></a>00051 <span class="keyword">@protocol </span><a class="code" href="protocol_g_c_game_controller_delegate-p.html">GCGameControllerDelegate</a>
-<a name="l00052"></a><a class="code" href="protocol_g_c_game_controller_delegate-p.html">00052</a> 
-<a name="l00053"></a>00053 - (void) setUndoButtonEnabled: (BOOL) enabled;
-<a name="l00054"></a>00054 - (void) setRedoButtonEnabled: (BOOL) enabled;
-<a name="l00055"></a>00055 - (void) <a class="code" href="protocol_g_c_game_controller_delegate-p.html#a5069a39e367cc7b6e592db662aa7ef7c">updateStatusLabel</a>;
-<a name="l00056"></a>00056 - (void) <a class="code" href="protocol_g_c_game_controller_delegate-p.html#ab214ec961540e7eb69a83aaa63189561">updateVVH</a>;
-<a name="l00057"></a>00057 
-<a name="l00058"></a>00058 <span class="keyword">@end</span>
+<a name="l00051"></a>00051 
+<a name="l00052"></a>00052 <span class="keyword">@protocol </span><a class="code" href="protocol_g_c_game_controller_delegate-p.html">GCGameControllerDelegate</a>
+<a name="l00053"></a><a class="code" href="protocol_g_c_game_controller_delegate-p.html">00053</a> 
+<a name="l00054"></a>00054 - (void) setUndoButtonEnabled: (BOOL) enabled;
+<a name="l00055"></a>00055 - (void) setRedoButtonEnabled: (BOOL) enabled;
+<a name="l00056"></a>00056 - (void) <a class="code" href="protocol_g_c_game_controller_delegate-p.html#a5069a39e367cc7b6e592db662aa7ef7c">updateStatusLabel</a>;
+<a name="l00057"></a>00057 - (void) <a class="code" href="protocol_g_c_game_controller_delegate-p.html#ab214ec961540e7eb69a83aaa63189561">updateVVH</a>;
+<a name="l00058"></a>00058 
+<a name="l00059"></a>00059 <span class="keyword">@end</span>
 </pre></div></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Mar 12 2012 14:38:52 for iGamesman by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Apr 11 2012 13:53:30 for iGamesman by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

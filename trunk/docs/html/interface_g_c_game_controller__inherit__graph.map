@@ -1,0 +1,4 @@
+<map id="G" name="G">
+<area shape="rect" id="node2" href="$protocol_g_c_j_s_o_n_service_delegate-p.html" title="{\&lt;GCJSONServiceDelegate\&gt;\n||+ jsonServiceDidReachServer:\l+ jsonServiceDidReceiveResponse:\l+ jsonServiceDidReceiveStatusOK:\l+ jsonService:didReceivePositionValue:remoteness:\l+ jsonService:didReceiveValues:remotenesses:forMoves:\l+ jsonService:didFailWithError:\l+ jsonServiceDidFinish:\l}" alt="" coords="5,6,365,183"/>
+<area shape="rect" id="node4" href="$protocol_g_c_meta_settings_panel_delegate-p.html" title="{\&lt;GCMetaSettingsPanelDelegate\&gt;\n||+ computerMoveDelay\l+ setComputerMoveDelay:\l+ computerGameDelay\l+ setComputerGameDelay:\l}" alt="" coords="390,30,612,159"/>
+</map>

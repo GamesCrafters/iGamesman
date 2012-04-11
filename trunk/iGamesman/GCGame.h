@@ -18,13 +18,20 @@ typedef NSObject<NSCopying> GCPosition;
 typedef NSObject<NSCopying> GCMove;
 
 
-/* Game values */
+/** Game values */
 typedef NSString GCGameValue;
 #define GCGameValueWin     @"GC_VALUE_WIN"
 #define GCGameValueLose    @"GC_VALUE_LOSE"
 #define GCGameValueTie     @"GC_VALUE_TIE"
 #define GCGameValueDraw    @"GC_VALUE_DRAW"
 #define GCGameValueUnknown @"GC_VALUE_UNKNOWN"
+
+
+/**
+ * The corresponding value is an NSNumber wrapping a boolean value that indicates whether misere play is on or off.
+ * A value of YES means misere is enabled; a value of NO means misere is disabled.
+ */
+#define GCGameMisereOptionKey @"GC_MISERE_OPTION"
 
 
 @class GCPlayer;
@@ -128,9 +135,11 @@ typedef NSString GCGameValue;
  *
  * @param leftPlayer The left player
  * @param rightPlayer The right player
+ * @param options The options dictionary. The keys for this dictionary are documented at the top of this file.
  */
 - (void) startGameWithLeft: (GCPlayer *) leftPlayer
-                     right: (GCPlayer *) rightPlayer;
+                     right: (GCPlayer *) rightPlayer
+                   options: (NSDictionary *) options;
 
 
 typedef void (^GCMoveCompletionHandler) (GCMove *move);
@@ -213,7 +222,11 @@ typedef void (^GCMoveCompletionHandler) (GCMove *move);
 
 @optional
 - (BOOL) isMisere;
-- (void) setMisere: (BOOL) misere;
+
+
+@required
+- (BOOL) canShowMoveValues;
+- (BOOL) canShowDeltaRemoteness;
 
 
 @optional

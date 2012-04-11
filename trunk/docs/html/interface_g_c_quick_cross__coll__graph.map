@@ -1,0 +1,7 @@
+<map id="G" name="G">
+<area shape="rect" id="node2" href="$protocol_g_c_game-p.html" title="{\&lt;GCGame\&gt;\n||+ gcWebServiceName\l+ gcWebParameters\l+ gcWebBoardString\l+ gcWebReportedPositionValue:remoteness:\l+ gcWebReportedValues:remotenesses:forMoves:\l+ moveForGCWebMove:\l+ name\l+ viewWithFrame:\l+ startGameWithLeft:right:options:\l+ waitForHumanMoveWithCompletion:\land 14 more...}" alt="" coords="5,6,323,247"/>
+<area shape="rect" id="node4" href="$protocol_g_c_quick_cross_view_delegate-p.html" title="{\&lt;GCQuickCrossViewDelegate\&gt;\n||+ position\l+ userChoseMove:\l}" alt="" coords="347,78,553,175"/>
+<area shape="rect" id="node6" href="$interface_g_c_player.html" title="{GCPlayer\n|+ name\l+ epithet\l+ type\l+ percentPerfect\l# _name\l# _epithet\l# _type\l# _percentPerfect\l|}" alt="" coords="578,30,704,223"/>
+<area shape="rect" id="node8" href="$interface_g_c_quick_cross_view.html" title="{GCQuickCrossView\n|+ delegate\l# _delegate\l# _acceptingTouches\l# _receivingMove\l# _touchDownPoint\l# _moveIndex\l|+ startReceivingTouches\l+ stopReceivingTouches\l}" alt="" coords="729,38,895,215"/>
+<area shape="rect" id="node10" href="$interface_g_c_quick_cross_position.html" title="{GCQuickCrossPosition\n|+ rows\l+ columns\l+ toWin\l+ leftTurn\l+ board\l# _rows\l# _columns\l# _toWin\l# _leftTurn\l# _board\l|+ initWithWidth:height:toWin:\l}" alt="" coords="920,14,1112,239"/>
+</map>

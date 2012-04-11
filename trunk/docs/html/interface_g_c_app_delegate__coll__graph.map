@@ -1,0 +1,4 @@
+<map id="G" name="G">
+<area shape="rect" id="node2" href="$interface_g_c_carousel_view_controller.html" title="{GCCarouselViewController\n|# _aboutGameButton\l# playGame\l# _currentEntry\l|}" alt="" coords="4,185,184,298"/>
+<area shape="rect" id="node4" href="$interface_g_c_games_scroll_view.html" title="{GCGamesScrollView\n|# _gameInfos\l# _visibleGameInfos\l# _visibleGames\l|+ centerGame\l}" alt="" coords="22,6,167,119"/>
+</map>

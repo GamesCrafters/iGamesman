@@ -13,13 +13,14 @@
 
 #import "GCModalDrawerView.h"
 #import "GCValuesPanelController.h"
+#import "GCVariantsPanelController.h"
 
 
 @protocol GCGame;
 @class GCSidebarView;
 
 
-@interface GCGameViewController : UIViewController <GCGameControllerDelegate, GCModalDrawerViewDelegate, GCValuesPanelDelegate, GCVVHViewDataSource>
+@interface GCGameViewController : UIViewController <GCGameControllerDelegate, GCModalDrawerViewDelegate, GCValuesPanelDelegate, GCVariantsPanelDelegate, GCVVHViewDataSource>
 {
     id<GCGame> _game;
     GCGameController *_gameController;

@@ -13,7 +13,7 @@
 #import "GCVariantsPanelController.h"
 
 
-@interface GCModalDrawerView : UIView <GCVariantsPanelDelegate>
+@interface GCModalDrawerView : UIView
 {
     UIToolbar *_toolbar;
     
@@ -37,6 +37,7 @@
 - (id) initWithFrame: (CGRect) frame startOffscreen: (BOOL) offscreen;
 
 - (void) setPanelController: (UIViewController<GCModalDrawerPanelDelegate> *) controller;
+- (UIViewController<GCModalDrawerPanelDelegate> *) panelController;
 
 /* Slide the drawer in from offscreen */
 - (void) slideIn;

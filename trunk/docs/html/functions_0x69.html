@@ -73,7 +73,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="annotated.html"><span>Class&#160;List</span></a></li>
       <li><a href="classes.html"><span>Class&#160;Index</span></a></li>
-      <li><a href="hierarchy.html"><span>Class&#160;Hierarchy</span></a></li>
+      <li><a href="inherits.html"><span>Class&#160;Hierarchy</span></a></li>
       <li class="current"><a href="functions.html"><span>Class&#160;Members</span></a></li>
     </ul>
   </div>
@@ -154,6 +154,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="interface_g_c_game_view_controller.html#ab1776c83b24411c28a89f758b1651052">GCGameViewController</a>
 , <a class="el" href="interface_g_c_player_panel_controller.html#af48bbb96ef794eab988df9ee3d85c089">GCPlayerPanelController</a>
 , <a class="el" href="interface_g_c_values_panel_controller.html#ade6d729f090a97043a1754de91bac227">GCValuesPanelController</a>
+, <a class="el" href="interface_g_c_variants_panel_controller.html#a99c310b51e80dad8063f9e2994d951cc">GCVariantsPanelController</a>
 </li>
 <li>initWithGame:andDelegate:
 : <a class="el" href="interface_g_c_game_controller.html#a224e9a019a972a09f8e84d6bc96101e8">GCGameController</a>
@@ -175,8 +176,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li>initWithWidth:height:toWin:
 : <a class="el" href="interface_g_c_connect_four_position.html#aabf5f5562541d3e1a1fb87fa55080c0a">GCConnectFourPosition</a>
-, <a class="el" href="interface_g_c_quick_cross_position.html#a9d710bd7eeddffc921c97dcc26560274">GCQuickCrossPosition</a>
 , <a class="el" href="interface_g_c_tic_tac_toe_position.html#a0ceb401ccdbb12848c899f7e0b283465">GCTicTacToePosition</a>
+, <a class="el" href="interface_g_c_quick_cross_position.html#a9d710bd7eeddffc921c97dcc26560274">GCQuickCrossPosition</a>
 </li>
 <li>initWithXMLPath:
 : <a class="el" href="interface_g_c_about_game_view_controller.html#a9a027132cd6bbd0c7bb553294f706e48">GCAboutGameViewController</a>
@@ -184,17 +185,20 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>isEmpty
 : <a class="el" href="interface_g_c_stack.html#a42ef1bf3b07c306993aaaf43c09f4490">GCStack</a>
 </li>
+<li>isMisere
+: <a class="el" href="protocol_g_c_game-p.html#a54bdf39982502841617cb039180ca790">&lt;GCGame&gt;</a>
+</li>
 <li>isShowingDeltaRemoteness
-: <a class="el" href="protocol_g_c_connect_four_view_delegate-p.html#a9d88af0f795f7058e41962204dfc744c">&lt;GCConnectFourViewDelegate&gt;</a>
-, <a class="el" href="protocol_g_c_quarto_view_delegate-p.html#a120f7a28767d1e76e2036944da3e8d93">&lt;GCQuartoViewDelegate&gt;</a>
+: <a class="el" href="protocol_g_c_tic_tac_toe_view_delegate-p.html#a7634958504d890582e1544c0e589b3e9">&lt;GCTicTacToeViewDelegate&gt;</a>
 , <a class="el" href="protocol_g_c_game-p.html#a8e64f53d717e45071a1b16c89674e386">&lt;GCGame&gt;</a>
-, <a class="el" href="protocol_g_c_tic_tac_toe_view_delegate-p.html#a7634958504d890582e1544c0e589b3e9">&lt;GCTicTacToeViewDelegate&gt;</a>
+, <a class="el" href="protocol_g_c_quarto_view_delegate-p.html#a120f7a28767d1e76e2036944da3e8d93">&lt;GCQuartoViewDelegate&gt;</a>
+, <a class="el" href="protocol_g_c_connect_four_view_delegate-p.html#a9d88af0f795f7058e41962204dfc744c">&lt;GCConnectFourViewDelegate&gt;</a>
 </li>
 <li>isShowingMoveValues
-: <a class="el" href="protocol_g_c_tic_tac_toe_view_delegate-p.html#a33515b67fd76d08ebbc88300f7486263">&lt;GCTicTacToeViewDelegate&gt;</a>
-, <a class="el" href="protocol_g_c_connect_four_view_delegate-p.html#ac7f5d1e2d7733efd8ca4eca30f8556e8">&lt;GCConnectFourViewDelegate&gt;</a>
+: <a class="el" href="protocol_g_c_connect_four_view_delegate-p.html#ac7f5d1e2d7733efd8ca4eca30f8556e8">&lt;GCConnectFourViewDelegate&gt;</a>
 , <a class="el" href="protocol_g_c_quarto_view_delegate-p.html#aa6a48e3b08878b4131b0d91e93855141">&lt;GCQuartoViewDelegate&gt;</a>
 , <a class="el" href="protocol_g_c_game-p.html#af412a3bd9c350b452be8645c4be8108e">&lt;GCGame&gt;</a>
+, <a class="el" href="protocol_g_c_tic_tac_toe_view_delegate-p.html#a33515b67fd76d08ebbc88300f7486263">&lt;GCTicTacToeViewDelegate&gt;</a>
 </li>
 <li>isShowingPredictions
 : <a class="el" href="protocol_g_c_values_panel_delegate-p.html#ab02b0cc005da7eabe7acb419caca2a33">&lt;GCValuesPanelDelegate&gt;</a>
@@ -204,7 +208,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Mar 12 2012 14:38:53 for iGamesman by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Apr 11 2012 13:53:32 for iGamesman by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

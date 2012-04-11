@@ -342,8 +342,8 @@
             NSInteger remoteness = [[remotenessValues objectAtIndex: i] integerValue];
             
             CGRect valueRect = CGRectMake(minX + cellSize * i, minY - (cellSize / 2.0f), cellSize, cellSize / 2.0f);
-            /* Expand in X direction by 1/2 pixel each side to overlap */
-            valueRect = CGRectInset(valueRect, -0.5f, 0);
+            /* Expand in X direction by 1 pixel each side to overlap */
+            valueRect = CGRectInset(valueRect, -1.0f, 0);
             
             
             if (![value isEqualToString: GCGameValueUnknown])
