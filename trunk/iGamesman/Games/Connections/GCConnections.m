@@ -72,6 +72,9 @@
     
     _position = [[GCConnectionsPosition alloc] initWithSize: 7];
     [_position setLeftTurn: YES];
+    
+    BOOL misere = [[options objectForKey: GCMisereOptionKey] boolValue];
+    [_position setMisere: misere];
 }
 
 
@@ -144,7 +147,11 @@
     if ([[self generateMoves] count] == 0)
     {
 		[queue release];
-        return GCGameValueLose;
+        
+        if ([_position isMisere])
+            return GCGameValueWin;
+        else
+            return GCGameValueLose;
 	}
 	
 	//////////////////p1 turn finished/////////////////////////
@@ -165,7 +172,11 @@
 			if (positionNum/size >= size - 2)
             {
 				[queue release];
-				return GCGameValueLose;
+                
+				if ([_position isMisere])
+                    return GCGameValueWin;
+                else
+                    return GCGameValueLose;
 			}
 			
 			//add neighbors to the fringe
@@ -251,7 +262,11 @@
 			if (positionNum % size >= size - 2)
             {
 				[queue release];
-				return GCGameValueLose;
+                
+                if ([_position isMisere])
+                    return GCGameValueWin;
+                else
+                    return GCGameValueLose;
 			}
 			
 			//////////////odd case///////////////
@@ -336,6 +351,12 @@
 		}
 	}
 	return [moves autorelease];
+}
+
+
+- (BOOL) isMisere
+{
+    return [_position isMisere];
 }
 
 

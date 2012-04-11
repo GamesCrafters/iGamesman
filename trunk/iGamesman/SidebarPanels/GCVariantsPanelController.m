@@ -97,7 +97,7 @@
     {
         [_delegate closeDrawer: self];
         
-        NSDictionary *options = [NSDictionary dictionaryWithObject: [NSNumber numberWithBool: [_misereSwitch isOn]] forKey: GCGameMisereOptionKey];
+        NSDictionary *options = [NSDictionary dictionaryWithObject: [NSNumber numberWithBool: [_misereSwitch isOn]] forKey: GCMisereOptionKey];
         [_delegate startNewGameWithOptions: options];
     }
 }

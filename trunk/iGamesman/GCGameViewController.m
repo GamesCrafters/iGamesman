@@ -533,7 +533,7 @@
     
     [_game startGameWithLeft: left
                        right: right
-                     options: [NSDictionary dictionaryWithObject: [NSNumber numberWithBool: NO] forKey: GCGameMisereOptionKey]];
+                     options: [NSDictionary dictionaryWithObject: [NSNumber numberWithBool: NO] forKey: GCMisereOptionKey]];
     
     [left release];
     [right release];

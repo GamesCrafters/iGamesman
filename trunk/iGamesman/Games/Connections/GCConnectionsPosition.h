@@ -20,11 +20,14 @@ GCConnectionsPiece const GCConnectionsBluePiece;
 	BOOL _leftTurn;
 	NSMutableArray *_board;
 	int _size;
+    
+    BOOL _misere;
 }
 
 @property (nonatomic, assign) int size;
 @property (nonatomic, assign) BOOL leftTurn;
 @property (nonatomic, retain) NSMutableArray *board;
+@property (nonatomic, assign, getter = isMisere) BOOL misere;
 
 - (id) initWithSize: (int) sideLength;
 

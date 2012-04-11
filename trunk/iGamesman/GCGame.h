@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+#ifndef GCGAME_H
+#define GCGAME_H
+
 
 /* Left and right player indicators */
 typedef enum { GC_PLAYER_LEFT, GC_PLAYER_RIGHT } GCPlayerSide;
@@ -27,11 +30,12 @@ typedef NSString GCGameValue;
 #define GCGameValueUnknown @"GC_VALUE_UNKNOWN"
 
 
+
 /**
  * The corresponding value is an NSNumber wrapping a boolean value that indicates whether misere play is on or off.
  * A value of YES means misere is enabled; a value of NO means misere is disabled.
  */
-#define GCGameMisereOptionKey @"GC_MISERE_OPTION"
+#define GCMisereOptionKey @"GC_MISERE_OPTION"
 
 
 @class GCPlayer;
@@ -135,7 +139,7 @@ typedef NSString GCGameValue;
  *
  * @param leftPlayer The left player
  * @param rightPlayer The right player
- * @param options The options dictionary. The keys for this dictionary are documented at the top of this file.
+ * @param options The options dictionary. The keys for this dictionary are documented at the top of GCGame.h
  */
 - (void) startGameWithLeft: (GCPlayer *) leftPlayer
                      right: (GCPlayer *) rightPlayer
@@ -236,3 +240,7 @@ typedef void (^GCMoveCompletionHandler) (GCMove *move);
 - (void) setShowingDeltaRemoteness: (BOOL) deltaRemoteness;
 
 @end
+
+
+#endif
+

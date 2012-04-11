@@ -386,7 +386,7 @@
     
     [_game startGameWithLeft: [_game leftPlayer] 
                        right: [_game rightPlayer]
-                     options: [NSDictionary dictionaryWithObject: [NSNumber numberWithBool: NO] forKey: GCGameMisereOptionKey]];
+                     options: [NSDictionary dictionaryWithObject: [NSNumber numberWithBool: NO] forKey: GCMisereOptionKey]];
     
     GCPosition *position = [[_game currentPosition] copy];
     GCGameHistoryItem *startingItem = [[GCGameHistoryItem alloc] initWithPosition: position

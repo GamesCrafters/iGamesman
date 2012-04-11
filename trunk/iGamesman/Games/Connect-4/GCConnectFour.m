@@ -186,7 +186,7 @@
     _position = [[GCConnectFourPosition alloc] initWithWidth: 6 height: 4 toWin: 4];
     [_position setLeftTurn: YES];
     
-    BOOL misere = [[options objectForKey: GCGameMisereOptionKey] boolValue];
+    BOOL misere = [[options objectForKey: GCMisereOptionKey] boolValue];
     [_position setMisere: misere];
     
     [_connectFourView resetBoard];

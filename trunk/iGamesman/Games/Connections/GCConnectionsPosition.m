@@ -18,6 +18,7 @@ GCConnectionsPiece const GCConnectionsBluePiece  = @"O";
 @synthesize leftTurn = _leftTurn;
 @synthesize board = _board;
 @synthesize size = _size;
+@synthesize misere = _misere;
 
 #pragma mark - Memory lifecycle
 
@@ -66,9 +67,9 @@ GCConnectionsPiece const GCConnectionsBluePiece  = @"O";
 
 - (id) copyWithZone: (NSZone *) zone
 {
-    GCConnectionsPosition *copy = [[GCConnectionsPosition allocWithZone: zone] init];
+    GCConnectionsPosition *copy = [[GCConnectionsPosition allocWithZone: zone] initWithSize: _size];
     [copy setLeftTurn: _leftTurn];
-    [copy setSize: _size];
+    [copy setMisere: _misere];
     
     NSMutableArray *boardCopy = [_board copy];
     [copy setBoard: boardCopy];

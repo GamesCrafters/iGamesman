@@ -197,7 +197,7 @@
     _position = [[GCTicTacToePosition alloc] initWithWidth: 3 height: 3 toWin: 3];
     [_position setLeftTurn: YES];
     
-    BOOL misere = [[options objectForKey: GCGameMisereOptionKey] boolValue];
+    BOOL misere = [[options objectForKey: GCMisereOptionKey] boolValue];
     [_position setMisere: misere];
     
     [_tttView setNeedsDisplay];
