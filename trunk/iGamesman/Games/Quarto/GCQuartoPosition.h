@@ -24,11 +24,14 @@ typedef enum { GCQ_LEFT_CHOOSE, GCQ_RIGHT_PLACE, GCQ_RIGHT_CHOOSE, GCQ_LEFT_PLAC
     GCQuartoPiece *_platformPiece;
     
     GCQuartoPhase _phase;
+    
+    BOOL _misere;
 }
 
 
 @property (nonatomic, readonly) NSMutableArray *pieces;
 @property (nonatomic, assign) GCQuartoPhase phase;
+@property (nonatomic, assign, getter = isMisere) BOOL misere;
 
 - (GCGameValue *) primitive;
 

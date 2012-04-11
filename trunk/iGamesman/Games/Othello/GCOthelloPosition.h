@@ -22,11 +22,14 @@ GCOthelloPiece const GCOthelloWhitePiece;
     BOOL _leftTurn;
     
     NSMutableArray *_board;
+    
+    BOOL _misere;
 }
 
 @property (nonatomic, assign) NSUInteger rows, columns;
 @property (nonatomic, assign) BOOL leftTurn;
 @property (nonatomic, retain) NSMutableArray *board;
+@property (nonatomic, assign, getter = isMisere) BOOL misere;
 
 - (id) initWithWidth: (NSUInteger) width 
               height: (NSUInteger) height;

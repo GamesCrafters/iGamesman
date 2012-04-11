@@ -112,6 +112,11 @@
     
     _position = [[GCQuartoPosition alloc] init];
     [_position setPhase: GCQ_LEFT_CHOOSE];
+    
+    BOOL misere = [[options objectForKey: GCMisereOptionKey] boolValue];
+    [_position setMisere: misere];
+    
+    [_quartoView setNeedsDisplay];
 }
 
 
@@ -150,7 +155,7 @@
 }
 
 
-- (void) doMove: (NSObject<NSCopying> *) move
+- (void) doMove: (GCMove *) move
 {
     if ([move isKindOfClass: [NSString class]])
     {
@@ -196,7 +201,7 @@
 }
 
 
-- (void) undoMove: (NSObject<NSCopying> *) move toPosition: (GCQuartoPosition *) previousPosition
+- (void) undoMove: (GCMove *) move toPosition: (GCQuartoPosition *) previousPosition
 {
     if ([move isKindOfClass: [NSString class]])
     {
@@ -249,7 +254,47 @@
 
 - (NSArray *) generateMoves
 {
+    if (([_position phase] == GCQ_LEFT_CHOOSE) || ([_position phase] == GCQ_RIGHT_CHOOSE))
+    {
+        NSMutableArray *moves = [[NSMutableArray alloc] initWithCapacity: [[_position pieces] count]];
+        for (GCQuartoPiece *piece in [_position pieces])
+        {
+            BOOL tall   = [piece tall];
+            BOOL square = [piece square];
+            BOOL hollow = [piece hollow];
+            BOOL white  = [piece white];
+            
+            NSUInteger pieceValue = (tall << 3) + (square << 2) + (hollow << 1) + (white << 0);
+            char pieceChar = pieceValue + 'A';
+            
+            [moves addObject: [NSString stringWithFormat: @"%c", pieceChar]];
+        }
+        
+        return moves;
+    }
+    else
+    {
+        NSMutableArray *moves = [[NSMutableArray alloc] initWithCapacity: 16];
+        for (NSUInteger row = 0; row < 4; row += 1)
+        {
+            for (NSUInteger col = 0; col < 4; col += 1)
+            {
+                GCQuartoPiece *piece = [_position pieceAtRow: row column: col];
+                if ([piece blank])
+                    [moves addObject: [NSNumber numberWithUnsignedInteger: row * 4 + col]];
+            }
+        }
+        
+        return moves;
+    }
+    
     return nil;
+}
+
+
+- (BOOL) isMisere
+{
+    return [_position isMisere];
 }
 
 

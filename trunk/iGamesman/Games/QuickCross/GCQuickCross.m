@@ -88,6 +88,11 @@
     
     _position = [[GCQuickCrossPosition alloc] initWithWidth: 4 height: 4 toWin: 4];
     [_position setLeftTurn: YES];
+    
+    BOOL misere = [[options objectForKey: GCMisereOptionKey] boolValue];
+    [_position setMisere: misere];
+    
+    [_quickCrossView setNeedsDisplay];
 }
 
 
@@ -240,7 +245,7 @@
         
         
         if (horizontal || vertical || positiveDiagonal || negativeDiagonal)
-            return GCGameValueLose;		
+            return [_position isMisere] ? GCGameValueWin : GCGameValueLose;
 	}
 	return nil;
 }
@@ -264,6 +269,12 @@
     }
     
     return [moves autorelease];
+}
+
+
+- (BOOL) isMisere
+{
+    return [_position isMisere];
 }
 
 

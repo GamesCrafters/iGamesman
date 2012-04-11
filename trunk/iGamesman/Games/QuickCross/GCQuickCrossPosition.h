@@ -31,11 +31,14 @@ GCQuickCrossMove const GCQuickCrossPlaceVerticalMove;
     BOOL _leftTurn;
     
     NSMutableArray *_board;
+    
+    BOOL _misere;
 }
 
 @property (nonatomic, readonly) NSUInteger rows, columns, toWin;
 @property (nonatomic, assign) BOOL leftTurn;
 @property (nonatomic, retain) NSMutableArray *board;
+@property (nonatomic, assign, getter = isMisere) BOOL misere;
 
 - (id) initWithWidth: (NSUInteger) width
               height: (NSUInteger) height

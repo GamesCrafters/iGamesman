@@ -17,6 +17,7 @@ GCOthelloPiece const GCOthelloWhitePiece = @"O";
 @synthesize rows = _rows, columns = _columns;
 @synthesize leftTurn = _leftTurn;
 @synthesize board = _board;
+@synthesize misere = _misere;
 
 #pragma mark - Memory lifecycle
 
@@ -74,6 +75,7 @@ GCOthelloPiece const GCOthelloWhitePiece = @"O";
 {
     GCOthelloPosition *copy = [[GCOthelloPosition allocWithZone: zone] initWithWidth: _columns height: _rows];
     [copy setLeftTurn: _leftTurn];
+    [copy setMisere: _misere];
     
     NSMutableArray *boardCopy = [_board mutableCopy];
     [copy setBoard: boardCopy];

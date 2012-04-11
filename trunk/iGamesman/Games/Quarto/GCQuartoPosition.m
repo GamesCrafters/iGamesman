@@ -29,6 +29,7 @@ BOOL match(NSUInteger a, NSUInteger b, NSUInteger c, NSUInteger d);
 
 @synthesize pieces = _pieces;
 @synthesize phase = _phase;
+@synthesize misere = _misere;
 
 #pragma mark - Memory lifecycle
 
@@ -99,6 +100,7 @@ BOOL match(NSUInteger a, NSUInteger b, NSUInteger c, NSUInteger d);
 {
     GCQuartoPosition *copy = [[GCQuartoPosition allocWithZone: zone] init];
     [copy setPhase: _phase];
+    [copy setMisere: _misere];
 
     NSMutableArray *boardCopy = [_board copy];
     [copy setBoard: boardCopy];
@@ -155,7 +157,7 @@ BOOL match(NSUInteger a, NSUInteger b, NSUInteger c, NSUInteger d)
             continue;
         
         if (match(piece0, piece1, piece2, piece3))
-            return GCGameValueWin;
+            return _misere ? GCGameValueLose : GCGameValueWin;
     }
     
     /* Check each row */
@@ -170,7 +172,7 @@ BOOL match(NSUInteger a, NSUInteger b, NSUInteger c, NSUInteger d)
             continue;
         
         if (match(piece0, piece1, piece2, piece3))
-            return GCGameValueWin;
+            return _misere ? GCGameValueLose : GCGameValueWin;
     }
     
     /* Check the main diagonal */
@@ -181,7 +183,7 @@ BOOL match(NSUInteger a, NSUInteger b, NSUInteger c, NSUInteger d)
     
     BOOL hasBlank = ((piece0 == -1) || (piece1 == -1) || (piece2 == -1) || (piece3 == -1));
     if (!hasBlank && match(piece0, piece1, piece2, piece3))
-        return GCGameValueWin;
+        return _misere ? GCGameValueLose : GCGameValueWin;
     
     /* Check the secondary diagonal */
     piece0 = [self valueOfPiece: [_board objectAtIndex: 3]];
@@ -191,7 +193,7 @@ BOOL match(NSUInteger a, NSUInteger b, NSUInteger c, NSUInteger d)
     
     hasBlank = ((piece0 == -1) || (piece1 == -1) || (piece2 == -1) || (piece3 == -1));
     if (!hasBlank && match(piece0, piece1, piece2, piece3))
-        return GCGameValueWin;
+        return _misere ? GCGameValueLose : GCGameValueWin;
     
     return nil;
 }

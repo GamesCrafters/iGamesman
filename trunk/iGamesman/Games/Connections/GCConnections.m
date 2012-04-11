@@ -75,6 +75,8 @@
     
     BOOL misere = [[options objectForKey: GCMisereOptionKey] boolValue];
     [_position setMisere: misere];
+    
+    [_connectionsView setNeedsDisplay];
 }
 
 

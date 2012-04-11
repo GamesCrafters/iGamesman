@@ -158,12 +158,17 @@
     _position = [[GCOthelloPosition alloc] initWithWidth: 8 height: 8];
     [_position setLeftTurn: YES];
     
+    BOOL misere = [[options objectForKey: GCMisereOptionKey] boolValue];
+    [_position setMisere: misere];
+    
     int col = [_position columns] / 2 - 1;
     int row = [_position rows] / 2 - 1;
     [[_position board] replaceObjectAtIndex: col + row * [_position columns] withObject: GCOthelloBlackPiece];
     [[_position board] replaceObjectAtIndex: 1 + col + row * [_position columns] withObject: GCOthelloWhitePiece];
     [[_position board] replaceObjectAtIndex: col + (row + 1) * [_position columns] withObject: GCOthelloWhitePiece];
     [[_position board] replaceObjectAtIndex: 1 + col + (row + 1) * [_position columns] withObject: GCOthelloBlackPiece];
+    
+    [_othelloView setNeedsDisplay];
 }
 
 
@@ -255,16 +260,16 @@
 			if (leftPlayerPieces > rightPlayerPieces)
             {
 				if ([_position leftTurn])
-					return GCGameValueWin;
+					return [_position isMisere] ? GCGameValueLose : GCGameValueWin;
 				else
-					return GCGameValueLose;
+					return [_position isMisere] ? GCGameValueWin : GCGameValueLose;
 			}
 			else if (rightPlayerPieces > leftPlayerPieces)
             {
 				if ([_position leftTurn])
-					return GCGameValueLose;
+					return [_position isMisere] ? GCGameValueWin : GCGameValueLose;
 				else
-					return GCGameValueWin;
+					return [_position isMisere] ? GCGameValueLose : GCGameValueWin;
 			}
             else
             {
@@ -296,6 +301,12 @@
 		[moves addObject: PASS];
     
 	return [moves autorelease];
+}
+
+
+- (BOOL) isMisere
+{
+    return [_position isMisere];
 }
 
 

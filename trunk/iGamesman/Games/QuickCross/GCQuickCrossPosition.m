@@ -23,6 +23,7 @@ GCQuickCrossMove const GCQuickCrossPlaceVerticalMove   = @"GCQX_PLACE_VERTICAL";
 @synthesize rows = _rows, columns = _columns, toWin = _toWin;
 @synthesize leftTurn = _leftTurn;
 @synthesize board = _board;
+@synthesize misere = _misere;
 
 #pragma mark - Memory lifecycle
 
@@ -62,6 +63,7 @@ GCQuickCrossMove const GCQuickCrossPlaceVerticalMove   = @"GCQX_PLACE_VERTICAL";
     GCQuickCrossPosition *copy = [[GCQuickCrossPosition allocWithZone: zone] initWithWidth: _columns height: _rows toWin: _toWin];
     
     [copy setLeftTurn: _leftTurn];
+    [copy setMisere: _misere];
     
     NSMutableArray *boardCopy = [_board copy];
     [copy setBoard: boardCopy];
