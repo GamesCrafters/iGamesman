@@ -537,8 +537,15 @@
     GCPlayerType leftType  = [[_game leftPlayer] type];
     GCPlayerType rightType = [[_game rightPlayer] type];
     
-    if (((leftType == GC_HUMAN) && (rightType == GC_COMPUTER)) ||
-        ((leftType == GC_COMPUTER) && (rightType == GC_HUMAN)))
+    BOOL humanVsComputer = ((leftType == GC_HUMAN) && (rightType == GC_COMPUTER)) || ((leftType == GC_COMPUTER) && (rightType == GC_HUMAN));
+    
+    GCPlayerType currentType;
+    if ([_game currentPlayerSide] == GC_PLAYER_LEFT)
+        currentType = leftType;
+    else
+        currentType = rightType;
+    
+    if (humanVsComputer && (currentType == GC_COMPUTER))
     {
         currentItem = [_historyStack peek];
         
@@ -599,8 +606,15 @@
     GCPlayerType leftType  = [[_game leftPlayer] type];
     GCPlayerType rightType = [[_game rightPlayer] type];
     
-    if (((leftType == GC_HUMAN) && (rightType == GC_COMPUTER)) ||
-        ((leftType == GC_COMPUTER) && (rightType == GC_HUMAN)))
+    BOOL humanVsComputer = ((leftType == GC_HUMAN) && (rightType == GC_COMPUTER)) || ((leftType == GC_COMPUTER) && (rightType == GC_HUMAN));
+    
+    GCPlayerType currentType;
+    if ([_game currentPlayerSide] == GC_PLAYER_LEFT)
+        currentType = leftType;
+    else
+        currentType = rightType;
+    
+    if (humanVsComputer && (currentType == GC_COMPUTER))
     {
         historyItem = [_undoStack peek];
         

@@ -46,10 +46,8 @@
 	<string>2</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
-	<key>CFBundleVersion</key>
-	<string>25</string>
 	<key>GCBuildNumber</key>
-	<integer>33</integer>
+	<integer>37</integer>
 	<key>GCVersionNumber</key>
 	<integer>2</integer>
 	<key>LSRequiresIPhoneOS</key>

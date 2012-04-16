@@ -34,8 +34,12 @@
     
     GCSidebarView *_sideBar;
     GCVVHView *_vvh;
+    
+    NSDictionary *_gameInfo;
 }
 
 - (id) initWithGame: (id<GCGame>) game;
+
+- (void) setGameInfoDictionary: (NSDictionary *) gameInfo;
 
 @end

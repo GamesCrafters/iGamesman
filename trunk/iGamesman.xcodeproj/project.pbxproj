@@ -138,6 +138,10 @@
 		0AF146F114B53D14003E693C /* GreenButton~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AF146F014B53D14003E693C /* GreenButton~ipad.png */; };
 		0AF146F314B53D6E003E693C /* BlackButton~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AF146F214B53D6E003E693C /* BlackButton~ipad.png */; };
 		0AF146F514B53D8A003E693C /* GamesCrafters~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AF146F414B53D8A003E693C /* GamesCrafters~ipad.png */; };
+		0AFD01B315377A6B00C7282E /* patchwork-landscape@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AFD01AF15377A6B00C7282E /* patchwork-landscape@2x.png */; };
+		0AFD01B415377A6B00C7282E /* patchwork-landscape@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AFD01B015377A6B00C7282E /* patchwork-landscape@2x~ipad.png */; };
+		0AFD01B515377A6B00C7282E /* patchwork-landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AFD01B115377A6B00C7282E /* patchwork-landscape~ipad.png */; };
+		0AFD01B615377A6B00C7282E /* patchwork-landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AFD01B215377A6B00C7282E /* patchwork-landscape.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -324,6 +328,10 @@
 		0AF146F014B53D14003E693C /* GreenButton~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GreenButton~ipad.png"; sourceTree = "<group>"; };
 		0AF146F214B53D6E003E693C /* BlackButton~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BlackButton~ipad.png"; sourceTree = "<group>"; };
 		0AF146F414B53D8A003E693C /* GamesCrafters~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GamesCrafters~ipad.png"; sourceTree = "<group>"; };
+		0AFD01AF15377A6B00C7282E /* patchwork-landscape@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "patchwork-landscape@2x.png"; sourceTree = "<group>"; };
+		0AFD01B015377A6B00C7282E /* patchwork-landscape@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "patchwork-landscape@2x~ipad.png"; sourceTree = "<group>"; };
+		0AFD01B115377A6B00C7282E /* patchwork-landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "patchwork-landscape~ipad.png"; sourceTree = "<group>"; };
+		0AFD01B215377A6B00C7282E /* patchwork-landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "patchwork-landscape.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -705,6 +713,10 @@
 				0A9513A414F5A20C0000A563 /* patchwork@2x.png */,
 				0A9513A214F5A20C0000A563 /* patchwork~ipad.png */,
 				0A32FE631517FC280093F10A /* patchwork@2x~ipad.png */,
+				0AFD01B215377A6B00C7282E /* patchwork-landscape.png */,
+				0AFD01AF15377A6B00C7282E /* patchwork-landscape@2x.png */,
+				0AFD01B115377A6B00C7282E /* patchwork-landscape~ipad.png */,
+				0AFD01B015377A6B00C7282E /* patchwork-landscape@2x~ipad.png */,
 			);
 			path = "UI Assets";
 			sourceTree = "<group>";
@@ -752,6 +764,7 @@
 		0AD753EC14AD29EF00746E7B /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = GC;
 				LastUpgradeCheck = 0430;
 				ORGANIZATIONNAME = GamesCrafters;
 			};
@@ -858,6 +871,10 @@
 				0A32FE601517F8FB0093F10A /* GreenButton@2x~ipad.png in Resources */,
 				0A32FE621517F91D0093F10A /* YellowButton@2x~ipad.png in Resources */,
 				0A32FE641517FC280093F10A /* patchwork@2x~ipad.png in Resources */,
+				0AFD01B315377A6B00C7282E /* patchwork-landscape@2x.png in Resources */,
+				0AFD01B415377A6B00C7282E /* patchwork-landscape@2x~ipad.png in Resources */,
+				0AFD01B515377A6B00C7282E /* patchwork-landscape~ipad.png in Resources */,
+				0AFD01B615377A6B00C7282E /* patchwork-landscape.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

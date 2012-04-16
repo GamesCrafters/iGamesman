@@ -28,7 +28,12 @@
     {
         NSString *path = [mainBundle pathForResource: xmlTitle ofType: @"xml"];
         
-        GCAboutGameViewController *aboutGameController = [[GCAboutGameViewController alloc] initWithXMLPath: path];
+        CGRect frame = CGRectZero;
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+            frame = CGRectMake(0, 0, 480, 288);
+        else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+            frame = CGRectMake(0, 0, 1024, 724);
+        GCAboutGameViewController *aboutGameController = [[GCAboutGameViewController alloc] initWithXMLPath: path viewFrame: frame];
         
         UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController: aboutGameController];
         [navController setModalTransitionStyle: UIModalTransitionStyleFlipHorizontal];
@@ -85,6 +90,7 @@
     /* Create the game controller and present it */
     GCGameViewController *gameViewController = [[GCGameViewController alloc] initWithGame: game];
     [gameViewController setModalTransitionStyle: UIModalTransitionStyleFlipHorizontal];
+    [gameViewController setGameInfoDictionary: _currentEntry];
     
     [self presentModalViewController: gameViewController animated: YES];
     

@@ -10,6 +10,7 @@
 
 #import "GCGame.h"
 
+#import "GCAboutGameViewController.h"
 #import "GCGameHistoryItem.h"
 #import "GCPlayer.h"
 #import "GCSidebarView.h"
@@ -21,6 +22,9 @@
 #import "GCVVHPanelController.h"
 
 
+/**
+ * Class continuation (private)
+ */
 @interface GCGameViewController ()
 {
     GCMetaSettingsPanelController *metaPanel;
@@ -43,15 +47,28 @@
         
         _showingPredictions = NO;
         _showingVVH = NO;
+        
+        _gameInfo = nil;
     }
     
     return self;
 }
 
 
+- (void) setGameInfoDictionary: (NSDictionary *) gameInfo
+{
+    [gameInfo retain];
+    
+    [_gameInfo release];
+    
+    _gameInfo = gameInfo;
+}
+
+
 - (void) dealloc
 {
     [_game release];
+    [_gameInfo release];
     
     [super dealloc];
 }
@@ -363,6 +380,59 @@
 }
 
 
+- (void) infoButtonTapped: (UIButton *) sender
+{
+    NSBundle *mainBundle = [NSBundle mainBundle];
+    NSString *xmlTitle = [_gameInfo objectForKey: @"xml"];
+    GCAboutGameViewController *aboutGameController;
+    
+    if (xmlTitle)
+    {
+        NSString *path = [mainBundle pathForResource: xmlTitle ofType: @"xml"];
+        
+        CGRect frame = CGRectZero;
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+            frame = CGRectMake(0, 0, 480, 288);
+        else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+            frame = CGRectMake(0, 0, 480, 680);
+        aboutGameController = [[GCAboutGameViewController alloc] initWithXMLPath: path viewFrame: frame];
+    }
+    else
+    {
+        return;
+    }
+    
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+    {
+        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController: aboutGameController];
+        [nav setModalTransitionStyle: UIModalTransitionStyleCoverVertical];
+        
+        [self presentModalViewController: nav animated: YES];
+        
+        [nav release];
+    }
+    else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+        [aboutGameController setShowsDoneButton: NO];
+        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController: aboutGameController];
+        UIPopoverController *popover = [[UIPopoverController alloc] initWithContentViewController: nav];
+        [popover setPopoverContentSize: CGSizeMake(480, 724)];
+        
+        [popover presentPopoverFromRect: [sender frame]
+                                 inView: [self view]
+               permittedArrowDirections: UIPopoverArrowDirectionAny
+                               animated: YES];
+        
+        [nav release];
+        
+#warning TODO: Find a way to memory-manage the popover controller
+//        [popover autorelease];
+    }
+    
+    [aboutGameController release];
+}
+
+
 - (void) addSidebarInRect: (CGRect) sideBarRect;
 {
     _sideBar = [[GCSidebarView alloc] initWithFrame: sideBarRect];
@@ -486,7 +556,11 @@
     
     
     UIButton *infoButton = [UIButton buttonWithType: UIButtonTypeInfoLight];
-    [infoButton setCenter: CGPointMake(width - 15, height - 15)];
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+        [infoButton setCenter: CGPointMake(width - 15, height -15)];
+    else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        [infoButton setCenter: CGPointMake(width - 30, height - 30)];
+    [infoButton addTarget: self action: @selector(infoButtonTapped:) forControlEvents: UIControlEventTouchUpInside];
     [[self view] addSubview: infoButton];
     
     

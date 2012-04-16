@@ -2,11 +2,11 @@
 <game>
   <name>Connect 4</name>
   <code>connect4</code>
-  <history>Connect 4 or Four-in-a-Row has its roots in Tic-Tac-Toe, a simple three in a row pencil and paper game. The object of the game is to get four pieces in a row. Four-In-A-Row, also, adds the element of restricted placement by requiring the players to "drop" the pieces vertically down the board. In America, this game was popularized under the name Connect Four. The name “Connect Four” was first coined by Milton Bradley Company in 1974. The company was founded by Milton Bradley in Springfield, Massachusetts in 1860. The company is known for its contributions in the board game and video game industries.</history>
+  <history>Connect 4 or Four-in-a-Row has its roots in Tic-Tac-Toe, a simple three in a row pencil and paper game. The object of the game is to get four pieces in a row. Four-In-A-Row, also, adds the element of restricted placement by requiring the players to "drop" the pieces vertically down the board. In America, this game was popularized under the name Connect Four. The name "Connect Four" was first coined by Milton Bradley Company in 1974. The company was founded by Milton Bradley in Springfield, Massachusetts in 1860. The company is known for its contributions in the board game and video game industries.</history>
   <board>The official playing board is a 6-rows-by-7-columns plastic game board with slots in the middle to place the pieces into. There is also a switch at the right and left hand side of the board that is used to release the pieces from their slots thus resetting the board.</board>
   <pieces>The official pieces for Connect Four are 42 black and red checkered playing pieces (21 of each color). Due to the playing board, anything aside from checkered pieces proves to be rather inefficient since most substituted pieces don’t stack well with each other.</pieces>
   <tomove>Each player takes alternating turns. During each player’s turn, drop a colored piece of that player’s color into the slots of the game board.</tomove>
-  <towin>To get three in a row, vertically, horizontally or diagonally.</towin>
+  <towin>To get four in a row, vertically, horizontally or diagonally.</towin>
   <rules>The players take turns dropping pieces into the slots. These pieces fall to the bottom of the board and the game continues until one player has four in a row and wins or until the board fills up, which results in a tie.</rules>
   <strategies>
     <strategy>
@@ -21,7 +21,7 @@
   <variants>
     <variant>
       <name>Misere</name>
-      <description>To force your opponent into getting three in a row.</description>
+      <description>To force your opponent into getting four in a row.</description>
     </variant>
   </variants>
   <alternates>

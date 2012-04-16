@@ -11,8 +11,12 @@
 @interface GCAboutGameViewController : UIViewController <NSXMLParserDelegate>
 {
     NSDictionary *_gameData;
+    
+    UIScrollView *_scroller;
 }
 
-- (id) initWithXMLPath: (NSString *) pathToXML;
+- (id) initWithXMLPath: (NSString *) pathToXML
+             viewFrame: (CGRect) frame;
+- (void) setShowsDoneButton: (BOOL) showsDone;
 
 @end
