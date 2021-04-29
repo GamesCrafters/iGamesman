@@ -92,7 +92,7 @@
         [othView updateLabels];
         [othView updateServerDataWithService: service];
     }
-	return board;
+	
 }
 
 - (void) undoMove: (GCMove *) move toPosition: (GCPosition *) previousPosition{
